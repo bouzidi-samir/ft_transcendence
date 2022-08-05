@@ -53,11 +53,15 @@ h1,h2 {
 .auth-form p {
     color: white;
     text-align: center;
-    font-size: 200%;
+    font-size: 150%;
 }
 
 .auth-form hr {
     width: 80%;
+    color: white;
+    margin-left: 10%;
+    margin-top: 5%;
+    margin-bottom: 1%;
 }
 
 .auth-form button {

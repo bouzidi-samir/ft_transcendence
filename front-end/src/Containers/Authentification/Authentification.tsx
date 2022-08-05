@@ -12,6 +12,7 @@ export default function Authentification() {
               <button className="btn btn-primary"> Login </button>
               <hr></hr>
               <p>or</p>
+              <button className="btn btn-secondary"> Register </button>
           </form>
         </div>
         
