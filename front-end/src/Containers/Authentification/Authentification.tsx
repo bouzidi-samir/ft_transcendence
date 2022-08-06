@@ -6,7 +6,7 @@ export default function Authentification() {
     <div className="auth-content">
         <div className="auth-field">
           <form className="auth-form">
-          <h1>Pong Master</h1>
+          <h1>Master Pong</h1>
               <input></input>
               <input></input>
               <button className="btn btn-primary"> Login </button>

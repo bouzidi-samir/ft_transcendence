@@ -47,7 +47,10 @@ h1,h2 {
 }
 
 .auth-form h1 {
-    color: white;
+    padding-top: 2%;
+    color: yellow;
+    opacity: 70%;
+    font-family: 'calvierregular';
 }
 
 .auth-form p {
@@ -70,4 +73,13 @@ h1,h2 {
     height: 10%;
     margin-left: 20%;
     margin-top: 5%;
+}
+
+@font-face {
+    font-family: 'calvierregular';
+    src: url('../../fonts/main_title/calvier.woff') format('woff2'),
+         url('../../fonts/main_title/calvier.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
 }
