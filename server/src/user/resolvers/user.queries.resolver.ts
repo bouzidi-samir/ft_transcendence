@@ -2,7 +2,6 @@ import { Args, Query, Resolver } from "@nestjs/graphql";
 import { AuthGuard } from "@nestjs/passport";
 import { CurrentUser, JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { Game } from "src/game/entities/game.entity";
-import { UserPagination, UserPaginationArgs } from "../dto/user-pagination.dto";
 import { User } from "../entities/user.entity";
 import { UserService } from "../user.service";
 import { UseGuards } from "@nestjs/common";

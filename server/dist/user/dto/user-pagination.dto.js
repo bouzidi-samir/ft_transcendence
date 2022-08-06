@@ -8,16 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserPagination = exports.UserPaginationArgs = exports.UserPaginationSortBy = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const pagination_dto_1 = require("../../pagination/dto/pagination.dto");
+const pagination_dto_1 = require("src/pagination/dto/pagination.dto");
 const user_entity_1 = require("../entities/user.entity");
 let UserPaginationSortBy = class UserPaginationSortBy extends pagination_dto_1.PaginationSortBy {
 };
 __decorate([
     (0, graphql_1.Field)(() => pagination_dto_1.SortDirection, { nullable: true }),
-    __metadata("design:type", Number)
+    __metadata("design:type", typeof (_a = typeof pagination_dto_1.SortDirection !== "undefined" && pagination_dto_1.SortDirection) === "function" ? _a : Object)
 ], UserPaginationSortBy.prototype, "email", void 0);
 UserPaginationSortBy = __decorate([
     (0, graphql_1.InputType)()
