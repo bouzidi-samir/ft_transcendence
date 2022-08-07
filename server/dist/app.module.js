@@ -23,13 +23,19 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot(),
+            config_1.ConfigModule.forRoot({
+                envFilePath: ['.env', 'database.env'],
+                isGlobal: true,
+            }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: 'schema.gql',
+                cors: {
+                    origin: 'http://localhost:3000',
+                    credentials: true,
+                },
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
-                imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
                 useFactory: (configService) => ({
                     type: 'postgres',

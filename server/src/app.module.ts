@@ -10,16 +10,28 @@ import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
+import config from './orm';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: ['.env', 'database.env'],
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }),
+    
+    
+    // TypeOrmModule.forRoot(config),
+
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      // imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
@@ -32,6 +44,7 @@ import { GameModule } from './game/game.module';
         synchronize: true,
       }),
     }),
+
     AuthModule,
     UserModule,
     GameModule,
