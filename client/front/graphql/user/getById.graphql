@@ -1,0 +1,16 @@
+query userGetByid($input : String!){
+  userGetById(id: $input){
+    id
+    createdAt
+    updatedAt
+    email
+    name
+    avatar
+    lastScore
+    bestScore
+    games{
+      id
+      score
+    }
+  }
+}

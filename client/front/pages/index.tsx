@@ -2,13 +2,17 @@ import { useQuery } from '@apollo/client'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { UserGetAllDocument, UserGetAllQuery, UserGetAllQueryVariables, useUserGetAllQuery } from '../generated'
+import { UserGetAllDocument, UserGetAllQuery, UserGetAllQueryVariables, useUserGetAllQuery, useUserGetByidQuery } from '../generated'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
 
   // const { data, error, loading } = useQuery<UserGetAllQuery, UserGetAllQueryVariables>(UserGetAllDocument); 
-  const { data, error, loading } = useUserGetAllQuery();
+  // const { data, error, loading } = useUserGetAllQuery();
+  const { data, loading, error } = useUserGetAllQuery({
+       variables: {
+       },
+     });
   
   if (loading)
   return (
@@ -33,7 +37,27 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        {data?.userGetAll.length}
+        {/* <p>Number of users: {data?.userGetAll.length}</p>
+        <p>avatar: {data?.userGetAll[1].avatar}</p>
+        <p>id: {data?.userGetAll[1].id}</p>
+        <p>Name: {data?.userGetAll[1].name}</p>
+        <p>createdAt: {data?.userGetAll[1].createdAt}</p>
+        <p>updatedAt: {data?.userGetAll[1].updatedAt}</p>
+        <p>email: {data?.userGetAll[1].email}</p>
+        <p>Lastscore: {data?.userGetAll[1].lastScore}</p>
+        <p>Bestscore: {data?.userGetAll[1].bestScore}</p>
+        */}
+        
+      {!data
+        ? null
+        : data.userGetAll.map((e) => {
+            return <p key={e.id}>{e.id} ** {e.name} ** {e.createdAt} ** {e.updatedAt} ** {e.email} ** {e.lastScore} ** {e.bestScore}</p>;
+          })
+      }
+
+     
+      
+  
       </main>
 
       <footer className={styles.footer}>
