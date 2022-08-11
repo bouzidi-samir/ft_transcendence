@@ -163,6 +163,18 @@ export type UserUpdateOutput = {
   user: User;
 };
 
+export type GameListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GameListQuery = { __typename?: 'Query', gameList: Array<{ __typename?: 'Game', id: string, createdAt: any, updatedAt: any, score: number, win: boolean, loss: boolean, player?: { __typename?: 'User', id: string, createdAt: any, updatedAt: any, email: string, name: string } | null }> };
+
+export type UserCreateMutationVariables = Exact<{
+  input: UserCreateInput;
+}>;
+
+
+export type UserCreateMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserCreateOutput', user: { __typename?: 'User', id: string, createdAt: any, updatedAt: any, name: string, email: string, lastScore?: number | null, bestScore?: number | null } } };
+
 export type UserGetAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -176,6 +188,93 @@ export type UserGetByidQueryVariables = Exact<{
 export type UserGetByidQuery = { __typename?: 'Query', userGetById: { __typename?: 'User', id: string, createdAt: any, updatedAt: any, email: string, name: string, avatar?: string | null, lastScore?: number | null, bestScore?: number | null, games?: Array<{ __typename?: 'Game', id: string, score: number }> | null } };
 
 
+export const GameListDocument = gql`
+    query gameList {
+  gameList {
+    id
+    createdAt
+    updatedAt
+    score
+    win
+    loss
+    player {
+      id
+      createdAt
+      updatedAt
+      email
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGameListQuery__
+ *
+ * To run a query within a React component, call `useGameListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGameListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGameListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGameListQuery(baseOptions?: Apollo.QueryHookOptions<GameListQuery, GameListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GameListQuery, GameListQueryVariables>(GameListDocument, options);
+      }
+export function useGameListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GameListQuery, GameListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GameListQuery, GameListQueryVariables>(GameListDocument, options);
+        }
+export type GameListQueryHookResult = ReturnType<typeof useGameListQuery>;
+export type GameListLazyQueryHookResult = ReturnType<typeof useGameListLazyQuery>;
+export type GameListQueryResult = Apollo.QueryResult<GameListQuery, GameListQueryVariables>;
+export const UserCreateDocument = gql`
+    mutation userCreate($input: UserCreateInput!) {
+  userCreate(input: $input) {
+    user {
+      id
+      createdAt
+      updatedAt
+      name
+      email
+      lastScore
+      bestScore
+    }
+  }
+}
+    `;
+export type UserCreateMutationFn = Apollo.MutationFunction<UserCreateMutation, UserCreateMutationVariables>;
+
+/**
+ * __useUserCreateMutation__
+ *
+ * To run a mutation, you first call `useUserCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userCreateMutation, { data, loading, error }] = useUserCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserCreateMutation(baseOptions?: Apollo.MutationHookOptions<UserCreateMutation, UserCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserCreateMutation, UserCreateMutationVariables>(UserCreateDocument, options);
+      }
+export type UserCreateMutationHookResult = ReturnType<typeof useUserCreateMutation>;
+export type UserCreateMutationResult = Apollo.MutationResult<UserCreateMutation>;
+export type UserCreateMutationOptions = Apollo.BaseMutationOptions<UserCreateMutation, UserCreateMutationVariables>;
 export const UserGetAllDocument = gql`
     query userGetAll {
   userGetAll {

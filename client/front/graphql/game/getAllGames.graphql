@@ -1,0 +1,18 @@
+query gameList {
+  gameList {
+    id
+    createdAt
+    updatedAt
+    score
+    win
+    loss
+    player{
+      id
+      createdAt
+      updatedAt
+      email
+      name
+      
+    }
+  }
+}
