@@ -26,6 +26,7 @@
     width: 80%;
     height: 80%;
     background-color: black;
+    padding-bottom: 3%;
     margin-left: 10%;
     margin-top: 10%;
     border: solid white;
@@ -34,7 +35,7 @@
 .auth-form input {
 
     width: 60%;
-    height: 10%;
+    height: 8%;
     background-color:gray;
     margin-left: 20%;
     margin-bottom: 0%;
@@ -56,7 +57,7 @@ h1,h2 {
 .auth-form p {
     color: white;
     text-align: center;
-    font-size: 150%;
+    font-size: 120%;
 }
 
 .auth-form hr {
@@ -70,9 +71,19 @@ h1,h2 {
 .auth-form button {
     display: block;
     width: 60%;
-    height: 10%;
+    height: 8%;
     margin-left: 20%;
     margin-top: 5%;
+}
+
+.logo42 {
+    background-image: url(./img/42logo.jpeg);
+    background-size: cover;
+    background-position: center;
+    width: 10%;
+    height: 10%;
+    margin: auto;
+   
 }
 
 @font-face {
