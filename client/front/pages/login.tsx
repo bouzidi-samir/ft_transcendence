@@ -1,33 +1,32 @@
 import type { NextPage } from 'next'
-import router, { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUserCreateMutation } from '../generated'
+import { useLoginMutation } from '../generated'
 import styles from '../styles/Home.module.css'
+import router, { useRouter } from 'next/router';
 
 
-const CUser: NextPage = () => {
+const Login: NextPage = () => {
 
   const [formState, setFormState] = useState({
     name: '',
-    email:'',
     password:''
   });
-  const [userCreate] = useUserCreateMutation({
+  const [login] = useLoginMutation({
     variables: {
-      input: {
-        name: formState.name,
-        email: formState.email,
+        
+        username: formState.name,
         password: formState.password
       }
-    }
+
   });
 
+ 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
       <form onSubmit={ e => {
         e.preventDefault();
-        userCreate();
+        login();
         router.push("/");
       }}
       >
@@ -47,34 +46,20 @@ const CUser: NextPage = () => {
               />
             </div>
             <div className="pure-control-group">
-            <label>Email  </label>
-            <input
-                value={formState.email}
-                onChange={ (e) =>
-                  setFormState({
-                    ...formState,
-                    email: e.target.value
-                  })
-                }
-                type="text"
-                placeholder="Enter an email"
-                />
-            </div>
-            <div className="pure-control-group">
               <label>Password  </label>
             <input
                 value={formState.password}
                 onChange={ (e) =>
-                  setFormState({
-                    ...formState,
-                    password: e.target.value
-                  })
-                }
+                setFormState({
+                  ...formState,
+                  password: e.target.value
+                })
+              }
               type="text"
               placeholder="Enter a password"
               />
             </div>
-        <button type="submit"> Add User</button>
+        <button type="submit"> Log in </button>
         </fieldset>
       </form>
       </main>
@@ -82,4 +67,4 @@ const CUser: NextPage = () => {
   )
 }
 
-export default CUser
+export default Login

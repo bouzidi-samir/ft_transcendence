@@ -1,0 +1,5 @@
+mutation deleteuser($userId : ID!){
+  userRemove (userId: $userId) {
+    userId
+  }
+}

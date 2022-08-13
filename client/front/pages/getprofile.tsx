@@ -1,42 +1,68 @@
-import { ID } from '@nestjs/graphql'
+import { truncate } from 'fs'
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { stringify } from 'querystring'
+import { useState } from 'react'
 import { useUserGetByidQuery } from '../generated'
 import styles from '../styles/Home.module.css'
 
 const GBI: NextPage = () => {
-  const { data, error, loading } = useUserGetByidQuery({
-         variables: { 
-          input: "6984552e-f817-4edc-a1f8-90315692721f",
-         },
+  const [formState, setFormState] = useState({
+    id: '',
+    });
+    const [variable, setVariable] = useState(false);
+
+  const { data }= useUserGetByidQuery({
+        variables: { 
+        input: formState.id,
+        }
        });
 
-  if (loading)
-  return (
-    <main className={styles.main}>
-        Loading...
-    </main>
-    );
-
-    if (error)
-    return (
-      <main className={styles.main}>
-          {error.message}
-      </main>
-      );
+  const ele = () => {
+    if (data)
+    {
+      setVariable(true)
+    }
+    else{
+      setVariable(false)
+    }
+  }
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-      <Image src={'https://images.unsplash.com/photo-1583274082351-893b3d0100d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGVsbGJveXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'} width="100px" height={"100px"}/>
-        <p>{data?.userGetById.name}</p>
-        <p>{data?.userGetById.id}</p>
-        <p>{data?.userGetById.email}</p>
-        <p>{data?.userGetById.lastScore}</p>
-        <p>{data?.userGetById.bestScore}</p>
-        <p>{data?.userGetById.games?.length}</p>
+        <form onSubmit={ e => {
+        e.preventDefault();
+      
+        }}>
+        <fieldset>
+        <div className="pure-control-group">
+        <label>User id </label>
+        <input
+        value={formState.id}
+        onChange={ (e) =>
+        setFormState({
+        ...formState,
+        id: e.target.value
+        })
+        }
+        type="text"
+        placeholder="Enter an id"
+        />
+        </div>
+        <button type="submit" onClick={ ele }> Get User</button>
+        </fieldset>
+        </form>
+
+        <div> {variable && data ? <div>        
+        <p>Avatar: {data?.userGetById.avatar}</p>
+        <p>id; {data?.userGetById.id}</p>
+        <p>Name: {data?.userGetById.name}</p>
+        <p>Email: {data?.userGetById.email}</p>
+        <p>Last score: {data?.userGetById.lastScore}</p>
+        <p>Best score: {data?.userGetById.bestScore}</p>
+        <p>Nbr of games: {data?.userGetById.games?.length}</p>  
+        </div> : <div></div>}
+        
+        </div> 
       </main>
     </div>
   )

@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useUserGetAllQuery } from '../generated'
 import styles from '../styles/Home.module.css'
 
@@ -37,13 +36,6 @@ const Home: NextPage = () => {
               // return <p key={e.id}>{e.id} ** < Image src={'e.avatar'} width="100px" height="100px" /> ** {e.name} ** {e.createdAt} ** {e.updatedAt} ** {e.email} ** {e.lastScore} ** {e.bestScore}</p>;
             })
         }
-
-        {/* <h1 className={styles.title}>
-        <Link href="/profile">One profile</Link>
-        </h1>
-        <h1 className={styles.title}>
-        <Link href="/games">Games list</Link>
-        </h1> */}
       </main>
     </div>
   )
