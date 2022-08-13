@@ -1,5 +1,6 @@
 import "./Authentification.css"
 import React from "react";
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
 export default function Authentification() {
@@ -8,8 +9,8 @@ export default function Authentification() {
         <div className="auth-field">
           <form className="auth-form">
           <h1>Master Pong</h1>
-              <input></input>
-              <input></input>
+              <input placeholder="Email"></input>
+              <input placeholder="Password"></input>
               <button className="btn btn-primary"> Login </button>
               <hr></hr>
               <p>or</p>
@@ -25,7 +26,11 @@ export default function Authentification() {
         </div>
         
         <div className="picture">
-        
+          <Link  to={'/Accueil'}>
+            <button className="btn btn-warning demo">
+              Demo
+            </button>
+          </Link>
         </div>
 
 
