@@ -1,0 +1,32 @@
+.custom-form {
+    width: 50%;
+    height: 80%;
+    background-color: white;
+    border: solid blue 1px;
+
+}
+
+.vignette {
+    width: 40%;
+    height: 40%;
+    margin-left: 30%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    border-radius: 100%;
+    background-image: url("../../img/avatar.png");
+    background-position: center;
+    background-size: cover;
+    border: solid blue 1px;
+}
+
+.custom-form input {
+    width: 40%;
+    margin-left: 30%;
+    display: block;
+}
+
+.custom-form button {
+    margin-top: 3%;
+    width: 30%;
+    margin-left: 35%;
+}
