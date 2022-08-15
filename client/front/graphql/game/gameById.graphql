@@ -8,6 +8,7 @@ query gameById($input : String!) {
     loss
     player{
       id
+      name
     }
   }
 }

@@ -6,6 +6,7 @@ export declare class UserUpdateInput {
     avatar?: string;
     lastScore: number;
     bestScore: number;
+    online: boolean;
 }
 export declare class UserUpdateOutput extends UserCreateOutput {
 }

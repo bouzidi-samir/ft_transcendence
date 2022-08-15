@@ -22,7 +22,10 @@ export class UserUpdateInput
   
     @Field(() => Int, { nullable: true })
     bestScore: number;
-  
+    
+    @Field({ nullable: true })
+    online: boolean;
+
     // @OneToMany(() => Game, game => game.user)
     // @Field(() => Game)
     // games: Game[];

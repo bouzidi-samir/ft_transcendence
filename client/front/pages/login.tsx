@@ -1,25 +1,38 @@
 import type { NextPage } from 'next'
 import { useState } from 'react';
-import { useLoginMutation } from '../generated'
+import { useLoginMutation, useUserGetByNameQuery, useUserUpdateMutation } from '../generated'
 import styles from '../styles/Home.module.css'
 import router, { useRouter } from 'next/router';
 
 
 const Login: NextPage = () => {
 
+    let set = 0;
+    var _name;
   const [formState, setFormState] = useState({
     name: '',
-    password:''
+    password:'',
   });
   const [login] = useLoginMutation({
     variables: {
         
         username: formState.name,
-        password: formState.password
+        password: formState.password,
       }
 
   });
 
+  // const { data } = useUserGetByNameQuery({variables:{ input:formState.name}});
+
+  // const [userUpdate] = useUserUpdateMutation({
+  //     variables: {
+  //         userId:  "data?.userGetByName.id",
+  //       input: {
+  //         name: formState.name,
+  //         online: true
+  //       }
+  //     }
+  //   });
  
   return (
     <div className={styles.container}>
@@ -27,6 +40,7 @@ const Login: NextPage = () => {
       <form onSubmit={ e => {
         e.preventDefault();
         login();
+        
         router.push("/");
       }}
       >
@@ -41,7 +55,7 @@ const Login: NextPage = () => {
                   name: e.target.value
                 })
               }
-              type="text"
+              type="text" required
               placeholder="Enter a name"
               />
             </div>
@@ -55,7 +69,7 @@ const Login: NextPage = () => {
                   password: e.target.value
                 })
               }
-              type="text"
+              type="text" required
               placeholder="Enter a password"
               />
             </div>

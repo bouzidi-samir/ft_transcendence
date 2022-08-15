@@ -27,6 +27,10 @@ __decorate([
     __metadata("design:type", String)
 ], UserCreateInput.prototype, "password", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", Boolean)
+], UserCreateInput.prototype, "online", void 0);
+__decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UserCreateInput.prototype, "avatar", void 0);

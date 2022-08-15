@@ -18,6 +18,10 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
         <Link href="/login">Login</Link>
         </h1>
+        <h1 className={styles.title}>
+        <Link href="/userOnline">Online</Link>
+        </h1>
+        
          <h1 className={styles.title}>
         <Link href="/getUsers">Users list</Link>
         </h1>
@@ -27,6 +31,9 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
         <Link href="/createUser">Create new User</Link>
         </h1>
+        {/* <h1 className={styles.title}>
+        <Link href="/updateUser">Update user</Link>
+        </h1> */}
         <h1 className={styles.title}>
         <Link href="/deleteUser">Delete User</Link>
         </h1>

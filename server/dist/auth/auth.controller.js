@@ -12,34 +12,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthMutationsResolver = void 0;
+exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
-const auth_service_1 = require("../auth.service");
-const auth_login_dto_1 = require("../dto/auth-login.dto");
-const local_auth_guard_1 = require("../guards/local-auth.guard");
-let AuthMutationsResolver = class AuthMutationsResolver {
+const auth_service_1 = require("./auth.service");
+const local_auth_guard_1 = require("./guards/local-auth.guard");
+let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async authLogin(req, _username, _password) {
-        req.user.online = true;
-        return this.authService.login(req.user);
+    async authLogin(req, response, _username, _password) {
+        await this.authService.login(req.user);
+        return response.send(req.user);
     }
 };
 __decorate([
     (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
-    (0, graphql_1.Mutation)(() => auth_login_dto_1.AuthLoginOutput),
+    (0, common_1.Post)('authLogin'),
     __param(0, (0, graphql_1.Context)('req')),
-    __param(1, (0, graphql_1.Args)('username')),
-    __param(2, (0, graphql_1.Args)('password')),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __param(2, (0, graphql_1.Args)('username')),
+    __param(3, (0, graphql_1.Args)('password')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, String]),
+    __metadata("design:paramtypes", [Object, Object, String, String]),
     __metadata("design:returntype", Promise)
-], AuthMutationsResolver.prototype, "authLogin", null);
-AuthMutationsResolver = __decorate([
-    (0, graphql_1.Resolver)(),
+], AuthController.prototype, "authLogin", null);
+AuthController = __decorate([
+    (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
-], AuthMutationsResolver);
-exports.AuthMutationsResolver = AuthMutationsResolver;
-//# sourceMappingURL=auth.mutations.resolver.js.map
+], AuthController);
+exports.AuthController = AuthController;
+//# sourceMappingURL=auth.controller.js.map

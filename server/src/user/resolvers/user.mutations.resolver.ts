@@ -32,4 +32,6 @@ export class UserMutationsResolver {
   async userRemove(@Args({ name: 'userId', type: () => ID}) userId: User['id'],) {
     return this.userService.userRemove(userId);
   }
+
+  
 }

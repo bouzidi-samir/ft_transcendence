@@ -1,5 +1,5 @@
-query userGetAll {
-  userGetAll {
+query userGetByName($input : String!){
+  userGetByName(name: $input){
     id
     createdAt
     updatedAt
@@ -8,14 +8,9 @@ query userGetAll {
     avatar
     lastScore
     bestScore
-    online
-    games {
+    games{
       id
-      createdAt
-      updatedAt
       score
-      win
-      loss
     }
   }
 }

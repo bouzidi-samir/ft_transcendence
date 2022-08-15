@@ -8,6 +8,7 @@ export declare class User extends BaseEntity {
     name: string;
     password: string;
     avatar?: string;
+    online: boolean;
     lastScore: number;
     bestScore: number;
     games: Game[];

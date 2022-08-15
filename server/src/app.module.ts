@@ -10,7 +10,6 @@ import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
-import config from './orm';
 
 @Module({
   imports: [
@@ -40,7 +39,7 @@ import config from './orm';
         username: configService.get('DATABASE_USER'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_DB'),
-        entities: [join(__dirname, '**', '*.entity.{ts,js}')], // les entites de base de donnees se trouvent ds les .entity, typorm y regarde pour synchroniser la db
+        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         synchronize: true,
       }),
     }),

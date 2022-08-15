@@ -37,6 +37,7 @@ let UserService = class UserService {
         user.password = input.password;
         user.lastScore = input.lastScore;
         user.bestScore = input.bestScore;
+        user.online = input.online;
         await user.save();
         return { user };
     }

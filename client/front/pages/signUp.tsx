@@ -18,7 +18,8 @@ const Signup: NextPage = () => {
           input: {
             name: formState.name,
             email: formState.email,
-            password: formState.password
+            password: formState.password,
+            online: true
           }
         }
       });
@@ -26,7 +27,7 @@ const Signup: NextPage = () => {
       const [login] = useLoginMutation({
         variables: {
             username: formState.name,
-            password: formState.password
+            password: formState.password,
           }
       });
     
@@ -54,7 +55,7 @@ const Signup: NextPage = () => {
                       name: e.target.value
                     })
                   }
-                  type="text"
+                  type="text" required
                   placeholder="Enter a name"
                   />
                 </div>
@@ -68,7 +69,7 @@ const Signup: NextPage = () => {
                         email: e.target.value
                       })
                     }
-                    type="text"
+                    type="text" required
                     placeholder="Enter an email"
                     />
                 </div>
@@ -82,7 +83,7 @@ const Signup: NextPage = () => {
                         password: e.target.value
                       })
                     }
-                  type="text"
+                  type="text" required
                   placeholder="Enter a password"
                   />
                 </div>

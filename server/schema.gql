@@ -9,6 +9,7 @@ type User {
   email: String!
   name: String!
   avatar: String
+  online: Boolean!
   lastScore: Int
   bestScore: Int
   games: [Game!]
@@ -58,6 +59,7 @@ type Query {
   sayHello: String!
   userGetById(id: String!): User!
   userGetByEmail(email: String!): User!
+  userGetByName(name: String!): User!
   userGetAll: [User!]!
   gameList: [Game!]!
   gameById(id: String!): Game!
@@ -77,6 +79,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  online: Boolean!
   avatar: String
   lastScore: Int
   bestScore: Int
@@ -89,6 +92,7 @@ input UserUpdateInput {
   avatar: String
   lastScore: Int
   bestScore: Int
+  online: Boolean
 }
 
 input GameCreateInput {

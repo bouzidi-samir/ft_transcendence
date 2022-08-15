@@ -9,8 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthLoginOutput = void 0;
+exports.AuthLoginOutput = exports.AuthLoginInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
+let AuthLoginInput = class AuthLoginInput {
+};
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], AuthLoginInput.prototype, "username", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], AuthLoginInput.prototype, "password", void 0);
+AuthLoginInput = __decorate([
+    (0, graphql_1.InputType)()
+], AuthLoginInput);
+exports.AuthLoginInput = AuthLoginInput;
 let AuthLoginOutput = class AuthLoginOutput {
 };
 __decorate([

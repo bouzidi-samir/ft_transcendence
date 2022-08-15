@@ -50,6 +50,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => Boolean),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Boolean)
+], User.prototype, "online", void 0);
+__decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)

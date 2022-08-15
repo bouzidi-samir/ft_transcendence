@@ -1,6 +1,6 @@
 import { Injectable, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { JWTPayload } from 'src/auth/auth.service';
+// import { JWTPayload } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Game } from 'src/game/entities/game.entity';
 import { Repository } from 'typeorm';
@@ -33,6 +33,7 @@ export class UserService {
     user.password = input.password;
     user.lastScore = input.lastScore;
     user.bestScore = input.bestScore;
+    user.online = input.online;
     await user.save();
     return { user };
   }

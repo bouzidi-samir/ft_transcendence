@@ -32,6 +32,10 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   avatar?: string;
 
+  @Field(() => Boolean)
+  @Column({ nullable: true })
+  online: boolean;
+
   @Field(() => Int, { nullable: true })
   @Column( { nullable: true })
   lastScore: number;

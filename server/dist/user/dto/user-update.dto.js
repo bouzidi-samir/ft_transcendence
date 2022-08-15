@@ -38,6 +38,10 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], UserUpdateInput.prototype, "bestScore", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", Boolean)
+], UserUpdateInput.prototype, "online", void 0);
 UserUpdateInput = __decorate([
     (0, graphql_1.InputType)()
 ], UserUpdateInput);

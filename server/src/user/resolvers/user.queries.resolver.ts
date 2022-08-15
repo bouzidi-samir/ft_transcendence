@@ -22,9 +22,14 @@ export class UserQueriesResolver {
     return this.userService.userGetByEmail(email);
   }
 
+  @Query( ()=> User)
+  async userGetByName(@Args('name') name: string) {
+    return this.userService.userGetByName(name);
+  }
+
   // @UseGuards(JwtAuthGuard)
   // @Query(() => [User])
-  // async userGetAll( @CurrentUser() user: JWTPayload, ) {
+  // async userGetAll( @CurrentUser() user: JWTPayload, ) { //current user accessible grace a guards
   //   return this.userService.userGetAll(user);
   // }
 

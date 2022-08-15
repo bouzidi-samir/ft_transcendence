@@ -26,6 +26,9 @@ let UserQueriesResolver = class UserQueriesResolver {
     async userGetByEmail(email) {
         return this.userService.userGetByEmail(email);
     }
+    async userGetByName(name) {
+        return this.userService.userGetByName(name);
+    }
     async userGetAll() {
         return this.userService.userGetAll();
     }
@@ -44,6 +47,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserQueriesResolver.prototype, "userGetByEmail", null);
+__decorate([
+    (0, graphql_1.Query)(() => user_entity_1.User),
+    __param(0, (0, graphql_1.Args)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserQueriesResolver.prototype, "userGetByName", null);
 __decorate([
     (0, graphql_1.Query)(() => [user_entity_1.User]),
     __metadata("design:type", Function),

@@ -57,9 +57,10 @@ const GameById: NextPage = () => {
         <p>Created at:  {data?.gameById.createdAt}</p>
         <p>Updated at:  {data?.gameById.updatedAt}</p>
         <p>Score:  {data?.gameById.score}</p>
-        <p>Win:  {data?.gameById.win}</p>
-        <p>Loss:  {data?.gameById.loss}</p>
+        <p>Win:  {data?.gameById.win.toString()}</p>
+        <p>Loss:  {data?.gameById.loss.toString()}</p>
         <p>Player id:  {data?.gameById.player?.id}</p>
+        <p>Player name:  {data?.gameById.player?.name}</p>
         {/* </div> : <div>lala</div>} */}
         
       </main>

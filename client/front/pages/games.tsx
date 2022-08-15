@@ -27,7 +27,7 @@ const Games: NextPage = () => {
         {!data
           ? null
           : data.gameList.map((e) => {
-              return <p key={e.id}> ** {e.id} ** {e.createdAt} ** {e.updatedAt} ** {e.score} ** {e.win} ** {e.loss} PLAYER DETAILS == {e.player?.id} ** {e.player?.name}</p>;
+              return <p key={e.id}> ** {e.id} ** {e.createdAt} ** {e.updatedAt} ** {e.score} ** {e.win.toString()} ** {e.loss.toString()} PLAYER DETAILS == {e.player?.id} ** {e.player?.name}</p>;
             })
         }
         </main>

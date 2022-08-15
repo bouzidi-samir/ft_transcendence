@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
 const user_module_1 = require("../user/user.module");
+const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const auth_mutations_resolver_1 = require("./resolvers/auth.mutations.resolver");
 const jwt_strategy_1 = require("./strategies/jwt.strategy");
@@ -33,6 +34,7 @@ AuthModule = __decorate([
                 }),
             }),
         ],
+        controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService, auth_mutations_resolver_1.AuthMutationsResolver, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
     })
 ], AuthModule);

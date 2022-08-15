@@ -15,6 +15,9 @@ export class UserCreateInput {
   @Field(() => String)
   password: string;
 
+  @Field()
+  online: boolean;
+
   @Field(() => String, { nullable: true })
   avatar?: string;
 

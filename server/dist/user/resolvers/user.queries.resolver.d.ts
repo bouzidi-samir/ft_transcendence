@@ -5,5 +5,6 @@ export declare class UserQueriesResolver {
     constructor(userService: UserService);
     userGetById(id: string): Promise<User>;
     userGetByEmail(email: string): Promise<User>;
+    userGetByName(name: string): Promise<User>;
     userGetAll(): Promise<User[]>;
 }

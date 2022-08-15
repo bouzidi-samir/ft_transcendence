@@ -1,26 +1,31 @@
+import { Int } from '@nestjs/graphql';
 import type { NextPage } from 'next'
 import router, { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUserCreateMutation } from '../generated'
+import { useUserUpdateMutation } from '../generated'
 import styles from '../styles/Home.module.css'
 
 
-const CUser: NextPage = () => {
+const UpdateUser: NextPage = () => {
 
   const [formState, setFormState] = useState({
+    ID:'',
+    avatar:'',
     name: '',
     email:'',
-    password:'',
-    online: false
+    lastScore:Int,
+    bestScore:Int,
+    online:Boolean
+
   });
-  const [userCreate] = useUserCreateMutation({
+  const [userUpdate] = useUserUpdateMutation({
     variables: {
+        userId: formState.ID,
       input: {
+        avatar: formState.avatar,
         name: formState.name,
         email: formState.email,
-        password: formState.password,
-        online: false
-      
+        online: true
       }
     }
   });
@@ -30,11 +35,25 @@ const CUser: NextPage = () => {
       <main className={styles.main}>
       <form onSubmit={ e => {
         e.preventDefault();
-        userCreate();
+        userUpdate();
         router.push("/");
       }}
       >
         <fieldset>
+        <div className="pure-control-group">
+            <label>Avatar  </label>
+              <input
+                value={formState.avatar}
+                onChange={ (e) =>
+                setFormState({
+                  ...formState,
+                  avatar: e.target.value
+                })
+              }
+              type="text"
+            //   placeholder="Enter a name"
+              />
+            </div>
             <div className="pure-control-group">
             <label>Name  </label>
               <input
@@ -45,8 +64,8 @@ const CUser: NextPage = () => {
                   name: e.target.value
                 })
               }
-              type="text" required
-              placeholder="Enter a name"
+              type="text"
+            //   placeholder="Enter a name"
               />
             </div>
             <div className="pure-control-group">
@@ -59,25 +78,11 @@ const CUser: NextPage = () => {
                     email: e.target.value
                   })
                 }
-                type="text" required
-                placeholder="Enter an email"
+                type="text"
+                // placeholder="Enter an email"
                 />
             </div>
-            <div className="pure-control-group">
-              <label>Password  </label>
-            <input
-                value={formState.password}
-                onChange={ (e) =>
-                  setFormState({
-                    ...formState,
-                    password: e.target.value
-                  })
-                }
-              type="text" required
-              placeholder="Enter a password"
-              />
-            </div>
-        <button type="submit"> Add User</button>
+        <button type="submit"> Update </button>
         </fieldset>
       </form>
       </main>
@@ -85,4 +90,4 @@ const CUser: NextPage = () => {
   )
 }
 
-export default CUser
+export default UpdateUser
