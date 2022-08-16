@@ -23,7 +23,6 @@ let AuthMutationsResolver = class AuthMutationsResolver {
         this.authService = authService;
     }
     async authLogin(req, _username, _password) {
-        req.user.online = true;
         return this.authService.login(req.user);
     }
 };

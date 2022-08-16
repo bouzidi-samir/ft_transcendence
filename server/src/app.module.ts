@@ -10,6 +10,7 @@ import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { GameModule } from './game/game.module';
     AuthModule,
     UserModule,
     GameModule,
+    MessagesModule,
   ],
   // controllers: [AppController],
   providers: [AppService, AppResolver],

@@ -18,6 +18,7 @@ const app_resolver_1 = require("./app.resolver");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
 const game_module_1 = require("./game/game.module");
+const messages_module_1 = require("./messages/messages.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -51,6 +52,7 @@ AppModule = __decorate([
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             game_module_1.GameModule,
+            messages_module_1.MessagesModule,
         ],
         providers: [app_service_1.AppService, app_resolver_1.AppResolver],
     })
