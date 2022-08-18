@@ -4,6 +4,11 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
 export default function Authentification() {
+
+  function handleFourtyTwo() {
+    //query pour l'auhtentification avec 42.
+  }
+
   return (
     <div className="auth-content">
         <div className="auth-field">
@@ -16,11 +21,10 @@ export default function Authentification() {
               <p>or</p>
               <button className="btn btn-secondary"> Register </button>
               <p>Sign with</p>
-              
-                <a href="https://api.intra.42.fr/oauth/authorize?client_id=6e52620f16bfa38095e26eae2231051c3fff5161197180b12228a4a2e04bbdb1&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code"> 
-                
-                <div className="logo42"></div>
-                </a>
+              <div className="sign">
+                <button onClick={handleFourtyTwo} className="logo42">
+                </button>
+              </div>
               
           </form>
         </div>
@@ -32,7 +36,6 @@ export default function Authentification() {
             </button>
           </Link>
         </div>
-
 
     </div>
   )
