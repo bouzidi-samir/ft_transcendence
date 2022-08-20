@@ -1,0 +1,16 @@
+query userGetByName($input : String!){
+  userGetByName(name: $input){
+    id
+    createdAt
+    updatedAt
+    email
+    name
+    avatar
+    lastScore
+    bestScore
+    games{
+      id
+      score
+    }
+  }
+}

@@ -1,0 +1,14 @@
+query gameById($input : String!) {
+  gameById(id: $input){
+    id
+    createdAt
+    updatedAt
+    score
+    win
+    loss
+    player{
+      id
+      name
+    }
+  }
+}

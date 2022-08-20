@@ -1,0 +1,21 @@
+query userGetAll {
+  userGetAll {
+    id
+    createdAt
+    updatedAt
+    email
+    name
+    avatar
+    lastScore
+    bestScore
+    online
+    games {
+      id
+      createdAt
+      updatedAt
+      score
+      win
+      loss
+    }
+  }
+}
