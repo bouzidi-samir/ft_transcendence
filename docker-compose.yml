@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  back-end:
+    container_name: back
+    build: ./back-end
+    image: back_image
+    restart: on-failure
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    networks:
+      - mynetwork
+
+  front-end:
+    container_name: front
+    build: ./front-end
+    image: front_image
+    # restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+  
