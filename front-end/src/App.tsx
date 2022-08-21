@@ -1,6 +1,6 @@
 import './App.css';
-import Authentification from './Containers/Authentification/Authentification';
-import Accueil from "./Containers/Accueil/Accueil"
+import Authentification from './Containers/Authentification';
+import Accueil from "./Containers/Accueil"
 import { BrowserRouter as Router} from 'react-router-dom';
 import { Route, Routes, useParams } from 'react-router';
 

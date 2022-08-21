@@ -1,5 +1,5 @@
 import React from 'react'
-import "./Custom.css"
+import "../styles/Components/Custom.css"
 
 export default function Custom() {
   return (

@@ -1,6 +1,6 @@
-import "./Accueil.css"
+import "../styles/Containers/Accueil.css"
 import React, {useState} from "react";
-import Custom from "./Components/Custom/Custom";
+import Custom from "../Components/Custom";
 
 export default function Accueil() {
 

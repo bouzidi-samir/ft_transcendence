@@ -1,5 +1,5 @@
-import "./Authentification.css"
-import AuthForm from "./Components/AuthForm";
+import "../styles/Containers/Authentification.css"
+import AuthForm from "../Components/AuthForm"
 import React from "react";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
