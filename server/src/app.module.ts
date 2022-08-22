@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
 import { MessagesModule } from './messages/messages.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -50,7 +51,7 @@ import { MessagesModule } from './messages/messages.module';
     GameModule,
     MessagesModule,
   ],
-  // controllers: [AppController],
+  controllers: [AppController],
   providers: [AppService, AppResolver],
 })
 export class AppModule {}
