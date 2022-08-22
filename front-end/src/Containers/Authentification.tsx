@@ -1,5 +1,5 @@
 import "../styles/Containers/Authentification.css"
-import AuthForm from "../Components/AuthForm"
+import LoginForm from "../Components/LoginForm"
 import React from "react";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
@@ -13,7 +13,7 @@ export default function Authentification() {
   return (
     <div className="auth-content">
         <div className="auth-field">
-          <AuthForm/>
+          <LoginForm/>
         </div>        
         <div className="picture">
           <Link  to={'/Accueil'}>

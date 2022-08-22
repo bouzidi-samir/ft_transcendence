@@ -1,12 +1,17 @@
-import "../styles/Components/AuthForm.css"
+import "../styles/Components/LoginForm.css"
 import React from "react";
+import { getSession, signIn, useSession } from 'next-auth/react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
 export default function AuthForm() {
 
-    function handleFourtyTwo() {
-        //query pour l'auhtentification avec 42.
+   // const { data: session } = useSession();
+
+    async function handleFourtyTwo() {
+        const response =  await signIn('42-school', {
+        callbackUrl: "http://localhost:3000",
+      })
       }
 
   return (
