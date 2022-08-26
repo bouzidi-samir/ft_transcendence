@@ -1,0 +1,5 @@
+.home-content {
+    height: 100vh;
+    background: rgb(0,1,36);
+    background: radial-gradient(circle, rgba(0,1,36,1) 0%, rgba(10,10,56,1) 91%);
+}

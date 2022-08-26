@@ -1,0 +1,69 @@
+.Navbar {
+    height: 30px;
+    text-decoration: none;
+    margin-bottom: 0%;
+    margin-top: 0%;
+    padding-bottom: 5%;
+    padding-top: 1%;
+    padding-right: 2%;
+    background: rgb(161,163,233);
+background: linear-gradient(82deg, rgba(161,163,233,1) 0%, rgba(10,10,56,1) 100%);
+}
+
+.nav_link {
+    text-decoration: none;
+    margin-right: 80px;
+    font-size: 120%;
+    color: black
+}
+
+.profil-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../styles/img/icones/profil.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.chat-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../styles/img/icones/messenger.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.game-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../styles/img/icones/controle-du-jeu-2.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.logout-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../styles/img/icones/logout.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.navbar-brand {
+    color: yellow;
+}
+
+@media only screen and (max-width: 991px) {
+    .Navbar {
+        height: 60px;
+    }
+
+    .nav_link {
+        margin: auto;
+    }
+    
+}

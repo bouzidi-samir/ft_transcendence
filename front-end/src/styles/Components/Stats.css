@@ -1,0 +1,17 @@
+.stats-content {
+    width: 40%;
+    height: 80%;
+    background: rgb(80,81,135);
+    background: radial-gradient(circle, rgba(80,81,135,1) 94%, rgba(59,61,136,1) 100%, rgba(10,10,56,1) 100%);
+    margin-right: 2.5%;
+}
+
+.stats-content h2 {
+    color: white;
+}
+
+.stats-content p {
+    color: white;
+    text-align: center;
+    font-size: 120%;
+}

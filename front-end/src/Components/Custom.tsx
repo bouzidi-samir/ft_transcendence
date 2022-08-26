@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "../styles/Components/Custom.css"
 
 export default function Custom() {
@@ -9,7 +10,9 @@ export default function Custom() {
         <form >
             <h2>Choisie ton pseudo</h2>
             <input></input>
-            <button className="btn btn-primary">Valider</button>
+            <Link to={"/Home"}>
+              <button className="btn btn-primary">Valider</button>
+            </Link>
         </form>
     </div>
   )

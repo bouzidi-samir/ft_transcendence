@@ -2,6 +2,7 @@ import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/LoginForm"
 import React from "react";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { getSession, signIn, useSession, SessionProvider } from 'next-auth/react'
 
 
 export default function Authentification() {
@@ -13,7 +14,9 @@ export default function Authentification() {
   return (
     <div className="auth-content">
         <div className="auth-field">
-          <LoginForm/>
+     
+            <LoginForm/>
+         
         </div>        
         <div className="picture">
           <Link  to={'/Accueil'}>
