@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
-import {getUserAccessToken }  from './utils';
+import {getUserAccessToken, getUserInformations }  from './utils';
 import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
-import User from 'src/users/user.entity';
+import User from '../users/user.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -30,21 +30,16 @@ export class AuthController {
 			'6fa238a221040adadeaa4a5934e546414387154964dbbabe3189a0b7db211496',
 			code, body.redirect_uri
 		);
-	//	let infos = await getUserInformations(api.access_token);
+		let infos = await getUserInformations(api.access_token);
 		//let user = await this.service.getUserBy42Username(infos.login);
-	//	let user = new Object;
+		let fortyTwoUser: User = new User();
+		fortyTwoUser.username = infos.login;
+		fortyTwoUser.avatar_url = infos.image_url; 
+		//user = await this.service.addUser(req);
 
-	//	if (!user)
-	//	{
-	//		let req: User = new User();
-	//		req.username = infos.login;
-	//		req["42_username"] = infos.login;
-			//user = await this.service.addUser(req);
-	//	}
 		return JSON.stringify({
-			user: "sam"
-			//username: req.username,
-			//"42_username": req["42_username"],
+			username: fortyTwoUser.username,
+			image: fortyTwoUser.avatar_url ,			
 		});
 	}
 }
