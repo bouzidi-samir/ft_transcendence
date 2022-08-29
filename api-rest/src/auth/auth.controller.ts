@@ -25,12 +25,12 @@ export class AuthController {
 		@Param("code") code: string,
 		@Body() body: any
 	): Promise<string> {
-		let api = await getUserAccessToken(
+		let api = await this.service.getUserAccessToken(
 			'7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670', 
 			'6fa238a221040adadeaa4a5934e546414387154964dbbabe3189a0b7db211496',
 			code, body.redirect_uri
 		);
-		let infos = await getUserInformations(api.access_token);
+		let infos = await this.service.getUserInformations(api.access_token);
 		//let user = await this.service.getUserBy42Username(infos.login);
 		let fortyTwoUser: User = new User();
 		fortyTwoUser.username = infos.login;
