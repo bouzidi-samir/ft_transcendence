@@ -6,9 +6,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export default NextAuth({
   providers: [ 
   
-  GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  FortyTwoProvider({
+      clientId: process.env.FORTY_TWO_ID,
+      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET,
     })
   ],
 });

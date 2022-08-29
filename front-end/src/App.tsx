@@ -7,9 +7,9 @@ import { SessionProvider } from 'next-auth/react'
 import { getSession, signIn, useSession } from 'next-auth/react'
 
 function App() {
-  var session : any;
+
   return (
-    <SessionProvider session={session}>
+  
     <Router>
       <Routes>
       <Route path="/" element={<Authentification/>} />
@@ -17,7 +17,7 @@ function App() {
       <Route path="/Home" element={<Home/>} /> 
       </Routes>
     </Router>
-    </SessionProvider>
+  
   );
 }
 

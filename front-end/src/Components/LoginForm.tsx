@@ -5,20 +5,22 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
 export default function AuthForm() {
-
-   const {data: session} = useSession();
-   
-    async function handleFourtyTwo() {
-      signIn('github', {callbackUrl: 'http://localhost:3000/Home'});
-      console.log(session);
-        //const response =  await signIn('42-school', {
-        //callbackUrl: "http://localhost:3000",
-      //})
-    
-       // )
-      
-      }  
-      
+  
+   const handleFourtyTwo = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		
+  e.preventDefault()
+  const {hostname, port} = document.location;
+   let request = await fetch('http://localhost:4000/auth/authorize', {
+			method: "POST",
+			headers: {
+		//		'Authorization': `Bearer ${session}`,
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
+		});
+    let response = await request.json();
+		document.location.href = response.url;
+  }
   return (
     <>
           <form className="auth-form">

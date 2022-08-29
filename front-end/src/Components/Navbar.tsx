@@ -24,7 +24,8 @@ function Navbar() {
                         
                         <li>   
                         <Link className="nav_link" to="/">
-                            <div className='profil-icon'></div>
+                            <div 
+                            className='profil-icon'></div>
                         </Link>
                         </li> 
                         <li>   
