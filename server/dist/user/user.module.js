@@ -20,7 +20,7 @@ UserModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, game_entity_1.Game])],
         providers: [user_service_1.UserService, user_mutations_resolver_1.UserMutationsResolver, user_queries_resolver_1.UserQueriesResolver],
-        exports: [user_service_1.UserService],
+        exports: [user_service_1.UserService, user_mutations_resolver_1.UserMutationsResolver, user_queries_resolver_1.UserQueriesResolver],
     })
 ], UserModule);
 exports.UserModule = UserModule;

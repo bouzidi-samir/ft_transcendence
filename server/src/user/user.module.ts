@@ -9,6 +9,6 @@ import { UserService } from './user.service';
 @Module({
   imports: [TypeOrmModule.forFeature([User, Game])],
   providers: [UserService, UserMutationsResolver, UserQueriesResolver],
-  exports: [UserService],
+  exports: [UserService, UserMutationsResolver, UserQueriesResolver], 
 })
 export class UserModule {}

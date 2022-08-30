@@ -17,7 +17,6 @@ export class AuthMutationsResolver {
     // @Args('email') _email: string,
     @Args('password') _password: string,
   ) {
-      
     return this.authService.login(req.user);
   }
 

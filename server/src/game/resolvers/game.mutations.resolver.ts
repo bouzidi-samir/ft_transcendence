@@ -13,7 +13,7 @@ export class GameMutationsResolver {
 
     @UseGuards(JwtAuthGuard)
     @Mutation(() => GameCreateOutput)
-    async gameCreate( 
+    async gameCreate(  
         @CurrentUser() user: JWTPayload, 
         @Args('input') input: GameCreateInput,){
     return this.gameService.gameCreate( user, input);

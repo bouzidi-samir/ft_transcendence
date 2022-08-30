@@ -3,13 +3,21 @@ import { AppService } from './app.service';
 import axios from 'axios';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from 'src/user/entities/user.entity';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthMutationsResolver } from 'src/auth/resolvers/auth.mutations.resolver';
 import { AuthLoginOutput } from 'src/auth/dto/auth-login.dto';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { UserCreateInput, UserCreateOutput } from 'src/user/dto/user-create.dto';
+import { argsToArgsConfig } from 'graphql/type/definition';
+import { UserMutationsResolver } from 'src/user/resolvers/user.mutations.resolver';
+import { UserQueriesResolver } from 'src/user/resolvers/user.queries.resolver';
 
 @Controller("")
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService,
+    private readonly mutationsResolver: UserMutationsResolver,
+    private readonly authMutations : AuthMutationsResolver,
+    private readonly UserQueries : UserQueriesResolver,
+  ) {}
 
   @Get("callback")
   async getCode(@Query('code') code: number,)
@@ -43,8 +51,26 @@ export class AppController {
       },
     );
 
-    console.log(result['data']['login']);
-    return ({"token": "hello"});
+    let args = {
+      name : result['data']['login'],
+      email : result['data']['email'],
+      password : "test",
+      online : false,
+      avatar: result['data']['image_url'],
+      lastScore : 0,
+      bestScore: 0,
+    }
+    let usr;
+    try {
+      usr = await this.mutationsResolver.userCreate(args);
+    }
+    catch (e){
+      usr = await this.UserQueries.userGetByName(args['name']);
+    }
+    let req = {user : usr,}
+    let payLoad = await this.authMutations.authLogin(req, usr['name'], usr['password']);
+    console.log(payLoad);
+    return ({payLoad});
    }
     catch (e){console.log(e)};
   }
