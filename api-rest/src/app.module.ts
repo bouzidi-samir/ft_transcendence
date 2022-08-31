@@ -8,20 +8,22 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal:true }),
-    /*TypeOrmModule.forRoot({
+  //  ConfigModule.forRoot({ isGlobal:true }),
+    TypeOrmModule.forRoot({
       type: 'postgres',
 			host: 'localhost',
 			port: 5400,
-			username: 'user',
-			password: 'password',
-			database: 'pong',
-			autoLoadEntities: true,
-    }),*/
+			//username: 'user',
+			//password: 'postgres',
+			database: 'master-pong',
+      autoLoadEntities: true,
+			entities: ["dist/entities/*.entity.js"],
+      synchronize: true,
+    }),
     UsersModule,
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService], 
 })
 export class AppModule {}

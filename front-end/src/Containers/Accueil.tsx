@@ -1,17 +1,33 @@
 import "../styles/Containers/Accueil.css"
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect,} from "react";
 import Custom from "../Components/Custom";
+import UserContext from "../Context/userProfilContext";
+import { useParams } from "react-router";
 
-export default function Accueil() {
 
+export default function Accueil(props: any) {
+    const {user, setUser} = useContext(UserContext);
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
+    const username = useParams();
+    console.log(username.username);
 
+    useEffect(() => {
+
+        const request = fetch(`http://localhost:4000/user/:sbouzidi`)
+            .then(response => response.json()
+            .then((response) => {
+                console.log(response);
+            }))
+            request.catch(e => {console.error(e)})
+            return () => {}
+        }, [])
+      
+      
     function redirection() {
         if (newMenber == true)
             setCustom(true);
     }
-
     return (
         <>
         <div className="custom-content">

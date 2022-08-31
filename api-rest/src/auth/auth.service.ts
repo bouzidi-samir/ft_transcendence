@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import fetch from 'node-fetch';
+import User from '../users/user.entity'
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
+
+    @Inject(UsersService)
+	public readonly users: UsersService;
 
     getUserAccessToken = async (uid: string, secret: string, code: string, redirect_uri: string): Promise<any> => {
         let request = await fetch("https://api.intra.42.fr/oauth/token", {
@@ -30,6 +35,17 @@ export class AuthService {
         return await request.json();
     }
     
+    async getUserByUsername(username: string): Promise<User>
+	{
+		return await this.users.userRepository.findOne({
+			where: {"username": username}
+		})
+	}
+
+    async addUser(user: User)
+	{
+		return await this.users.userRepository.save(user);
+	}
 
     getUniqueID(): string { return process.env.API_UID; }
 	

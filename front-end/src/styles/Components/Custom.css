@@ -1,8 +1,9 @@
 .custom-form {
     width: 50%;
     height: 80%;
-    background-color: white;
-    border: solid blue 1px;
+    background: rgb(0,1,36);
+    background: radial-gradient(circle, rgba(0,1,36,1) 0%, rgba(10,10,56,1) 91%);
+    border: solid white 1px;
 
 }
 
@@ -13,7 +14,7 @@
     margin-top: 2%;
     margin-bottom: 5%;
     border-radius: 100%;
-    background-image: url("../img/avatar.png");
+    background-image: url("https://cdn.intra.42.fr/users/sbouzidi.jpg");
     background-position: center;
     background-size: cover;
     border: solid blue 1px;
@@ -29,4 +30,8 @@
     margin-top: 3%;
     width: 30%;
     margin-left: 35%;
+}
+
+.custom-form h2 {
+    color: white;
 }

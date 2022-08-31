@@ -12,7 +12,7 @@ export default class User {
     username: string;
 
 	@Column({
-		type: 'int',
+		type: 'varchar',
 		default: 0
 	})
 	avatar_url: string;
@@ -28,4 +28,11 @@ export default class User {
 		nullable: true
 	})
 	"42_token": string;
+
+	@CreateDateColumn()
+	created_at: Date;
+
+	@UpdateDateColumn()
+	updated_at: Date;
+
 }
