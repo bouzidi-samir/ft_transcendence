@@ -6,30 +6,33 @@ import { useParams } from "react-router";
 
 
 export default function Accueil(props: any) {
-    const {user, setUser} = useContext(UserContext);
+   
+    const [user, setUser] = useState(null); 
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
     const username = useParams();
-    console.log(username.username);
-
+    const [userDatas, setUserDatas] = useState("");
+  
     useEffect(() => {
-
-        const request = fetch(`http://localhost:4000/user/:sbouzidi`)
+        
+        const request = fetch(`http://localhost:4000/users/search/${username.username}`)
             .then(response => response.json()
             .then((response) => {
-                console.log(response);
+                setUserDatas(response);
             }))
             request.catch(e => {console.error(e)})
             return () => {}
         }, [])
-      
-      
     function redirection() {
         if (newMenber == true)
+        {
             setCustom(true);
+        }
     }
+ 
     return (
         <>
+        <UserContext.Provider value={userDatas}> 
         <div className="custom-content">
            <div className="pong" data-aos="fade-up" data-aos-duration="2000"></div>
             {custom == false ?
@@ -46,6 +49,7 @@ export default function Accueil(props: any) {
             : <Custom/>}
             <div className="pong" data-aos="fade-down" data-aos-duration="2000"></div>
         </div>
+        </UserContext.Provider>
         </>
     )
 }

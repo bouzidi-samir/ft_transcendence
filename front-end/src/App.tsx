@@ -9,17 +9,14 @@ import { getSession, signIn, useSession } from 'next-auth/react'
 import UserContext from './Context/userProfilContext';
 
 function App() {
-  const [user, setUser] = useState(null); 
-  const value = useMemo(() => ({user, setUser}), [user, setUser]);
+  const [user, setUser] = useState({}); 
 
   return (  
     <Router>
       <Routes>
-      <Route path="/" element={<Authentification/>} />
-  
+        <Route path="/" element={<Authentification/>} />
         <Route path="/Accueil/:username" element={<Accueil/>} /> 
         <Route path="/Home" element={<Home/>} /> 
-    
       </Routes>
     </Router>
   

@@ -8,7 +8,7 @@ import UserContext from "../Context/userProfilContext";
 
 export default function Home() {
 
-  const {user, setUser} = useContext(UserContext);
+  const user = useContext(UserContext);
   const [params] = useSearchParams();
   const [loading, setLoading] = useState(false);
 

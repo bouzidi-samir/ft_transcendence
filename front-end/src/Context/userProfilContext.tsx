@@ -5,7 +5,7 @@ const UserContext = createContext<any>({
     username: "",
     avatar_url: "",
     status: "",
-    setuserProfilContext: (info: any) => { },    
+   // setUserContext: (info: any) => { },    
 })
 
 const UserContextProvider = (children: any) => {
@@ -13,11 +13,9 @@ const UserContextProvider = (children: any) => {
         id: "",
         username: "",
         avatar_url: "",
-        status: "",
-       
+        status: "",    
     }
     const [userProfil, setuserProfil] = useState(userProfilState);  
-    
 }
 
 export default UserContext;
