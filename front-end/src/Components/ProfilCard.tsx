@@ -4,10 +4,10 @@ import '../styles/Components/ProfilCard.css'
 import UserContext from '../Context/userProfilContext';
 
 export default function ProfilCard() {
-    const user = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext); 
     return (
         <div className='profilCard-content'>
-            <div className='vignette-card'></div>
+            <img src={user.avatar_url} className='vignette-card'></img>
             <h2>Nom</h2>
             <p>Niveau:</p>
         </div>

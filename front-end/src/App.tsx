@@ -13,11 +13,13 @@ function App() {
 
   return (  
     <Router>
+      <UserContext.Provider value={{user, setUser}}> 
       <Routes>
         <Route path="/" element={<Authentification/>} />
         <Route path="/Accueil/:username" element={<Accueil/>} /> 
         <Route path="/Home" element={<Home/>} /> 
       </Routes>
+      </UserContext.Provider> 
     </Router>
   
   );

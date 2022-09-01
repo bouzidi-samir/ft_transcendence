@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 
 export default function Accueil(props: any) {
    
-    const [user, setUser] = useState(null); 
+    const {user, setUser} = useContext(UserContext); 
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
     const username = useParams();
@@ -18,7 +18,7 @@ export default function Accueil(props: any) {
         const request = fetch(`http://localhost:4000/users/search/${username.username}`)
             .then(response => response.json()
             .then((response) => {
-                setUserDatas(response);
+                setUser(response);
             }))
             request.catch(e => {console.error(e)})
             return () => {}
@@ -32,7 +32,6 @@ export default function Accueil(props: any) {
  
     return (
         <>
-        <UserContext.Provider value={userDatas}> 
         <div className="custom-content">
            <div className="pong" data-aos="fade-up" data-aos-duration="2000"></div>
             {custom == false ?
@@ -49,7 +48,6 @@ export default function Accueil(props: any) {
             : <Custom/>}
             <div className="pong" data-aos="fade-down" data-aos-duration="2000"></div>
         </div>
-        </UserContext.Provider>
         </>
     )
 }
