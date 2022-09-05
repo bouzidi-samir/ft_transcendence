@@ -6,11 +6,11 @@ import { useState, useMemo } from 'react';
 import { Route, Routes, useParams } from 'react-router';
 import { SessionProvider } from 'next-auth/react'
 import { getSession, signIn, useSession } from 'next-auth/react'
-import UserContext from './Context/userProfilContext';
+import UserContext from './Context/userContext';
 
 function App() {
   const [user, setUser] = useState({}); 
-
+  
   return (  
     <Router>
       <UserContext.Provider value={{user, setUser}}> 

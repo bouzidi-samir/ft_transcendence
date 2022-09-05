@@ -1,8 +1,9 @@
 import "../styles/Containers/Accueil.css"
 import React, {useState, useContext, useEffect,} from "react";
 import Custom from "../Components/Custom";
-import UserContext from "../Context/userProfilContext";
-import { useParams } from "react-router";
+import UserContext from "../Context/userContext";
+import { useParams, Navigate, useNavigate } from "react-router";
+import Home from "./Home";
 
 
 export default function Accueil(props: any) {
@@ -12,6 +13,7 @@ export default function Accueil(props: any) {
     const [newMenber, setNewMenber] = useState(true);
     const username = useParams();
     const [userDatas, setUserDatas] = useState("");
+    let navigation = useNavigate();
   
     useEffect(() => {
         
@@ -23,19 +25,19 @@ export default function Accueil(props: any) {
             request.catch(e => {console.error(e)})
             return () => {}
         }, [])
+    
     function redirection() {
-        if (newMenber == true)
-        {
-            setCustom(true);
-        }
-    }
+        //if (user.resgistred = "true")
+          //  navigation("/Home");
+        //else
+            setCustom(true)
+    }   
  
     return (
         <>
         <div className="custom-content">
            <div className="pong" data-aos="fade-up" data-aos-duration="2000"></div>
-            {custom == false ?
-                
+           {custom == false ?
                 <div className="custom-title">
                     <h1  data-aos="fade-right" data-aos-duration="2200">Master Pong</h1>
                     <button  onClick={redirection}
@@ -44,7 +46,6 @@ export default function Accueil(props: any) {
                         Commencer
                     </button>
                 </div>
-            
             : <Custom/>}
             <div className="pong" data-aos="fade-down" data-aos-duration="2000"></div>
         </div>
