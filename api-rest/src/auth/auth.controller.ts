@@ -38,7 +38,7 @@ export class AuthController {
 		user.username = fortyTwoUser.username;
 		user.avatar_url = fortyTwoUser.avatar_url; 
 		let check = this.service.getUserByUsername(user.username);
-		if (!check)
+		//if (!check)
 			await this.service.addUser(user);
 		return JSON.stringify({
 			username: user.username,

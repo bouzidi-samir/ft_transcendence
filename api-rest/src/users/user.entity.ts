@@ -13,6 +13,18 @@ export default class User {
 
 	@Column({
 		type: 'varchar',
+		default: 'offline',
+	})
+    nickname: string;
+
+	@Column({
+		type: 'varchar',
+		default: 'false',
+	})
+    registred: string;
+
+	@Column({
+		type: 'varchar',
 		default: 0
 	})
 	avatar_url: string;

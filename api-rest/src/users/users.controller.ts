@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
@@ -30,4 +30,21 @@ export class UsersController {
 	): Promise<User> {
 		return await this.service.getUserByUsername(username);
 	}
+
+	@Post("/register/:id")
+	async setRegister(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() body: any
+	): Promise<any> {
+		return await this.service.setRegister(id)
+	}
+
+	@Post('/:id/nickname')
+	async updateNickname(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() body: any
+	): Promise<any> {
+		return await this.service.updateNickname(id, body.nickname)
+	}
+
 }

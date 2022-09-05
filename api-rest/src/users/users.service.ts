@@ -18,8 +18,7 @@ export class UsersService {
     {
         
         const user = await this.userRepository.findOne({where: {id: id}});
-        return user;
-      
+        return user;      
     }
     
     async getUserByUsername(username: string): Promise<User>
@@ -34,5 +33,20 @@ export class UsersService {
 		return addedUser;
 	}
 
+    async setRegister(id: number): Promise<any> {
+        return await this.userRepository.query(
+            `UPDATE "user" SET "registred" = $1, updated_at = NOW() WHERE id = $2;`,
+            ["true", id]
+        );
+    }
+
+    async updateNickname(id: number, nickname: string): Promise<any> {
+		if (!nickname)
+			return {error: "Veuillez saisir un pseudo"}
+		return await this.userRepository.query(
+			`UPDATE "user" SET "nickname" = $1, updated_at = NOW() WHERE id = $2;`,
+			[nickname, id]
+		);
+	}
 
 }

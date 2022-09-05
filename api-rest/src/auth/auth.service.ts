@@ -37,9 +37,8 @@ export class AuthService {
     
     async getUserByUsername(username: string): Promise<User>
 	{
-		return await this.users.userRepository.findOne({
-			where: {"username": username}
-		})
+		const user = await this.users.userRepository.findOne({where: {username: username}});
+        return user; 
 	}
 
     async addUser(user: User)
