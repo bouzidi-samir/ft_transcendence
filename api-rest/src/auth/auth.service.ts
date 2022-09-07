@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import fetch from 'node-fetch';
+import { EntityListenerMetadata } from 'typeorm/metadata/EntityListenerMetadata';
 import User from '../users/user.entity'
 import { UsersService } from '../users/users.service';
 
@@ -37,13 +38,19 @@ export class AuthService {
     
     async getUserByUsername(username: string): Promise<User>
 	{
-		const user = await this.users.userRepository.findOne({where: {username: username}});
-        return user; 
+	    const user = await this.users.userRepository.findOneOrFail({where: {username: username}});
+        return user;
 	}
 
     async addUser(user: User)
 	{
-		return await this.users.userRepository.save(user);
+        try {
+            await this.getUserByUsername(user.username);
+            return ;
+        }
+        catch {
+            return await this.users.userRepository.save(user);
+        }
 	}
 
     getUniqueID(): string { return process.env.API_UID; }

@@ -2,6 +2,8 @@ import { AuthService } from './auth.service';
 import {getUserAccessToken, getUserInformations }  from './utils';
 import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
 import User from '../users/user.entity';
+import { PassThrough } from 'stream';
+import { URLSearchParams } from 'url';
 
 @Controller('auth')
 export class AuthController {
@@ -36,12 +38,8 @@ export class AuthController {
 		fortyTwoUser.avatar_url = infos.image_url; 
 		let user = new User;
 		user.username = fortyTwoUser.username;
-		user.avatar_url = fortyTwoUser.avatar_url; 
-		let check = this.service.getUserByUsername(user.username);
-		if ((await check).registred == "false") {
-			this.service.addUser(user);
-			console.log("User added");
-		}
+		user.avatar_url = fortyTwoUser.avatar_url;
+		this.service.addUser(user);
 		return JSON.stringify({
 			username: user.username,
 			avatar_url: user.avatar_url ,			
