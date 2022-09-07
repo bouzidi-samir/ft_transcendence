@@ -11,21 +11,8 @@ export default function Accueil(props: any) {
     const {user, setUser} = useContext(UserContext); 
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
-    const username = useParams();
-    const [userDatas, setUserDatas] = useState("");
     let navigation = useNavigate();
-  
-    useEffect(() => {
-        
-        const request = fetch(`http://localhost:4000/users/search/${username.username}`)
-            .then(response => response.json()
-            .then((response) => {
-                setUser(response);
-            }))
-            request.catch(e => {console.error(e)})
-            return () => {}
-        }, [])
-    
+
     function redirection() {
         //if (user.resgistred = "true")
           //  navigation("/Home");

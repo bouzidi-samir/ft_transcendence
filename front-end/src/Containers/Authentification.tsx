@@ -1,16 +1,19 @@
 import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/LoginForm"
 import React from "react";
-import { useEffect, useState} from 'react'
+import UserContext from "../Context/userContext";
+import { useEffect, useState, useContext} from 'react'
 import {BrowserRouter as Router, Route, Link, useSearchParams, Navigate} from 'react-router-dom';
 
 
 export default function Authentification() {
   
   const [params] = useSearchParams();
+  const {user, setUser} = useContext(UserContext); 
   const [loading, setLoading] = useState(false);
   const [resgistred, setRegistred] = useState(false);
   const [username, setUsername] = useState(""); 
+  
 
   useEffect(() => {
     const code = params.get("code")
@@ -29,6 +32,7 @@ export default function Authentification() {
 			})
 			request.then(response => response.json()
       .then((response) => {
+        setUser(response);
         setUsername(response.username);
         setRegistred(true);
 			}))
@@ -37,7 +41,8 @@ export default function Authentification() {
 		return () => {}
   }, [])
   if (resgistred){
-    return  <Navigate to={"/Accueil/" + username}/>;
+    console.log(user);
+    return  <Navigate to={"/Accueil"}/>;
   }
   return (
     <div className="auth-content">

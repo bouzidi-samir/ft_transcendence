@@ -11,15 +11,4 @@ const UserContext = createContext<any>({
      //},    
 })
 
-const UserContextProvider = (children: any) => {
-    const userProfilState = {
-        id: "",
-        username: "",
-        nickname: "",
-        avatar_url: "",
-        status: "",    
-    }
-    const [userProfil, setuserProfil] = useState(userProfilState);  
-}
-
 export default UserContext;

@@ -1,8 +1,10 @@
 import '../styles/Components/Users.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from '../Context/userContext';
 
 export default function Users() {
 
+    const {user, setUser} = useContext(UserContext); 
     const [userlist, setUserlist] : any = useState([{}]);
 
     useEffect(() => {
@@ -18,10 +20,10 @@ export default function Users() {
                 <p>Hors Ligne</p>
             <div className='online'>   
                 {
-                    userlist.map((user : any)=> (
-                        
-                            <img key={user.id} className='user-avatar' src={user.avatar_url}></img>
-                        
+                    userlist.map((u : any)=> (
+                        u.username != user.username ?
+                            <img key={u.id} className='user-avatar' src={u.avatar_url}></img>
+                        : null
                     )
                     )
                 }

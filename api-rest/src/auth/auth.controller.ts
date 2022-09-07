@@ -38,11 +38,13 @@ export class AuthController {
 		user.username = fortyTwoUser.username;
 		user.avatar_url = fortyTwoUser.avatar_url; 
 		let check = this.service.getUserByUsername(user.username);
-		//if (!check)
-			await this.service.addUser(user);
+		if ((await check).registred == "false") {
+			this.service.addUser(user);
+			console.log("User added");
+		}
 		return JSON.stringify({
 			username: user.username,
-			image: user.avatar_url ,			
+			avatar_url: user.avatar_url ,			
 		});
 	}
 }
