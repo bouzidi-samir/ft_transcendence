@@ -39,10 +39,15 @@ export class AuthController {
 		let user = new User;
 		user.username = fortyTwoUser.username;
 		user.avatar_url = fortyTwoUser.avatar_url;
+		user.registred = "false";
 		this.service.addUser(user);
 		return JSON.stringify({
+			id: "",
 			username: user.username,
-			avatar_url: user.avatar_url ,			
+			nickname: "undefined",
+			registred: user.registred,
+			avatar_url: user.avatar_url,
+			status: "online",			
 		});
 	}
 }

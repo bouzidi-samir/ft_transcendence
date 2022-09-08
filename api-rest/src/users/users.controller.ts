@@ -31,12 +31,12 @@ export class UsersController {
 		return await this.service.getUserByUsername(username);
 	}
 
-	@Post("/register/:id")
+	@Post("/register/:username")
 	async setRegister(
-		@Param('id', ParseIntPipe) id: number,
+		@Param('username') username: string,
 		@Body() body: any
 	): Promise<any> {
-		return await this.service.setRegister(id)
+		return await this.service.setRegister(username)
 	}
 
 	@Post('/:id/nickname')
