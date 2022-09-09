@@ -45,8 +45,7 @@ export class AuthService {
     async addUser(user: User)
 	{
         try {
-            await this.getUserByUsername(user.username);
-            return ;
+            return await this.getUserByUsername(user.username);
         }
         catch {
             return await this.users.userRepository.save(user);
