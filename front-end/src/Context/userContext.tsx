@@ -4,7 +4,7 @@ const UserContext = createContext<any>({
     id: "",
     username: "",
     nickname: "",
-    registred: "false",
+    registred:"",
     avatar_url: "",
     status: "",
     //setUserContext: (propertie:any, info: any) => {  

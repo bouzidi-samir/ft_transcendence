@@ -15,7 +15,6 @@ export default function Custom(props: any) {
     let userUpdate = {...user};
     userUpdate.nickname = nickname;
     setUser(userUpdate);
-    console.log(user.nickname);
     let response = await fetch(
 			`http://localhost:4000/users/register/${user.id}`,
 			{

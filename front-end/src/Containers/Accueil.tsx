@@ -14,10 +14,16 @@ export default function Accueil(props: any) {
     let navigation = useNavigate();
 
     function redirection() {
-        //if (user.resgistred = "true")
-          //  navigation("/Home");
-        //else
-            setCustom(true)
+        console.log(user);
+        console.log(user.registred);
+
+        if (user.registred === 'false')
+        {
+            setCustom(true);
+            //navigation("/Profil");
+        }
+        else if (user.registred === 'true')
+            navigation("/Home");
     }   
  
     return (
@@ -33,7 +39,7 @@ export default function Accueil(props: any) {
                         Commencer
                     </button>
                 </div>
-            : <Custom/>}
+            : <Custom setCustom={setCustom}/>}
             <div className="pong" data-aos="fade-down" data-aos-duration="2000"></div>
         </div>
         </>

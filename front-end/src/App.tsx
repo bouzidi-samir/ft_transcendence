@@ -1,6 +1,7 @@
 import Authentification from './Containers/Authentification';
 import Accueil from "./Containers/Accueil"
 import Home from './Containers/Home';
+import Profil from './Containers/Profil';
 import { BrowserRouter as Router} from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { Route, Routes, useParams } from 'react-router';
@@ -17,7 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Authentification/>} />
         <Route path="/Accueil" element={<Accueil/>} /> 
-        <Route path="/Home" element={<Home/>} /> 
+        <Route path="/Home" element={<Home/>}/> 
+        <Route path="/Profil" element={<Profil/>}/>
       </Routes>
       </UserContext.Provider> 
     </Router>

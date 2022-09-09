@@ -32,6 +32,7 @@ export default function Authentification() {
 			})
 			request.then(response => response.json()
       .then((response) => {
+        console.log(response);
         setUser(response);
         setUsername(response.username);
         setRegistred(true);
