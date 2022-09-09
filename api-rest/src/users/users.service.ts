@@ -33,10 +33,10 @@ export class UsersService {
 		return addedUser;
 	}
 
-    async setRegister(username: string): Promise<any> {
+    async setRegister(id: number): Promise<any> {
         return await this.userRepository.query(
-            `UPDATE "user" SET "registred" = $1, updated_at = NOW() WHERE username = $2;`,
-            ["true", username]
+            `UPDATE "user" SET "registred" = $1, updated_at = NOW() WHERE id = $2;`,
+            ["true", id]
         );
     }
 

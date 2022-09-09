@@ -33,21 +33,17 @@ export class AuthController {
 			code, body.redirect_uri
 		);
 		let infos = await this.service.getUserInformations(api.access_token);
-		let fortyTwoUser: User = new User();
-		fortyTwoUser.username = infos.login;
-		fortyTwoUser.avatar_url = infos.image_url; 
 		let user = new User;
-		user.username = fortyTwoUser.username;
-		user.avatar_url = fortyTwoUser.avatar_url;
-		user.registred = "false";
-		this.service.addUser(user);
+		user.username = infos.login;
+		user.avatar_url = infos.image_url; 
+		let finaluser = await this.service.addUser(user);
 		return JSON.stringify({
-			id: "",
-			username: user.username,
-			nickname: "undefined",
-			registred: user.registred,
-			avatar_url: user.avatar_url,
-			status: "online",			
+			id: finaluser.id,
+			username: finaluser.username,
+			nickname: finaluser.nickname,
+			registred: finaluser.registred,
+			avatar_url: finaluser.avatar_url,
+			status: finaluser.status,			
 		});
 	}
 }

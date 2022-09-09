@@ -48,7 +48,8 @@ export class AuthService {
             return await this.getUserByUsername(user.username);
         }
         catch {
-            return await this.users.userRepository.save(user);
+            await this.users.userRepository.save(user);
+            return await this.getUserByUsername(user.username);
         }
 	}
 

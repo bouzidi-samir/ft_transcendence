@@ -15,7 +15,7 @@ import { AuthModule } from './auth/auth.module';
 			port: 5400,
 			//username: 'user',
 			//password: 'postgres',
-			database: 'postgres',
+			database: 'master-pong',
       autoLoadEntities: true,
 			entities: ["dist/entities/*.entity.js"],
       synchronize: true,
