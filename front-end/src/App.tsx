@@ -8,6 +8,7 @@ import { Route, Routes, useParams } from 'react-router';
 import { SessionProvider } from 'next-auth/react'
 import { getSession, signIn, useSession } from 'next-auth/react'
 import UserContext from './Context/userContext';
+import Particle from './Components/Particle';
 
 function App() {
   const [user, setUser] = useState({}); 

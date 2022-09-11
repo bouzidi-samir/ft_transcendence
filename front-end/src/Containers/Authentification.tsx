@@ -2,7 +2,8 @@ import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/LoginForm"
 import React from "react";
 import UserContext from "../Context/userContext";
-import { useEffect, useState, useContext} from 'react'
+import { useEffect, useState, useContext} from 'react';
+import Particle from "../Components/Particle";
 import {BrowserRouter as Router, Route, Link, useSearchParams, Navigate} from 'react-router-dom';
 
 
@@ -47,9 +48,8 @@ export default function Authentification() {
   }
   return (
     <div className="auth-content">
-      
        <div className="auth-field">
-     
+       
             <LoginForm/>
          
         </div>        
@@ -59,6 +59,7 @@ export default function Authentification() {
               Demo
             </button>
           </Link>
+      
         </div>
 
     </div>

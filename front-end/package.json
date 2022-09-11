@@ -11,9 +11,11 @@
     "next-auth": "^4.10.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-particles": "^2.2.4",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "tsparticles": "^2.2.4",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
