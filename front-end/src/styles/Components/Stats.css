@@ -1,9 +1,9 @@
 .stats-content {
     width: 40%;
-    height: 80%;
+    height: 85%;
     display: flex;
     flex-direction: column;
-    margin-right: 2.5%;
+    margin-right: 1%;
     border-radius: 2%;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .win-lost {
-    width: 48%;
+    width: 49%;
     height: 100%;
     background: rgb(80,81,135);
     background: radial-gradient(circle, rgba(80,81,135,1) 94%, rgba(59,61,136,1) 100%, rgba(10,10,56,1) 100%);
@@ -53,24 +53,30 @@
 
 .circle {
     width: 30%;
+    max-width: 180px;
+    max-height: 150px;
     height: 60%;
     margin-left: 35%;
-    margin-top: 2%;
+    margin-top: 6%;
     margin-bottom: 2%;
-    padding-top: 10%;
-    border: solid gold 2px;
+    padding-top: 8%;
+    border: solid gold 4px;
     border-radius: 90%;
+    opacity: 80%;
 }
 
 .win-lost .circle {
     width: 50%;
+    max-width: 150px;
+    max-height: 140px;
     height: 50%;
     margin-left: 25%;
-    margin-top: 10%;
+    margin-top: 14%;
     margin-bottom: 4%;
-    padding-top: 10%;
-    border: solid gold 2px;
+    padding-top: 14%;
+    border: solid gold 4px;
     border-radius: 90%;
+    opacity: 80%;
 }
 
 .circle p {
