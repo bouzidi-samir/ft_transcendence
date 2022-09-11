@@ -44,6 +44,7 @@ export class UsersController {
 		@Param('id', ParseIntPipe) id: number,
 		@Body() body: any
 	): Promise<any> {
+		await this.service.setRegister(id)
 		return await this.service.updateNickname(id, body.nickname)
 	}
 
