@@ -49,4 +49,7 @@ export class UsersService {
 		);
 	}
 
+    async updateAvatar(id: number, image: string): Promise<any> {
+		
+	}
 }
