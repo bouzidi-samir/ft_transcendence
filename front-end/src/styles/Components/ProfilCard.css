@@ -10,7 +10,7 @@
 }
 
 .profilCard-content h2 {
-    color: white;
+    color: goldenrod;
 }
 
 .profilCard-content p {
@@ -29,5 +29,19 @@
     background-position: center;
     background-size: cover;
     border: solid white 2px;
-    border-radius: 10%;
+    border-radius: 60%;
+}
+
+.set-avatar {
+    position: relative;
+    width: 15%;
+    height: 10%;
+    top: -7%;
+    left: 10%;
+    background-image: url(../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid white 2px;
+    border-radius: 80%;
+    margin-left: 40%;
 }

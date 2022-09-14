@@ -23,7 +23,13 @@ function Navbar() {
                     <ul className="navbar-nav ms-auto text-center"> 
                         
                         <li>   
-                        <Link className="nav_link" to="/">
+                        <Link className="nav_link" to="/Home">
+                            <div 
+                            className='home-icon'></div>
+                        </Link>
+                        </li> 
+                        <li>   
+                        <Link className="nav_link" to="/ProfilSettings">
                             <div 
                             className='profil-icon'></div>
                         </Link>

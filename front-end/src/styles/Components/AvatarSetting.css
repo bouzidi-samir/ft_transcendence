@@ -1,0 +1,21 @@
+.setavatar-content{
+    position: absolute;
+    width: 30%;
+    height: 15%;
+    margin-left: 35%;
+    margin-top: 20%;
+    padding-top: 1%;
+    border-radius: 2%;
+    background-color: white;
+}
+
+.setavatar-content button {
+    width: 20%;
+    margin-left: 40%;
+}
+
+.setavatar-content input{
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 3%;
+} 
