@@ -17,6 +17,15 @@ export default class User {
 	})
     nickname: string;
 
+	@Column({ nullable: true })
+	public twoFactorAuthenticationSecret?: string;
+
+	@Column({
+		type: 'varchar',
+		unique: true,
+	})
+	email: string;
+
 	@Column({
 		type: 'varchar',
 		default: 'false',
@@ -40,6 +49,12 @@ export default class User {
 		nullable: true
 	})
 	"42_token": string;
+
+	@Column({
+		type : 'text',
+		nullable: true
+	})
+	JWT_token: string;
 
 	@CreateDateColumn()
 	created_at: Date;

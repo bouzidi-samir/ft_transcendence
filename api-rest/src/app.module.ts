@@ -1,27 +1,31 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { join } from 'path';
 
 @Module({
   imports: [
-  //  ConfigModule.forRoot({ isGlobal:true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-			host: 'localhost',
-			port: 5400,
-			//username: 'user',
-			//password: 'postgres',
-			database: 'postgres',
-      autoLoadEntities: true,
-			entities: ["dist/entities/*.entity.js"],
-      synchronize: true,
+   ConfigModule.forRoot({ isGlobal:true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: parseInt(configService.get('DATABASE_PORT')),
+        username: configService.get('DATABASE_USER'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_DB'),
+        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+        synchronize: true,
     }),
+  }),
     UsersModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService], 

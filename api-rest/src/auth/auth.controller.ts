@@ -1,9 +1,12 @@
-import { AuthService } from './auth.service';
 import {getUserAccessToken, getUserInformations }  from './utils';
-import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards, Request } from '@nestjs/common';
 import User from '../users/user.entity';
 import { PassThrough } from 'stream';
 import { URLSearchParams } from 'url';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './jwt-authguard';
+import { LocalAuthGuard } from './local-auth.guard';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
@@ -26,7 +29,7 @@ export class AuthController {
 	async login(
 		@Param("code") code: string,
 		@Body() body: any
-	): Promise<string> {
+	): Promise<any> {
 		let api = await this.service.getUserAccessToken(
 			'7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670', 
 			'6fa238a221040adadeaa4a5934e546414387154964dbbabe3189a0b7db211496',
@@ -40,14 +43,25 @@ export class AuthController {
 		user.username = fortyTwoUser.username;
 		user.avatar_url = fortyTwoUser.avatar_url;
 		user.registred = "false";
-		this.service.addUser(user);
+		user.email = infos.email;
+		user = await this.service.addUser(user);
+		let token = await this.service.createToken(user);
+		//console.log(token);
+		//return (token);
 		return JSON.stringify({
 			id: "",
 			username: user.username,
 			nickname: "undefined",
 			registred: user.registred,
 			avatar_url: user.avatar_url,
-			status: "online",			
+			status: "online",
+			JWT_token: token,	
 		});
 	}
+
+	@UseGuards(JwtAuthGuard)
+  	@Get('profile')
+  	getProfile(@Request() req) {
+    return req.user;
+  }
 }
