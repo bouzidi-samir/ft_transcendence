@@ -3,7 +3,7 @@ import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
-import { getBase64FromBuffer } from 'src/auth/utils';
+//import { getBase64FromBuffer } from 'src/auth/utils';
 import User from './user.entity';
 
 import { UsersService } from './users.service'; 
@@ -56,7 +56,7 @@ export class UsersController {
 		@Param('id', ParseIntPipe) id: number,
 		@UploadedFile() file: any
 	): Promise<any> {
-		let image = await getBase64FromBuffer(file.buffer);
+		let image; //= await getBase64FromBuffer(file.buffer);
 		await this.service.updateAvatar(id, image);
 	}
 }
