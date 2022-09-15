@@ -6,8 +6,8 @@
     padding-bottom: 5%;
     padding-top: 1%;
     padding-right: 2%;
-    background: rgb(161,163,233);
-    background: linear-gradient(82deg, rgba(161,163,233,1) 0%, rgba(10,10,56,1) 100%);
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
    
 }
 

@@ -1,8 +1,8 @@
 .users-content {
     width: 25%;
     height: 85%;
-    background: rgb(80,81,135);
-    background: radial-gradient(circle, rgba(80,81,135,1) 94%, rgba(59,61,136,1) 100%, rgba(10,10,56,1) 100%);
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     border: solid 1px white;
     margin-right: 1%;
     border-radius: 2%;

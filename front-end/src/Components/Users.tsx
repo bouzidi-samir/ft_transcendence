@@ -13,8 +13,7 @@ export default function Users() {
         .then (response => response.json())
         .then (data => setUserlist(data))
     }, []) 
-    console.log(userlist[0].username);
-    
+  
     return (
         <div className='users-content'>
                 <p>Hors Ligne</p>
