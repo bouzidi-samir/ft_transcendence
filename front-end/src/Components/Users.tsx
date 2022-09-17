@@ -1,10 +1,12 @@
 import '../styles/Components/Users.css'
 import { useState, useEffect, useContext } from 'react';
-import UserContext from '../Context/userContext';
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 
 export default function Users() {
 
-    const {user, setUser} = useContext(UserContext); 
+    const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
     const [userlist, setUserlist] : any = useState([{}]);
 
     useEffect(() => {
@@ -20,7 +22,7 @@ export default function Users() {
             <div className='online'>   
                 {
                     userlist.map((u : any)=> (
-                        u.username != user.username ?
+                        u.username != User.username ?
                             <img key={u.id} className='user-avatar' src={u.avatar_url}></img>
                         : null
                     )

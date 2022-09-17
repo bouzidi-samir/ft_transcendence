@@ -5,10 +5,13 @@ import UserContext from "../Context/userContext";
 import { useEffect, useState, useContext} from 'react';
 import Particle from "../Components/Particle";
 import {BrowserRouter as Router, Route, Link, useSearchParams, Navigate} from 'react-router-dom';
-
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 
 export default function Authentification() {
   
+  const User = useSelector((state: any) => state.User);
+  const dispatch = useDispatch();
   const [params] = useSearchParams();
   const {user, setUser} = useContext(UserContext); 
   const [loading, setLoading] = useState(false);
@@ -33,8 +36,12 @@ export default function Authentification() {
 			})
 			request.then(response => response.json()
       .then((response) => {
-        console.log(response);
+        
         setUser(response);
+        dispatch({
+          type: "User/setUser",
+          payload: response,
+        });
         setUsername(response.username);
         setRegistred(true);
 			}))
@@ -43,7 +50,6 @@ export default function Authentification() {
 		return () => {}
   }, [])
   if (resgistred){
-    console.log(user);
     return  <Navigate to={"/Accueil"}/>;
   }
   return (

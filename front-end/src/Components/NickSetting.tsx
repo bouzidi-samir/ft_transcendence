@@ -1,11 +1,9 @@
 import "../styles/Components/NickSetting.css"
 import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import UserContext from "../Context/userContext";
 
 export default function AvatarSetting(props : any) {
 
-    const {user, setUser} = useContext(UserContext);
     const [avatar, setAvatar] = useState<File>();
 
     const handleChange = async (e: any) => setAvatar(e.target.files[0])

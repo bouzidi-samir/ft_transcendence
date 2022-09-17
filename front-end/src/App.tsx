@@ -15,8 +15,8 @@ function App() {
   const [user, setUser] = useState({}); 
   
   return (  
-    <Router>
       <UserContext.Provider value={{user, setUser}}> 
+    <Router>
       <Routes>
         <Route path="/" element={<Authentification/>} />
         <Route path="/Accueil" element={<Accueil/>} /> 
@@ -24,8 +24,8 @@ function App() {
         <Route path="/Profil" element={<Profil/>}/>
         <Route path="/ProfilSettings" element={<ProfilSettings/>}/>
       </Routes>
-      </UserContext.Provider> 
     </Router>
+      </UserContext.Provider> 
   
   );
 }

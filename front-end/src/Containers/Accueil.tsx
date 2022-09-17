@@ -14,9 +14,6 @@ export default function Accueil(props: any) {
     let navigation = useNavigate();
 
     function redirection() {
-        console.log(user);
-        console.log(user.registred);
-
         if (user.registred === 'false')
         {
             setCustom(true);
