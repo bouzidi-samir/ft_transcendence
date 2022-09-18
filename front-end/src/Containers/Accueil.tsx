@@ -1,25 +1,25 @@
 import "../styles/Containers/Accueil.css"
 import React, {useState, useContext, useEffect,} from "react";
 import Custom from "../Components/Custom";
-import UserContext from "../Context/userContext";
 import { useParams, Navigate, useNavigate } from "react-router";
 import Home from "./Home";
-
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 
 export default function Accueil(props: any) {
-   
-    const {user, setUser} = useContext(UserContext); 
+    const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
     let navigation = useNavigate();
 
     function redirection() {
-        if (user.registred === 'false')
+        if (User.registred === 'false')
         {
             setCustom(true);
             //navigation("/Profil");
         }
-        else if (user.registred === 'true')
+        else if (User.registred === 'true')
             navigation("/Home");
     }   
  

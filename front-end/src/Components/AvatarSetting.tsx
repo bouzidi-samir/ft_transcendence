@@ -1,11 +1,12 @@
 import "../styles/Components/AvatarSetting.css"
 import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import UserContext from "../Context/userContext";
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 
 export default function AvatarSetting(props : any) {
-
-    const {user, setUser} = useContext(UserContext);
+    const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
     const [avatar, setAvatar] = useState<File>();
 
     const handleChange = async (e: any) => setAvatar(e.target.files[0])
@@ -19,7 +20,7 @@ export default function AvatarSetting(props : any) {
         formData.append("file", avatar, avatar.name);
         props.setAvatarform(false);
         let reponse = await fetch(
-			`http://localhost:4000/users/${user.id}/avatar`,
+			`http://localhost:4000/users/${User.id}/avatar`,
 			{
 				method: "POST",
 				headers: {},

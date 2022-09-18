@@ -41,6 +41,14 @@ export class UsersController {
 		return await this.service.setRegister(id)
 	}
 
+	@Post("/register/:id")
+	async setStatus(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() body: any
+	): Promise<any> {
+		return await this.service.setRegister(id)
+	}
+
 	@Post('/:id/nickname')
 	async updateNickname(
 		@Param('id', ParseIntPipe) id: number,
@@ -56,7 +64,8 @@ export class UsersController {
 		@Param('id', ParseIntPipe) id: number,
 		@UploadedFile() file: any
 	): Promise<any> {
-		let image; //= await getBase64FromBuffer(file.buffer);
-		await this.service.updateAvatar(id, image);
+		//let image; //= await getBase64FromBuffer(file.buffer);
+		console.log(file);
+		//await this.service.updateAvatar(id, image);
 	}
 }

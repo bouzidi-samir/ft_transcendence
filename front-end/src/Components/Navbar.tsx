@@ -35,7 +35,7 @@ function Navbar() {
                         </Link>
                         </li> 
                         <li>   
-                        <Link className="nav_link" to="/">
+                        <Link className="nav_link" to="/Chat">
                             <div className='chat-icon'></div>
                         </Link>
                         </li>  

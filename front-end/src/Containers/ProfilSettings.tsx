@@ -6,9 +6,9 @@ import FormSetting from "../Components/FormSetting";
 export default function ProfilSettings() {
     return (
         <>
-            <Navbar></Navbar>
+        <Navbar></Navbar>
         <div className="profilset-content">
-            <FormSetting></FormSetting>
+            <FormSetting data-aos="fade-up" data-aos-duration="1000"></FormSetting>
         </div>
         </>
     );

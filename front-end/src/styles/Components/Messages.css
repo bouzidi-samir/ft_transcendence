@@ -1,0 +1,41 @@
+.messages-content {
+    background-color:white;
+    border: solid white 1px;
+    margin-top: 1%;
+    margin-right: 1%;
+     width: 50%;
+     height: 99%;
+    opacity: 90%;
+ }
+ 
+ .conversation {
+     height: 72%;
+     width: 100%;
+ 
+ }
+
+ .room-title {
+ background: rgb(2,0,36);
+ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+  height: 8%;
+}
+
+ .send-zone {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+     height: 20%;
+     padding-top: 4%;
+ }
+ 
+ 
+ .messages-content input {
+     width: 70%;
+     margin-left: 10%;
+ }
+ 
+ .messages-content button {
+     height: 25%;
+     padding: 0%;
+     width: 12%;
+     display: inline;
+ }

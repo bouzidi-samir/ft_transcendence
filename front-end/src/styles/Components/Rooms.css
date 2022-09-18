@@ -1,0 +1,14 @@
+.rooms-content {
+    margin-top: 1%;
+    margin-right: 1%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    width: 25%;
+    height: 99%;
+    border: solid white 1px;
+}
+
+.rooms-content button {
+    width: 15%;
+    margin-left: 42%;
+}

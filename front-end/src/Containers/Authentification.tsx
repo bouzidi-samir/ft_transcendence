@@ -1,7 +1,6 @@
 import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/LoginForm"
 import React from "react";
-import UserContext from "../Context/userContext";
 import { useEffect, useState, useContext} from 'react';
 import Particle from "../Components/Particle";
 import {BrowserRouter as Router, Route, Link, useSearchParams, Navigate} from 'react-router-dom';
@@ -13,7 +12,6 @@ export default function Authentification() {
   const User = useSelector((state: any) => state.User);
   const dispatch = useDispatch();
   const [params] = useSearchParams();
-  const {user, setUser} = useContext(UserContext); 
   const [loading, setLoading] = useState(false);
   const [resgistred, setRegistred] = useState(false);
   const [username, setUsername] = useState(""); 
@@ -36,8 +34,6 @@ export default function Authentification() {
 			})
 			request.then(response => response.json()
       .then((response) => {
-        
-        setUser(response);
         dispatch({
           type: "User/setUser",
           payload: response,
