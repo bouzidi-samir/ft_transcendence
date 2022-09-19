@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
 import {getUserAccessToken, getUserInformations }  from './utils';
 import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
-import User from '../users/user.entity';
+import User from '../users/entities/user.entity';
 import { PassThrough } from 'stream';
 import { URLSearchParams } from 'url';
 

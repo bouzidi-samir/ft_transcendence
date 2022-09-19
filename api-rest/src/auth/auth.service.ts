@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { EntityListenerMetadata } from 'typeorm/metadata/EntityListenerMetadata';
-import User from '../users/user.entity'
+import User from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service';
 
 @Injectable()
