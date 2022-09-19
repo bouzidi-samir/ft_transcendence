@@ -25,6 +25,9 @@ const UserSlice = createSlice({
             state.registred = action.payload.registred;
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
+        },
+        setAvatar : (state, action) => {
+            state.avatar_url = action.payload;
         }
         },   
     }

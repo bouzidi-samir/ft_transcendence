@@ -20,7 +20,7 @@ export default function AvatarSetting(props : any) {
         formData.append("file", avatar, avatar.name);
         props.setAvatarform(false);
         let reponse = await fetch(
-			`http://localhost:4000/users/${User.id}/avatar`,
+			`http://localhost:4000/users/${User.id}/upload`,
 			{
 				method: "POST",
 				headers: {},

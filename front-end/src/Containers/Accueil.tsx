@@ -17,7 +17,6 @@ export default function Accueil(props: any) {
         if (User.registred === 'false')
         {
             setCustom(true);
-            //navigation("/Profil");
         }
         else if (User.registred === 'true')
             navigation("/Home");

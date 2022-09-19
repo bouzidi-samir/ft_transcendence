@@ -4,6 +4,8 @@ import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 //import { getBase64FromBuffer } from 'src/auth/utils';
 import User from './entities/user.entity';
 
@@ -59,25 +61,30 @@ export class UsersController {
 		return await this.service.updateNickname(id, body.nickname)
 	}
 
-	@Post('/:id/avatar')
-	@UseInterceptors(FileInterceptor('file'))
-	async updateAvatar(
-		@Param('id', ParseIntPipe) id: number,
-		@UploadedFile() file: any
-	): Promise<any> {
-		//let image; //= await getBase64FromBuffer(file.buffer);
-		console.log(file);
-		await this.service.updateAvatar(id, file);
-	}
+	@Post("/:id/upload")
+    @UseInterceptors(FileInterceptor("file", {
+        storage: diskStorage({
+            destination: "./upload", filename: (req, file, callback) => {
+                let fileName = (Math.random() + 1).toString(36).substring(7);
+                callback(null, fileName + extname(file.originalname))
+            }
+        })
+    }))
+    async uploadFile(
+	@Param('id', ParseIntPipe) id: number,
+	@UploadedFile() file: any, 
+	@Body() params: any) 
+	{	
+		let url = "http://localhost:4000/users/" + file.path;
+		return this.service.updateAvatar(id, url)
+    } 
 
-	@Get('/:id/getavatar')
-	@Header('Content-Type', 'image/jpeg')
-	async getAvatar(
-		@Param('id', ParseIntPipe) id: number,
-		@Res() res: any
-	): Promise<any> {
-		const [response] = await this.service.getAvatar(id);
-		let image = response.avatar_url;
-		console.log(image);
-	}
+	@Get("upload/:filename")
+    async getFile(@Param("filename") filename: string, @Res() res: any) {
+        res.sendFile(filename, { root: './upload' });
+    }
 }
+
+
+
+
