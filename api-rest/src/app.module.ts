@@ -6,19 +6,20 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { join } from 'path';
 
 @Module({
   imports: [
-  //  ConfigModule.forRoot({ isGlobal:true }),
+    ConfigModule.forRoot({ isGlobal:true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
 			host: 'localhost',
-			port: 5400,
+			port: 5432,
 			//username: 'user',
 			//password: 'postgres',
 			database: 'master-pong',
       autoLoadEntities: true,
-			entities: ["dist/entities/*.entity.js"],
+      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),
     UsersModule,
