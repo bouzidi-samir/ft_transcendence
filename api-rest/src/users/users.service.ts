@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import User from './entities/user.entity';
@@ -49,7 +49,17 @@ export class UsersService {
 		);
 	}
 
-    async updateAvatar(id: number, image: string): Promise<any> {
-		
+    async updateAvatar(id: number, image: File): Promise<any> {
+        return await this.userRepository.query(
+			`UPDATE "user" SET "avatar_url" = $1, updated_at = NOW() WHERE id = $2;`,
+			[image, id]
+		);
 	}
+
+    async getAvatar(id: number): Promise<any> {
+        return await this.userRepository.query(
+			`SELECT "avatar_url" FROM "user" WHERE id = $1;`,
+			[id]
+		);
+    }
 }

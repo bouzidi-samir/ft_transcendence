@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Patch, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Header, Patch, 
+	UseInterceptors, UploadedFile, StreamableFile, Res } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DataSource } from 'typeorm';
@@ -66,6 +67,17 @@ export class UsersController {
 	): Promise<any> {
 		//let image; //= await getBase64FromBuffer(file.buffer);
 		console.log(file);
-		//await this.service.updateAvatar(id, image);
+		await this.service.updateAvatar(id, file);
+	}
+
+	@Get('/:id/getavatar')
+	@Header('Content-Type', 'image/jpeg')
+	async getAvatar(
+		@Param('id', ParseIntPipe) id: number,
+		@Res() res: any
+	): Promise<any> {
+		const [response] = await this.service.getAvatar(id);
+		let image = response.avatar_url;
+		console.log(image);
 	}
 }
