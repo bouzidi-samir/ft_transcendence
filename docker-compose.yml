@@ -1,27 +1,46 @@
-version: "3.3"
+version: '3.7'
 
 services:
-  back-end:
+  api-rest:
+    build:
+      context: api-rest
+      dockerfile: Dockerfile
     container_name: back
-    build: ./back-end
-    image: back_image
-    restart: on-failure
     ports:
-      - "4000:4000"
-      - "4001:4001"
+      - 4000:4000
+    depends_on:
+      - postgres
     networks:
       - mynetwork
 
   front-end:
+    build:
+      context: front-end
+      dockerfile: Dockerfile
     container_name: front
-    build: ./front-end
-    image: front_image
-    # restart: on-failure
     ports:
-      - "3000:3000"
+      - 3000:3000
     networks:
       - mynetwork
 
+  postgres:
+    image: postgres:13
+    hostname: postgres-db
+    container_name: postgres-db
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - database.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+volumes:
+  postgres:
+    name: nest-db
+
 networks:
   mynetwork:
-  
+    driver: bridge
