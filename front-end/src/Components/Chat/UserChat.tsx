@@ -1,4 +1,4 @@
-import '../styles/Components/UserChat.css'
+import '../../styles/Components/UserChat.css'
 
 
 export default function UserChat() {

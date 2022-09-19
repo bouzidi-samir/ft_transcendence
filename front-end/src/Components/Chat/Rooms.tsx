@@ -1,4 +1,4 @@
-import '../styles/Components/Rooms.css'
+import '../../styles/Components/Rooms.css'
 
 
 export default function Rooms() {
