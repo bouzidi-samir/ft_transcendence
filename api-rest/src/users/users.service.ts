@@ -48,13 +48,15 @@ export class UsersService {
 			`UPDATE "user" SET "nickname" = $1, updated_at = NOW() WHERE id = $2;`,
 			[nickname, id]
 		);
+        //return await this.userRepository.findOne({where: {id: id}});
 	}
 
     async updateAvatar(id: number, image: string): Promise<any> {
-        return await this.userRepository.query(
+        await this.userRepository.query(
 			`UPDATE "user" SET "avatar_url" = $1, updated_at = NOW() WHERE id = $2;`,
 			[image, id]
 		);
+        return await this.userRepository.findOne({where: {id: id}});
 	}
 
     async getAvatar(id: number): Promise<any> {

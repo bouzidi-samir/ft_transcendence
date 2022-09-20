@@ -27,7 +27,8 @@ const UserSlice = createSlice({
             state.status = action.payload.status;
         },
         updateUser  :(state, action) => {
-            let url = `http://localhost:4000/${action.payload}`;
+            console.log(state);
+            state = {...action.payload};
         },
         setAvatar : (state, action) => {
             state.avatar_url = action.payload;

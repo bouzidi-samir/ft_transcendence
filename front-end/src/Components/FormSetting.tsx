@@ -1,5 +1,5 @@
 import "../styles/Components/FormSetting.css"
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
@@ -10,12 +10,25 @@ export default function FormSetting(props:any) {
     const[avatarform, setAvatarform] = useState(false);
     const[nickForm, setNickform] = useState(false);
     const [nickname, setNickname] = useState("");
+    const [error, setError] = useState("");
+
+    function nickError(nickname: string) : boolean {
+        if (nickname.length < 3 || nickname.length > 8)
+        {
+            setError("Ton pseudo doit contenir entre 3 et 8 charactères.")
+            return false;
+        }
+        return true;
+    } 
 
     function handlechange(e: any) {
       setNickname(e.target.value);
     }
 
     async function handleForm () {
+        
+        if (nickError(nickname) == false)
+            return;
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
         dispatch({
@@ -32,18 +45,19 @@ export default function FormSetting(props:any) {
                     body: JSON.stringify({nickname})
                 }
             ).then(response => response.json());
-      }
+    }
 
     return (
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
-            <form className="form-setting" data-aos="fade-up" data-aos-duration="1000">
+            <form className="form-setting" >
                 <img  className="vignette-form" src={User.avatar_url}></img>
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>
                     {!nickForm ? <h2>{User.nickname}</h2> 
                         : <input type="text" onChange={handlechange}></input>}
                 <div onClick={()=> setNickform(true)}  className='set-nickname'></div>
                 <button onClick={handleForm}  className="btn btn-primary">Valider</button>
+                <p className="error-text">{error}</p>
             </form>
         </>
     );

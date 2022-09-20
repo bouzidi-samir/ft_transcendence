@@ -18,7 +18,6 @@ export default function AvatarSetting(props : any) {
         }
         const formData = new FormData();
         formData.append("file", avatar, avatar.name);
-        props.setAvatarform(false);
         let reponse = await fetch(
 			`http://localhost:4000/users/${User.id}/upload`,
 			{
@@ -27,6 +26,10 @@ export default function AvatarSetting(props : any) {
 				body: formData,
 			}
 		).then(res => res.json())
+        dispatch({
+            type: "User/setUser",
+            payload: reponse,
+          });
         props.setAvatarform(false);
     } 
 
