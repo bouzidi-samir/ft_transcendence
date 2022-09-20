@@ -54,8 +54,9 @@ export class AuthController {
 			nickname: "undefined",
 			registred: user.registred,
 			avatar_url: user.avatar_url,
+			isTwoAuthFactorEnabled: user.isTwoFactorAuthenticationEnabled,
 			status: "online",
-			JWT_token: token,	
+			JWT_token: token,
 		});
 	}
 

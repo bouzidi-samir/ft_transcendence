@@ -3,6 +3,7 @@ dotenv.config();
 
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
+import {TwoFactorAuthenticationController} from './twoFactorAuthentication.controller'
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -11,6 +12,7 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import {TwoFactorAuthenticationService } from './twoFactorAuthentication.service'
 
 @Module({
   imports: [
@@ -21,8 +23,7 @@ import { JwtStrategy } from './jwt.strategy';
         signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
   ],
-
-  controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy]
+  controllers: [AuthController, TwoFactorAuthenticationController],
+  providers: [AuthService, LocalStrategy, JwtStrategy, TwoFactorAuthenticationService ]
 })
 export class AuthModule {}

@@ -7,12 +7,14 @@ import { authenticator } from 'otplib';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
+import {TokenPayload} from './dto/tokenPayload.interface';
 
 @Injectable()
 export class AuthService {
 
     @Inject(UsersService)
 	public readonly users: UsersService;
+    private readonly configService: ConfigService
 
     constructor(
         private jwtService: JwtService
@@ -62,15 +64,23 @@ export class AuthService {
 
     async createToken(user: User)
     {
-        const payload = { username: user.username,
+        const payload = {isSecondFactorAuthenticated : false,
             sub: user.id, //sub pour stocker l id pour les standards jwt
-            nickname: user.nickname,
-			registred: user.registred,
-			avatar_url: user.avatar_url,
-            email: user.email,
-			status: "online",};
+        };
         let token = this.jwtService.sign(payload);
-        await this.users.updateToken(token, user.id)
+        await this.users.updateToken(token, user.id);
+        return {
+            access_token: token,
+          };
+    }
+
+    public async getCookieWithJwtAccessToken(userId: number, isSecondFactorAuthenticated = false) {
+        const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
+        const token = this.jwtService.sign(payload, {
+          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+          expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}`
+        });
+        await this.users.updateToken(token, userId);
         return {
             access_token: token,
           };
@@ -85,25 +95,4 @@ export class AuthService {
 	
     getSecret(): string { return process.env.API_SECRET; }
 
-}
-
-@Injectable()
-export class TwoFactorAuthenticationService {
-  constructor (
-    private readonly usersService: UsersService,
-    private readonly configService: ConfigService
-  ) {}
- 
-  public async generateTwoFactorAuthenticationSecret(user: User) {
-    const secret = authenticator.generateSecret();
- 
-   const otpauthUrl = authenticator.keyuri(user.email, this.configService.get('TWO_FACTOR_AUTHENTICATION_APP_NAME'), secret);
- 
-   await this.usersService.setTwoFactorAuthenticationSecret(secret, user.id);
- 
-    return {
-      secret,
-      otpauthUrl
-    }
-  }
 }
