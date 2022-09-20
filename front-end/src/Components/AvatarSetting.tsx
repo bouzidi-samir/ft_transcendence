@@ -35,7 +35,7 @@ export default function AvatarSetting(props : any) {
 
     return (
         <form className="setavatar-content">
-            <input type='file' onChange={handleChange} ></input>
+            <input type='file' accept="image/*" multiple={false}  onChange={handleChange} ></input>
             <br></br>
                 <Link to="/ProfilSettings">
                     <button onClick={handleForm} className="btn btn-primary">Valider</button>
