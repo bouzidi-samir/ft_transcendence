@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import '../../styles/Components/Rooms.css'
 
-
 export default function Rooms() {
+    const[addroom, setAddroom] = useState(false);
+
 
     return (
         <div className="rooms-content">

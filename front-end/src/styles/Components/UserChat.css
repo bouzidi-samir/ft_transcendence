@@ -4,5 +4,44 @@
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     width: 25%;
     height: 99%;
+    border: solid black 1px;
+}
+
+.online-list {
+
+    width: 100%;
+    height: 50%;
+}
+
+.user-online {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 20%;
+    border: solid black 1px;
+}
+
+.online-list  :hover {
+   
     border: solid white 1px;
+   
+}
+
+.online-avatar {
+    width: 20%;
+    height: 78%;
+    margin-left: 2%;
+    margin-top: 3%;
+    border-radius: 50%;
+    
+}
+
+.user-online p {
+    color: white;
+    margin-left: 20%;
+    margin-top: 4%;
+}
+
+p {
+    text-decoration: none;
 }

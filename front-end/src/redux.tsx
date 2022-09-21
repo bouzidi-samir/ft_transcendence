@@ -13,7 +13,6 @@ const User = {
 };
 
 const UserSlice = createSlice({
-
     name: "User",
     initialState: User,
     reducers: {
@@ -26,16 +25,10 @@ const UserSlice = createSlice({
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
         },
-        updateUser  :(state, action) => {
-            console.log(state);
-            state = {...action.payload};
         },
-        setAvatar : (state, action) => {
-            state.avatar_url = action.payload;
-        }
-        },   
-    }
+    },
 );
+
 
 const persistConfig = {
     key:'root',

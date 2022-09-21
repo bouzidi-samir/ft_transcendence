@@ -9,6 +9,7 @@ import { SessionProvider } from 'next-auth/react'
 import { getSession, signIn, useSession } from 'next-auth/react'
 import Particle from './Components/Particle';
 import ProfilSettings from './Containers/ProfilSettings';
+import UserProfil from './Components/Share/UserProfil';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/Accueil" element={<Accueil/>} /> 
         <Route path="/Home" element={<Home/>}/> 
         <Route path="/ProfilSettings" element={<ProfilSettings/>}/>
+        <Route path="/UserProfil/:id" element={<UserProfil/>}/>
         <Route path="/Chat" element={<Chat/>}/> 
       </Routes>
     </Router>  
