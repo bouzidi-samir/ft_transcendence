@@ -1,11 +1,14 @@
 .auth-form {
-    width: 80%;
+    width: 40%;
+    max-width: 650px;
+    min-width: 300px;
     height: 80%;
     background-color: black;
     padding-bottom: 3%;
-    margin-left: 10%;
-    margin-top: 10%;
-    border: solid white;
+    margin-left: 30%;
+    border-radius: 2%;
+    margin-top: 4%;
+    border: solid white 1px;
 }
 
 .auth-form input {
@@ -27,8 +30,9 @@ h1,h2 {
 
 .auth-form h1 {
     padding-top: 2%;
-    color: yellow;
+    color: white;
     opacity: 70%;
+    font-size: 400%;
     font-family: 'calvierregular';
 }
 

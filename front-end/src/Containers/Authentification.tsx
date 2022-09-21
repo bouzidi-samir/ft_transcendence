@@ -55,14 +55,7 @@ export default function Authentification() {
             <LoginForm/>
          
         </div>        
-        <div className="picture">
-          <Link  to={'/Accueil/Demo'}>
-            <button className="btn btn-warning demo">
-              Demo
-            </button>
-          </Link>
-      
-        </div>
+
 
     </div>
   )

@@ -10,26 +10,27 @@
 
 .auth-field {
 
-    width: 50%;
-    background-color: black;
+    width: 100%;
+    background: rgb(0,1,36);
+    background: radial-gradient(circle, rgba(0,1,36,1) 0%, rgba(10,10,56,1) 91%);
 }
+
 
 .picture {
     width: 50%;
-    background-image: url(../img/pongdark.jpeg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: rgb(0,1,36);
+    background: radial-gradient(circle, rgba(0,1,36,1) 0%, rgba(10,10,56,1) 91%);
 }
+
 
 .auth-form {
     width: 80%;
     height: 80%;
-    background-color: black;
+   
     padding-bottom: 3%;
     margin-left: 10%;
     margin-top: 10%;
-    border: solid white;
+ 
 }
 
 .auth-form input {
