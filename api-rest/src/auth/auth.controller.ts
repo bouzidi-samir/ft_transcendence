@@ -44,6 +44,7 @@ export class AuthController {
 		user.avatar_url = fortyTwoUser.avatar_url;
 		user.registred = "false";
 		user.email = infos.email;
+		user.isTwoFactorAuthenticationEnabled = true;
 		user = await this.service.addUser(user);
 		let token = await this.service.createToken(user);
 		//console.log(token);

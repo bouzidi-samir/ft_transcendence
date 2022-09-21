@@ -78,7 +78,7 @@ export class AuthService {
         const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
         const token = this.jwtService.sign(payload, {
           secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-          expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}`
+          expiresIn: this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME'),
         });
         await this.users.updateToken(token, userId);
         return {

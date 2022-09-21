@@ -7,7 +7,7 @@ import {
   UseGuards,
   Req,
   Body,
-  UnauthorizedException, HttpCode,
+  UnauthorizedException, HttpCode, Param,
 } from '@nestjs/common';
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
 import {JwtAuthGuard} from './jwt-authguard';
@@ -16,6 +16,7 @@ import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCod
 import { UsersService } from '../users/users.service';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
+import User from '../users/user.entity';
 
  
 @Controller('2fa')
@@ -43,10 +44,13 @@ export class TwoFactorAuthenticationController {
     await this.usersService.turnOnTwoFactorAuthentication(request.user.id);
   }
 
-  @Post('generate')
+  @Post('generate') /* {userId : 19, email : qbrillai@student.42nice.fr, avatar_url : https://cdn.intra.42.fr/users/qbrillai.jpg, 
+  registred: false, nickname: offline, username: qbrillai}  */
   @UseGuards(JwtAuthGuard)
-  async register(@Res() response: Response, @Req() request: RequestWithUser) {
-    const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(request.user);
+  async register(@Res() response: Response, @Req() request: Request) {
+    let userId = response.req.query.user['userId'];
+    let user = await this.usersService.getUserById(userId);
+    const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(user);
  
     return this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl);
   }
