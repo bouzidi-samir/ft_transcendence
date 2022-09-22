@@ -1,4 +1,4 @@
-import '../styles/Components/Users.css'
+import '../../styles/Components/Users.css'
 import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
@@ -18,8 +18,8 @@ export default function Users() {
   
     return (
         <div className='users-content'>
-                <p>Hors Ligne</p>
-            <div className='online'>   
+                <p>Mes Amis</p>
+            <div className='friends'>   
                 {
                     userlist.map((u : any)=> (
                         u.username != User.username ?

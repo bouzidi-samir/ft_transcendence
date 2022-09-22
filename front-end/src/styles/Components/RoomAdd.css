@@ -1,0 +1,41 @@
+.addroom-content {
+    position:absolute;
+    margin-left: 20%;
+    margin-top: -7%;
+    width: 60%;
+    height: 70%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border-radius: 2%;
+    padding-left: 3%;
+    padding-top: 3%;
+    border: solid black 1px;
+}
+
+.addroom-content label {
+    color: white;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 1%;
+}
+
+.addroom-content .room-name {
+    width: 60%;
+    border-radius: 4%;
+    margin-bottom: 5%;
+}
+
+.addroom-content .room-type {
+   margin-right: 55px;
+}
+
+
+.addroom-content .btn-primary {
+    margin-top: 14%;
+  
+} 
+
+.addroom-content span {
+    color : white;
+    margin-right: 2%;
+}

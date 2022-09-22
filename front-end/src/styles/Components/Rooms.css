@@ -6,6 +6,7 @@
     width: 25%;
     height: 99%;
     border: solid black 1px;
+    border-radius: 2%;
 }
 
 .rooms-content button {

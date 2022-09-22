@@ -1,4 +1,4 @@
-import "../styles/Components/FormSetting.css"
+import "../../styles/Components/FormSetting.css"
 import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
@@ -13,8 +13,9 @@ export default function FormSetting(props:any) {
     const [error, setError] = useState("");
 
     function nickError(nickname: string) : boolean {
-        if (nickname.length < 3 || nickname.length > 8)
+        if ((nickname.length < 3 || nickname.length > 8) && nickForm == true)
         {
+            console.log(nickForm);
             setError("Ton pseudo doit contenir entre 3 et 8 charactères.")
             return false;
         }
@@ -27,7 +28,7 @@ export default function FormSetting(props:any) {
 
     async function handleForm () {
         
-        if (nickError(nickname) == false)
+        if (nickError(nickname) == false || !nickForm )
             return;
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
@@ -51,11 +52,16 @@ export default function FormSetting(props:any) {
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
+                
                 <img  className="vignette-form" src={User.avatar_url}></img>
+                
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>
+               
                     {!nickForm ? <h2>{User.nickname}</h2> 
                         : <input type="text" onChange={handlechange}></input>}
+               
                 <div onClick={()=> setNickform(true)}  className='set-nickname'></div>
+        
                 <button onClick={handleForm}  className="btn btn-primary">Valider</button>
                 <p className="error-text">{error}</p>
             </form>

@@ -1,4 +1,4 @@
-import "../styles/Components/LoginForm.css"
+import "../../styles/Components/LoginForm.css"
 import React from "react";
 import { getSession, signIn, useSession } from 'next-auth/react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';

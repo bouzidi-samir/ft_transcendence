@@ -1,5 +1,5 @@
 import "../styles/Containers/Authentification.css"
-import LoginForm from "../Components/LoginForm"
+import LoginForm from "../Components/Authentification/LoginForm"
 import React from "react";
 import { useEffect, useState, useContext} from 'react';
 import Particle from "../Components/Particle";

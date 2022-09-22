@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../../styles/Components/Share/UserProfil.css'
 import { useParams } from 'react-router';
-import Navbar from '../Navbar';
+import Navbar from './Navbar';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 

@@ -14,7 +14,6 @@
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 2%;
-    border: solid 1px white;
     opacity: 80%;
 }
 
@@ -47,7 +46,7 @@
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 2%;
-    border: solid 1px white;
+   
     opacity: 80%;
 }
 

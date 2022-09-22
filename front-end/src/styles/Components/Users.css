@@ -3,7 +3,6 @@
     height: 85%;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
-    border: solid 1px white;
     margin-right: 1%;
     border-radius: 2%;
     opacity: 80%;
@@ -13,6 +12,7 @@
 
 .users-content h2 {
     color: white;
+    font-size: 20px;
 }
 
 .users-content p {
@@ -22,11 +22,11 @@
    
 }
 
-.online {
+.friends {
     width: 100%;
-    height: 50%;
-    display: flex;
-    flex-wrap: wrap;
+    height: 60%;
+
+    
     justify-content: space-around;
 }
 
@@ -35,6 +35,6 @@
     height: 15%;
     margin-left: 2%;
     border-radius: 60%;
-    border: solid white 2px;
+    border: solid black 1px;
     margin-top: 1%;
 }

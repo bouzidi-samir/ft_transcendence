@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { from } from '@apollo/client';
-import '../styles/Components/ProfilCard.css'
+import '../../styles/Components/ProfilCard.css'
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 

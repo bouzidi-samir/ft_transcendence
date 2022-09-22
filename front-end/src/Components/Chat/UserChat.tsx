@@ -20,7 +20,7 @@ export default function UserChat() {
     return (
         <div className="userchat-content">
               <h2>En Ligne</h2>
-              <hr></hr>
+         
               <div className='online-list'>
                   {
                       userlist.map((user : any) => (

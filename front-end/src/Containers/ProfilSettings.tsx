@@ -1,6 +1,6 @@
 import "../styles/Containers/ProfilSettings.css"
-import Navbar from "../Components/Navbar";
-import FormSetting from "../Components/FormSetting";
+import Navbar from "../Components/Share/Navbar";
+import FormSetting from "../Components/ProfilSettings/FormSetting";
 
 
 export default function ProfilSettings() {
@@ -8,7 +8,7 @@ export default function ProfilSettings() {
         <>
         <Navbar></Navbar>
         <div className="profilset-content">
-            <FormSetting data-aos="fade-up" data-aos-duration="1000"></FormSetting>
+            <FormSetting></FormSetting>
         </div>
         </>
     );
