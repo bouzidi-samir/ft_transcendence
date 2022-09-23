@@ -49,10 +49,9 @@ export class UsersService {
 		);
 	}
 
-    async updateToken(Token: string, id: number): Promise<any> {
-		return await this.userRepository.query(
-			`UPDATE "user" SET "JWT_token" = $1, updated_at = NOW() WHERE id = $2;`,
-			[Token, id]
+    async updateToken(Token: string, userId: number): Promise<any> {
+		return this.userRepository.update(userId,
+			{JWT_token: Token}
 		);
 	}
 

@@ -33,15 +33,18 @@ export class TwoFactorAuthenticationController {
   @UseGuards(JwtAuthGuard)
   async turnOnTwoFactorAuthentication(
     @Req() request: RequestWithUser,
-    @Body() { twoFactorAuthenticationCode } : TwoFactorAuthenticationCodeDto
+    @Res() response: Response,
   ) {
+    let twoFactorAuthenticationCode = response.req.query.twoFactorAuthenticationCode;
+    twoFactorAuthenticationCode = twoFactorAuthenticationCode.toString();
+    let user = await this.usersService.getUserById(request.user['userId']);
     const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
-      twoFactorAuthenticationCode, request.user
+      twoFactorAuthenticationCode, user
     );
     if (!isCodeValid) {
       throw new UnauthorizedException('Wrong authentication code');
     }
-    await this.usersService.turnOnTwoFactorAuthentication(request.user.id);
+    await this.usersService.turnOnTwoFactorAuthentication(user.id);
   }
 
   @Post('generate') /* {userId : 19, email : qbrillai@student.42nice.fr, avatar_url : https://cdn.intra.42.fr/users/qbrillai.jpg, 
@@ -61,25 +64,28 @@ export class TwoFactorAuthenticationController {
   @UseGuards(JwtAuthGuard)
   async authenticate(
     @Req() request: RequestWithUser,
-    @Body() { twoFactorAuthenticationCode } : TwoFactorAuthenticationCodeDto
+    @Res() response: Response
   ) {
-    const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
-      twoFactorAuthenticationCode, request.user
-    );
-    if (!isCodeValid) {
-      throw new UnauthorizedException('Wrong authentication code');
-    }
+      let twoFactorAuthenticationCode = response.req.query.twoFactorAuthenticationCode;
+      twoFactorAuthenticationCode = twoFactorAuthenticationCode.toString();
+      let user = await this.usersService.getUserById(request.user['userId']);
+      const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
+        twoFactorAuthenticationCode , user
+        );
+      if (!isCodeValid) {
+        throw new UnauthorizedException('Wrong authentication code');
+      }
  
-    const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(request.user.id, true);
+      const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id, true);
  
-    return JSON.stringify({
-			id: "",
-			username: request.user.username,
-			nickname: "undefined",
-			registred: request.user.registred,
-			avatar_url: request.user.avatar_url,
-			status: "online",
-			JWT_token: accessTokenCookie,	
-		});
-  }
+      return JSON.stringify({
+			  id: "",
+			  username: user.username,
+			  nickname: user.nickname,
+			  registred: user.registred,
+			  avatar_url: user.avatar_url,
+			  status: "online",
+			  JWT_token: accessTokenCookie,	
+		  });
+   }
 }

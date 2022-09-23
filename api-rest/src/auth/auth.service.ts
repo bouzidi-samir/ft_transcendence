@@ -8,6 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
 import {TokenPayload} from './dto/tokenPayload.interface';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class AuthService {
@@ -77,8 +79,8 @@ export class AuthService {
     public async getCookieWithJwtAccessToken(userId: number, isSecondFactorAuthenticated = false) {
         const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
         const token = this.jwtService.sign(payload, {
-          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-          expiresIn: this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME'),
+          secret: process.env.JWT_ACCESS_TOKEN_SECRET,
+          expiresIn: process.env.JWT_EXPIRATION_TIME,
         });
         await this.users.updateToken(token, userId);
         return {
