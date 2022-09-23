@@ -7,7 +7,6 @@ import { ChatController } from './chat.controller';
 import { ChatService } from './chat.service';
 import { Member } from './entities/member.entity';
 import { Messages } from './entities/messages.entity';
-import { Room } from './entities/room.entity';
 import { Rooms } from './entities/rooms.entity';
 
 @Module({
