@@ -1,12 +1,11 @@
 import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Header, Patch, 
-	UseInterceptors, UploadedFile, StreamableFile, Res } from '@nestjs/common';
+	UseInterceptors, UploadedFile, StreamableFile, Res, Put } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-//import { getBase64FromBuffer } from 'src/auth/utils';
 import User from './entities/user.entity';
 
 import { UsersService } from './users.service'; 
@@ -83,6 +82,89 @@ export class UsersController {
     async getFile(@Param("filename") filename: string, @Res() res: any) {
         res.sendFile(filename, { root: './upload' });
     }
+
+		//-----------------------------------------------------------------------------
+
+		@Post('/sendFriendshipRequest')
+	async sendFriendshipRequest(
+		@Body() body: any): Promise<any>  { // params: senderName, receiverName
+		return await this.service.sendFriendshipRequest(body);
+	}
+
+	@Post('/checkFriendshipRequest')
+		async checkFriendshipRequest(
+			@Body() body: any): Promise<any> { // param: username
+			return await this.service.checkFriendshipRequest(body);
+	}
+
+	@Post('/acceptOneFriendshipRequest')
+	async acceptOneFriendshipRequest(
+		@Body() body: any): Promise<any> { // params username: string, from: string
+		return await this.service.acceptOneFrienshipRequest(body);
+	}
+
+	@Post('/acceptAllFriendshipRequest')
+	async acceptAllFriendshipRequest(
+		@Body() body: any): Promise<any> { // param username: string
+		return await this.service.acceptAllFriendshipRequest(body);
+	}
+
+
+	@Post('/displayMyFriendshipRequest')
+	async displayMyFriendshipRequest(
+		@Body() body: any): Promise<any> { // param username: string
+		return await this.service.displayMyFriendshipRequest(body);
+	}
+
+	
+	@Put('deleteOneFriendship')
+	async deleteOneFriendship(
+		@Body() body: any): Promise<any> { // param myUsername: string, otherUsername: string
+			return await this.service.deleteOneFriendship(body);
+		}
+
+
+	@Post('/getAllMyFriendships')
+	async getAllMyFriends(
+		@Body() body: any): Promise<any> { // param username: string
+		return await this.service.getAllMyFriendships(body);
+	}
+
+	@Post('/blockUser') // params: username: string, targetUsername: string
+	async blockUser(
+		@Body() body: any): Promise<any> {
+		return await this.service.blockUser(body);
+	}
+
+	@Post('/unBlockUser') // params: username: string, targetUsername: string
+	async unBlockUser(
+		@Body() body: any): Promise<any>  {
+		return await this.service.unBlockUser(body);
+	}
+
+	@Post('/getAllMyBlockedUser')
+	async getAllMyBlockedUser(
+		@Body() body: any): Promise<any> { // param username: string
+		return await this.service.getAllMyBlockedUser(body);
+	}
+
+	@Post('/muteUser') // params: username: string, targetUsername: string
+	async muteUser(
+		@Body() body: any): Promise<any> {
+		return await this.service.muteUser(body);
+	}
+
+	@Post('/unmuteUser') // params: username: string, targetUsername: string
+	async unmuteuser(
+		@Body() body: any): Promise<any>  {
+		return await this.service.unmuteUser(body);
+	}
+
+	@Post('/getAllMyMutedUser')
+	async getAllMyMutedUser(
+		@Body() body: any): Promise<any> { // param username: string
+		return await this.service.getAllMyMutedUser(body);
+	}
 }
 
 

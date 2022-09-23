@@ -4,15 +4,14 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Room } from 'src/chat/entities/room.entity';
+import { Relations } from './entities/relations.entity';
 import { Messages } from 'src/chat/entities/messages.entity';
-import { Status } from './entities/status.entity';
-import { Relatives } from './entities/relatives.entity';
 
 @Module({
   controllers: [UsersController],
 	providers: [UsersService],
  	imports: [
-		 TypeOrmModule.forFeature([User, Room, Messages, Status, Relatives])
+		 TypeOrmModule.forFeature([User, Room, Messages, Relations])
 	],
 	exports: [UsersService]
 })

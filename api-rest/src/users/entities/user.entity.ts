@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
-import { Status } from './status.entity';
-import { Relatives } from './relatives.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany} from 'typeorm';
+import { Relations } from './relations.entity';
 import { Room } from 'src/chat/entities/room.entity';
 import { Messages } from '../../chat/entities/messages.entity';
 
@@ -51,16 +50,13 @@ export default class User {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	@Column({default: false})
-	admin: boolean;
+		// @Column({default: false})
+	// admin: boolean;
 
-	@OneToMany(() => Room, (room) => room.user, {nullable: true})
-	room:Room[];
-
-	@OneToMany(() => Relatives, (relatives) => relatives.user, {nullable: true})
-	relatives:Relatives[];
+	@OneToMany(() => Relations, (relations) => relations.owner, {nullable: true})
+	@JoinColumn()
+	relations:Relations[];
 
 	@OneToMany(() => Messages, (messages) => messages.user, {nullable: true})
 	messages:Messages[];
-
 }

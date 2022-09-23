@@ -11,8 +11,8 @@ export class Messages {
     @Column()
     text: string
 
-    @ManyToOne(() => Room, room => room.messages)
-    room:Room;
+    // @ManyToOne(() => Room, room => room.messages)
+    // room:Room;
 
     @ManyToOne(() => User, user => user.messages)
     user:User;

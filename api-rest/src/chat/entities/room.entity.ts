@@ -1,6 +1,5 @@
 import User from "../../users/entities/user.entity";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Messages } from "./messages.entity";
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Room {
@@ -8,24 +7,21 @@ export class Room {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({nullable: true})
     tag: string;
 
-    @Column({default: true})
+    @Column({default: false})
     global: boolean;
 
     @Column({default: false})
     private: boolean;
 
     @Column({default: false})
-    password:string;
+    public: boolean;
 
-    @OneToMany(() => User, (user) => user.room, {nullable: true})
-    user:User[];
+    @Column({default: false})
+    friendly: boolean;
 
-    @OneToMany( () => Messages, messages => messages.room, {nullable:true})
-    @JoinColumn()
-    messages:Messages[]
-
-    
+    @Column({nullable: true})
+    password:string;   
 }
