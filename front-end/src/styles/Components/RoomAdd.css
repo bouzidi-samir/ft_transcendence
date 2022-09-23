@@ -1,14 +1,13 @@
 .addroom-content {
     position:absolute;
-    margin-left: 20%;
+    margin-left: 25%;
     margin-top: -7%;
-    width: 60%;
-    height: 70%;
+    width: 50%;
+    height: 80%;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 2%;
     padding-left: 3%;
-    padding-top: 3%;
     border: solid black 1px;
 }
 
@@ -22,7 +21,7 @@
 .addroom-content .room-name {
     width: 60%;
     border-radius: 4%;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
 }
 
 .addroom-content .room-type {
@@ -32,10 +31,23 @@
 
 .addroom-content .btn-primary {
     margin-top: 14%;
-  
+    margin-left: 35%;
+    width: 30%;
+
 } 
 
 .addroom-content span {
     color : white;
     margin-right: 2%;
+}
+
+.group-avatar {
+    
+    width: 20%;
+    height: 40%;
+    margin-left: 40%;
+    background-image: url(../../styles/img/groupe.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

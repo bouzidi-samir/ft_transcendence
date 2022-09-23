@@ -7,6 +7,7 @@ export default function RoomAdd({setAddroom} :any) {
     return (
         <>
             <form className="addroom-content" data-aos="fade-up" data-aos-duration="1000">
+                <div className='group-avatar'></div>
                 <label>Nom de la room:</label>       
                     <input type="text" className='room-name'></input>
                 <label>Type:</label>

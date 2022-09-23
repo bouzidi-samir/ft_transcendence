@@ -21,7 +21,6 @@ export default function Messages() {
     }
     
     useEffect(() => {
-       socket?.on("message", messageListener )
        return () => {
             socket?.off("message", messageListener)
        }
@@ -33,8 +32,9 @@ export default function Messages() {
                 <h2>Nom de la room</h2>
             </div>
             <div className="conversation">
-            {messages.map((message: string, index: number) => (  
-                    <div key={index}>     
+                console.log(message);
+            {messages.map((message: string, index: number) => (   
+                    <div key={index}>    
                          <div>{message}</div>
                     </div>
                 ))}
