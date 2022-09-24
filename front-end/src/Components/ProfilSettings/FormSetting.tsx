@@ -4,19 +4,25 @@ import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
-export default function FormSetting(props:any) {
+export default function FormSetting(props : any) {
+    
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const[avatarform, setAvatarform] = useState(false);
     const[nickForm, setNickform] = useState(false);
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
-
+    const {userlist} = props;
+ 
     function nickError(nickname: string) : boolean {
         if ((nickname.length < 3 || nickname.length > 8) && nickForm == true)
         {
-            console.log(nickForm);
             setError("Ton pseudo doit contenir entre 3 et 8 charactères.")
+            return false;
+        }
+        if (userlist.some((e : any) => nickname == e.nickname))
+        {
+            setError("Ce pseudo  est déja utilié.")
             return false;
         }
         return true;
@@ -26,8 +32,10 @@ export default function FormSetting(props:any) {
       setNickname(e.target.value);
     }
 
-    async function handleForm () {
+    async function handleForm (e : any) {
         
+        e.preventDefault();
+
         if (nickError(nickname) == false || !nickForm )
             return;
         let userUpdate = {...User};
@@ -46,6 +54,7 @@ export default function FormSetting(props:any) {
                     body: JSON.stringify({nickname})
                 }
             ).then(response => response.json());
+        setError("");
     }
 
     return (
