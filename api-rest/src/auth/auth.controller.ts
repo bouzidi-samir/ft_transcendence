@@ -29,7 +29,7 @@ export class AuthController {
 	): Promise<string> {
 		let api = await this.service.getUserAccessToken(
 			'7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670', 
-			'6fa238a221040adadeaa4a5934e546414387154964dbbabe3189a0b7db211496',
+			'8f0429ab7bec196067bb438e31cd08b9e07a79953cd6a932fc0f4595dced75d7',
 			code, body.redirect_uri
 		);
 		let infos = await this.service.getUserInformations(api.access_token);

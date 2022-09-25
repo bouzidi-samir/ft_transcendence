@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../styles/Components/RoomAdd.css'
+import '../../styles/Components/Chat/RoomAdd.css'
 import { Link } from 'react-router-dom';
 
 export default function RoomAdd({setAddroom} :any) {

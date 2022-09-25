@@ -1,4 +1,4 @@
-import '../../styles/Components/Stats.css'
+import '../../styles/Components/Home/Stats.css'
 
 export default function Stats() {
     return (

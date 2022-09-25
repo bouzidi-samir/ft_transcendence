@@ -1,4 +1,4 @@
-import "../../styles/Components/FormSetting.css"
+import "../../styles/Components/ProfilSettings/FormSetting.css"
 import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";

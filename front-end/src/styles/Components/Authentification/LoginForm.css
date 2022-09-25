@@ -65,7 +65,7 @@ h1,h2 {
 }
 
 .logo42 {
-    background-image: url(../img/42logo.jpeg);
+    background-image: url(../../img/42logo.jpeg);
     background-size: cover;
     background-position: center;
     width: 10%;

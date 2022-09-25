@@ -1,4 +1,4 @@
-import "../../styles/Components/LoginForm.css"
+import "../../styles/Components/Authentification/LoginForm.css"
 import React from "react";
 import { getSession, signIn, useSession } from 'next-auth/react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
@@ -13,7 +13,6 @@ export default function AuthForm() {
    let request = await fetch('http://localhost:4000/auth/authorize', {
 			method: "POST",
 			headers: {
-		//		'Authorization': `Bearer ${session}`,
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})

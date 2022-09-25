@@ -25,7 +25,7 @@
     height: 10%;
     top: -7%;
     left: 12%;
-    background-image: url(../../styles/img/icones/camera.png);
+    background-image: url(../../../styles/img/icones/camera.png);
     background-position: center;
     background-size: cover;
     border: solid black 2px;
@@ -39,7 +39,7 @@
     height: 7%;
     top: -10%;
     left: 25%;
-    background-image: url(../../styles/img/icones/modif.png);
+    background-image: url(../../../styles/img/icones/modif.png);
     background-position: center;
     background-size: cover;
     
@@ -53,7 +53,7 @@
     height: 10%;
     top: -15%;
     left: 12%;
-    background-image: url(../../styles/img/icones/camera.png);
+    background-image: url(../../../styles/img/icones/camera.png);
     background-position: center;
     background-size: cover;
     border: solid blue 2px;

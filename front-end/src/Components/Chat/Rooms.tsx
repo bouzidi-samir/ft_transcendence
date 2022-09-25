@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../styles/Components/Rooms.css'
+import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
 
 export default function Rooms() {

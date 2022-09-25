@@ -1,4 +1,4 @@
-import '../../styles/Components/Users.css'
+import '../../styles/Components/Home/Users.css'
 import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';

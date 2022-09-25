@@ -1,4 +1,4 @@
-import '../../styles/Components/UserChat.css'
+import '../../styles/Components/Chat/UserChat.css'
 import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
