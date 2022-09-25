@@ -12,7 +12,7 @@ export default function Messages() {
     }
 
     useEffect(() => {
-      const newSocket = io('http://localhost:8000')
+      const newSocket = io('http://localhost:4000/')
       setSocket(newSocket)
     }, [setSocket])
     
@@ -32,7 +32,6 @@ export default function Messages() {
                 <h2>Nom de la room</h2>
             </div>
             <div className="conversation">
-                console.log(message);
             {messages.map((message: string, index: number) => (   
                     <div key={index}>    
                          <div>{message}</div>
@@ -41,7 +40,7 @@ export default function Messages() {
             </div>
             <div className="send-zone">
             <input value={value} onChange={(e)=> setValue(e.target.value)} ></input>
-            <button onClick={() => send(value)}className="btn btn-primary" >Envoyer</button>
+            <button onClick={() => send("test")}className="btn btn-primary" >Envoyer</button>
         </div>
     </div>
     );
