@@ -7,6 +7,7 @@ import { Member } from './entities/member.entity';
 import * as bcrypt from 'bcrypt';
 import { Rooms } from './entities/rooms.entity';
 import { ok } from 'assert';
+import { Relations } from '../users/entities/relations.entity';
 
 @Injectable()
 export class ChatService {
@@ -20,6 +21,8 @@ export class ChatService {
     private readonly roomsRepository: Repository<Rooms>,
     @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
+    @InjectRepository(Relations)
+    private readonly relationsRepository: Repository<Relations>
   
   ){}
 
@@ -83,12 +86,48 @@ export class ChatService {
 
   }
 
+  async createMyFriendsRoom(body){
+
+    const room = await this.roomsRepository.create();
+    room.friendly = true;
+    room.tag = "friends";
+    await this.roomsRepository.save(room);
+
+    const friends = await this.relationsRepository.find({ where: [{toUsername: body.username,  acceptFriendship: true}, {fromUsername: body.username, acceptFriendship: true}]});
+
+
+    for (let i = 0; i < friends.length; i++) {
+
+      const oneMember = await this.memberRepository.create();
+
+      if (body.username == friends[i].fromUsername) {
+        const myFriend = await this.userRepository.findOne({where: {username: friends[i].toUsername}})
+        oneMember.userId =  myFriend.id;
+        oneMember.username = myFriend.username;
+        oneMember.roomTag = 'friends';
+        await this.memberRepository.save(oneMember);
+      }
+      else if (body.username == friends[i].toUsername) {
+        const myFriend = await this.userRepository.findOne({where: {username: friends[i].fromUsername}})
+        oneMember.userId =  myFriend.id;
+        oneMember.username = myFriend.username;
+        oneMember.roomTag = 'friends';
+        await this.memberRepository.save(oneMember);
+      }
+  }
+  return friends;
+
+  }
+
   async joinRoom(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (alreadyMember){
       if (alreadyMember.blocked == true){
       return 'blocked';
+      }
+      else if (alreadyMember.in == true){
+        return 'already in';
       }
       else{
         alreadyMember.in = true;
@@ -101,11 +140,11 @@ export class ChatService {
     if (room == null)
       return 'no room';
     
-    if (room.password != null){
+    if (room.password){
       if(!body.password){
         return 'need a password';
       }
-      const match = bcrypt.compare(room.password, body.password)
+      const match = bcrypt.compareSync(body.password, room.password);
       if (!match)
         return 'wrong password';
     }
@@ -123,6 +162,20 @@ export class ChatService {
 
     return newMember;
 
+  }
+
+  async leaveRoom(body) {
+
+    const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    if (alreadyMember){
+        alreadyMember.in = false;
+        alreadyMember.out = true;
+        await this.memberRepository.save(alreadyMember);
+        return true;
+      }
+      else {
+        return false;
+      }
   }
 
   async blockMember(body) {
@@ -157,7 +210,6 @@ export class ChatService {
 
   }
 
-
   findAll() {
     return `This action returns all chat`;
   }
@@ -173,4 +225,5 @@ export class ChatService {
   remove(id: number) {
     return `This action removes a #${id} chat`;
   }
+
 }

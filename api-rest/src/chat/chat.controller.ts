@@ -20,9 +20,19 @@ export class ChatController {
         return this.service.createGlobalRoom();
     }
 
+    @Post('/createMyfriendsRoom') // username
+    async createMyFriendsRoom(@Body() body: any): Promise<any> {
+        return this.service.createMyFriendsRoom(body);
+    }
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);
+    }
+
+
+    @Post('/leaveRoom') // tag, username
+    async leaveRoom(@Body() body: any): Promise<any> {
+        return this.service.leaveRoom(body);
     }
 
     @Post('/blockMember') // tag, username, toBlockUsername
