@@ -38,5 +38,20 @@ export class ChatController {
     @Post('/blockMember') // tag, username, toBlockUsername
     async blockMember( @Body() body: any): Promise<any> {
         return this.service.blockMember(body);
-        }
+    }
+
+    @Post('/unblockMember') // params: username: string, toUnblockUsername: string
+	async unBlockMember(@Body() body: any): Promise<any>  {
+		return await this.service.unblockMember(body);
+	}
+
+    @Post('/muteMember') // tag, username, toMuteUsername
+    async muteMember( @Body() body: any): Promise<any> {
+        return this.service.muteMember(body);
+    }
+
+    @Post('/unmuteMember') // params: username: string, toUnmuteUsername: string
+	async unmuteMember(@Body() body: any): Promise<any>  {
+		return await this.service.unmuteMember(body);
+	}
 }

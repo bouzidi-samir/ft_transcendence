@@ -210,6 +210,68 @@ export class ChatService {
 
   }
 
+  async unblockMember(body) {
+
+    const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
+    if (room == null || body.tag == 'global')
+      return false;
+
+    const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    if (oneAdmin == null)
+      return false;
+    
+    const existingMember = await this.memberRepository.findOne({where: { username: body.toUnblockUsername, roomTag: body.tag}});
+    if (existingMember){
+      existingMember.blocked = false;
+      await this.memberRepository.save(existingMember);
+      return existingMember;
+    }
+    else{
+      return false;
+    }
+}
+
+async muteMember(body) {
+
+  const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
+  if (room == null || body.tag == 'global')
+    return false;
+
+  const existingMember = await this.memberRepository.findOne({where: { username: body.toMuteUsername, roomTag: body.tag}});
+  if (existingMember == null)
+    return false;
+  
+  const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+  if (oneAdmin == null)
+    return false;
+ 
+  existingMember.muted = true;
+  await this.memberRepository.save(existingMember);
+  return existingMember;
+  
+}
+
+async unmuteMember(body) {
+
+  const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
+  if (room == null || body.tag == 'global')
+    return false;
+
+  const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+  if (oneAdmin == null)
+    return false;
+  
+  const existingMember = await this.memberRepository.findOne({where: { username: body.toUnmuteUsername, roomTag: body.tag}});
+  if (existingMember){
+    existingMember.muted = false;
+    await this.memberRepository.save(existingMember);
+    return existingMember;
+  }
+  else{
+    return false;
+  }
+}
+
   findAll() {
     return `This action returns all chat`;
   }

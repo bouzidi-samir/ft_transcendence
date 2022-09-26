@@ -25,6 +25,9 @@ export class Member {
     @Column({default: false})
     blocked: boolean;
 
+    @Column({default: false})
+    muted: boolean;
+
     @Column({nullable: true})
     roomTag: string;
 
