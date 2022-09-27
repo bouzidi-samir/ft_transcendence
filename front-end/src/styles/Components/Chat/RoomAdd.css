@@ -30,7 +30,8 @@
 
 
 .addroom-content .btn-primary {
-    margin-top: 14%;
+    position: relative;
+    margin-top: 12%;
     margin-left: 32%;
     width: 30%;
 
@@ -49,4 +50,8 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.pass-label {
+    margin-top: 5%;
 }

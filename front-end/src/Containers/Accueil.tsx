@@ -8,10 +8,24 @@ import {useDispatch} from 'react-redux';
 
 export default function Accueil(props: any) {
     const User = useSelector((state: any) => state.User);
+    const Userlist = useSelector((state: any) => state.UserList);
     const dispatch = useDispatch();
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
     let navigation = useNavigate();
+
+    useEffect( () => {    
+        let url : string = "http://localhost:4000/users";
+        fetch(url)
+        .then(response => response.json())
+        .then(data => 
+        dispatch({
+            type: "Userlist/setUserlist",
+            payload: data,
+          })
+        );
+    }, []
+    )
 
     function redirection() {
         if (User.registred === 'false')

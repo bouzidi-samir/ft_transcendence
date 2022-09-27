@@ -3,25 +3,26 @@ import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
+import {myIsalpha} from "../../Utils/Util";
 
-export default function FormSetting(props : any) {
+export default function FormSetting() {
     
     const User = useSelector((state: any) => state.User);
+    const Userlist = useSelector((state: any) => state.UserList);
     const dispatch = useDispatch();
     const[avatarform, setAvatarform] = useState(false);
     const[nickForm, setNickform] = useState(false);
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
-    const {userlist} = props;
  
     function nickError(nickname: string) : boolean {
-        if ((nickname.length < 3 || nickname.length > 8) && nickForm == true)
-        {
-            setError("Ton pseudo doit contenir entre 3 et 8 charactères.")
+        if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
+            setError("Ton pseudo doit contenir entre 4 et 8 charactères.")
             return false;
-        }
-        if (userlist.some((e : any) => nickname == e.nickname))
-        {
+        } else if(!myIsalpha(nickname)){
+            setError("Les trois premiers caracteres doivent etre des lettres.")
+            return false;
+        } else if (Userlist.some((e : any) => nickname == e.nickname)){
             setError("Ce pseudo  est déja utilié.")
             return false;
         }
