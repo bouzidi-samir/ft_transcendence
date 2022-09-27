@@ -1,5 +1,6 @@
 import User from "../../users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Messages } from "./messages.entity";
 
 @Entity()
 export class Room {
@@ -24,4 +25,7 @@ export class Room {
 
     @Column({nullable: true})
     password:string;   
+
+    @OneToMany(() => Messages, (messages) => messages.room, {nullable: true})
+	messages:Messages[];
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -69,7 +69,13 @@ export class ChatService {
 
   async createGlobalRoom(){
 
-    const room = await this.roomsRepository.create();
+    const room = await this.roomsRepository.findOne({where: {tag: "global"}});
+    if (room.tag == "global")
+      return true;
+    else{
+      const room = await this.roomsRepository.create();
+    }
+    
     room.global = true;
     room.tag = "global";
     await this.roomsRepository.save(room);
@@ -350,6 +356,28 @@ async unmuteMember(body) {
     return false;
   }
 }
+
+// ------------------------------------ MESSAGES --------------------------------
+
+// async  saveMessage(body) {
+
+//   const user1 = await this.memberRepository.findOne({where: { username: body.fromUsername, roomTag: body.tag}});
+//   if (!user1)
+//     return false;
+
+//   const user2 = await this.memberRepository.findOne({where: { username: body.toUsername, roomTag: body.tag}});
+//   if (!user2)
+//     return false;
+
+//   const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
+
+//   const newMessage = await this.messagesRepository.create();
+//   newMessage.from = user1.username;
+//   newMessage.to = user2.username;
+//   newMessage.room = room.tag;
+//   newMessage.owner = await this.userRepository.findOne({where: {username: body.fromUsername}});
+// }
+
 
   findAll() {
     return `This action returns all chat`;

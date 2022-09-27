@@ -1,5 +1,5 @@
 import User from "../../users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Room } from "./room.entity";
 
 @Entity()
@@ -8,12 +8,21 @@ export class Messages {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @CreateDateColumn()
+	created_at: Date;
+
+    @Column({nullable: true})
     text: string
 
-    // @ManyToOne(() => Room, room => room.messages)
-    // room:Room;
+    @Column({nullable: true})
+    from: string
+
+    @Column({nullable: true})
+    to: string
+
+    @ManyToOne(() => Room, room => room.messages)
+    room:Room;
 
     @ManyToOne(() => User, user => user.messages)
-    user:User;
+    owner:User;
 }

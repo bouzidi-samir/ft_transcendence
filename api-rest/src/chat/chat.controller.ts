@@ -72,9 +72,9 @@ export class ChatController {
 		return await this.service.acceptOneRoomInvitation(body);
 	}
 
-	@Post('/acceptAllRoomInvitation')
-	async acceptAllRoomInvitation(
-		@Body() body: any): Promise<any> { // username: string
-		return await this.service.acceptAllRoomInvitation(body);
-	}
+	// @Post('/acceptAllRoomInvitation')
+	// async acceptAllRoomInvitation(
+	// 	@Body() body: any): Promise<any> { // username: string
+	// 	return await this.service.acceptAllRoomInvitation(body);
+	// }
 }
