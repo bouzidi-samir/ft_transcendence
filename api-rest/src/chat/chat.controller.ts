@@ -61,20 +61,30 @@ export class ChatController {
     }
 
     @Post('/checkRoomInvitation')
-		async checkRoomInvitation(
-			@Body() body: any): Promise<any> { // username
+		async checkRoomInvitation(@Body() body: any): Promise<any> { // username
 			return await this.service.checkRoomInvitation(body);
 	}
 
     @Post('/acceptOneRoomInvitation')
-	async acceptOneRoomInvitation(
-		@Body() body: any): Promise<any> { // username, fromUsername, tag
+	async acceptOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
 		return await this.service.acceptOneRoomInvitation(body);
 	}
 
-	@Post('/acceptAllRoomInvitation')
-	async acceptAllRoomInvitation(
-		@Body() body: any): Promise<any> { // username: string
-		return await this.service.acceptAllRoomInvitation(body);
-	}
+	// @Post('/acceptAllRoomInvitation')
+	// async acceptAllRoomInvitation(
+	// 	@Body() body: any): Promise<any> { // username: string
+	// 	return await this.service.acceptAllRoomInvitation(body);
+	// }
+
+    // ------------------------- Messages ------------------------------------------------
+
+    @Post('saveMessage')
+    async saveMessage(@Body() body:any): Promise<any> { // username, tag
+        return await this.service.saveMessage(body);
+    }
+
+    @Post('getRoomMessages')
+    async getRoomMessages(@Body() body:any): Promise<any> {
+        return await this.service.getRoomMessages(body);
+    }
 }

@@ -351,6 +351,30 @@ async unmuteMember(body) {
   }
 }
 
+async saveMessage(body) {
+
+  const member = await this.memberRepository.findOne({where: {username: body.username, roomTag: body.tag}});
+  if (!member)
+    return false;
+  const user = await this.userRepository.findOne({where: {username: body.username}});
+  const message = await this.messagesRepository.create();
+  message.fromUsername = body.username;
+  message.text = body.text;
+  message.roomTag = body.tag;
+  message.owner = user;
+  await this.messagesRepository.save(message);
+  return message;
+}
+
+async getRoomMessages(body) {
+
+  const roomMessages = await this.messagesRepository.find({where: {roomTag: body.tag}});
+  if (!roomMessages[0])
+    return false;
+  return roomMessages;
+  
+}
+
   findAll() {
     return `This action returns all chat`;
   }
