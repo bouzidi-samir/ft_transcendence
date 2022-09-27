@@ -20,6 +20,15 @@ export class Relations {
     acceptFriendship: boolean
 
     @Column({default: false})
+    roomRequest: boolean
+
+    @Column({default: false})
+    acceptRoom: boolean
+
+    @Column({nullable: true})
+    roomTag: string
+
+    @Column({default: false})
     blocked: boolean
 
     @Column({default: false})

@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { Rooms } from './entities/rooms.entity';
 import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
+import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
 
 @Injectable()
 export class ChatService {
@@ -176,6 +177,80 @@ export class ChatService {
       else {
         return false;
       }
+  }
+
+  async roomInvitation(body) {
+
+    const sender = await this.memberRepository.findOne({where: {username: body.senderName, roomTag: body.tag}});
+    if (!sender)
+      return false;
+    const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
+    if (!receiver)
+      return false;
+
+    const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName, roomTag: body.tag}})
+    if (relation){
+      if (relation.roomRequest == false) {
+        relation.roomRequest = true;
+        relation.roomTag = body.tag;
+        await this.relationsRepository.save(relation);
+        return relation;
+      }
+    }
+    else {
+
+      const newRelation = await this.relationsRepository.create();
+      newRelation.fromUsername = body.senderName;
+      newRelation.toUsername = body.receiverName;
+      newRelation.roomRequest = true;
+      newRelation.roomTag = body.tag;
+      newRelation.owner = receiver;
+      await this.relationsRepository.save(newRelation);
+      return newRelation;
+
+    }
+    
+  }
+
+  async checkRoomInvitation(body) {
+
+    const invitations = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true}]});
+    return invitations ;
+  }
+
+  async acceptOneRoomInvitation(body) {
+
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, roomRequest: true, roomTag: body.tag} ]});
+    if (!request)
+      return false;
+    if (request.acceptRoom == true)
+      return true;
+
+    const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
+    if (!requester)
+      return false;
+
+    request.acceptRoom = true;
+    await this.relationsRepository.save(request);
+
+    const newMember = await this.memberRepository.create();
+    const invited = await this.userRepository.findOne({where: {username: body.username}})
+    newMember.username = body.username;
+    newMember.userId = invited.id;
+    newMember.roomTag = body.tag;
+    newMember.password = requester.password;
+    await this.memberRepository.save(newMember);
+    return request;
+  }
+
+  async acceptAllRoomInvitation(body) {
+
+    const requests = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true} ]});
+    for (let i = 0; i < requests.length; i++){
+        requests[i].acceptRoom = true;
+        await this.relationsRepository.save(requests[i]);
+    }
+    return requests;
   }
 
   async blockMember(body) {

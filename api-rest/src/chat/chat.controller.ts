@@ -50,8 +50,31 @@ export class ChatController {
         return this.service.muteMember(body);
     }
 
-    @Post('/unmuteMember') // params: username: string, toUnmuteUsername: string
+    @Post('/unmuteMember') // tag, username, toUnmuteUsername
 	async unmuteMember(@Body() body: any): Promise<any>  {
 		return await this.service.unmuteMember(body);
+	}
+
+    @Post('roomInvitation')
+    async roomInvitation(@Body() body: any): Promise<any> {
+        return await this.service.roomInvitation(body);
+    }
+
+    @Post('/checkRoomInvitation')
+		async checkRoomInvitation(
+			@Body() body: any): Promise<any> { // username
+			return await this.service.checkRoomInvitation(body);
+	}
+
+    @Post('/acceptOneRoomInvitation')
+	async acceptOneRoomInvitation(
+		@Body() body: any): Promise<any> { // username, fromUsername, tag
+		return await this.service.acceptOneRoomInvitation(body);
+	}
+
+	@Post('/acceptAllRoomInvitation')
+	async acceptAllRoomInvitation(
+		@Body() body: any): Promise<any> { // username: string
+		return await this.service.acceptAllRoomInvitation(body);
 	}
 }

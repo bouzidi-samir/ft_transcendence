@@ -77,17 +77,28 @@ export class UsersService {
 
         const sender = await this.userRepository.findOne({where: {username: body.senderName}});
         const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
+        const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName}})
         
-        const relation = await this.relationsRepository.create();
+        if (relation){
 
+            if(relation.friendshipRequest == true)
+                return true;
+
+            relation.friendshipRequest = true;
+            await this.relationsRepository.save(relation);
+            return sender.username;
+        }
+        else {
+
+        const relation = await this.relationsRepository.create();
         relation.owner = receiver; // le receiver est owner de la relation, qd il check ses relations il decide d'accepter ou pas.
         relation.fromUsername = sender.username;
         relation.toUsername = receiver.username;
         relation.friendshipRequest = true;
-
         await this.relationsRepository.save(relation);
-
         return sender.username;
+
+        }
     }
 
     async checkFriendshipRequest(body) {
@@ -100,6 +111,8 @@ export class UsersService {
     async acceptOneFrienshipRequest(body) {
 
         const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.from, friendshipRequest: true} ]});
+            if (!request)
+        return false;
         request.acceptFriendship = true;
         await this.relationsRepository.save(request);
         return request;
