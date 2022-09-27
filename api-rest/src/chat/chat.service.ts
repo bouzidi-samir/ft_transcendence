@@ -23,6 +23,9 @@ export class ChatService {
   
   ){}
 
+  getAllRooms(): Promise<any[]> {
+    return this.roomsRepository.find() 
+  }
 
   async createRoom(body) {
 

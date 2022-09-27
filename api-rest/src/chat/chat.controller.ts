@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Get, Body, Controller, Inject, Post } from "@nestjs/common";
 import { ChatService } from "./chat.service";
 
 @Controller('chat')
@@ -9,6 +9,10 @@ export class ChatController {
     @Inject(ChatService)
     private readonly service: ChatService
 
+    @Get('/rooms')
+	async getUsers(): Promise<any> {
+        return await this.service.getAllRooms();
+    }
 
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
