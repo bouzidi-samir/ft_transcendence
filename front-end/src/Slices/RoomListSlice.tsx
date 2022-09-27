@@ -8,7 +8,6 @@ const RoomlistSlice = createSlice({
     reducers: {
         setRoomlist : (state, action) => {
             state = [...action.payload];
-            console.log(state);
             return state;
         },
         },

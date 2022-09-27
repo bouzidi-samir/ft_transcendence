@@ -8,18 +8,28 @@ export default function Rooms() {
     const Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
-        
-    console.log(Roomlist);
+    
+    function handleRoom() : void {
+
+
+
+    }
+
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
             <button onClick={()=> setAddroom(true)} className="btn btn-primary" >+</button>
             {addroom ? <RoomAdd setAddroom={setAddroom} />: null}
-            {
-                Roomlist.map((room : any) => 
-                    <p>{room.tag}</p>
+            <div className='roomlist'>
+                {
+                    Roomlist.map((room : any) => 
+                        <div className='room' key={room.id}>
+                            <div onClick={handleRoom} className='room-avatar'></div>
+                            <p>{room.tag}</p>
+                        </div>
                 )
-            }
+                }
+            </div>
         </div>
     );
 }

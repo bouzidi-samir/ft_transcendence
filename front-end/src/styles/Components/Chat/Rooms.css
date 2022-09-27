@@ -13,3 +13,33 @@
     width: 15%;
     margin-left: 42%;
 }
+
+.rooms-content p {
+    color: white;
+}
+
+.roomlist {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    flex-wrap: wrap;
+}
+
+.room {
+    display: flex;
+    height: 10%;
+    width: 100%;
+    border: solid black 1px;
+    cursor: pointer;
+}
+
+.room-avatar {
+    background-image: url(../../../styles/img/avatar.png);
+    background-position: center;
+    background-size: cover;
+    width: 20%;
+    height: 100%;
+    margin-right: 4%;
+}
+
