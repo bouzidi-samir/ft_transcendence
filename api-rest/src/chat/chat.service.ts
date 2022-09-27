@@ -243,15 +243,19 @@ export class ChatService {
     return request;
   }
 
-  async acceptAllRoomInvitation(body) {
+  // async acceptAllRoomInvitation(body) {
 
-    const requests = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true} ]});
-    for (let i = 0; i < requests.length; i++){
-        requests[i].acceptRoom = true;
-        await this.relationsRepository.save(requests[i]);
-    }
-    return requests;
-  }
+  //   const requests = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true} ]});
+  //   for (let i = 0; i < requests.length; i++){
+  //       requests[i].acceptRoom = true;
+  //       await this.relationsRepository.save(requests[i]);
+  //       const newMember = await this.memberRepository.create();
+  //       newMember.username = body.username;
+  //       newMember.roomTag = requests[i].roomTag;
+  //       await this.memberRepository.save(newMember)
+  //   }
+  //   return requests;
+  // }
 
   async blockMember(body) {
 
