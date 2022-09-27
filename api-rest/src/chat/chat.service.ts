@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -69,7 +69,12 @@ export class ChatService {
 
   async createGlobalRoom(){
 
+    const room = await this.roomsRepository.findOne({where: {tag: "global"}});
+    if (room)
+      return false;
+    else{
     const room = await this.roomsRepository.create();
+    }
     room.global = true;
     room.tag = "global";
     await this.roomsRepository.save(room);
@@ -89,7 +94,12 @@ export class ChatService {
 
   async createMyFriendsRoom(body){
 
-    const room = await this.roomsRepository.create();
+    const room = await this.roomsRepository.findOne({where: {tag: "friends"}});
+    if (room)
+      return false;
+    else{
+      const room = await this.roomsRepository.create();
+    }
     room.friendly = true;
     room.tag = "friends";
     await this.roomsRepository.save(room);
