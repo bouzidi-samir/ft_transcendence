@@ -9,8 +9,20 @@ import { useEffect } from "react";
 export default function Home() {
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
-  
 
+  useEffect(() => {
+    let url = "http://localhost:4000/chat/createGlobalRoom";
+    const response = fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'true'
+      },
+    }
+    );
+  }, []
+  )
+  
   return (
     <>
       <Navbar/>

@@ -68,10 +68,15 @@ export class ChatService {
 
   async createGlobalRoom(){
 
-    const room = await this.roomsRepository.create();
-    room.global = true;
-    room.tag = "global";
-    await this.roomsRepository.save(room);
+    const room = await this.roomsRepository.findOne({where: {tag: "global"}});
+    if (room)
+      return false;
+    else{
+      const room = await this.roomsRepository.create();
+      room.global = true;
+      room.tag = "global";
+      await this.roomsRepository.save(room);
+    }
     const users = await this.userRepository.find();
 
     for (let i = 0; i < users.length; i++) {
