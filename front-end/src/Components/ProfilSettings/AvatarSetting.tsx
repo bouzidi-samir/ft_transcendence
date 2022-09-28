@@ -1,4 +1,4 @@
-import "../../styles/Components/AvatarSetting.css"
+import "../../styles/Components/ProfilSettings/AvatarSetting.css"
 import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";

@@ -1,4 +1,4 @@
-import '../../styles/Components/Dashboard.css'
+import '../../styles/Components/Home/Dashboard.css'
 import ProfilCard from './ProfilCard';
 import Stats from './Stats';
 import Users from './Users';

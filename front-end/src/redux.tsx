@@ -2,33 +2,9 @@ import { configureStore, createSlice, combineReducers} from "@reduxjs/toolkit";
 import { persistStore} from "redux-persist";
 import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "redux-persist/lib/storage";
-
-const User = {
-    id: "",
-    username: "",
-    nickname: "",
-    registred:"",
-    avatar_url: "",
-    status: "",
-};
-
-const UserSlice = createSlice({
-    name: "User",
-    initialState: User,
-    reducers: {
-
-        setUser : (state, action) => {
-            state.id = action.payload.id;
-            state.username = action.payload.username;
-            state.nickname = action.payload.nickname;
-            state.registred = action.payload.registred;
-            state.avatar_url = action.payload.avatar_url;
-            state.status = action.payload.status;
-        },
-        },
-    },
-);
-
+import { UserSlice } from "./Slices/UserSlice";
+import { UserlistSlice } from "./Slices/UserlistSlice";
+import { RoomlistSlice } from "./Slices/RoomListSlice";
 
 const persistConfig = {
     key:'root',
@@ -38,6 +14,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
     User: UserSlice.reducer,
+    UserList: UserlistSlice.reducer,
+    RoomList : RoomlistSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer);

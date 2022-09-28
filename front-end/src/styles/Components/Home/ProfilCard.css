@@ -26,7 +26,7 @@
     margin-top: 5%;
     margin-left: 15%;
     
-    background-image: url(../img/avatar.png);
+    background-image: url(../../img/avatar.png);
     background-position: center;
     background-size: contain;
     border: solid black 1px;
@@ -39,7 +39,7 @@
     height: 10%;
     top: -7%;
     left: 10%;
-    background-image: url(../../styles/img/icones/camera.png);
+    background-image: url(../../../styles/img/icones/camera.png);
     background-position: center;
     background-size: cover;
     border: solid white 2px;

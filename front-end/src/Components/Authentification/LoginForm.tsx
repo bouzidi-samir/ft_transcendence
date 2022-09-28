@@ -1,19 +1,23 @@
-import "../../styles/Components/LoginForm.css"
+import "../../styles/Components/Authentification/LoginForm.css"
 import React from "react";
 import { getSession, signIn, useSession } from 'next-auth/react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { useEffect} from "react";
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 
 
 export default function AuthForm() {
-  
-   const handleFourtyTwo = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		
+
+  const Userlist = useSelector((state: any) => state.Userlist);
+  const dispatch = useDispatch();
+    
+  const handleFourtyTwo = async (e : any) => {	
   e.preventDefault()
   const {hostname, port} = document.location;
-   let request = await fetch('http://localhost:4000/auth/authorize', {
+   let request = await fetch(`http://${hostname}:4000/auth/authorize`, {
 			method: "POST",
 			headers: {
-		//		'Authorization': `Bearer ${session}`,
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})

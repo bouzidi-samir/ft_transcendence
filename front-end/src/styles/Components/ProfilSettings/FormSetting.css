@@ -13,7 +13,7 @@
     height: 50%;
     margin-left: 25%;
     margin-top: 4%;
-    margin-bottom: 4%;
+    margin-bottom: 0%;
   
     
     border: solid black 1px;
@@ -23,26 +23,27 @@
     position: relative;
     width: 9%;
     height: 10%;
-    top: -10%;
+    top: -7%;
     left: 12%;
-    background-image: url(../../styles/img/icones/camera.png);
+    background-image: url(../../../styles/img/icones/camera.png);
     background-position: center;
     background-size: cover;
     border: solid black 2px;
     border-radius: 80%;
     margin-left: 40%;
+    cursor: pointer;
 }
 
 .form-setting .set-nickname {
     position: relative;
     width: 6%;
     height: 7%;
-    top: -10%;
+    top: -7%;
     left: 25%;
-    background-image: url(../../styles/img/icones/modif.png);
+    background-image: url(../../../styles/img/icones/modif.png);
     background-position: center;
     background-size: cover;
-    
+    cursor: pointer;
     border-radius: 80%;
     margin-left: 40%;
 }
@@ -53,7 +54,7 @@
     height: 10%;
     top: -15%;
     left: 12%;
-    background-image: url(../../styles/img/icones/camera.png);
+    background-image: url(../../../styles/img/icones/camera.png);
     background-position: center;
     background-size: cover;
     border: solid blue 2px;
@@ -71,7 +72,7 @@
     border: solid white 1px;
     width: 30%;
     margin-left: 35%;
-    margin-bottom: 2%;
+    margin-bottom: 0%;
     padding-bottom: 1%;
     font-size: 160%;
 }
@@ -84,7 +85,7 @@
     width: 30%;
     height: 8%;
     margin-left: 35%;
-    margin-bottom: 2%;
+    margin-bottom: 0%;
     font-size: 130%;
     text-align: center;
 }

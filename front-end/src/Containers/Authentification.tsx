@@ -1,30 +1,23 @@
 import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/Authentification/LoginForm"
 import React from "react";
-import { useEffect, useState, useContext} from 'react';
-import Particle from "../Components/Particle";
-import {BrowserRouter as Router, Route, Link, useSearchParams, Navigate} from 'react-router-dom';
+import { useEffect, useState} from 'react';
+import {useSearchParams, Navigate} from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
 export default function Authentification() {
   
-  const User = useSelector((state: any) => state.User);
   const dispatch = useDispatch();
   const [params] = useSearchParams();
-  const [loading, setLoading] = useState(false);
   const [resgistred, setRegistred] = useState(false);
-  const [username, setUsername] = useState(""); 
   
-
   useEffect(() => {
     const code = params.get("code")
-		const {hostname, port} = document.location
-		
+		const {hostname, port} = document.location;
     if (code)
 		{
-      setLoading(true)
-			const request = fetch(`http://localhost:4000/auth/token/${code}`, {
+			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -38,7 +31,6 @@ export default function Authentification() {
           type: "User/setUser",
           payload: response,
         });
-        setUsername(response.username);
         setRegistred(true);
 			}))
 			request.catch(e => {console.error(e)})
@@ -51,12 +43,8 @@ export default function Authentification() {
   return (
     <div className="auth-content">
        <div className="auth-field">
-       
             <LoginForm/>
-         
         </div>        
-
-
     </div>
   )
 }
