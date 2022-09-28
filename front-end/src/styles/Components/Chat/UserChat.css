@@ -25,7 +25,13 @@
 .online-list  :hover {
    
     border: solid white 1px;
+    text-decoration: none;
+}
+
+h2  :hover {
    
+    border: solid red 1px;
+    text-decoration: none;
 }
 
 .online-avatar {

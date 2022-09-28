@@ -8,6 +8,7 @@ const UserlistSlice = createSlice({
     reducers: {
         setUserlist : (state, action) => {
             state = [...action.payload];
+            return state;
         },
         },
     },
