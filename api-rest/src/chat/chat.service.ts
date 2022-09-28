@@ -73,11 +73,11 @@ export class ChatService {
     if (room)
       return false;
     else{
-    const room = await this.roomsRepository.create();
+      const room = await this.roomsRepository.create();
+      room.global = true;
+      room.tag = "global";
+      await this.roomsRepository.save(room);
     }
-    room.global = true;
-    room.tag = "global";
-    await this.roomsRepository.save(room);
     const users = await this.userRepository.find();
 
     for (let i = 0; i < users.length; i++) {
