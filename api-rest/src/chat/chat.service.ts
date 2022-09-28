@@ -27,6 +27,9 @@ export class ChatService {
   
   ){}
 
+  getAllRooms(): Promise<any[]> {
+    return this.roomsRepository.find() 
+  }
 
   async createRoom(body) {
 
@@ -141,6 +144,11 @@ export class ChatService {
         return 'already in';
       }
       else{
+        const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
+        for (let i = 0; i < rooms.length; i++) {
+          rooms[i].in = false;
+          await this.memberRepository.save(rooms[i]);
+        }
         alreadyMember.in = true;
         await this.memberRepository.save(alreadyMember);
         return 'in';
@@ -164,6 +172,13 @@ export class ChatService {
     const user = await this.userRepository.findOne({where: { username: body.username}});
     if (user == null)
       return 'no user';
+
+    const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
+    for (let i = 0; i < rooms.length; i++) {
+      rooms[i].in = false;
+      await this.memberRepository.save(rooms[i]);
+    }
+
     newMember.roomTag = body.tag;
     newMember.userId = user.id;
     newMember.username = body.username;
@@ -173,6 +188,14 @@ export class ChatService {
 
     return newMember;
 
+  }
+
+  async getActiveRoom(body) {
+
+    const room = await this.memberRepository.findOne({where: {username: body.username, in: true}});
+    if (!room)
+      return false;
+    return room.roomTag;
   }
 
   async leaveRoom(body) {

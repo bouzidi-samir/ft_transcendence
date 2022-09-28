@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
 import { ChatService } from "./chat.service";
 
 @Controller('chat')
@@ -9,6 +9,10 @@ export class ChatController {
     @Inject(ChatService)
     private readonly service: ChatService
 
+    @Get('/rooms')
+	async getUsers(): Promise<any> {
+        return await this.service.getAllRooms();
+    }
 
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
@@ -29,6 +33,10 @@ export class ChatController {
         return this.service.joinRoom(body);
     }
 
+    @Get('/getActiveRoom') // username
+    async getActiveRoom(@Body() body:any): Promise<any> {
+        return this.service.getActiveRoom(body);
+    }
 
     @Post('/leaveRoom') // tag, username
     async leaveRoom(@Body() body: any): Promise<any> {
