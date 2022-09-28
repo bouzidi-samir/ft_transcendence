@@ -49,6 +49,11 @@ export class ChatController {
         return this.service.adminizer(body);
     }
 
+    @Post('setPassword')
+    async setPassword(@Body() body:any):Promise<any> { // username, tag, action(change ou cancel), password
+        return this.service.setPassword(body);
+    }
+
     @Post('/leaveRoom') // tag, username
     async leaveRoom(@Body() body: any): Promise<any> {
         return this.service.leaveRoom(body);

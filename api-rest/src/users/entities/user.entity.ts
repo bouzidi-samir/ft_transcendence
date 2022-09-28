@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany} from 'typeorm';
 import { Relations } from './relations.entity';
-import { Room } from 'src/chat/entities/room.entity';
 import { Messages } from '../../chat/entities/messages.entity';
 
 @Entity('user')

@@ -1,6 +1,5 @@
 import User from "../../users/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Room } from "./room.entity";
 
 @Entity()
 export class Messages {
@@ -21,7 +20,7 @@ export class Messages {
     roomTag: string
 
     // @ManyToOne(() => Room, room => room.messages)
-    // room:Room;
+    // room:Rooms;
 
     @ManyToOne(() => User, user => user.messages)
     owner:User;

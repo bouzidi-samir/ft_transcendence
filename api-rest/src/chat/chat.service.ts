@@ -92,6 +92,7 @@ export class ChatService {
       oneMember.userId = users[i].id;
       oneMember.username = users[i].username;
       oneMember.roomTag = 'global';
+      oneMember.room = room;
       await this.memberRepository.save(oneMember);
   }
   return users;
@@ -225,6 +226,36 @@ export class ChatService {
     
   }
 
+  async setPassword(body) {
+
+    const owner = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag, owner: true }]});
+    if (!owner)
+      return false;
+    const room = await this.roomsRepository.findOne({where: {owner: body.username, tag:body.tag}})
+    if (body.action == "change"){
+      const salt = await bcrypt.genSalt();
+      room.password = await bcrypt.hash(body.password, salt);
+      await this.roomsRepository.save(room);
+      const members = await this.memberRepository.find({where: {roomTag: body.tag}})
+      for (let i = 0; i < members.length; i++) {
+        members[i].password = room.password;
+        await this.memberRepository.save(members[i]);
+      }
+      return room;
+    }
+    if (body.action ==  "cancel"){
+      room.password = null;
+      await this.roomsRepository.save(room);
+      const members = await this.memberRepository.find({where: {roomTag: body.tag}})
+      for (let i = 0; i < members.length; i++) {
+        members[i].password = null;
+        await this.memberRepository.save(members[i]);
+      }
+      return room;
+    }
+    return 'action required';
+  }
+
   async leaveRoom(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
@@ -245,7 +276,7 @@ export class ChatService {
     if (!sender)
       return false;
     const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
-    if (room.password && sender.admin == false)
+    if (room.private && sender.admin == false)
       return false;
     const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
     if (!receiver)
