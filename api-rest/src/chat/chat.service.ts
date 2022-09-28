@@ -9,6 +9,7 @@ import { Rooms } from './entities/rooms.entity';
 import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
 import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
+import { RuleTester } from 'eslint';
 
 @Injectable()
 export class ChatService {
@@ -47,8 +48,9 @@ export class ChatService {
     creator.username = user.username;
     creator.userId = user.id;
     creator.admin = true;
+    creator.owner = true;
     creator.roomTag = body.tag;
-    
+    creator.room = room;
 
     if (body.public == true){
       room.public = true;
@@ -57,6 +59,7 @@ export class ChatService {
       room.private = true;
     }
     room.tag = body.tag;
+    room.owner = user.username;
   
     if (body.password != null){
       const salt = await bcrypt.genSalt();
@@ -64,8 +67,8 @@ export class ChatService {
       creator.password = room.password;
     }
     
-    await this.memberRepository.save(creator);
     await this.roomsRepository.save(room);
+    await this.memberRepository.save(creator);
 
     return {room, creator};
   }
@@ -133,15 +136,25 @@ export class ChatService {
 
   }
 
+  async checkIfMember(body) {
+
+    const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    if (alreadyMember)
+      return true;
+    else{
+        return false;
+    }
+  }
+
   async joinRoom(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (alreadyMember){
       if (alreadyMember.blocked == true){
-      return 'blocked';
+      return false;
       }
       else if (alreadyMember.in == true){
-        return 'already in';
+        return true;
       }
       else{
         const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
@@ -151,7 +164,7 @@ export class ChatService {
         }
         alreadyMember.in = true;
         await this.memberRepository.save(alreadyMember);
-        return 'in';
+        return true;
       }
     }
 
@@ -198,6 +211,20 @@ export class ChatService {
     return room.roomTag;
   }
 
+  async adminizer(body) {
+
+    const owner = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag, owner: true }]});
+    if (!owner)
+      return false;
+    const target = await this.memberRepository.findOne({where: [{ username: body.targetName, roomTag: body.tag }]});
+    if (!target)
+      return false;
+    target.admin = true;
+    await this.memberRepository.save(target);
+    return true;
+    
+  }
+
   async leaveRoom(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
@@ -216,6 +243,9 @@ export class ChatService {
 
     const sender = await this.memberRepository.findOne({where: {username: body.senderName, roomTag: body.tag}});
     if (!sender)
+      return false;
+    const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
+    if (room.password && sender.admin == false)
       return false;
     const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
     if (!receiver)
@@ -240,9 +270,7 @@ export class ChatService {
       newRelation.owner = receiver;
       await this.relationsRepository.save(newRelation);
       return newRelation;
-
     }
-    
   }
 
   async checkRoomInvitation(body) {
@@ -262,6 +290,9 @@ export class ChatService {
     const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
     if (!requester)
       return false;
+    const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
+    if (!room)
+      return false;
 
     request.acceptRoom = true;
     await this.relationsRepository.save(request);
@@ -272,6 +303,7 @@ export class ChatService {
     newMember.userId = invited.id;
     newMember.roomTag = body.tag;
     newMember.password = requester.password;
+    newMember.room = room;
     await this.memberRepository.save(newMember);
     return request;
   }

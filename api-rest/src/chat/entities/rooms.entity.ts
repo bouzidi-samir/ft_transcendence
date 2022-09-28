@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Member } from "./member.entity";
 
 @Entity()
 export class Rooms {
@@ -23,5 +24,8 @@ export class Rooms {
 
     @Column({nullable: true})
     password:string;
+
+    @Column({nullable: true})
+    owner: string;
     
 }

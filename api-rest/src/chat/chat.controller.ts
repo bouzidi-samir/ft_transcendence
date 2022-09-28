@@ -28,6 +28,12 @@ export class ChatController {
     async createMyFriendsRoom(@Body() body: any): Promise<any> {
         return this.service.createMyFriendsRoom(body);
     }
+
+    @Post('/checkIfMember')
+    async checkIfMember(@Body() body:any): Promise<any> {
+        return this.service.checkIfMember(body);
+    }
+
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);
@@ -36,6 +42,11 @@ export class ChatController {
     @Get('/getActiveRoom') // username
     async getActiveRoom(@Body() body:any): Promise<any> {
         return this.service.getActiveRoom(body);
+    }
+
+    @Post('/adminizer')
+    async adminizr(@Body() body:any): Promise<any> { // username, tag, targetName
+        return this.service.adminizer(body);
     }
 
     @Post('/leaveRoom') // tag, username
