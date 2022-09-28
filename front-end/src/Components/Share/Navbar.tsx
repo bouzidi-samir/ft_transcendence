@@ -1,7 +1,15 @@
 import '../../styles/Components/Share/Navbar.css';
 import { Link } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import { useSelector } from "react-redux";
 
 function Navbar() {
+    const User = useSelector((state: any) => state.User);
+
+    function logout () : void {
+        console.log('logout');
+    }
+
     return (
         <div className="Navbar">
             <div className="container-fluid">
@@ -29,7 +37,7 @@ function Navbar() {
                         </Link>
                         </li> 
                         <li>   
-                        <Link className="nav_link" to="/ProfilSettings">
+                        <Link  className="nav_link" to="/ProfilSettings">
                             <div 
                             className='profil-icon'></div>
                         </Link>
@@ -45,7 +53,7 @@ function Navbar() {
                         </Link>
                         </li>
                         <li>   
-                        <Link className="nav_link" to="/">
+                        <Link onClick={logout} className="nav_link" to="/">
                             <div className='logout-icon'></div>
                         </Link>
                         </li>

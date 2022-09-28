@@ -23,6 +23,10 @@ const UserSlice = createSlice({
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
         },
+        logout : (state, action) => {
+            state = User;
+            return state;
+        }
         },
     },
 );
