@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Get, Body, Controller, Inject, Post } from "@nestjs/common";
-=======
-import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
->>>>>>> 962a0f5478f19803f435cbb485fc5202e3263d44
 import { ChatService } from "./chat.service";
 
 @Controller('chat')

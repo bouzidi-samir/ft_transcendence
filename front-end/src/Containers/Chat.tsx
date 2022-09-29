@@ -11,21 +11,6 @@ import {useDispatch} from 'react-redux';
 export default function Chat() {
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    let url = "http://localhost:4000/chat/createGlobalRoom";
-    const response = fetch(url, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'cors': 'true'
-      },
-    }
-    );
-  }, []
-  )
->>>>>>> 962a0f5478f19803f435cbb485fc5202e3263d44
 
   useEffect(() => {
     let url = "http://localhost:4000/chat/rooms";

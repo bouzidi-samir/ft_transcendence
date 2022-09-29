@@ -13,8 +13,4 @@ const RoomSlice = createSlice({
         },
     },
 );
-<<<<<<< HEAD
-
-=======
->>>>>>> 962a0f5478f19803f435cbb485fc5202e3263d44
 export {RoomSlice, Room};
