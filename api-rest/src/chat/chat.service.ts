@@ -282,7 +282,8 @@ export class ChatService {
     if (!receiver)
       return false;
 
-    const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName, roomTag: body.tag}})
+
+    const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName}})
     if (relation){
       if (relation.roomRequest == false) {
         relation.roomRequest = true;
@@ -374,11 +375,17 @@ export class ChatService {
       member.username = body.toBlockUsername;
       member.userId = user.id;
       member.blocked = true;
+      const millis = Date.now() + (body.minutes * 60 * 1000);
+      existingMember.chronos = Math.floor(millis / 1000);
       await this.memberRepository.save(member);
       return member;
     }
     
     existingMember.blocked = true;
+    if (existingMember.muted == true)
+      existingMember.muted = false;
+    const millis = Date.now() + (body.minutes * 60 * 1000);
+    existingMember.chronos = Math.floor(millis / 1000);
     await this.memberRepository.save(existingMember);
     return existingMember;
     
@@ -415,6 +422,8 @@ async muteMember(body) {
   const existingMember = await this.memberRepository.findOne({where: { username: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
     return false;
+  if (existingMember.blocked == true)
+    return 'Already blocked';
   
   const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
   if (oneAdmin == null)
