@@ -45,7 +45,7 @@ export class ChatController {
     }
 
     @Post('/adminizer')
-    async adminizr(@Body() body:any): Promise<any> { // username, tag, targetName
+    async adminizer(@Body() body:any): Promise<any> { // username, tag, targetName
         return this.service.adminizer(body);
     }
 
@@ -69,7 +69,7 @@ export class ChatController {
 		return await this.service.unblockMember(body);
 	}
 
-    @Post('/muteMember') // tag, username, toMuteUsername
+    @Post('/muteMember') // tag, username, toMuteUsername, minutes (minutes to mute)
     async muteMember( @Body() body: any): Promise<any> {
         return this.service.muteMember(body);
     }
@@ -78,6 +78,11 @@ export class ChatController {
 	async unmuteMember(@Body() body: any): Promise<any>  {
 		return await this.service.unmuteMember(body);
 	}
+
+    @Post('/checkMute')
+    async checkMute(@Body() body:any): Promise<any> {
+        return await this.service.checkMute(body);
+    }
 
     @Post('roomInvitation')
     async roomInvitation(@Body() body: any): Promise<any> {

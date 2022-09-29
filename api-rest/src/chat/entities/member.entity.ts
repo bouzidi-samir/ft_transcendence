@@ -32,6 +32,9 @@ export class Member {
     muted: boolean;
 
     @Column({nullable: true})
+    chronos: number
+
+    @Column({nullable: true})
     roomTag: string;
 
     @Column({nullable: true})

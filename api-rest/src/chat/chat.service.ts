@@ -421,9 +421,30 @@ async muteMember(body) {
     return false;
  
   existingMember.muted = true;
+  const millis = Date.now() + (body.minutes * 60 * 1000);
+  existingMember.chronos = Math.floor(millis / 1000);
   await this.memberRepository.save(existingMember);
   return existingMember;
   
+}
+
+async checkMute(body) {
+
+  const existingMember = await this.memberRepository.findOne({where: { username: body.username, roomTag: body.tag}});
+  if (existingMember == null)
+    return false;
+
+  const millis = Date.now();
+  const checkTime =  Math.floor(millis / 1000);
+  if (checkTime < existingMember.chronos)
+    return true;
+  else {
+    existingMember.muted = false;
+    existingMember.chronos = 0;
+    await this.memberRepository.save(existingMember);
+    return false;
+  }
+
 }
 
 async unmuteMember(body) {
@@ -439,6 +460,7 @@ async unmuteMember(body) {
   const existingMember = await this.memberRepository.findOne({where: { username: body.toUnmuteUsername, roomTag: body.tag}});
   if (existingMember){
     existingMember.muted = false;
+    existingMember.chronos = 0;
     await this.memberRepository.save(existingMember);
     return existingMember;
   }
