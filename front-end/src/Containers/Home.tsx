@@ -10,6 +10,7 @@ export default function Home() {
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   useEffect(() => {
     let url = "http://localhost:4000/chat/createGlobalRoom";
     const response = fetch(url, {
@@ -23,6 +24,8 @@ export default function Home() {
   }, []
   )
   
+=======
+>>>>>>> 962a0f5478f19803f435cbb485fc5202e3263d44
   return (
     <>
       <Navbar/>

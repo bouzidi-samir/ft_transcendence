@@ -1,6 +1,5 @@
 import User from "../../users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Room } from "./room.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Messages {
@@ -8,12 +7,21 @@ export class Messages {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @CreateDateColumn()
+	created_at: Date;
+
+    @Column({nullable: true})
     text: string
 
+    @Column({nullable: true})
+    fromUsername: string
+
+    @Column({nullable: true})
+    roomTag: string
+
     // @ManyToOne(() => Room, room => room.messages)
-    // room:Room;
+    // room:Rooms;
 
     @ManyToOne(() => User, user => user.messages)
-    user:User;
+    owner:User;
 }

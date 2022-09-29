@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Room } from "./room.entity";
+import { Rooms } from "./rooms.entity";
 
 @Entity()
 export class Member {
@@ -14,6 +14,9 @@ export class Member {
     username: string;
 
     @Column({default: false})
+    owner: boolean;
+
+    @Column({default: false})
     admin: boolean;
 
     @Column({default: false})
@@ -25,10 +28,20 @@ export class Member {
     @Column({default: false})
     blocked: boolean;
 
+    @Column({default: false})
+    muted: boolean;
+
+    @Column({nullable: true})
+    chronos: number
+
     @Column({nullable: true})
     roomTag: string;
 
     @Column({nullable: true})
     password:string;
+
+    @ManyToOne(() => Rooms)
+    @JoinColumn()
+	room:Rooms;
 
 }

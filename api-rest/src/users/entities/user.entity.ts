@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany} from 'typeorm';
 import { Relations } from './relations.entity';
-import { Room } from 'src/chat/entities/room.entity';
 import { Messages } from '../../chat/entities/messages.entity';
 
 @Entity('user')
@@ -57,6 +56,6 @@ export default class User {
 	@JoinColumn()
 	relations:Relations[];
 
-	@OneToMany(() => Messages, (messages) => messages.user, {nullable: true})
+	@OneToMany(() => Messages, (messages) => messages.owner, {nullable: true})
 	messages:Messages[];
 }

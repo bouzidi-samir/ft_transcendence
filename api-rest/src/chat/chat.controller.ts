@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Get, Body, Controller, Inject, Post } from "@nestjs/common";
+=======
+import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
+>>>>>>> 962a0f5478f19803f435cbb485fc5202e3263d44
 import { ChatService } from "./chat.service";
 
 @Controller('chat')
@@ -24,13 +28,96 @@ export class ChatController {
         return this.service.createGlobalRoom();
     }
 
+    @Post('/createMyfriendsRoom') // username
+    async createMyFriendsRoom(@Body() body: any): Promise<any> {
+        return this.service.createMyFriendsRoom(body);
+    }
+
+    @Post('/checkIfMember')
+    async checkIfMember(@Body() body:any): Promise<any> {
+        return this.service.checkIfMember(body);
+    }
+
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);
     }
 
-    @Post('/blockMember') // tag, username, toBlockUsername
+    @Get('/getActiveRoom') // username
+    async getActiveRoom(@Body() body:any): Promise<any> {
+        return this.service.getActiveRoom(body);
+    }
+
+    @Post('/adminizer')
+    async adminizer(@Body() body:any): Promise<any> { // username, tag, targetName
+        return this.service.adminizer(body);
+    }
+
+    @Post('setPassword')
+    async setPassword(@Body() body:any):Promise<any> { // username, tag, action(change ou cancel), password
+        return this.service.setPassword(body);
+    }
+
+    @Post('/leaveRoom') // tag, username
+    async leaveRoom(@Body() body: any): Promise<any> {
+        return this.service.leaveRoom(body);
+    }
+
+    @Post('/blockMember') // tag, username, toBlockUsername, minutes (minutes to mute)
     async blockMember( @Body() body: any): Promise<any> {
         return this.service.blockMember(body);
-        }
+    }
+
+    @Post('/unblockMember') // params: username: string, toUnblockUsername: string
+	async unBlockMember(@Body() body: any): Promise<any>  {
+		return await this.service.unblockMember(body);
+	}
+
+    @Post('/muteMember') // tag, username, toMuteUsername, minutes (minutes to mute)
+    async muteMember( @Body() body: any): Promise<any> {
+        return this.service.muteMember(body);
+    }
+
+    @Post('/unmuteMember') // tag, username, toUnmuteUsername
+	async unmuteMember(@Body() body: any): Promise<any>  {
+		return await this.service.unmuteMember(body);
+	}
+
+    @Post('/checkMute')
+    async checkMute(@Body() body:any): Promise<any> {
+        return await this.service.checkMute(body);
+    }
+
+    @Post('roomInvitation')
+    async roomInvitation(@Body() body: any): Promise<any> {
+        return await this.service.roomInvitation(body);
+    }
+
+    @Post('/checkRoomInvitation')
+		async checkRoomInvitation(@Body() body: any): Promise<any> { // username
+			return await this.service.checkRoomInvitation(body);
+	}
+
+    @Post('/acceptOneRoomInvitation')
+	async acceptOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
+		return await this.service.acceptOneRoomInvitation(body);
+	}
+
+	// @Post('/acceptAllRoomInvitation')
+	// async acceptAllRoomInvitation(
+	// 	@Body() body: any): Promise<any> { // username: string
+	// 	return await this.service.acceptAllRoomInvitation(body);
+	// }
+
+    // ------------------------- Messages ------------------------------------------------
+
+    @Post('saveMessage')
+    async saveMessage(@Body() body:any): Promise<any> { // username, tag
+        return await this.service.saveMessage(body);
+    }
+
+    @Post('getRoomMessages')
+    async getRoomMessages(@Body() body:any): Promise<any> {
+        return await this.service.getRoomMessages(body);
+    }
 }
