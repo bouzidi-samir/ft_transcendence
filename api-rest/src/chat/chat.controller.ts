@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "src/auth/jwt-authguards";
 import { ChatService } from "./chat.service";
 
 @Controller('chat')
@@ -14,11 +15,13 @@ export class ChatController {
         return await this.service.getAllRooms();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/createGlobalRoom')
     async createGlobalRoom(): Promise<any> {
         return this.service.createGlobalRoom();
@@ -37,6 +40,12 @@ export class ChatController {
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);
+    }
+
+    @Post('/editRoom')
+    async editRoom(@Body() body:any): Promise<any> { // tag, status, + password
+
+        return this.service.editRoom(body);
     }
 
     @Get('/getActiveRoom') // username

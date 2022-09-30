@@ -1,9 +1,12 @@
 import { AuthService } from './auth.service';
 import {getUserAccessToken, getUserInformations }  from './utils';
-import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Inject, Body, Post, Header, StreamableFile, Res, ParseIntPipe, Delete, UseGuards, Request } from '@nestjs/common';
 import User from '../users/entities/user.entity';
 import { PassThrough } from 'stream';
 import { URLSearchParams } from 'url';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './jwt-authguards'
+import { LocalAuthGuard } from './local-auth.guards'
 
 @Controller('auth')
 export class AuthController {
@@ -36,14 +39,25 @@ export class AuthController {
 		let user = new User;
 		user.username = infos.login;
 		user.avatar_url = infos.image_url; 
+		user.email = infos.email;
+		user.isTwoFactorAuthenticationEnabled = false; // button to create
 		let finaluser = await this.service.addUser(user);
+		let token = await this.service.createToken(finaluser);
 		return JSON.stringify({
-			id: finaluser.id,
+			id: user.id,
 			username: finaluser.username,
 			nickname: finaluser.nickname,
 			registred: finaluser.registred,
 			avatar_url: finaluser.avatar_url,
-			status: finaluser.status,			
+			status: finaluser.status,
+			JWT_token: token,
+			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
 		});
+	}
+	
+	@UseGuards(JwtAuthGuard)
+  	@Get('profile')
+  	getProfile(@Request() req) {
+    return req.user;
 	}
 }

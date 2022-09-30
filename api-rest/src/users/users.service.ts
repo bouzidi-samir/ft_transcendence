@@ -70,6 +70,24 @@ export class UsersService {
         return rep;
     }
 
+    async updateToken(Token: string, userId: number): Promise<any> {
+		return this.userRepository.update(userId,
+			{JWT_token: Token}
+		);
+	}
+
+    async setTwoFactorAuthenticationSecret(secret: string, userId: number) { //save le secret dans la db
+        return this.userRepository.update(userId, {
+          twoFactorAuthenticationSecret: secret
+        });
+      }
+    
+    async turnOnTwoFactorAuthentication(userId: number) {
+        return this.userRepository.update(userId, {
+          isTwoFactorAuthenticationEnabled: false /////
+        });
+      }
+
     //------------------------------------------ FRIENDS -----------------------------------------------------
 
 

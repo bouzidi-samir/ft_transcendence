@@ -204,6 +204,31 @@ export class ChatService {
 
   }
 
+  async editRoom(body) {
+
+    const room = await this.roomsRepository.findOne({where: { tag:body.tag }});
+    if (room)
+      return false;
+    if (body.status == "private"){
+      room.private = true;
+      room.public = false;
+    }
+    else if (body.status == "public") {
+      room.public = true;
+      room.private = false;
+      if(room.password) {
+        const salt = await bcrypt.genSalt();
+        room.password = await bcrypt.hash(body.password, salt);
+        await this.roomsRepository.save(room);
+        const members = await this.memberRepository.find({where: {roomTag: body.tag}})
+        for (let i = 0; i < members.length; i++) {
+          members[i].password = room.password;
+          await this.memberRepository.save(members[i]);
+        }
+    }
+  }
+}
+
   async getActiveRoom(body) {
 
     const room = await this.memberRepository.findOne({where: {username: body.username, in: true}});

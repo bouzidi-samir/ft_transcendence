@@ -8,40 +8,35 @@ export default class User {
 	@PrimaryGeneratedColumn()
     id: number;
 
-    @Column({
-		type: 'varchar'
-	})
+    @Column({ type: 'varchar' })
     username: string;
 
-	@Column({
-		type: 'varchar',
-		default: 'offline',
-	})
+	@Column({ type: 'varchar', default: 'offline' })
     nickname: string;
 
-	@Column({
-		type: 'varchar',
-		default: 'false',
-	})
+	@Column({ nullable: true })
+	public twoFactorAuthenticationSecret?: string;
+
+	@Column({ default: false })
+	public isTwoFactorAuthenticationEnabled: boolean;
+
+	@Column({ type: 'varchar', unique: true })
+	email: string;
+	
+	@Column({ type: 'varchar', default: 'false'})
     registred: string;
 
-	@Column({
-		type: 'varchar',
-		default: 0
-	})
+	@Column({ type: 'varchar', default: 0 })
 	avatar_url: string;
 
-	@Column({
-		type: 'varchar',
-		default: 'offline',
-	})
+	@Column({ type: 'varchar', default: 'offline'})
 	status: string;
 
-	@Column({
-		type: 'varchar',
-		nullable: true
-	})
+	@Column({ type: 'varchar', nullable: true })
 	"42_token": string;
+
+	@Column({ type : 'text', nullable: true })
+	JWT_token: string;
 
 	@CreateDateColumn()
 	created_at: Date;
@@ -49,8 +44,6 @@ export default class User {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-		// @Column({default: false})
-	// admin: boolean;
 
 	@OneToMany(() => Relations, (relations) => relations.owner, {nullable: true})
 	@JoinColumn()

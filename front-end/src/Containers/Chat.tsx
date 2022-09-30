@@ -16,6 +16,7 @@ export default function Chat() {
     const response = fetch(url, {
       method: "POST",
       headers: {
+        'Authorization' : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1NlY29uZEZhY3RvckF1dGhlbnRpY2F0ZWQiOmZhbHNlLCJzdWIiOjEsImlhdCI6MTY2NDUzMDc3NCwiZXhwIjoxNjY0NjE3MTc0fQ.ywuIG2F9r_ZLyzEcIYKM7RkgMeMDwKD2LY66PDOq-_c`,
         'Content-Type': 'application/json',
         'cors': 'true'
       },
