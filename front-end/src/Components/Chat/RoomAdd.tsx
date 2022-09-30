@@ -6,30 +6,34 @@ import {useDispatch} from 'react-redux';
 
 export default function RoomAdd({setAddroom} :any) {
     const User = useSelector((state: any) => state.User);
+    const Roomlist = useSelector((state: any) => state.RoomList);
+    const dispatch = useDispatch();
     const [roomName, setRoomName] = useState<string>();
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(false);
+    const [password, setPassword] = useState(null);
 
     function handleForm(e: any) : void {
-        
         e.preventDefault();
+        let newRoom : any = {
+            nickname: User.nickname,
+            tag: roomName,
+            public: publicRoom,
+            private: privateRoom,
+            password: null
+        }
+        dispatch({
+            type: "Roomlist/addRoom",
+            payload: newRoom,
+          });
         let url = "http://localhost:4000/chat/createRoom"
-        let response = fetch(url, {
-            method : 'POST',
+        let response = fetch(url, {method : 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                nickname: User.nickname,
-                tag: roomName,
-               // public: publicRoom,
-               // private: privateRoom,
-                password: null
-            })
+            body: JSON.stringify(newRoom)
         }
-        ).then(rep => rep.json())
-        .then(data =>console.log(data))
-        .then(setAddroom(false))
+        ).then(setAddroom(false))
     }
 
     function handleChange(e : any, element : string) {
