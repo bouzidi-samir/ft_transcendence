@@ -9,7 +9,7 @@ import { Rooms } from './entities/rooms.entity';
 import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
 import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
-import { RuleTester } from 'eslint';
+//import { RuleTester } from 'eslint';
 
 @Injectable()
 export class ChatService {
@@ -38,7 +38,7 @@ export class ChatService {
     if (check)
       return false;
 
-    const user = await this.userRepository.findOne({where: { username: body.username}});
+    const user = await this.userRepository.findOne({where: { nickname: body.nickname}});
     if (!user)
       return false;
 
