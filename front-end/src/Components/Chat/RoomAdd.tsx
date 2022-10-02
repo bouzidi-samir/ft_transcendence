@@ -11,7 +11,7 @@ export default function RoomAdd({setAddroom} :any) {
     const [roomName, setRoomName] = useState<string>();
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(false);
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState("");
 
     function handleForm(e: any) : void {
         e.preventDefault();
@@ -20,7 +20,7 @@ export default function RoomAdd({setAddroom} :any) {
             tag: roomName,
             public: publicRoom,
             private: privateRoom,
-            password: null
+            password: password
         }
         dispatch({
             type: "Roomlist/addRoom",
@@ -32,8 +32,7 @@ export default function RoomAdd({setAddroom} :any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newRoom)
-        }
-        ).then(setAddroom(false))
+        }).then(setAddroom(false))
     }
 
     function handleChange(e : any, element : string) {
@@ -70,10 +69,10 @@ export default function RoomAdd({setAddroom} :any) {
                     {privateRoom ? 
                     <>
                     <label className='pass-label'>Mot de passe:</label> 
-                    <input type="password"></input> 
+                    <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} ></input> 
                     <br></br>
                     </>
-                    : null}
+                    : <br></br>}
                 <button onClick={handleForm}  className='btn btn-primary'>Valider</button>
             </form>
         </>

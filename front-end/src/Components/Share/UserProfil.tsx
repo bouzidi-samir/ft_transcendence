@@ -29,7 +29,6 @@ export default function UserProfil() {
                 <h3>{user.nickname}</h3>
                 <button className="btn btn-primary btn-add">Ajouter</button>
                 <button className="btn btn-secondary">Supprimer</button>
-                <button className="btn btn-light">Message</button>
             </form>
         </div>
         </div>

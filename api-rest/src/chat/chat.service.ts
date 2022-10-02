@@ -32,6 +32,12 @@ export class ChatService {
     return this.roomsRepository.find() 
   }
 
+  async getRoomByTag(roomtag: string): Promise<any>
+  {
+      const room = await this.roomsRepository.findOne({where: {tag: roomtag}});
+      return room;      
+  }
+
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
@@ -149,23 +155,23 @@ export class ChatService {
 
   async joinRoom(body) {
 
-    const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    const alreadyMember = await this.memberRepository.findOne({where: [{ nickname: body.nickname, roomTag: body.tag }]});
     if (alreadyMember){
       if (alreadyMember.blocked == true){
-      return false;
+        return false;
       }
       else if (alreadyMember.in == true){
-        return true;
+        return this.getRoomByTag(body.tag);
       }
       else{
-        const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
+        const rooms = await this.memberRepository.find({where: {nickname: body.nickname, in: true}});
         for (let i = 0; i < rooms.length; i++) {
           rooms[i].in = false;
           await this.memberRepository.save(rooms[i]);
         }
         alreadyMember.in = true;
         await this.memberRepository.save(alreadyMember);
-        return true;
+        return this.getRoomByTag(body.tag);
       }
     }
 
@@ -183,11 +189,11 @@ export class ChatService {
     }
 
     const newMember = await this.memberRepository.create();
-    const user = await this.userRepository.findOne({where: { username: body.username}});
+    const user = await this.userRepository.findOne({where: { nickname: body.nickname}});
     if (user == null)
       return 'no user';
 
-    const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
+    const rooms = await this.memberRepository.find({where: {username: body.nic, in: true}});
     for (let i = 0; i < rooms.length; i++) {
       rooms[i].in = false;
       await this.memberRepository.save(rooms[i]);
@@ -196,20 +202,21 @@ export class ChatService {
     newMember.roomTag = body.tag;
     newMember.userId = user.id;
     newMember.username = body.username;
+    newMember.nickname = body.nickname;
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
-
     return newMember;
-
   }
 
-  async getActiveRoom(body) {
+  async getActiveRoom(id) {
 
-    const room = await this.memberRepository.findOne({where: {username: body.username, in: true}});
-    if (!room)
+    const check = await this.memberRepository.findOne({where: {userId: id, in: true}});
+    if (!check){
       return false;
-    return room.roomTag;
+    }
+    const room = this.getRoomByTag(check.roomTag);
+      return (room);
   }
 
   async adminizer(body) {

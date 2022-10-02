@@ -4,13 +4,15 @@ const Room = {
 
 };
 
-const RoomSlice = createSlice({
-    name: "Room",
+const RoomActiveSlice = createSlice({
+    name: "RoomActive",
     initialState: Room,
     reducers: {
-        setRoom : (state, action) => {
+        setRoomActive : (state, action) => {
+            state = {...action.payload};
+            return state;
         },
         },
     },
 );
-export {RoomSlice, Room};
+export {RoomActiveSlice, Room};

@@ -1,11 +1,14 @@
 import '../../styles/Components/Chat/Messages.css'
 import React, { useContext, useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
+import {useDispatch} from 'react-redux';
 //import { io, Socket } from 'socket.io-client';
 
 export default function Messages() {
   //  const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<string[]>([]);
     const [value, setValue] = useState<string>("");
+    const RoomActive = useSelector((state: any) => state.RoomActive);
 
     // const send = (messageData: any) => {
     //   socket?.emit("message", messageData.name, messageData.time, messageData.text)
@@ -29,7 +32,7 @@ export default function Messages() {
     return (
         <div className="messages-content">
             <div className='room-title'>
-                <h2>Nom de la room</h2>
+                <h2>{RoomActive.tag}</h2>
             </div>
             <div className="conversation">
             {/* {messages.map((message: string, index: number) => (   

@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import { useEffect } from "react";
 
 export default function Home() {
+  const User = useSelector((state: any) => state.User);
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
 
