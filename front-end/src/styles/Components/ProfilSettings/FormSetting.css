@@ -99,9 +99,12 @@
 .close {
 
     position: relative;
-    width: 12px;
-    height: 72px;
-    top : 1%;
-    right: 1%;
-
+    width: 5%;
+    height: 5%;
+    top: 2%;
+    left: 2%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
 }

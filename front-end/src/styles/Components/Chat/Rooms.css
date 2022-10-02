@@ -30,9 +30,17 @@
 
 .room {
     display: flex;
-    height: 10%;
+    height: 12%;
     width: 100%;
     border: solid black 1px;
+    cursor: pointer;
+}
+
+.room:hover {
+    display: flex;
+    height: 12%;
+    width: 100%;
+    background-color: blueviolet;
     cursor: pointer;
 }
 

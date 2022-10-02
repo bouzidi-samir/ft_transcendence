@@ -62,13 +62,14 @@ export default function Rooms() {
             <div className='roomlist'>
                 {
                     Roomlist.map((room : any) => 
-                        <div className='room' key={room.id} onClick={()=> handleRoom(room)} >
-                            {privateAcces ? <PrivateAcces room={room} setPrivate={setPrivate}/> : null}
+                        <div className='room' key={room.id} onClick={
+                            ()=>  handleRoom(room) } >
                             <div className='room-avatar'></div>
                             <p>{room.tag}</p>
                         </div>
-                )
+                    )
                 }
+                {privateAcces ? <PrivateAcces setPrivate={setPrivate}/> : null}
             </div>
         </div>
     );

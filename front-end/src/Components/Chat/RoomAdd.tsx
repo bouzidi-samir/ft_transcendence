@@ -3,6 +3,7 @@ import '../../styles/Components/Chat/RoomAdd.css'
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
+import Cross from '../Share/Cross';
 
 export default function RoomAdd({setAddroom} :any) {
     const User = useSelector((state: any) => state.User);
@@ -54,6 +55,7 @@ export default function RoomAdd({setAddroom} :any) {
     return (
         <>
             <form className="addroom-content" data-aos="fade-up" data-aos-duration="1000">
+                <Cross/>
                 <div className='group-avatar'></div>
                 <label>Nom de la room:</label>       
                     <input type="text"  onChange={(e)=> handleChange(e, "name")} 
@@ -66,13 +68,14 @@ export default function RoomAdd({setAddroom} :any) {
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
                         value={roomName} name="type" className='room-type'></input>
                     <br></br>
+                    <div className='pass-zone'>
                     {privateRoom ? 
                     <>
                     <label className='pass-label'>Mot de passe:</label> 
-                    <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} ></input> 
-                    <br></br>
+                    <input className='password' type="password" value={password} onChange={(e)=> setPassword(e.target.value)} ></input> 
                     </>
-                    : <br></br>}
+                    : null}
+                    </div>
                 <button onClick={handleForm}  className='btn btn-primary'>Valider</button>
             </form>
         </>

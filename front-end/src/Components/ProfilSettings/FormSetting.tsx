@@ -1,9 +1,11 @@
 import "../../styles/Components/ProfilSettings/FormSetting.css"
 import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
+import Cross from "../Share/Cross";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import {myIsalpha} from "../../Utils/Util";
+import { Link } from "react-router-dom";
 
 export default function FormSetting() {
     
@@ -62,9 +64,8 @@ export default function FormSetting() {
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
-                <button className="btn btn-alert close">*</button>
+                <Cross lastPage="/Home" />
                 <img  className="vignette-form" src={User.avatar_url}></img>
-                
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>
                
                     {!nickForm ? <h2>{User.nickname}</h2> 
