@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
+import PrivateAcces from './PrivateAcces';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
@@ -10,9 +11,14 @@ export default function Rooms() {
     const Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
+    const[privateAcces, setPrivate] = useState(false);
     
-    async function handleRoom(roomtag : string)  {
-
+    async function handleRoom(room : any)  {
+        
+        if (room.private) {
+            setPrivate(true)
+            return;
+        }
         let url_a = "http://localhost:4000/chat/leaveRoom";
         await fetch(url_a, {
           method: "POST",
@@ -27,7 +33,6 @@ export default function Rooms() {
             })
         }
         )
-
         let url_b = "http://localhost:4000/chat/joinRoom";
         const response =  fetch(url_b, {method: "POST",
           headers: {
@@ -35,7 +40,7 @@ export default function Rooms() {
             'cors': 'true'
           },
           body: JSON.stringify({
-                tag : roomtag,
+                tag : room.tag,
                 username: User.username,
                 nickname: User.nickname,
             })
@@ -57,7 +62,8 @@ export default function Rooms() {
             <div className='roomlist'>
                 {
                     Roomlist.map((room : any) => 
-                        <div className='room' key={room.id} onClick={()=> handleRoom(room.tag)} >
+                        <div className='room' key={room.id} onClick={()=> handleRoom(room)} >
+                            {privateAcces ? <PrivateAcces room={room} setPrivate={setPrivate}/> : null}
                             <div className='room-avatar'></div>
                             <p>{room.tag}</p>
                         </div>

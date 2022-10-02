@@ -32,7 +32,9 @@ export default function Messages() {
     return (
         <div className="messages-content">
             <div className='room-title'>
+                <div className='room-picture'></div>
                 <h2>{RoomActive.tag}</h2>
+                <div className='room-settings'></div>
             </div>
             <div className="conversation">
             {/* {messages.map((message: string, index: number) => (   

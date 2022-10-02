@@ -19,10 +19,10 @@ export default function FormSetting() {
         if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
             setError("Ton pseudo doit contenir entre 4 et 8 charactères.")
             return false;
-        } else if(!myIsalpha(nickname)){
+        } else if(!myIsalpha(nickname) && nickForm == true){
             setError("Les trois premiers caracteres doivent etre des lettres.")
             return false;
-        } else if (Userlist.some((e : any) => nickname == e.nickname)){
+        } else if (Userlist.some((e : any) => nickname == e.nickname) && nickForm == true){
             setError("Ce pseudo  est déja utilié.")
             return false;
         }
@@ -62,7 +62,7 @@ export default function FormSetting() {
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
-                
+                <button className="btn btn-alert close">*</button>
                 <img  className="vignette-form" src={User.avatar_url}></img>
                 
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>

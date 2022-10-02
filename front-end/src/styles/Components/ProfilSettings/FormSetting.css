@@ -95,3 +95,13 @@
     text-align: center;
     margin-top: 2%;
 }
+
+.close {
+
+    position: relative;
+    width: 12px;
+    height: 72px;
+    top : 1%;
+    right: 1%;
+
+}

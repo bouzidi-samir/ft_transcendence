@@ -1,0 +1,10 @@
+.privateAccess {
+    position:absolute;
+    margin-left: 25%;
+    margin-top: -7%;
+    width: 50%;
+    height: 20%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    
+}

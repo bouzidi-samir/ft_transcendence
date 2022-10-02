@@ -181,11 +181,11 @@ export class ChatService {
     
     if (room.password){
       if(!body.password){
-        return 'need a password';
+        return {error: "L'acces à cette room nécessite un mot de passe"}
       }
       const match = bcrypt.compareSync(body.password, room.password);
       if (!match)
-        return 'wrong password';
+        return {error: "Mot de passe invalide"};
     }
 
     const newMember = await this.memberRepository.create();
