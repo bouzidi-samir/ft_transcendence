@@ -44,7 +44,7 @@ export class ChatService {
     if (check)
       return false;
 
-    const user = await this.userRepository.findOne({where: { nickname: body.nickname}});
+    const user = await this.userRepository.findOne({where: { username: body.username}});
     if (!user)
       return false;
 
@@ -155,7 +155,7 @@ export class ChatService {
 
   async joinRoom(body) {
 
-    const alreadyMember = await this.memberRepository.findOne({where: [{ nickname: body.nickname, roomTag: body.tag }]});
+    const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (alreadyMember){
       if (alreadyMember.blocked == true){
         return false;
@@ -164,7 +164,7 @@ export class ChatService {
         return this.getRoomByTag(body.tag);
       }
       else{
-        const rooms = await this.memberRepository.find({where: {nickname: body.nickname, in: true}});
+        const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
         for (let i = 0; i < rooms.length; i++) {
           rooms[i].in = false;
           await this.memberRepository.save(rooms[i]);
@@ -189,11 +189,11 @@ export class ChatService {
     }
 
     const newMember = await this.memberRepository.create();
-    const user = await this.userRepository.findOne({where: { nickname: body.nickname}});
+    const user = await this.userRepository.findOne({where: { username: body.username}});
     if (user == null)
       return 'no user';
 
-    const rooms = await this.memberRepository.find({where: {username: body.nic, in: true}});
+    const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
     for (let i = 0; i < rooms.length; i++) {
       rooms[i].in = false;
       await this.memberRepository.save(rooms[i]);

@@ -17,6 +17,7 @@ export default function RoomAdd({setAddroom} :any) {
     function handleForm(e: any) : void {
         e.preventDefault();
         let newRoom : any = {
+            username: User.username,
             nickname: User.nickname,
             tag: roomName,
             public: publicRoom,
