@@ -7,7 +7,8 @@ const User = {
     registred:"",
     avatar_url: "",
     status: "",
-    room_active: ""
+    room_active: "",
+    JWT_token: "",
 };
 
 const UserSlice = createSlice({
@@ -22,6 +23,7 @@ const UserSlice = createSlice({
             state.registred = action.payload.registred;
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
+            state.JWT_token = action.payload.JWT_token;
         },
         },
     },
