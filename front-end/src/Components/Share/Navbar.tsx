@@ -29,7 +29,10 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="toggleMobileMenu">
                 
                     <ul className="navbar-nav ms-auto text-center"> 
-                        
+                        <Link className="nav_link" to="/Home">
+                            <div 
+                            className='avatar'></div>
+                        </Link>
                         <li>   
                         <Link className="nav_link" to="/Home">
                             <div 

@@ -1,9 +1,9 @@
 .privateAccess {
     position:absolute;
     margin-left: 30%;
-    margin-top: 10%;
+    margin-top: 8%;
     width: 40%;
-    height: 25%;
+    height: 35%;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 5%;
@@ -33,11 +33,15 @@
 .cross-private {
     position: relative;
     width: 4%;
-    height: 12%;
+    height: 8%;
     top: 1%;
     left: 1%;
     background-image: url(../../../styles/img/icones/cross.png);
     background-position: center;
     background-size: cover;
     cursor: pointer;
+}
+
+.error {
+    color: red;
 }
