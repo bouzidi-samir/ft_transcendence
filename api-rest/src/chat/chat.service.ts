@@ -9,7 +9,7 @@ import { Rooms } from './entities/rooms.entity';
 import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
 import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
-import { RuleTester } from 'eslint';
+//import { RuleTester } from 'eslint';
 
 @Injectable()
 export class ChatService {
@@ -158,7 +158,7 @@ export class ChatService {
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (alreadyMember){
       if (alreadyMember.blocked == true){
-      return false;
+        return false;
       }
       else if (alreadyMember.in == true){
         return this.getRoomByTag(body.tag);
@@ -185,7 +185,7 @@ export class ChatService {
       }
       const match = bcrypt.compareSync(body.password, room.password);
       if (!match)
-      return {error: "Mot de passe invalide"};
+        return {error: "Mot de passe invalide"};
     }
 
     const newMember = await this.memberRepository.create();
@@ -202,12 +202,11 @@ export class ChatService {
     newMember.roomTag = body.tag;
     newMember.userId = user.id;
     newMember.username = body.username;
+    newMember.nickname = body.nickname;
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
-
     return newMember;
-
   }
 
   async editRoom(body) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
-import PrivateAcces from './PrivateAccess';
+import PrivateAcces from './PrivateAcces';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
@@ -16,7 +16,7 @@ export default function Rooms() {
     async function handleRoom(room : any)  {
         
         if (room.private) {
-            setPrivate(true)
+            setPrivate(room)
             return;
         }
         let url_a = "http://localhost:4000/chat/leaveRoom";
@@ -69,7 +69,7 @@ export default function Rooms() {
                         </div>
                     )
                 }
-                {privateAcces ? <PrivateAcces setPrivate={setPrivate}/> : null}
+                {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate}/> : null}
             </div>
         </div>
     );

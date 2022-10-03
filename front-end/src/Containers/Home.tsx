@@ -12,16 +12,22 @@ export default function Home() {
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   console.log('User.JWT',User.JWT_token);
   const values = Object.values(User.JWT_token);
   console.log('values', values);
 
+=======
+>>>>>>> merge_SO
   useEffect(() => {
     let url = "http://localhost:4000/chat/createGlobalRoom";
     const response = fetch(url, {
       method: "POST",
       headers: {
+<<<<<<< HEAD
         'Authorization': `Bearer ${values[0]}`,
+=======
+>>>>>>> merge_SO
         'Content-Type': 'application/json',
         'cors': 'true'
       },
