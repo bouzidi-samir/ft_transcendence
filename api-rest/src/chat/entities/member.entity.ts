@@ -13,6 +13,9 @@ export class Member {
     @Column({nullable: true})
     username: string;
 
+    @Column({nullable: true})
+    nickname: string;
+
     @Column({default: false})
     owner: boolean;
 

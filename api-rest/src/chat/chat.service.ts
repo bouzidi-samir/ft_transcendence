@@ -32,6 +32,12 @@ export class ChatService {
     return this.roomsRepository.find() 
   }
 
+  async getRoomByTag(roomtag: string): Promise<any>
+  {
+      const room = await this.roomsRepository.findOne({where: {tag: roomtag}});
+      return room;      
+  }
+
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
@@ -155,7 +161,7 @@ export class ChatService {
       return false;
       }
       else if (alreadyMember.in == true){
-        return true;
+        return this.getRoomByTag(body.tag);
       }
       else{
         const rooms = await this.memberRepository.find({where: {username: body.username, in: true}});
@@ -165,7 +171,7 @@ export class ChatService {
         }
         alreadyMember.in = true;
         await this.memberRepository.save(alreadyMember);
-        return true;
+        return this.getRoomByTag(body.tag);
       }
     }
 
@@ -175,11 +181,11 @@ export class ChatService {
     
     if (room.password){
       if(!body.password){
-        return 'need a password';
+        return {error: "L'acces à cette room nécessite un mot de passe"}
       }
       const match = bcrypt.compareSync(body.password, room.password);
       if (!match)
-        return 'wrong password';
+      return {error: "Mot de passe invalide"};
     }
 
     const newMember = await this.memberRepository.create();
@@ -225,16 +231,18 @@ export class ChatService {
           members[i].password = room.password;
           await this.memberRepository.save(members[i]);
         }
+      }
     }
   }
-}
 
-  async getActiveRoom(body) {
+  async getActiveRoom(id) {
 
-    const room = await this.memberRepository.findOne({where: {username: body.username, in: true}});
-    if (!room)
+    const check = await this.memberRepository.findOne({where: {userId: id, in: true}});
+    if (!check){
       return false;
-    return room.roomTag;
+    }
+    const room = this.getRoomByTag(check.roomTag);
+      return (room);
   }
 
   async adminizer(body) {

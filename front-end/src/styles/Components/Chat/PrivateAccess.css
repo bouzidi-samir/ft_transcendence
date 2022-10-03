@@ -1,0 +1,43 @@
+.privateAccess {
+    position:absolute;
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 40%;
+    height: 25%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border-radius: 5%;
+    padding-top: 1%;
+    padding-left: 1%;
+}
+
+.privateAccess label {
+    color: white;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.privateAccess input {
+    margin-top: 2%;
+    width: 40%;
+    margin-left: 28%;
+    text-align: center;
+}
+
+.privateAccess button {
+    margin-top: 3%;
+    width: 25%;
+    margin-left: 35%;
+}
+
+.cross-private {
+    position: relative;
+    width: 4%;
+    height: 12%;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}

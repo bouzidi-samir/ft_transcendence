@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { UserSlice } from "./Slices/UserSlice";
 import { UserlistSlice } from "./Slices/UserlistSlice";
 import { RoomlistSlice } from "./Slices/RoomListSlice";
+import { RoomActiveSlice } from "./Slices/RoomSlice";
 
 const persistConfig = {
     key:'root',
@@ -15,7 +16,8 @@ const persistConfig = {
 const reducer = combineReducers({
     User: UserSlice.reducer,
     UserList: UserlistSlice.reducer,
-    RoomList : RoomlistSlice.reducer
+    RoomList : RoomlistSlice.reducer,
+    RoomActive : RoomActiveSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer);

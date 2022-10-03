@@ -18,7 +18,7 @@ export default function UserChat() {
                   {
                       Userlist.map((user : any) => (
                         user.username != User.username ? 
-                                <Link to = {"/UserProfil/" + user.id}>
+                                <Link to = {"/UserProfil/" + user.id} style={{textDecoration: 'none'}}>
                             <div key={user.id} className="user-online">
                                     <img src={user.avatar_url} className="online-avatar">
                                     </img>

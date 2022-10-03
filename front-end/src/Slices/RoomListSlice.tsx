@@ -10,6 +10,11 @@ const RoomlistSlice = createSlice({
             state = [...action.payload];
             return state;
         },
+        addRoom : (state, action) => {
+            let Roomadded = {...action.payload}
+            state.push(Roomadded);
+            return state;
+        }
         },
     },
 );

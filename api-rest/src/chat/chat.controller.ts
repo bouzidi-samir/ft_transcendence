@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-authguards";
 import { ChatService } from "./chat.service";
 
@@ -15,7 +15,7 @@ export class ChatController {
         return await this.service.getAllRooms();
     }
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);
@@ -48,9 +48,13 @@ export class ChatController {
         return this.service.editRoom(body);
     }
 
-    @Get('/getActiveRoom') // username
-    async getActiveRoom(@Body() body:any): Promise<any> {
-        return this.service.getActiveRoom(body);
+    @Get('/getActiveRoom/:id') // username
+    async getActiveRoom(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() body: any
+    )
+    : Promise<any> {
+        return this.service.getActiveRoom(id);
     }
 
     @Post('/adminizer')

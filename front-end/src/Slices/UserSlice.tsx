@@ -25,6 +25,10 @@ const UserSlice = createSlice({
             state.status = action.payload.status;
             state.JWT_token = action.payload.JWT_token;
         },
+        logout : (state, action) => {
+            state = User;
+            return state;
+        }
         },
     },
 );

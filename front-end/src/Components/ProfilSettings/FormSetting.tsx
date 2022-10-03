@@ -1,9 +1,11 @@
 import "../../styles/Components/ProfilSettings/FormSetting.css"
 import React, { useContext, useEffect, useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
+import Cross from "../Share/Cross";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import {myIsalpha} from "../../Utils/Util";
+import { Link } from "react-router-dom";
 
 export default function FormSetting() {
     
@@ -19,10 +21,10 @@ export default function FormSetting() {
         if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
             setError("Ton pseudo doit contenir entre 4 et 8 charactères.")
             return false;
-        } else if(!myIsalpha(nickname)){
+        } else if(!myIsalpha(nickname) && nickForm == true){
             setError("Les trois premiers caracteres doivent etre des lettres.")
             return false;
-        } else if (Userlist.some((e : any) => nickname == e.nickname)){
+        } else if (Userlist.some((e : any) => nickname == e.nickname) && nickForm == true){
             setError("Ce pseudo  est déja utilié.")
             return false;
         }
@@ -62,9 +64,8 @@ export default function FormSetting() {
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
-                
+                <Cross lastPage="/Home" />
                 <img  className="vignette-form" src={User.avatar_url}></img>
-                
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>
                
                     {!nickForm ? <h2>{User.nickname}</h2> 

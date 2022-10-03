@@ -7,7 +7,7 @@
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 2%;
-    padding-left: 3%;
+    padding-bottom: 8%;
     border: solid black 1px;
 }
 
@@ -16,22 +16,24 @@
     font-size: 20px;
     display: block;
     margin-bottom: 1%;
+    margin-left: 3%;
 }
 
 .addroom-content .room-name {
     width: 60%;
     border-radius: 4%;
     margin-bottom: 3%;
+    margin-left: 3%;
 }
 
 .addroom-content .room-type {
    margin-right: 55px;
+   margin-left: 3%;
 }
 
 
 .addroom-content .btn-primary {
     position: relative;
-    margin-top: 12%;
     margin-left: 32%;
     width: 30%;
 
@@ -40,13 +42,14 @@
 .addroom-content span {
     color : white;
     margin-right: 2%;
+    margin-left: 3%;
 }
 
 .group-avatar {
     width: 20%;
-    height: 40%;
+    height: 30%;
     margin-left: 40%;
-    background-image: url(../../../styles/img/groupe.png);
+    background-image: url(../../../styles/img/icones/groups.png);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -54,4 +57,15 @@
 
 .pass-label {
     margin-top: 5%;
+    margin-left: 3%;
+}
+
+.pass-zone {
+    height: 30%;
+    margin-left: 3%;
+}
+
+.addroom-content .password {
+
+    margin-bottom: 4%;
 }

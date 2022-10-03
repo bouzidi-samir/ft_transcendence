@@ -24,9 +24,10 @@
 
 .online-list  :hover {
    
-    border: solid white 1px;
-   
+    background-color: blueviolet;
+    text-decoration: none;
 }
+
 
 .online-avatar {
     width: 20%;
