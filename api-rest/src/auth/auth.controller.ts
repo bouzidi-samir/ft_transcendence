@@ -44,7 +44,7 @@ export class AuthController {
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);
 		return JSON.stringify({
-			id: user.id,
+			id: finaluser.id,
 			username: finaluser.username,
 			nickname: finaluser.nickname,
 			registred: finaluser.registred,
