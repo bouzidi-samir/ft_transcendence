@@ -44,7 +44,6 @@ export default class User {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-
 	@OneToMany(() => Relations, (relations) => relations.owner, {nullable: true})
 	@JoinColumn()
 	relations:Relations[];

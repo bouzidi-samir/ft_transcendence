@@ -5,6 +5,7 @@ import PrivateAcces from './PrivateAccess';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { User } from "../../Slices/UserSlice";
+import { Room } from '../../Slices/RoomSlice';
 
 
 export default function Rooms() {
@@ -18,6 +19,9 @@ export default function Rooms() {
     const values = Object.values(User.JWT_token);
     
     async function handleRoom(room : any)  {
+
+        if (room.tag == RoomActive.tag)
+            return;
         
         if (room.private) {
             setPrivate(room)

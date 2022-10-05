@@ -67,7 +67,7 @@ export class ChatService {
     room.tag = body.tag;
     room.owner = user.username;
   
-    if (body.password != null){
+    if (body.password != ""){
       const salt = await bcrypt.genSalt();
       room.password = await bcrypt.hash(body.password, salt);
       creator.password = room.password;
