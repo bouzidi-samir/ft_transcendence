@@ -12,7 +12,6 @@ export default function Home() {
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
 
-  console.log('User.JWT',User.JWT_token);
   const values = Object.values(User.JWT_token);
   console.log('values', values);
 

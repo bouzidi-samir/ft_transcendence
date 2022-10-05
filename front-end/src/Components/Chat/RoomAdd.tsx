@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import Cross from '../Share/Cross';
+import { User } from "../../Slices/UserSlice";
 
 export default function RoomAdd({setAddroom} :any) {
     const User = useSelector((state: any) => state.User);
@@ -14,6 +15,8 @@ export default function RoomAdd({setAddroom} :any) {
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(false);
     const [password, setPassword] = useState("");
+
+    const values = Object.values(User.JWT_token);
 
     function handleForm(e: any) : void {
         e.preventDefault();
@@ -32,6 +35,7 @@ export default function RoomAdd({setAddroom} :any) {
         let url = "http://localhost:4000/chat/createRoom"
         let response = fetch(url, {method : 'POST',
             headers: {
+                'Authorization': `Bearer ${values[0]}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newRoom)

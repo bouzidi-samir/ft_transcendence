@@ -15,7 +15,7 @@ export class ChatController {
         return await this.service.getAllRooms();
     }
 
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);
@@ -37,6 +37,7 @@ export class ChatController {
         return this.service.checkIfMember(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);

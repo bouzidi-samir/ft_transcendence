@@ -14,28 +14,31 @@ import {
     
     @WebSocketServer()
     server: Server;
-    
-    afterInit(server: any) {
-      throw new Error('Method not implemented.');
+
+    afterInit(server: Server) {
+      // throw new Error('Method not implemented.');
+      console.log('initialized');
     }
     
-    handleConnection(client: any, ...args: any[]) {
+    handleConnection(client: Socket, ...args: any[]) {
       console.log(`Client connected: ${client.id}`);
   
-      throw new Error('Method not implemented.');
+      // throw new Error('Method not implemented.');
     }
     
-    handleDisconnect(client: any) {
+    handleDisconnect(client: Socket) {
       console.log(`Client disconnected: ${client.id}`);
   
-      throw new Error('Method not implemented.');
+      // throw new Error('Method not implemented.');
     }
 
   
-    @SubscribeMessage('message')
-    handleMessage(@MessageBody() message: string): void {
-      console.log(message);
-      this.server.emit('message', message);
+    @SubscribeMessage('messageFromClient')
+    handleMessage(client: Socket, @MessageBody()  message: any): void {
+      console.log('Received message in Back', message);
+      this.server.emit('messageFromServer', message);
+    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
+
     }
   
     // @SubscribeMessage('createChat')
