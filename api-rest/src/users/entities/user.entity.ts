@@ -20,7 +20,7 @@ export default class User {
 	@Column({ default: false })
 	public isTwoFactorAuthenticationEnabled: boolean;
 
-	@Column({ type: 'varchar', unique: true })
+	@Column({ type: 'varchar', unique: true , nullable: true})
 	email: string;
 	
 	@Column({ type: 'varchar', default: 'false'})
@@ -37,6 +37,15 @@ export default class User {
 
 	@Column({ type : 'text', nullable: true })
 	JWT_token: string;
+
+	@Column({
+		type: 'integer',
+		default : 1200
+	})
+    ello: number;
+
+	@Column("integer", { array: true, default: {} })
+	GamesPlayedId: number[];
 
 	@CreateDateColumn()
 	created_at: Date;
