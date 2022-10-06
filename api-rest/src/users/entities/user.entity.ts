@@ -44,8 +44,8 @@ export default class User {
 	})
     ello: number;
 
-	@Column("integer", { array: true, default: {} })
-	GamesPlayedId: number[];
+	// @Column("integer", { array: true, default: {} })
+	// GamesPlayedId: number[];
 
 	@CreateDateColumn()
 	created_at: Date;

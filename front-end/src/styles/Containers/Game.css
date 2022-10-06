@@ -1,0 +1,22 @@
+body{
+	margin: 0;
+	background-color: rgb(148, 127, 255);
+
+}
+
+.paddle {
+	position: absolute;
+	background-color: aliceblue;
+	top: calc(var(--position) * 1vh);
+	transform: translateY(-50%);
+	width: 1vh;
+	height: 10vh;
+}
+
+.paddle.left{
+	left: 1vw;
+}
+
+.paddle.right{
+	right: 1vw;
+}
