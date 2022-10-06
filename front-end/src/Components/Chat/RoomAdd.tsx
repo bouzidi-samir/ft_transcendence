@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import Cross from '../Share/Cross';
 import { User } from "../../Slices/UserSlice";
+import React, { useEffect } from 'react';
+import { io, Socket } from 'socket.io-client';
+
 
 export default function RoomAdd({setAddroom} :any) {
     const User = useSelector((state: any) => state.User);
@@ -15,10 +18,20 @@ export default function RoomAdd({setAddroom} :any) {
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(false);
     const [password, setPassword] = useState("");
+    const [socket, setSocket] = useState<Socket>();
+
 
     const values = Object.values(User.JWT_token);
+    const alert = "New room alert";
 
+    useEffect(() => {
+        const newSocket = io('http://localhost:8000');
+        setSocket(newSocket)
+    }, [setSocket])
+    
+    
     function handleForm(e: any) : void {
+        
         e.preventDefault();
         let newRoom : any = {
             username: User.username,
@@ -31,16 +44,20 @@ export default function RoomAdd({setAddroom} :any) {
         dispatch({
             type: "Roomlist/addRoom",
             payload: newRoom,
-          });
+        });
         let url = "http://localhost:4000/chat/createRoom"
+        socket?.emit("new room client", alert);
         let response = fetch(url, {method : 'POST',
-            headers: {
-                'Authorization': `Bearer ${values[0]}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newRoom)
-        }).then(setAddroom(false))
-    }
+        headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRoom)
+    }).then(setAddroom(false))
+}
+
+
+
 
     function handleChange(e : any, element : string) {
         switch(element) {

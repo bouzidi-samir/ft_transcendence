@@ -1,7 +1,8 @@
 import { 
     WebSocketGateway, SubscribeMessage, MessageBody,  
     OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect,
-    WebSocketServer, 
+    WebSocketServer,
+    ConnectedSocket, 
   } from '@nestjs/websockets';
   import { Server, Socket } from 'socket.io'
   import { ChatService } from './chat.service';
@@ -37,10 +38,17 @@ import {
     handleMessage(client: Socket, @MessageBody()  message: any): void {
       console.log('Received message in Back', message);
       this.server.emit('messageFromServer', message);
-    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
+
+      // this.server.emit('messageFromServer', message.name, ' ', message.time, ' ', message.text);
+      //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
 
     }
   
+      @SubscribeMessage('new room client')
+      handleNewRoom( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
+        console.log('Received message in Back', alert);
+        this.server.emit('new room server', alert);
+      }
     // @SubscribeMessage('createChat')
     // create(@MessageBody() createChatDto: CreateChatDto) {
     //   return this.chatService.create(createChatDto);

@@ -1,3 +1,4 @@
+
 import { configureStore, createSlice, combineReducers} from "@reduxjs/toolkit";
 import { persistStore} from "redux-persist";
 import persistReducer from "redux-persist/lib/persistReducer";
@@ -17,7 +18,7 @@ const reducer = combineReducers({
     User: UserSlice.reducer,
     UserList: UserlistSlice.reducer,
     RoomList : RoomlistSlice.reducer,
-    RoomActive : RoomActiveSlice.reducer
+    RoomActive : RoomActiveSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer);

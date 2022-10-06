@@ -32,6 +32,10 @@ export class ChatService {
     return this.roomsRepository.find() 
   }
 
+  async getAllMember(): Promise<any[]> {
+    return this.memberRepository.find() 
+  }
+  
   async getRoomByTag(roomtag: string): Promise<any>
   {
       const room = await this.roomsRepository.findOne({where: {tag: roomtag}});

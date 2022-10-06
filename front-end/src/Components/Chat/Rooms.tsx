@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
 import PrivateAcces from './PrivateAccess';
@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { User } from "../../Slices/UserSlice";
 import { Room } from '../../Slices/RoomSlice';
+import { io, Socket } from 'socket.io-client';
 
 
 export default function Rooms() {
@@ -15,10 +16,28 @@ export default function Rooms() {
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
     const[privateAcces, setPrivate] = useState(false);
-    
+    const [socket, setSocket] = useState<Socket>();
+    const [alert, setAlert] = useState<string>();
     const values = Object.values(User.JWT_token);
     
+    useEffect(() => {
+       const newSocket = io('http://localhost:8000');
+       setSocket(newSocket)
+   }, [setSocket])
+
+   const alertListener = (alert: string) => {
+       setAlert(alert);
+   }
+
+   useEffect(() => {
+       socket?.on("new room server", alertListener);
+       return () => {
+           socket?.off("new room server", alertListener)
+       }
+   }, [alertListener])
+   
     async function handleRoom(room : any)  {
+
 
         if (room.tag == RoomActive.tag)
             return;
@@ -42,7 +61,7 @@ export default function Rooms() {
         }
         )
         let url_b = "http://localhost:4000/chat/joinRoom";
-        const response =  fetch(url_b, {method: "POST",
+        const response =  fetch(url_b, { method: "POST",
           headers: {
             'Authorization': `Bearer ${values[0]}`,
             'Content-Type': 'application/json',
@@ -79,6 +98,7 @@ export default function Rooms() {
                     )
                 }
                 {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate}/> : null}
+                <h2>{alert}</h2>
             </div>
         </div>
     );

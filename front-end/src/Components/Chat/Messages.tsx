@@ -8,6 +8,7 @@ import MessageInput from './MessageInput';
 export default function Messages() {
    const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<string[]>([]);
+    const [alert, setAlert] = useState<string>();
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
@@ -20,20 +21,21 @@ export default function Messages() {
     }, [setSocket])
     
     const send = (messageData: any) => {
-      socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
-    //   socket?.emit("messageFromClient", { messageData })
+      socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', '"', messageData.text, '"')
     }
 
     const messageListener = (message: string) => {
         setMessages([...messages, message]);
     }
-    
+
     useEffect(() => {
         socket?.on("messageFromServer" , messageListener)
+        
         return () => {
             socket?.off("messageFromServer", messageListener)
         }
     }, [messageListener])
+
 
     return (
         <div className="messages-content">
