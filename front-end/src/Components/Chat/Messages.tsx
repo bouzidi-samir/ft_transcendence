@@ -5,9 +5,22 @@ import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 
+class Message {
+    constructor(sender: string, time: string, message: string) {
+        this.sender = sender;
+        this.time = time;
+        this.message = message;
+    }
+    sender: string;
+    time: string;
+    message: string;
+}
+
+
+
 export default function Messages() {
    const [socket, setSocket] = useState<Socket>();
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<any[]>([]);
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
@@ -24,8 +37,10 @@ export default function Messages() {
     //   socket?.emit("messageFromClient", { messageData })
     }
 
-    const messageListener = (message: string) => {
-        setMessages([...messages, message]);
+    const messageListener = (message: any) => {
+        let tab = [...message];
+        let newMessage = new Message(tab[0], tab[2], tab[4]);
+        setMessages([...messages, newMessage]);
     }
     
     useEffect(() => {
@@ -40,19 +55,23 @@ export default function Messages() {
             <div className='room-title'>
                 <div className='room-picture'></div>
                 <h2>{RoomActive.tag}</h2>
-                <div className='room-settings'></div>
+                <div onClick={()=>{setMessages([])} } className='room-settings'></div>
             </div>
             <div className="conversation">
-            {messages.map((message: string, index: number) => (   
-                    <div key={index}>    
-                         <div>{message}</div>
+            {messages.map((message: any, index: number) => (   
+                message.sender == User.nickname ? 
+                    <div key={index} className="buble" >
+                        <img src={User.avatar_url} className="avatar-buble"></img>   
+                    <div key={index} className="message-bubleA"> 
+                        <p>{message.sender}:</p>
+                         <p>{message.message}</p>
                     </div>
+                    </div>
+                : null
                 ))}
             </div>
             <div className="send-zone">
             <MessageInput send={send}/>
-            {/* <input value={value} onChange={(e)=> setValue(e.target.value)} ></input> */}
-            {/* <button className="btn btn-primary" >Envoyer</button> */}
         </div>
     </div>
     );

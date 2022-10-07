@@ -66,3 +66,36 @@
     height: 70%;
   
  }
+
+ .buble {
+    width: 100%;
+    display: flex;
+ }
+
+ .message-bubleA {
+
+    width: 30%;
+    height: 10%;
+    background-color: blueviolet;
+    opacity: 60%;
+    margin-left: 1%;
+    margin-top: 2%;
+    border-radius: 12%;
+    padding-left: 2%;
+    padding-right: 1%;
+    flex-wrap: nowrap;
+}
+
+.avatar-buble {
+    width: 10%;
+    height: 10%;
+    border-radius: 60%;
+    display: inline-block;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.message-bubleA p {
+    color: white;
+    margin-bottom: 2%;
+}

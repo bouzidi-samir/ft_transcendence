@@ -20,7 +20,7 @@ export default class User {
 	@Column({ default: false })
 	public isTwoFactorAuthenticationEnabled: boolean;
 
-	@Column({ type: 'varchar', unique: true })
+	@Column({ type: 'varchar', unique: true, nullable: true })
 	email: string;
 	
 	@Column({ type: 'varchar', default: 'false'})
