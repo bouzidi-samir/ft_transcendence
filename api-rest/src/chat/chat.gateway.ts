@@ -37,6 +37,9 @@ import {
     @SubscribeMessage('messageFromClient')
     handleMessage(client: Socket, @MessageBody()  message: any): void {
       console.log('Received message in Back', message);
+      // const obj = JSON.parse(JSON.stringify(message));
+      // console.log('obj', obj);
+      // console.log('obj.messageData.text', obj.messageData.text);
       this.server.emit('messageFromServer', message);
 
       // this.server.emit('messageFromServer', message.name, ' ', message.time, ' ', message.text);

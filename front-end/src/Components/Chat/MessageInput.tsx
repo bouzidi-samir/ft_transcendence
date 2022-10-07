@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { User } from "../../Slices/UserSlice";
 
-export default function MessageInput({send}: {send: (messagedata: any) => void}) {
+export default function MessageInput({send}: {send: (message: {name: any, time: string, text: string}) => void}) {
     
     
     const [value, setValue] = useState("");

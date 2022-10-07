@@ -6,13 +6,17 @@ import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 
 export default function Messages() {
-   const [socket, setSocket] = useState<Socket>();
+    const [socket, setSocket] = useState<Socket>();
+    // const [messages, setMessages] = useState<{name: any, time: string, text: string}[]>([]);
     const [messages, setMessages] = useState<string[]>([]);
-    const [alert, setAlert] = useState<string>();
-    const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
 
+    // type mData = {
+    //     name: string,
+    //     time: string,
+    //     text: string,
+    //   };
     
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -20,12 +24,16 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
-    const send = (messageData: any) => {
-      socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', '"', messageData.text, '"')
+    const send = (message: any) => {
+    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', '"', messageData.text, '"')
+      socket?.emit("messageFromClient", {message})
     }
 
-    const messageListener = (message: string) => {
-        setMessages([...messages, message]);
+    const messageListener = (message: any) => {
+        const obj = JSON.parse(JSON.stringify(message));
+        console.log('obj', obj);
+        console.log('obj.text', obj.message.text);
+        setMessages([...messages, obj.message.text]);
     }
 
     useEffect(() => {
@@ -46,8 +54,10 @@ export default function Messages() {
             </div>
             <div className="conversation">
             {messages.map((message: string, index: number) => (   
-                    <div key={index}>    
-                         <div>{message}</div>
+                    <div key={index}>  
+                    {/* <span>{message.name}</span>   */}
+                    {/* <span>{message.time}</span>   */}
+                         <div>" {message} "</div>
                     </div>
                 ))}
             </div>
