@@ -5,18 +5,18 @@ import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 
-class Message {
-    constructor(sender: string, time: string, message: string) {
+export class Message {
+    constructor(sender: string, time: string, message: string, roomTag: string) {
         this.sender = sender;
         this.time = time;
         this.message = message;
+        this.roomTag = roomTag
     }
     sender: string;
     time: string;
     message: string;
+    roomTag: string
 }
-
-
 
 export default function Messages() {
    const [socket, setSocket] = useState<Socket>();
@@ -32,14 +32,15 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
-    const send = (messageData: any) => {
+    const send = (messageData: any, roomTag : string) => {
       socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
     //   socket?.emit("messageFromClient", { messageData })
     }
 
     const messageListener = (message: any) => {
         let tab = [...message];
-        let newMessage = new Message(tab[0], tab[2], tab[4]);
+        console.log(tab);
+        let newMessage = new Message(tab[0], tab[2], tab[4], RoomActive.tag);
         setMessages([...messages, newMessage]);
     }
     
