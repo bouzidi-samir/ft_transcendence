@@ -40,9 +40,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-      socket?.on("new room server", alertListener);
+      socket?.on("newMessageServer", alertListener);
       return () => {
-          socket?.off("new room server", alertListener)
+          socket?.off("newMessageServer", alertListener)
       }
   }, [alertListener])
 

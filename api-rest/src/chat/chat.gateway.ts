@@ -47,11 +47,17 @@ import {
 
     }
   
-      @SubscribeMessage('new room client')
-      handleNewRoom( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
-        console.log('Received message in Back', alert);
-        this.server.emit('new room server', alert);
-      }
+    @SubscribeMessage('newMessageClient')
+    handleNewMessage( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('newMessageServer', alert);
+    }
+
+    @SubscribeMessage('newRoomClient')
+    handleNewRoom( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('newRoomServer', alert);
+    }
     // @SubscribeMessage('createChat')
     // create(@MessageBody() createChatDto: CreateChatDto) {
     //   return this.chatService.create(createChatDto);

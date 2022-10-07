@@ -17,7 +17,7 @@ export default function Rooms() {
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
-    const [alert, setAlert] = useState<string>();
+    const [alertRoom, setAlertRoom] = useState<string>("");
     const values = Object.values(User.JWT_token);
     
     // const styles = {
@@ -26,21 +26,21 @@ export default function Rooms() {
     //     color: "red"
     // };
 
-    // useEffect(() => {
-    //     const newSocket = io('http://localhost:8000');
-    //     setSocket(newSocket)
-    // }, [setSocket])
+    useEffect(() => {
+        const newSocket = io('http://localhost:8000');
+        setSocket(newSocket)
+    }, [setSocket])
 
-    // const alertListener = (alert: string) => {
-    //     setAlert(alert);
-    // }
+    const alertListener = (alertRoom: string) => {
+        setAlertRoom(alertRoom);
+    }
     
-    // useEffect(() => {
-    //     socket?.on("new room server", alertListener);
-    //     return () => {
-    //         socket?.off("new room server", alertListener)
-    //     }
-    // }, [alertListener])
+    useEffect(() => {
+        socket?.on("newRoomServer", alertListener);
+        return () => {
+            socket?.off("newRoomServer", alertListener)
+        }
+    }, [alertListener])
     
     
 
@@ -90,6 +90,8 @@ export default function Rooms() {
                 })
             );
     }
+
+    
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
@@ -98,14 +100,15 @@ export default function Rooms() {
             <div className='roomlist'>
                 {
                     Roomlist.map((room: any) =>
-                        <div className='room' key={room.id} onClick={
-                            () => handleRoom(room)} >
+                    <div className='room' key={room.id} onClick={
+                        () => handleRoom(room)} >
                             <div className='room-avatar'></div>
                             <p>{room.tag}</p>
                         </div>
                     )
                 }
                 {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
+                {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
 
             </div>
         </div>
