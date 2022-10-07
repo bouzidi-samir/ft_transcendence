@@ -22,7 +22,7 @@ export default function RoomAdd({setAddroom} :any) {
 
 
     const values = Object.values(User.JWT_token);
-    const alert = "New room alert";
+    const alert = "New room available";
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
