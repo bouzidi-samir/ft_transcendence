@@ -22,7 +22,7 @@ export default function RoomAdd({setAddroom} :any) {
 
 
     const values = Object.values(User.JWT_token);
-    const alert = "New room available";
+    const alert = "NEW MESSAGES !!!";
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -46,7 +46,9 @@ export default function RoomAdd({setAddroom} :any) {
             payload: newRoom,
         });
         let url = "http://localhost:4000/chat/createRoom"
+
         socket?.emit("new room client", alert);
+        
         let response = fetch(url, {method : 'POST',
         headers: {
             'Authorization': `Bearer ${values[0]}`,

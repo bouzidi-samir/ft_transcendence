@@ -20,27 +20,29 @@ export default function Rooms() {
     const [alert, setAlert] = useState<string>();
     const values = Object.values(User.JWT_token);
     
-    const styles = {
-        fontFamily: "Open Sans", 
-        fontSize: '16px', 
-        color: "red"
-    };
+    // const styles = {
+    //     fontFamily: "Open Sans", 
+    //     fontSize: '16px', 
+    //     color: "red"
+    // };
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
-    const alertListener = (alert: string) => {
-        setAlert(alert);
-    }
-
-    useEffect(() => {
-        socket?.on("new room server", alertListener);
-        return () => {
-            socket?.off("new room server", alertListener)
-        }
-    }, [alertListener])
+    // const alertListener = (alert: string) => {
+    //     setAlert(alert);
+    // }
+    
+    // useEffect(() => {
+    //     socket?.on("new room server", alertListener);
+    //     return () => {
+    //         socket?.off("new room server", alertListener)
+    //     }
+    // }, [alertListener])
+    
+    
 
     async function handleRoom(room: any) {
 
@@ -88,7 +90,6 @@ export default function Rooms() {
                 })
             );
     }
-
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
@@ -105,9 +106,6 @@ export default function Rooms() {
                     )
                 }
                 {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
-                <div>
-                    <h2 style={styles}>{alert}</h2>
-                </div>
 
             </div>
         </div>
