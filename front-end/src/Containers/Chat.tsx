@@ -6,7 +6,6 @@ import UserChat from "../Components/Chat/UserChat";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-import { io, Socket } from "socket.io-client";
 
 
 export default function Chat() {
@@ -27,6 +26,19 @@ export default function Chat() {
   }, []
   )
 
+  useEffect(() => {
+    let url = "http://localhost:4000/chat/member";
+    const ret = fetch(url)
+    .then(response => response.json())
+    .then(data => 
+      dispatch({
+        type: "User/setRooms",
+        payload: data,
+      }
+      )
+    );
+  }, []
+  )
     return (
       <>
         <Navbar/> 

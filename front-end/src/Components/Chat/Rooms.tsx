@@ -4,9 +4,6 @@ import RoomAdd from './RoomAdd';
 import PrivateAcces from './PrivateAccess';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-import { User } from "../../Slices/UserSlice";
-import { Room } from '../../Slices/RoomSlice';
-
 
 export default function Rooms() {
     const User = useSelector((state: any) => state.User);
@@ -15,15 +12,11 @@ export default function Rooms() {
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
     const[privateAcces, setPrivate] = useState(false);
-    
-    const values = Object.values(User.JWT_token);
-    
+  
     async function handleRoom(room : any)  {
-
-        if (room.tag == RoomActive.tag)
-            return;
         
-        if (room.private) {
+        if (room.private && !User.rooms.some((e : any) => e == room.tag)) 
+        {
             setPrivate(room)
             return;
         }
@@ -42,9 +35,8 @@ export default function Rooms() {
         }
         )
         let url_b = "http://localhost:4000/chat/joinRoom";
-        const response =  fetch(url_b, {method: "POST",
+        const response =  await fetch(url_b, {method: "POST",
           headers: {
-            'Authorization': `Bearer ${values[0]}`,
             'Content-Type': 'application/json',
             'cors': 'true'
           },
@@ -55,12 +47,8 @@ export default function Rooms() {
             })
         }
         ).then(rep => rep.json())
-        .then(data => 
-            dispatch({
-                type: "RoomActive/setRoomActive",
-                payload: data,
-              })
-        );
+        dispatch({type: "RoomActive/setRoomActive",payload: response});
+        dispatch({type: "User/addRoom",payload: response.tag})
     }
 
     return (

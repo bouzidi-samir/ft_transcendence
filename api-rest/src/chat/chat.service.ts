@@ -526,6 +526,11 @@ async saveMessage(body) {
   return message;
 }
 
+async broadcastMessage(message: any, roomTag: string) {
+
+
+} 
+
 async getRoomMessages(body) {
 
   const roomMessages = await this.messagesRepository.find({where: {roomTag: body.tag}});

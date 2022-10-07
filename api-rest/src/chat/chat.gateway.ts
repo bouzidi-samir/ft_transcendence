@@ -34,9 +34,9 @@ import {
 
   
     @SubscribeMessage('messageFromClient')
-    handleMessage(client: Socket, @MessageBody()  message: any): void {
+    handleMessage(client: Socket, @MessageBody()  message: any, roomTag: string): void {
       console.log('Received message in Back', message);
-      this.server.emit('messageFromServer', message);
+      this.server.emit('messageFromServer', message, "rrr");
     //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
 
     }

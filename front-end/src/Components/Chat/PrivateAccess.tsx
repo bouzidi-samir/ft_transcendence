@@ -1,4 +1,3 @@
-
 import { Room } from "../../Slices/RoomSlice"
 import "../../styles/Components/Chat/PrivateAccess.css"
 import { useSelector } from "react-redux";
@@ -13,8 +12,6 @@ export default function PrivateAcces(props : any) {
     const dispatch = useDispatch();
     const [password, setPassword] = useState();
     const [error, setError] = useState("");
-
-    const values = Object.values(User.JWT_token);
 
    async function handleRoom(e: any)  {
     e.preventDefault();
@@ -35,7 +32,6 @@ export default function PrivateAcces(props : any) {
     let url_b = "http://localhost:4000/chat/joinRoom";
     const response = await fetch(url_b, {method: "POST",
       headers: {
-        'Authorization': `Bearer ${values[0]}`,
         'Content-Type': 'application/json',
         'cors': 'true'
       },
@@ -51,10 +47,8 @@ export default function PrivateAcces(props : any) {
         setError(response.error)
         return;
     }
-    dispatch({
-        type: "RoomActive/setRoomActive",
-        payload: response,
-      })
+    dispatch({type: "RoomActive/setRoomActive",payload: response})
+    dispatch({type: "User/addRoom",payload: response.tag})
     setPrivate(false);
 }   
 

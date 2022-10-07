@@ -12,7 +12,7 @@ import { join } from 'path';
   imports: [
     ConfigModule.forRoot({ isGlobal:true }),
     TypeOrmModule.forRoot({
-      //type: 'postgres',
+      type: 'postgres',
 			 host: 'localhost',
      // host: 'postgres-db',
 			port: 5400,
