@@ -48,6 +48,6 @@ export default class User {
 	@JoinColumn()
 	relations:Relations[];
 
-	@OneToMany(() => Messages, (messages) => messages.owner, {nullable: true})
-	messages:Messages[];
+	// @OneToMany(() => Messages, (messages) => messages.owner, {nullable: true})
+	// messages:Messages[];
 }

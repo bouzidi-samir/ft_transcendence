@@ -1,3 +1,4 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { 
     WebSocketGateway, SubscribeMessage, MessageBody,  
     OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect,
@@ -5,6 +6,7 @@ import {
     ConnectedSocket, 
   } from '@nestjs/websockets';
   import { Server, Socket } from 'socket.io'
+import { Repository } from 'typeorm';
   import { ChatService } from './chat.service';
   import { Messages } from './entities/messages.entity';
 //   import { CreateChatDto } from './dto/create-chat.dto';
@@ -55,15 +57,11 @@ import {
     }
 
     @SubscribeMessage('messageFromClient')
-    handleMessage(@ConnectedSocket() client: Socket, @MessageBody()  message: any, roomTag: string): void {
+    handleMessage(@ConnectedSocket() client: Socket, @MessageBody()  message: any): void {
       console.log('Received message in Back', message);
-      console.log(roomTag);
-      let newMessage = new Messages;
-      newMessage.fromUsername = message[0];
-      newMessage.created_at = message[2];
-      newMessage.text = message[4];
       this.server.emit('messageFromServer', message);
-      this.chatService.saveMessage(newMessage);
+      this.chatService.saveMessage(message);
+
     }
 
     @SubscribeMessage('newRoomClient')

@@ -20,7 +20,7 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
-    const send = (messageData: any, roomTag : string) => {
+    const send = (messageData: any) => {
     //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
       socket?.emit("messageFromClient", { messageData })
     }
@@ -45,7 +45,7 @@ export default function Messages() {
             </div>
             <div className="conversation">
             {Object.values(messages).map((message: any, index: number) => (   
-                message.messageData.name == User.nickname ? 
+                message.messageData.room == RoomActive.tag ? 
                     <div key={index} className="buble" >
                         <img src={User.avatar_url} className="avatar-buble"></img>   
                     <div key={index} className="message-bubleA"> 

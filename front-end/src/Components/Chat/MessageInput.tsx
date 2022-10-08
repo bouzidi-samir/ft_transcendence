@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { User } from "../../Slices/UserSlice";
 // import { Message } from "./Messages";
 
-export default function MessageInput({send}: {send: (messagedata: any, roomTag: string) => void}) {
+export default function MessageInput({send}: {send: (messagedata: any) => void}) {
     
     
     const [value, setValue] = useState("");
@@ -11,18 +11,18 @@ export default function MessageInput({send}: {send: (messagedata: any, roomTag: 
     const RoomActive = useSelector((state: any) => state.RoomActive);
     
     const messagedata = {
-        name: User.nickname,
+        name: String(User.nickname),
         time:
           new Date(Date.now()).getHours() +
           ":" +
           new Date(Date.now()).getMinutes(),
         text: value,
-        room: "test",
+        room: String(RoomActive.tag),
       };
 
     const handleClick = (value: string) => { 
         messagedata.text = value;
-        send(messagedata, "test");
+        send(messagedata);
         setValue("");
       }
     

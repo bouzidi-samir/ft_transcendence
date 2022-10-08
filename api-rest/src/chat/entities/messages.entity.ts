@@ -7,8 +7,8 @@ export class Messages {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @CreateDateColumn()
-	created_at: Date;
+    @Column({nullable: true})
+	time: string;
 
     @Column({nullable: true})
     text: string
@@ -22,6 +22,6 @@ export class Messages {
     // @ManyToOne(() => Room, room => room.messages)
     // room:Rooms;
 
-    @ManyToOne(() => User, user => user.messages)
-    owner:User;
+    // @ManyToOne(() => User, user => user.messages)
+    // owner:User;
 }
