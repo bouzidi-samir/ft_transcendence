@@ -20,8 +20,16 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
+    // Récupération des messages de la room active.
+
+    useEffect(() => {
+        let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
+        fetch(url)
+        .then(response => response.json)
+        .then(data => console.log(data))
+    }, [])
+
     const send = (messageData: any) => {
-    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
       socket?.emit("messageFromClient", { messageData })
     }
 
