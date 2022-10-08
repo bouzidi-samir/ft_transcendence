@@ -517,23 +517,20 @@ async unmuteMember(body) {
   }
 }
 
-async saveMessage(body) {
-  const member = await this.memberRepository.findOne({where: {username: body.username, roomTag: body.tag}});
-  if (!member)
-    return false;
-  const user = await this.userRepository.findOne({where: {username: body.username}});
-  const message = await this.messagesRepository.create();
-  message.fromUsername = body.fromUsername;
-  message.text = body.text;
-  message.roomTag = body.roomTag;
-  message.owner = user;
-  await this.messagesRepository.save(message);
-  return message;
+async saveMessage(message) {
+  const newMessage = await this.messagesRepository.create();
+  newMessage.fromUsername = message.messageData.name;
+  newMessage.time = message.messageData.time;
+  newMessage.text = message.messageData.text;
+  newMessage.roomTag = message.messageData.room;
+  // newMessage.owner = user;
+  await this.messagesRepository.save(newMessage);
+  return newMessage;
 }
 
-async getRoomMessages(body) {
+async getRoomMessages(tag) {
 
-  const roomMessages = await this.messagesRepository.find({where: {roomTag: body.tag}});
+  const roomMessages = await this.messagesRepository.find({where: {roomTag: tag}});
   if (!roomMessages[0])
     return false;
   return roomMessages;

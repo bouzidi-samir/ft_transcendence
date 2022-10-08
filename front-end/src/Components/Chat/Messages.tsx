@@ -5,18 +5,6 @@ import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 
-export class Message {
-    constructor(sender: string, time: string, message: string, roomTag: string) {
-        this.sender = sender;
-        this.time = time;
-        this.message = message;
-        this.roomTag = roomTag
-    }
-    sender: string;
-    time: string;
-    message: string;
-    roomTag: string
-}
 
 export default function Messages() {
    const [socket, setSocket] = useState<Socket>();
@@ -32,16 +20,13 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
-    const send = (messageData: any, roomTag : string) => {
-      socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
-    //   socket?.emit("messageFromClient", { messageData })
+    const send = (messageData: any) => {
+    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
+      socket?.emit("messageFromClient", { messageData })
     }
 
     const messageListener = (message: any) => {
-        let tab = [...message];
-        console.log(tab);
-        let newMessage = new Message(tab[0], tab[2], tab[4], RoomActive.tag);
-        setMessages([...messages, newMessage]);
+        setMessages([...messages, message]);
     }
     
     useEffect(() => {
@@ -59,13 +44,13 @@ export default function Messages() {
                 <div onClick={()=>{setMessages([])} } className='room-settings'></div>
             </div>
             <div className="conversation">
-            {messages.map((message: any, index: number) => (   
-                message.sender == User.nickname ? 
+            {Object.values(messages).map((message: any, index: number) => (   
+                message.messageData.room == RoomActive.tag ? 
                     <div key={index} className="buble" >
                         <img src={User.avatar_url} className="avatar-buble"></img>   
                     <div key={index} className="message-bubleA"> 
-                        <p>{message.sender}:</p>
-                         <p>{message.message}</p>
+                        <span>{message.messageData.name} ({message.messageData.time}) :</span>
+                         <p>{message.messageData.text}</p>
                     </div>
                     </div>
                 : null

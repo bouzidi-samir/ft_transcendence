@@ -1,7 +1,7 @@
 import { 
     WebSocketGateway, SubscribeMessage, MessageBody,  
     OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect,
-    WebSocketServer, 
+    WebSocketServer, ConnectedSocket
   } from '@nestjs/websockets';
   import { Server, Socket } from 'socket.io'
 import User from 'src/users/entities/user.entity';
@@ -36,15 +36,11 @@ import User from 'src/users/entities/user.entity';
 
   
     @SubscribeMessage('messageFromClient')
-    handleMessage(client: Socket, @MessageBody()  message: any, roomTag: string): void {
+    handleMessage(@ConnectedSocket() client: Socket, @MessageBody()  message: any): void {
       console.log('Received message in Back', message);
-      console.log(roomTag);
-      let newMessage = new Messages;
-      newMessage.fromUsername = message[0];
-      newMessage.created_at = message[2];
-      newMessage.text = message[4];
       this.server.emit('messageFromServer', message);
-      this.chatService.saveMessage(newMessage);
+      this.chatService.saveMessage(message);
+
     }
   
     // @SubscribeMessage('createChat')

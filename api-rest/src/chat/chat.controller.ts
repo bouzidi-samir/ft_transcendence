@@ -120,14 +120,17 @@ export class ChatController {
 	// }
 
     // ------------------------- Messages ------------------------------------------------
+   
+    @Get('getRoomMessages/:roomTag')
+    async getRoomMessages(@Param('roomTag') roomTag: string, @Body() body: any): Promise<any> 
+    {
+        return await this.service.getRoomMessages(roomTag);
+    }
 
+   
     @Post('saveMessage')
     async saveMessage(@Body() body:any): Promise<any> { // username, tag
         return await this.service.saveMessage(body);
     }
 
-    @Post('getRoomMessages')
-    async getRoomMessages(@Body() body:any): Promise<any> {
-        return await this.service.getRoomMessages(body);
-    }
 }

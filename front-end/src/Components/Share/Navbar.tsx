@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
     const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
 
     function logout () : void {
-        console.log('logout');
+        dispatch({type: "User/logout",payload: null});
+        dispatch({type: "RoomList/logout",payload: null});
     }
 
     return (
