@@ -6,3 +6,15 @@ export class Bowl extends Schema {
 	@type("number") velocity: number;
 
 }
+
+export class players extends Schema {
+	@type("number") x: number;
+	@type("number") y: number;
+}
+
+export class status extends Schema {
+	@type(players) playerA = new players();
+	@type(players) playerB = new players();	
+}
+
+

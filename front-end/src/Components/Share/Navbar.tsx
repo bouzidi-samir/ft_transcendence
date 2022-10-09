@@ -10,17 +10,25 @@ const client = new Colyseus.Client('ws://localhost:4000');
 async function JoinOrCreateRoom()
 {
     try {
-    const room = await client.joinOrCreate("my_room", {mode: "duo", })
-    console.log(room.sessionId, "joined", room.name);
+        const room = await client.create("my_room");
+		if (room){
+            console.log("sakut")
+			room.onStateChange((newState:any) => {
+                console.log("test")
+				console.log(newState);
+			 });
+			}
+    // const room = await client.joinOrCreate("my_room", {mode: "duo", })
+    // console.log(room.sessionId, "joined", room.name);
     
-        room.onMessage("clientsNb", (message) => {
-        console.log("here");
-        if (message.clientsNb === 1)
-            room.send("p1Data", {p1_score: 0, p1_userName : "qbrillai"}); // a changer si on arrive a faire marcher le usercontext
-        if (message.clientsNb === 2)
-            room.send("p2Data", {p2_score: 0, p2_userName : "test"});  
-        });
-        room.send("p1", {test : "test"});
+    //     room.onMessage("clientsNb", (message) => {
+    //     console.log("here");
+    //     if (message.clientsNb === 1)
+    //         room.send("p1Data", {p1_score: 0, p1_userName : "qbrillai"}); // a changer si on arrive a faire marcher le usercontext
+    //     if (message.clientsNb === 2)
+    //         room.send("p2Data", {p2_score: 0, p2_userName : "test"});  
+    //     });
+    //     room.send("p1", {test : "test"});
     
     // room.send("move", {direction: "left"}); exemple pour envoyer des messages a la room
     /*room.onMessage("powerup", (message) => {

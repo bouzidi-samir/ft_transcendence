@@ -13,12 +13,12 @@ import { MyRoom } from './rooms/MyRoom';
 
 	const gameServer = new Server();
 	gameServer.define('my_room', MyRoom)
-	.filterBy(['mode', 'userId']) // rajouter access token
-	.enableRealtimeListing()
-	.on("create", (room) => console.log("room created:", room.roomId))
-	.on("dispose", (room) => console.log("room disposed:", room.roomId))
-	.on("join", (room, client) => console.log(client.id, "joined", room.roomId))
-	.on("leave", (room, client) => console.log(client.id, "left", room.roomId));
+	// .filterBy(['mode', 'userId']) // rajouter access token
+	// .enableRealtimeListing()
+	// .on("create", (room) => console.log("room created:", room.roomId))
+	// .on("dispose", (room) => console.log("room disposed:", room.roomId))
+	// .on("join", (room, client) => console.log(client.id, "joined", room.roomId))
+	// .on("leave", (room, client) => console.log(client.id, "left", room.roomId));
 	gameServer.attach({ server: api.getHttpServer() });
 
 	
