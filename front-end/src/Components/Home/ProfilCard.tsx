@@ -12,8 +12,9 @@ export default function ProfilCard() {
         <div className='profilCard-content'>
             <img src={User.avatar_url} className='vignette-card'></img>
             <h2>{User.nickname}</h2>
-            <p>Niveau:</p>
+            <hr></hr>
+            <div className='ecusson'></div>
+            <p>Novice</p>
         </div>
-
     );
 }

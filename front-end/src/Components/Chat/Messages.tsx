@@ -24,10 +24,10 @@ export default function Messages() {
 
     useEffect(() => {
         let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
-        fetch(url)
-        .then(response => response.json)
+        const ret = fetch(url)
+        .then(response => response.json())
         .then(data => console.log(data))
-    }, [])
+    }, [RoomActive])
 
     const send = (messageData: any) => {
       socket?.emit("messageFromClient", { messageData })
