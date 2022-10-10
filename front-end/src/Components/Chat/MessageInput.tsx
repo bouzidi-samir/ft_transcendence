@@ -11,7 +11,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
     const RoomActive = useSelector((state: any) => state.RoomActive);
     
     const messagedata = {
-        name: String(User.nickname),
+      fromUsername: String(User.nickname),
         time:
           new Date(Date.now()).getHours() +
           ":" +
