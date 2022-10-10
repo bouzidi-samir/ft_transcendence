@@ -28,7 +28,7 @@ export default function Messages() {
         let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
         const ret = fetch(url)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => setMessages(data))
     }, [RoomActive])
 
     const send = (messageData: any) => {
@@ -38,7 +38,11 @@ export default function Messages() {
     }
 
     const messageListener = (message: any) => {
-        setMessages([...messages, message]);
+
+        let MessagesList = [...messages];
+        MessagesList.push(message);
+        setMessages(MessagesList);
+        console.log(messages);
     }
     
     useEffect(() => {
@@ -56,17 +60,16 @@ export default function Messages() {
                 <div onClick={()=>{setMessages([])} } className='room-settings'></div>
             </div>
             <div className="conversation">
-            {Object.values(messages).map((message: any, index: number) => (   
-                message.messageData.room == RoomActive.tag ? 
+            {messages.map((message: any, index: number) => (   
                     <div key={index} className="buble" >
                         <img src={User.avatar_url} className="avatar-buble"></img>   
                     <div key={index} className="message-bubleA"> 
-                        <span>{message.messageData.name} ({message.messageData.time}) :</span>
-                         <p>{message.messageData.text}</p>
+                        <span>{message.fromUsername} ({message.time}) :</span>
+                         <p>{message.text}</p>
                     </div>
                     </div>
-                : null
-                ))}
+                
+            ))}
             </div>
             <div className="send-zone">
             <MessageInput send={send}/>
