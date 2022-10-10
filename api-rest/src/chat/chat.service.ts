@@ -38,6 +38,10 @@ export class ChatService {
       return user; 
   }
 
+  async getAllMember(): Promise<any[]> {
+    return this.memberRepository.find() 
+  }
+  
   async getRoomByTag(roomtag: string): Promise<any>
   {
       const room = await this.roomsRepository.findOne({where: {tag: roomtag}});
@@ -518,6 +522,11 @@ async unmuteMember(body) {
 }
 
 async saveMessage(message) {
+
+  // const member = await this.memberRepository.findOne({where: {username: body.username, roomTag: body.tag}});
+  // if (!member)
+  //   return false;
+  // const user = await this.userRepository.findOne({where: {username: body.username}});
   const newMessage = await this.messagesRepository.create();
   newMessage.fromUsername = message.messageData.name;
   newMessage.time = message.messageData.time;

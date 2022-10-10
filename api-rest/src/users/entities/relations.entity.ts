@@ -29,6 +29,15 @@ export class Relations {
     roomTag: string
 
     @Column({default: false})
+    gameRequest: boolean
+
+    @Column({default: false})
+    acceptGame: boolean
+
+    // @Column({nullable: true})
+    // gameId: number
+
+    @Column({default: false})
     blocked: boolean
 
     @Column({default: false})
