@@ -10,8 +10,8 @@ export default function Dashboard() {
             <ProfilCard/>
             <Stats/>
             <div className='user-infos'>
-                <Users/>
-                <Notifs/>
+            <Users/>
+            <Notifs/>
             </div>
         </div>
     );
