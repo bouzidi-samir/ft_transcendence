@@ -12,6 +12,8 @@ export default function Messages() {
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
+    const alert = "NEW MESSAGES !!!";
+
 
     
     useEffect(() => {
@@ -31,6 +33,8 @@ export default function Messages() {
 
     const send = (messageData: any) => {
       socket?.emit("messageFromClient", { messageData })
+      socket?.emit("newMessageClient", alert);
+
     }
 
     const messageListener = (message: any) => {
