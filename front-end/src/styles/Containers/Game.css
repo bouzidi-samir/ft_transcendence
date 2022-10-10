@@ -1,5 +1,14 @@
 
 .visual{
-	height: 100%;
+	margin:0%, auto;
+	height: 100vw;
 	background-color: blueviolet;
+}
+
+.gameCanvas {
+	height: 50vw;
+	padding: 0;
+	margin: auto; 
+	display: block;
+	background: linear-gradient(90deg, rgb(62, 162, 81), rgb(23, 44, 162));
 }

@@ -1,10 +1,10 @@
 import {Schema, type} from "@colyseus/schema";
 
-export class Bowl extends Schema {
+export class Ball extends Schema {
 	@type("number") x: number;
 	@type("number") y: number;
-	@type("number") velocity: number;
-
+	@type("number") velocity_x: number;
+	@type("number") velocity_y: number;
 }
 
 export class players extends Schema {
