@@ -25,8 +25,4 @@ export class Messages {
 
     // @ManyToOne(() => User, user => user.messages)
     // owner:User;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> merge_Oli
