@@ -12,6 +12,8 @@ export default function Messages() {
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
+    const alert = "NEW MESSAGES !!!";
+
 
     
     useEffect(() => {
@@ -19,10 +21,18 @@ export default function Messages() {
         console.log('New socket', newSocket?.id);
         setSocket(newSocket)
     }, [setSocket])
-    
+
+    useEffect(() => {
+        let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
+        const ret = fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }, [RoomActive])
+
     const send = (messageData: any) => {
-    //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
       socket?.emit("messageFromClient", { messageData })
+      socket?.emit("newMessageClient", alert);
+
     }
 
     const messageListener = (message: any) => {

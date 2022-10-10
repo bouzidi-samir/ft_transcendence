@@ -531,13 +531,17 @@ async saveMessage(message) {
   return newMessage;
 }
 
-async getRoomMessages(body) {
+async getRoomMessages(tag) {
 
-  const roomMessages = await this.messagesRepository.find({where: {roomTag: body.tag}});
+  const roomMessages = await this.messagesRepository.find({where: {roomTag: tag}});
   if (!roomMessages[0])
     return false;
+  if (roomMessages.length > 2)
+  {
+    const sortMessages =  roomMessages.slice(roomMessages.length - 10);
+    return sortMessages;
+  } 
   return roomMessages;
-  
 }
 
   findAll() {
