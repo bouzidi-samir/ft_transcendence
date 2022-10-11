@@ -18,7 +18,7 @@ export default function Home() {
   const [alert, setAlert] = useState<string>("Pong");
   
 
-  function useTitle(title: any) {
+  function useTitle(title: string) {
     useEffect(() => {
       document.title = title
       return () => {
@@ -45,6 +45,7 @@ export default function Home() {
           socket?.off("newMessageServer", alertListener)
       }
   }, [alertListener])
+
 
   useTitle(alert);
 
