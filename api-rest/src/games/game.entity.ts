@@ -19,12 +19,7 @@ export default class Game {
 	p2_userName: string;
 
     @Column({
-        default : 0
-	})
-	p1_score: number;
-
-    @Column({
-        default:0
-	})
-	p2_score: number;
+        default : 'No winner',
+    })
+    winner : string;
 }

@@ -22,10 +22,10 @@ export class gameService {
     }    
 
     async addGame(game: Game): Promise<Game> {
-		const addedGame = this.gameRepository.create(game);
-		await this.gameRepository.save(addedGame);
-		return addedGame;
-	}
+		  const addedGame = this.gameRepository.create(game);
+		  await this.gameRepository.save(addedGame);
+		  return addedGame;
+	  }
 
     async setP1Name(gameId: number, name: string) { //save le secret dans la db
         return this.gameRepository.update(gameId, {
@@ -36,18 +36,6 @@ export class gameService {
     async setP2Name(gameId: number, name: string) { //save le secret dans la db
         return this.gameRepository.update(gameId, {
           p2_userName: name
-        });
-      }
-
-    async setP1Score(gameId: number, score: number) { //save le secret dans la db
-        return this.gameRepository.update(gameId, {
-          p1_score: score
-        });
-      }
-
-    async setP2Score(gameId: number, score: number) { //save le secret dans la db
-        return this.gameRepository.update(gameId, {
-          p2_score: score
         });
       }
 }

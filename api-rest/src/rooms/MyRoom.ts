@@ -32,37 +32,76 @@ export class MyRoom extends Room<MyRoomState> {
     this.game = new Game;
   }
 
-  
   async onJoin (client: Client, options: any) {
     console.log(client.sessionId, "joined!");
    // client.send(this.gameData) data de la partie a afficher
     client.send("clientsNb", {clientsNb :this.clients.length});
+    client.send("gameData", {gameData: this.gameData});
     
   this.onMessage("p1Data", async (client, message) => {
       this.game.p1_userName = message.p1_userName;
-      this.game.p1_score = message.p1_score;
-      this.player1 = await this.userService.getUserByUsername(message.p1_username);
-      console.log(this.player1);
   })
     
   this.onMessage("p2Data", async (client, message) => {
     this.game.p2_userName = message.p2_userName;
-    this.game.p2_score = message.p2_score;
-    this.player2 = await this.userService.getUserByUsername(message.p2_username);
   })
 
-  this.onMessage("p1", (client, message) => 
-  {
-   //console.log(this.player1);
+  this.onMessage("keyDown", async (client, message) => {
+    console.log('here');
+    if (this.game.p1_userName == message.userName)
+    {
+      //faire les changements sur le gamedata.
+    }
+    else if (this.game.p2_userName == message.userName)
+    {
+      //faire les changements sur le gamedata.
+    }
   })
+  
+  this.onMessage("keyUp", async (client, message) => {
+    if (this.game.p1_userName == message.userName)
+    {
+      //faire les changements sur le gamedata.
+    }
+    else if (this.game.p2_userName == message.userName)
+    {
+      //faire les changements sur le gamedata.
+    }
+  })
+
+  this.onMessage("winner", async (client, message) => {
+    this.game.winner = message.userName;
+    this.onDispose();
+  })
+
+
 }
 
-  onLeave (client: Client, consented: boolean) {
+  async onLeave (client: Client, consented: boolean) {
+    if (this.clients.length > 1)
+    {
+      if (client == this.clients[0])
+      {
+        this.game.winner = this.game.p2_userName;
+        this.onDispose();
+      }
+      else if (client == this.clients[1])
+      {
+        this.game.winner = this.game.p1_userName;
+        this.onDispose();
+      }
+    }
     console.log(client.sessionId, "left!");
   }
 
   async onDispose() {
     console.log("room", this.roomId, "disposing...");
+    let request = await fetch("localhost:4000/games/result", {
+      method: "POST",
+      body: JSON.stringify({
+        game : this.game,
+      })
+    })
   }
 
 }
