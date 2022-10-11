@@ -5,7 +5,6 @@ import { User } from "../../Slices/UserSlice";
 
 export default function MessageInput({send}: {send: (messagedata: any) => void}) {
     
-    
     const [value, setValue] = useState("");
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -27,11 +26,13 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
       }
     
     return (
+          <div className="send-zone">
             <div className='ChatMessageInput'>
                 <div className='Input'>
                     <input onChange={(e)=>setValue(e.target.value)} placeholder="Tapez votre message..." value={value} />
                     <button className="btn btn-primary" onClick={() => handleClick(value)}>Envoyer</button>
                 </div>
             </div>
+          </div>
     )
 }

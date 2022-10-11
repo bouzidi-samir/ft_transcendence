@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
+import RoomDisplay from './RoomDisplay';
+import Conversation from './Conversation';
 
 
 export default function Messages() {
@@ -14,16 +16,12 @@ export default function Messages() {
     const User = useSelector((state: any) => state.User);
     const alert = "NEW MESSAGES !!!";
 
-
-    
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
         console.log('New socket', newSocket?.id);
         setSocket(newSocket)
     }, [setSocket])
     
-    // Récupération des messages de la room active.
-
     useEffect(() => {
         let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
         const ret = fetch(url)
@@ -34,15 +32,12 @@ export default function Messages() {
     const send = (messageData: any) => {
       socket?.emit("messageFromClient", { messageData })
       socket?.emit("newMessageClient", alert);
-
     }
 
     const messageListener = (message: any) => {
-
         let MessagesList = [...messages];
-        MessagesList.push(message);
+        MessagesList.push(message.messageData);
         setMessages(MessagesList);
-        console.log(messages);
     }
     
     useEffect(() => {
@@ -54,26 +49,9 @@ export default function Messages() {
 
     return (
         <div className="messages-content">
-            <div className='room-title'>
-                <div className='room-picture'></div>
-                <h2>{RoomActive.tag}</h2>
-                <div onClick={()=>{setMessages([])} } className='room-settings'></div>
-            </div>
-            <div className="conversation">
-            {messages.map((message: any, index: number) => (   
-                    <div key={index} className="buble" >
-                        <img src={User.avatar_url} className="avatar-buble"></img>   
-                    <div key={index} className="message-bubleA"> 
-                        <span>{message.fromUsername} ({message.time}) :</span>
-                         <p>{message.text}</p>
-                    </div>
-                    </div>
-                
-            ))}
-            </div>
-            <div className="send-zone">
+            <RoomDisplay/>
+            <Conversation messages={messages} />
             <MessageInput send={send}/>
         </div>
-    </div>
     );
 }
