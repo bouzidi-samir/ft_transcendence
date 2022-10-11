@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import * as Colyseus from "colyseus.js";
+import Game from '../../Containers/Game';
 
 
 const client = new Colyseus.Client('ws://localhost:4000');
@@ -87,8 +88,7 @@ function Navbar() {
                         </Link>
                         </li>  
                         <li>   
-                        <Link  onClick={JoinOrCreateRoom}
-                            className="nav_link" to="/">
+                        <Link  onClick={Game} className="nav_link" to="/Game">
                             <div className = 'game-icon'></div>
                         </Link>
                         </li>

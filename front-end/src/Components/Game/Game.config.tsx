@@ -1,4 +1,4 @@
-     // paddle de droite et gauche 
+     // taille du paddle de droite et gauche 
 export const paddle_height = 100;
 export const paddle_width = 6;
 

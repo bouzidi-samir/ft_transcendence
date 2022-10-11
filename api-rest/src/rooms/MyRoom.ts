@@ -8,21 +8,28 @@ import { Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Console } from "console";
+import { threadId } from "worker_threads";
 
 export class MyRoom extends Room<MyRoomState> {
 
        async   onCreate (options: any) {
         console.log("hello");
         this.setState(new MyRoomState());
-        this.setSimulationInterval((deltaTime) => this.update(deltaTime)); // FPS 
+    //     this.setSimulationInterval((deltaTime) => this.update(deltaTime)); // FPS 
+    //   }
+    //   // permet envoyer info au fron a chq mvt pour tout client co
+    //   update(deltaTime : any){
+    //     let playerA = this.state.playerA;
+    //     playerA.x += 1;
+	// 	playerA.y += 1;
       }
-      // permet envoyer info au fron a chq mvt pour tout client co
-      update(deltaTime : any){
-        let playerA = this.state.playerA;
-        playerA.x += 1;
-      }
+	  async onJoin (client: Client, options: any) {
+		console.log(client.sessionId, "joined!");
+		client.send("clientsNb", {clientsNb :this.clients.length});
+		client.send("ball", {ball : this.state.ball});
+		client.send("player", {playerA : this.state.playerA});
 
-  
+}
 }
 // constructor(
 	// 	@InjectRepository(User)
