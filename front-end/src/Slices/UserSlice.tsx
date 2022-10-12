@@ -11,7 +11,6 @@ const User = {
     room_active: "",
     rooms: [""],
     JWT_token: "",
-    socket: Socket
 };
 
 const UserSlice = createSlice({
@@ -27,7 +26,6 @@ const UserSlice = createSlice({
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
             state.JWT_token = action.payload.JWT_token;
-            state.socket = action.payload.newSocket;
         },
         setRooms : (state, action) => {
             let ret = [...action.payload]

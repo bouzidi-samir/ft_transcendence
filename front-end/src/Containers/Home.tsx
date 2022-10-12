@@ -7,6 +7,8 @@ import {useDispatch} from 'react-redux';
 import { useEffect } from "react";
 import { User } from "../Slices/UserSlice";
 import { io, Socket } from "socket.io-client";
+import mp3 from '../styles/Sound/new.mp3';
+import { Howl } from "howler";
 
 
 
@@ -16,7 +18,14 @@ export default function Home() {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState<Socket>();
   const [alert, setAlert] = useState<string>("Pong");
-  
+
+  const playMp3 = (src: any) => {
+    const sound = new Howl({
+      src, 
+      html5: true,
+    });
+    sound.play()
+  };
 
   function useTitle(title: string) {
     useEffect(() => {
@@ -28,7 +37,6 @@ export default function Home() {
   }
   
   const values = Object.values(User.JWT_token);
-  console.log('values', values);
 
   useEffect(() => {
       const newSocket = io('http://localhost:8000');
@@ -43,11 +51,18 @@ export default function Home() {
       socket?.on("newMessageServer", alertListener);
       return () => {
           socket?.off("newMessageServer", alertListener)
+          
       }
   }, [alertListener])
 
 
   useTitle(alert);
+  useEffect(() => {
+    if (alert != 'Pong'){
+      playMp3(mp3);
+      setTimeout(function(){setAlert('Pong')}, 2000);
+    }
+  })
 
   useEffect(() => {
     let url = "http://localhost:4000/chat/createGlobalRoom";
