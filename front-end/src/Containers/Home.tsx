@@ -28,7 +28,6 @@ export default function Home() {
   }
   
   const values = Object.values(User.JWT_token);
-  console.log('values', values);
 
   useEffect(() => {
       const newSocket = io('http://localhost:8000');

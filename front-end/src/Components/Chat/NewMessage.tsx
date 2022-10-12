@@ -6,7 +6,7 @@ export default function NewMessage(props: any) {
     const message = props.message;
     let bubleStyle : {bullDirection : any, bullColor : string};
 
-    if (message.fromUsername == User.nickname) 
+    if (message.fromUsername == User.username) 
         bubleStyle = {bullDirection: "start", bullColor : "blueviolet"};
     else
         bubleStyle = {bullDirection: "end", bullColor : "coral"};
@@ -16,7 +16,7 @@ export default function NewMessage(props: any) {
             <img src={User.avatar_url} className="avatar-buble"></img>   
             <div key={message.index} className="message-bubleA" style={{backgroundColor: bubleStyle.bullColor}}
                 > 
-                <span>{message.fromUsername} ({message.time}) :</span>
+                <span>{message.fromNickname} ({message.time}) :</span>
                 <p className="buble-text">{message.text}</p> 
             </div>
         </div>

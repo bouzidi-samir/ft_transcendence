@@ -15,7 +15,7 @@ import { join } from 'path';
       type: 'postgres',
 			 host: 'localhost',
      // host: 'postgres-db',
-			port: 5400,
+			port: 5432,
 			//username: 'user',
 			//password: 'password',
 			database: 'master-pong',

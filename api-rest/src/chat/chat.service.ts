@@ -528,7 +528,8 @@ async saveMessage(message) {
   //   return false;
   // const user = await this.userRepository.findOne({where: {username: body.username}});
   const newMessage = await this.messagesRepository.create();
-  newMessage.fromUsername = message.messageData.name;
+  newMessage.fromUsername = message.messageData.fromUsername;
+  newMessage.fromNickname = message.messageData.fromNickname;
   newMessage.time = message.messageData.time;
   newMessage.text = message.messageData.text;
   newMessage.roomTag = message.messageData.room;

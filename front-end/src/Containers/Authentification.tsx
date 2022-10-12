@@ -11,10 +11,11 @@ export default function Authentification() {
   const dispatch = useDispatch();
   const [params] = useSearchParams();
   const [resgistred, setRegistred] = useState(false);
-  
+ 
   useEffect(() => {
     const code = params.get("code")
 		const {hostname, port} = document.location;
+  
     if (code)
 		{
 			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
