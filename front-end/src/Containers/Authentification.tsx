@@ -5,6 +5,7 @@ import { useEffect, useState} from 'react';
 import {useSearchParams, Navigate} from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
+import Particle from "../Components/Particle";
 
 export default function Authentification() {
   
@@ -44,6 +45,7 @@ export default function Authentification() {
   return (
     <div className="auth-content">
        <div className="auth-field">
+            <Particle/>
             <LoginForm/>
         </div>        
     </div>

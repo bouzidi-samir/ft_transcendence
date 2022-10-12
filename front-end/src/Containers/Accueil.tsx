@@ -3,6 +3,7 @@ import React, {useState, useContext, useEffect,} from "react";
 import Custom from "../Components/Custom";
 import { useParams, Navigate, useNavigate } from "react-router";
 import Home from "./Home";
+import Particle from "../Components/Particle";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
