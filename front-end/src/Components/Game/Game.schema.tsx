@@ -31,3 +31,16 @@ export class Ball extends Schema {
 	  this.y = y;
 	}
   }
+
+  export class Computer extends Schema {
+	@type('number')
+	x: number;
+	@type('number')
+	y: number;
+  
+	constructor(x = 0, y = 0) {
+	  super();
+	  this.x = x;
+	  this.y = y;
+	}
+  }
