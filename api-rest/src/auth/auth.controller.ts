@@ -46,7 +46,7 @@ export class AuthController {
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,
-			nickname: "",
+			nickname: finaluser.nickname,
 			registred: finaluser.registred,
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,

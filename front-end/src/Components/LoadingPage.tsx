@@ -1,5 +1,5 @@
 import { redirect } from "react-router"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Particle from "./Particle";
 import Home from "../Containers/Home";
 import { useParams, Navigate, useNavigate } from "react-router";
@@ -12,6 +12,7 @@ export default function LoadingPage (props : any) {
 
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
+    const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
 
@@ -23,18 +24,26 @@ export default function LoadingPage (props : any) {
     }, []
     )
 
+   /* useEffect( () => {    
+        setInterval(() => {
+            setTime(time => time + 1);
+        },100)
+    }, []
+    )*/
+
     function redirect() {
 
        setTimeout(() => {
             navigation("/Home");
-        }, 3000);
+        }, 1000);
     }
 
     return (
         <div className="loading-content">
         <>
             <Particle/>
-            <h1 className="loading-title">loading...</h1>
+            
+            <h1 className="loading-title">{time}%</h1>
                 {User.registred === 'true' ? redirect() : <NewMemberSet/> }
         </>
         </div>
