@@ -20,11 +20,7 @@ export default function Accueil(props: any) {
         fetch(url)
         .then(response => response.json())
         .then(data => 
-        dispatch({
-            type: "Userlist/setUserlist",
-            payload: data,
-          })
-        );
+        dispatch({type: "Userlist/setUserlist",payload: data,}));
     }, []
     )
 

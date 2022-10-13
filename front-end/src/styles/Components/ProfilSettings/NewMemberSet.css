@@ -1,12 +1,18 @@
-.form-setting {
+.form-newsetting {
     position: relative;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     border: solid black 1px;
     border-radius: 2%;
     margin-left: 25%;
+    margin-top: 4%;
     width: 50%;
     height: 80%;
+}
+
+h1 {
+    margin-top: 2%;
+    color: white;
 }
 
 .vignette-form {
@@ -20,7 +26,7 @@
     border: solid black 1px;
 }
 
-.form-setting .set-avatar {
+.form-newsetting .set-avatar {
     position: relative;
     width: 9%;
     height: 10%;
@@ -35,7 +41,7 @@
     cursor: pointer;
 }
 
-.form-setting .set-nickname {
+.form-newsetting .set-nickname {
     position: relative;
     width: 6%;
     height: 7%;
@@ -63,12 +69,12 @@
     margin-left: 40%;
 }
 
-.form-setting button {
+.form-newsetting button {
     width: 20%;
     margin-left: 40%;
 }
 
-.form-setting h2 {
+.form-newsetting h2 {
     color: white;
     border: solid white 1px;
     width: 30%;
@@ -78,7 +84,7 @@
     font-size: 160%;
 }
 
-.form-setting input {
+.form-newsetting input {
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     color: white;
