@@ -12,6 +12,7 @@ export default function Messages() {
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
+  const values = Object.values(User.JWT_token);
     
 
     const alert = "NEW MESSAGE AVAILABLE";
