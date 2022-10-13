@@ -20,14 +20,17 @@ export default function NewMemberSet() {
     let navigation = useNavigate();
  
     function nickError(nickname: string) : boolean {
-        if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
+        if ((nickname.length == 0) ) {
+            setError("Merci de choisir un pseudo.")
+            return false;
+        } else if ((nickname.length < 4 || nickname.length > 8) ) {
             setError("Ton pseudo doit contenir entre 4 et 8 charactères.")
             return false;
-        } else if(!myIsalpha(nickname) && nickForm == true){
+        } else if(!myIsalpha(nickname)){
             setError("Les trois premiers caracteres doivent etre des lettres.")
             return false;
-        } else if (Userlist.some((e : any) => nickname == e.nickname) && nickForm == true){
-            setError("Ce pseudo  est déja utilié.")
+        } else if (Userlist.some((e : any) => nickname == e.nickname)){
+            setError("Ce pseudo est déja utilié.")
             return false;
         }
         return true;
@@ -39,8 +42,10 @@ export default function NewMemberSet() {
 
     async function handleForm (e : any) {
         e.preventDefault();
-        if (nickError(nickname) == false || !nickForm )
+        if (nickError(nickname) == false)
             return;
+        //if (!nickForm)
+          //  return navigation("/Home");
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
         dispatch({type: "User/setUser", payload: userUpdate,});
@@ -61,9 +66,7 @@ export default function NewMemberSet() {
             <form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000" >
                 <img  className="vignette-form" src={User.avatar_url}></img>
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>               
-                   {!nickForm ? <h2>{User.nickname}</h2> 
-                        : <input type="text" onChange={handlechange}></input>}               
-                <div onClick={()=> setNickform(true)}  className='set-nickname'></div>
+                  <input type="text" onChange={handlechange}></input>             
                 <button onClick={handleForm}  className="btn btn-primary">Valider</button>
                 <p className="error-text">{error}</p>
             </form>

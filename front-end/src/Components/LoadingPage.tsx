@@ -19,8 +19,7 @@ export default function LoadingPage (props : any) {
         let url : string = "http://localhost:4000/users";
         fetch(url)
         .then(response => response.json())
-        .then(data => 
-        dispatch({type: "Userlist/setUserlist",payload: data,}));
+        .then(data =>  dispatch({type: "Userlist/setUserlist",payload: data,}));
     }, []
     )
 

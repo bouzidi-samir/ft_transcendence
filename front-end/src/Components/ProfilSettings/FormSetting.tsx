@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import {myIsalpha} from "../../Utils/Util";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FormSetting() {
     
@@ -16,6 +17,7 @@ export default function FormSetting() {
     const[nickForm, setNickform] = useState(false);
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
+    let navigation = useNavigate();
  
     function nickError(nickname: string) : boolean {
         if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
@@ -31,33 +33,29 @@ export default function FormSetting() {
         return true;
     } 
 
-    function handlechange(e: any) {
-      setNickname(e.target.value);
-    }
+    function handlechange(e: any) {setNickname(e.target.value);}
 
     async function handleForm (e : any) {
         
         e.preventDefault();
 
-        if (nickError(nickname) == false || !nickForm )
+        if (nickError(nickname) == false)
             return;
+        if (!nickForm)
+            return navigation("/Home");
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
         dispatch({
             type: "User/setUser",
             payload: userUpdate,
           });
-        let response = await fetch(
-                `http://localhost:4000/users/${User.id}/nickname`,
-                {
-                    method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
+        let response = await fetch(`http://localhost:4000/users/${User.id}/nickname`,
+                {method: "POST", headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({nickname})
                 }
             ).then(response => response.json());
         setError("");
+        return navigation("/Home");
     }
 
     return (
