@@ -14,7 +14,15 @@ export default function Messages() {
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
-    const alert = "NEW MESSAGES !!!";
+  const values = Object.values(User.JWT_token);
+    
+
+    const alert = "NEW MESSAGE AVAILABLE";
+    const  alertNotif = {
+        text: "new message",
+        from: String(User.nickname),
+        room: String(RoomActive.tag)
+    }
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -22,6 +30,7 @@ export default function Messages() {
         setSocket(newSocket)
     }, [setSocket])
     
+    // Récupération des messages de la room active.
     useEffect(() => {
         let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
         const ret = fetch(url)
@@ -31,7 +40,9 @@ export default function Messages() {
 
     const send = (messageData: any) => {
       socket?.emit("messageFromClient", { messageData })
-      socket?.emit("newMessageClient", alert);
+      socket?.emit("newMessageClient", alert );
+      socket?.emit("newNotifClient", { alertNotif });
+
     }
 
     const messageListener = (message: any) => {

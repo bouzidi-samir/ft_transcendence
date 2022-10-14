@@ -10,19 +10,13 @@ import { io, Socket } from 'socket.io-client';
 export default function Rooms() {
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const Roomlist = useSelector((state: any) => state.RoomList);
+    let Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     const values = Object.values(User.JWT_token);
-    
-    // const styles = {
-    //     fontFamily: "Open Sans", 
-    //     fontSize: '16px', 
-    //     color: "red"
-    // };
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -85,7 +79,10 @@ export default function Rooms() {
         dispatch({type: "User/addRoom",payload: response.tag})
     }
 
-    
+        useEffect(() => {
+            document.title = alertRoom;
+        })
+
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
@@ -103,7 +100,6 @@ export default function Rooms() {
                 }
                 {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
                 {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
-
             </div>
         </div>
     );

@@ -12,10 +12,7 @@ dotenv.config();
 @Injectable()
 export class AuthService {
 
-    constructor(
-        private jwtService: JwtService,
-        // private readonly configService: ConfigService
-      ) {}
+    constructor( private jwtService: JwtService) {}
 
     @Inject(UsersService)
 	public readonly users: UsersService;

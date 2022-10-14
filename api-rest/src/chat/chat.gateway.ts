@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { 
     WebSocketGateway, SubscribeMessage, MessageBody,  
@@ -6,6 +7,7 @@ import {
     ConnectedSocket, 
   } from '@nestjs/websockets';
   import { Server, Socket } from 'socket.io'
+import { JwtAuthGuard } from 'src/auth/jwt-authguards';
 import { Repository } from 'typeorm';
   import { ChatService } from './chat.service';
   import { Messages } from './entities/messages.entity';
@@ -36,26 +38,16 @@ import { Repository } from 'typeorm';
       // throw new Error('Method not implemented.');
     }
 
-  
-    // @SubscribeMessage('messageFromClient')
-    // handleMessage(client: Socket, @MessageBody()  message: any): void {
-    //   console.log('Received message in Back', message);
-      // const obj = JSON.parse(JSON.stringify(message));
-      // console.log('obj', obj);
-      // console.log('obj.messageData.text', obj.messageData.text);
-      // this.server.emit('messageFromServer', message);
-
-      // this.server.emit('messageFromServer', message.name, ' ', message.time, ' ', message.text);
-      //   socket?.emit("messageFromClient", messageData.name, ' ', messageData.time, ' ', messageData.text)
-
-    // }
-  
     @SubscribeMessage('newMessageClient')
-    handleNewMessage( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
+    handleNewMessage(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       console.log('Received message in Back', alert);
       this.server.emit('newMessageServer', alert);
     }
-
+    @SubscribeMessage('newNotifClient')
+    handleNotif(@ConnectedSocket() client: Socket, @MessageBody()  alertNotif: any): void {
+      console.log('Received notif in Back', alertNotif);
+      this.server.emit('newNotifServer', alertNotif);
+    }
     @SubscribeMessage('messageFromClient')
     handleMessage(@ConnectedSocket() client: Socket, @MessageBody()  message: any): void {
       console.log('Received message in Back', message);
@@ -63,9 +55,8 @@ import { Repository } from 'typeorm';
       this.chatService.saveMessage(message);
 
     }
-
     @SubscribeMessage('newRoomClient')
-    handleNewRoom( @ConnectedSocket()client: Socket, @MessageBody()  alert: any): void {
+    handleNewRoom(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       console.log('Received message in Back', alert);
       this.server.emit('newRoomServer', alert);
     }
