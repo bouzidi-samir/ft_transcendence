@@ -24,12 +24,12 @@ export default function LoadingPage (props : any) {
     }, []
     )
 
-   /* useEffect( () => {    
+    useEffect( () => {    
         setInterval(() => {
             setTime(time => time + 1);
         },100)
     }, []
-    )*/
+    )
 
     function redirect() {
 
