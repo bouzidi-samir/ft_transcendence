@@ -528,7 +528,8 @@ async saveMessage(message) {
   //   return false;
   // const user = await this.userRepository.findOne({where: {username: body.username}});
   const newMessage = await this.messagesRepository.create();
-  newMessage.fromUsername = message.messageData.name;
+  newMessage.fromUsername = message.messageData.fromUsername;
+  newMessage.fromNickname = message.messageData.fromNickname;
   newMessage.time = message.messageData.time;
   newMessage.text = message.messageData.text;
   newMessage.roomTag = message.messageData.room;
@@ -542,9 +543,9 @@ async getRoomMessages(tag) {
   const roomMessages = await this.messagesRepository.find({where: {roomTag: tag}});
   if (!roomMessages[0])
     return false;
-  if (roomMessages.length > 10)
+  if (roomMessages.length > 20)
   {
-    const sortMessages =  roomMessages.slice(roomMessages.length - 10);
+    const sortMessages =  roomMessages.slice(roomMessages.length - 20);
     return sortMessages;
   } 
   return roomMessages;

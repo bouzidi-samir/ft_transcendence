@@ -18,6 +18,9 @@ export class Messages {
     fromUsername: string
 
     @Column({nullable: true})
+    fromNickname: string
+
+    @Column({nullable: true})
     roomTag: string
 
     // @ManyToOne(() => Room, room => room.messages)

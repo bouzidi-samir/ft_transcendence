@@ -15,6 +15,9 @@ export default function AuthForm() {
   const handleFourtyTwo = async (e : any) => {	
   e.preventDefault()
   const {hostname, port} = document.location;
+  console.log(hostname);
+  console.log(port);
+
    let request = await fetch(`http://${hostname}:4000/auth/authorize`, {
 			method: "POST",
 			headers: {

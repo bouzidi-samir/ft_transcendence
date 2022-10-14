@@ -11,7 +11,7 @@ export default class User {
     @Column({ type: 'varchar' })
     username: string;
 
-	@Column({ type: 'varchar', default: 'offline' })
+	@Column({ type: 'varchar', default: ''})
     nickname: string;
 
 	@Column({ nullable: true })
