@@ -18,7 +18,7 @@ export default function FormSetting() {
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
     let navigation = useNavigate();
- 
+  
     function nickError(nickname: string) : boolean {
         if ((nickname.length < 4 || nickname.length > 8) && nickForm == true) {
             setError("Ton pseudo doit contenir entre 4 et 8 charactères.")

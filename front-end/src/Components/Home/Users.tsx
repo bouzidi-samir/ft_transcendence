@@ -8,6 +8,14 @@ export default function Users() {
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const dispatch = useDispatch();
+
+    useEffect( () => {    
+        let url : string = "http://localhost:4000/users";
+        fetch(url)
+        .then(response => response.json())
+        .then(data =>  dispatch({type: "Userlist/setUserlist",payload: data,}));
+    }, []
+    )
     
     return (
         <div className='users-content'>
