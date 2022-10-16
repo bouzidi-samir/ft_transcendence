@@ -46,8 +46,12 @@ export default function Messages() {
     }
 
     const messageListener = (message: any) => {
-        let MessagesList = [...messages];
+        console.log(message);
+        let MessagesList : any[] = [];
+        if (messages.length > 0)
+            MessagesList = [...messages];
         MessagesList.push(message.messageData);
+        console.log(MessagesList);
         setMessages(MessagesList);
     }
     
