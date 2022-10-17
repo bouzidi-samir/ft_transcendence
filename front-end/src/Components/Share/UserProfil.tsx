@@ -29,8 +29,9 @@ export default function UserProfil() {
                 <Cross lastPage="/Chat"/>
                 <img  className="vignette-form" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
+                <hr></hr>
                 <button className="btn btn-primary btn-add">Ajouter</button>
-                <button className="btn btn-secondary">Supprimer</button>
+                <button className="btn btn-secondary">Bloquer</button>
             </form>
         </div>
         </div>

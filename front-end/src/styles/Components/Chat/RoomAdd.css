@@ -17,13 +17,15 @@
     display: block;
     margin-bottom: 1%;
     margin-left: 3%;
+    margin-top: 2%;
 }
 
 .addroom-content .room-name {
-    width: 60%;
+    width: 40%;
     border-radius: 4%;
     margin-bottom: 3%;
     margin-left: 3%;
+    height: 8%;
 }
 
 .addroom-content .room-type {
@@ -56,13 +58,18 @@
 }
 
 .pass-label {
-    margin-top: 5%;
+    margin-top: 6%;
+    
+}
+
+.password-input {
+    height: 30%;
     margin-left: 3%;
 }
 
 .pass-zone {
-    height: 30%;
-    margin-left: 3%;
+    height: 25%;
+    
 }
 
 .addroom-content .password {

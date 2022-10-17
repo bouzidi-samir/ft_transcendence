@@ -3,7 +3,7 @@
     width: 20%;
     margin-left: 25%;
     margin-right: 10%;
-    margin-top: 12%;
+    margin-top: 7%;
 }
 
 .profilset-content .btn-secondary{
@@ -11,7 +11,7 @@
     width: 20%;
     margin-left: 2px;
     margin-right: 5%;
-    margin-top: 12%;
+    margin-top: 7%;
 }
 
 .profilset-content .btn-light{
@@ -29,3 +29,8 @@
     margin-top: 2%;
 }
 
+.userprofil hr {
+ 
+    color: white;
+
+}

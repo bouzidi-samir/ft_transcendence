@@ -14,27 +14,37 @@
     height: 50%;
 }
 
+.user-block {
+    height: 25%;
+    width: 100%;
+    border: solid 1px black;
+    
+}
+
+.user-block p {
+    color: white;
+    font-size: 17px;
+    margin-bottom: 0px;
+    margin-left: 42%;
+}
+
 .user-online {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 20%;
-    border: solid black 1px;
+    height: 80%;
+  
 }
 
-.online-list  :hover {
-   
-    background-color: blueviolet;
-    text-decoration: none;
-}
 
 
 .online-avatar {
     width: 20%;
     height: 78%;
     margin-left: 2%;
-    margin-top: 3%;
+    margin-top: 0%;
     border-radius: 50%;
+    border: solid blueviolet 1px;
     
 }
 
@@ -46,4 +56,57 @@
 
 p {
     text-decoration: none;
+}
+
+.user-icon-profil {
+    background-image: url(../../img/icones/profil2.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 30%;
+    margin-top: 4%;
+    margin-left: 7%;
+    margin-right: 2%;
+    cursor: pointer;
+}
+
+.user-icon-mess {
+    background-image: url(../../img/icones/messager2.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 30%;
+    margin-top: 4%;
+    margin-left: 5%;
+    margin-right: 2%;
+    cursor: pointer;
+}
+
+.user-icon-game {
+    background-image: url(../../img/icones/versus.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 30%;
+    margin-top: 4%;
+    margin-left: 5%;
+    margin-right: 2%;
+}
+
+.user-icon-mute {
+    background-image: url(../../img/icones/mute.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 30%;
+    margin-top: 4%;
+    margin-left: 5%;
 }

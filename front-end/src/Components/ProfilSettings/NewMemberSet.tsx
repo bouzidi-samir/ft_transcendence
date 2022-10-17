@@ -62,8 +62,8 @@ export default function NewMemberSet() {
     return (
         <>
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
-                <h1>Bienvenue! Rentre tes informations.</h1>
             <form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000" >
+                <h1>Configure ton profil:</h1>
                 <img  className="vignette-form" src={User.avatar_url}></img>
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>               
                   <input type="text" onChange={handlechange}></input>             

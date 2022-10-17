@@ -35,16 +35,13 @@ export default function RoomAdd({setAddroom} :any) {
         e.preventDefault();
         let newRoom : any = {
             username: User.username,
-            nickname: User.nickname,
             tag: roomName,
             public: publicRoom,
             private: privateRoom,
+            privateMessage: false,
             password: password
         }
-        dispatch({
-            type: "Roomlist/addRoom",
-            payload: newRoom,
-        });
+        dispatch({type: "Roomlist/addRoom", payload: newRoom,});
         let url = "http://localhost:4000/chat/createRoom"
 
         socket?.emit("newRoomClient", alertRoom);
@@ -82,22 +79,25 @@ export default function RoomAdd({setAddroom} :any) {
             <form className="addroom-content" data-aos="fade-up" data-aos-duration="1000">
                 <Cross lastPage="/Home" closeWinwow={setAddroom}/> 
                 <div className='group-avatar'></div>
-                <label>Nom de la room:</label>       
+                <h2>Informations du salon </h2>
+                <hr></hr>
+                <label>Nom du salon:</label>       
                     <input type="text"  onChange={(e)=> handleChange(e, "name")} 
-                    value={roomName} className='room-name'></input>
+                    value={roomName} className='room-name' placeholder='Nom du salon'></input>
                 <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
                         value={roomName} name="type" className='room-type'></input>
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
-                        value={roomName} name="type" className='room-type'></input>
+                        value={roomName} name="type" className='room-type' checked></input>
                     <br></br>
                     <div className='pass-zone'>
                     {privateRoom ? 
                     <>
                     <label className='pass-label'>Mot de passe:</label> 
-                    <input className='password' type="password" value={password} onChange={(e)=> setPassword(e.target.value)} ></input> 
+                    <input className='password-input' type="password" value={password} 
+                    onChange={(e)=> setPassword(e.target.value)} placeholder='Mot de passe' ></input> 
                     </>
                     : null}
                     </div>

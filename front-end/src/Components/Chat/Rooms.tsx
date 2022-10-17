@@ -37,12 +37,11 @@ export default function Rooms() {
     
 
     async function handleRoom(room: any) {
-
-
+        console.log(room);
         if (room.tag == RoomActive.tag)
             return;
 
-        if (room.private) {
+        if (room.private && !room.privateMessage) {
             setPrivate(room)
             return;
         }
@@ -93,7 +92,9 @@ export default function Rooms() {
                     Roomlist.map((room: any) =>
                     <div className='room' key={room.id} onClick={
                         () => handleRoom(room)} >
-                            <div className='room-avatar'></div>
+                            {room.privateMessage ? <img></img>
+                               : <div className='room-avatar'></div>
+                            }
                             <p>{room.tag}</p>
                         </div>
                     )
