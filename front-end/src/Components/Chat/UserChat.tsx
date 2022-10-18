@@ -22,8 +22,7 @@ export default function UserChat() {
         .then(data => setMembers(data));
     }, []
     )
-    
-    console.log(members)
+
     return (
         <div className="userchat-content">
               <h2>En Ligne</h2>
@@ -31,19 +30,19 @@ export default function UserChat() {
               <div className='online-list'>
                   {
                       members.map((user : any) => (
-                        user.username != User.username ? 
+                      //  user.username != User.username ? 
                         <div className='user-block'>
                                 <p>{user.nickname}</p>
                         <div key={user.id} className="user-online">
                                     <img src={user.avatar_url} className="online-avatar"></img>
-                                <Link className='user-icon-profil'to = {"/UserProfil/" + user.id} style={{textDecoration: 'none'}}>
+                                <Link className='user-icon-profil'to = {"/UserProfil/" + user.userId} style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>
                                     <MuteUser/>
                             </div>
                             </div>
-                            : null
+                        //    : null
                             )
                       )
                   }

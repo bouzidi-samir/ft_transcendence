@@ -70,6 +70,7 @@ export default function Rooms() {
                 tag : room.tag,
                 username: User.username,
                 nickname: User.nickname,
+                avatar_url: User.avatar_url
             })
         }
         ).then(rep => rep.json())

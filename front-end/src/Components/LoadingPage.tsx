@@ -15,6 +15,7 @@ export default function LoadingPage (props : any) {
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
+    const values = Object.values(User.JWT_token);
 
     useEffect( () => {    
         let url : string = "http://localhost:4000/users";
