@@ -47,10 +47,8 @@ export default function PrivateAcces(props : any) {
         setError(response.error)
         return;
     }
-    dispatch({
-        type: "RoomActive/setRoomActive",
-        payload: response,
-      })
+    dispatch({type: "RoomActive/setRoomActive",payload: response})
+    dispatch({type: "User/addRoom",payload: response.tag})
     setPrivate(false);
 }   
 

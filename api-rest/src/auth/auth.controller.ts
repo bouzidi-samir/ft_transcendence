@@ -25,6 +25,12 @@ export class AuthController {
 		return JSON.stringify({url: url.toString()});
 	}
 
+	@Post("/logout")
+	async logout(@Body() body: any)
+	{
+		this.service.logout(body.userId);
+	}
+
 	@Post("/token/:code")
 	async login(
 		@Param("code") code: string,
@@ -40,9 +46,10 @@ export class AuthController {
 		user.username = infos.login;
 		user.avatar_url = infos.image_url; 
 		user.email = infos.email;
-		user.isTwoFactorAuthenticationEnabled = false; // button to create
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);
+		console.log("here");
+		console.log(finaluser.isTwoFactorAuthenticationEnabled);
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,
@@ -51,7 +58,7 @@ export class AuthController {
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
 			JWT_token: token,
-			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,		
 		});
 	}
 	

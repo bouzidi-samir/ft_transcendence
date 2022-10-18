@@ -1,9 +1,10 @@
 .auth-form {
     width: 40%;
+    position: relative;
     max-width: 650px;
     min-width: 300px;
     height: 80%;
-    background-color: black;
+    background-color: #050125;
     padding-bottom: 3%;
     margin-left: 30%;
     border-radius: 2%;
@@ -30,7 +31,7 @@ h1,h2 {
 
 .auth-form h1 {
     padding-top: 2%;
-    color: white;
+    color: goldenrod;
     opacity: 70%;
     font-size: 400%;
     font-family: 'calvierregular';

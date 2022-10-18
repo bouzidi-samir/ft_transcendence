@@ -10,6 +10,7 @@ import { getSession, signIn, useSession } from 'next-auth/react'
 import Particle from './Components/Particle';
 import ProfilSettings from './Containers/ProfilSettings';
 import UserProfil from './Components/Share/UserProfil';
+import LoadingPage from './Components/LoadingPage';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/ProfilSettings" element={<ProfilSettings/>}/>
         <Route path="/UserProfil/:id" element={<UserProfil/>}/>
         <Route path="/Chat" element={<Chat/>}/> 
+        <Route path="/Loading" element={<LoadingPage/>}/>
       </Routes>
     </Router>  
   );

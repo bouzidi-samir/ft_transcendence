@@ -2,51 +2,67 @@ import '../../styles/Components/Chat/Messages.css'
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-//import { io, Socket } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
+import MessageInput from './MessageInput';
+import RoomDisplay from './RoomDisplay';
+import Conversation from './Conversation';
+
 
 export default function Messages() {
-  //  const [socket, setSocket] = useState<Socket>();
-    const [messages, setMessages] = useState<string[]>([]);
+   const [socket, setSocket] = useState<Socket>();
+    const [messages, setMessages] = useState<any[]>([]);
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
-
-    // const send = (messageData: any) => {
-    //   socket?.emit("message", messageData.name, messageData.time, messageData.text)
-    // }
-
-    // useEffect(() => {
-    //   const newSocket = io('http://localhost:4000/')
-    //   setSocket(newSocket)
-    // }, [setSocket])
+    const User = useSelector((state: any) => state.User);
+  const values = Object.values(User.JWT_token);
     
-    // const messageListener = (message: string) => {
-    //     setMessages([...messages, message]);
-    // }
+
+    const alert = "NEW MESSAGE AVAILABLE";
+    const  alertNotif = {
+        text: "new message",
+        from: String(User.nickname),
+        room: String(RoomActive.tag)
+    }
+
+    useEffect(() => {
+        const newSocket = io('http://localhost:8000');
+        console.log('New socket', newSocket?.id);
+        setSocket(newSocket)
+    }, [setSocket])
     
-    // useEffect(() => {
-    //    return () => {
-    //         socket?.off("message", messageListener)
-    //    }
-    //   }, [messageListener])
+    // Récupération des messages de la room active.
+    useEffect(() => {
+        let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
+        const ret = fetch(url)
+        .then(response => response.json())
+        .then(data => setMessages(data))
+    }, [RoomActive])
+
+    const send = (messageData: any) => {
+      socket?.emit("messageFromClient", { messageData })
+      socket?.emit("newMessageClient", alert );
+      socket?.emit("newNotifClient", { alertNotif });
+
+    }
+
+    const messageListener = (message: any) => {
+        let MessagesList = [...messages];
+        MessagesList.push(message.messageData);
+        setMessages(MessagesList);
+    }
+    
+    useEffect(() => {
+        socket?.on("messageFromServer" , messageListener)
+        return () => {
+            socket?.off("messageFromServer", messageListener)
+        }
+    }, [messageListener])
 
     return (
         <div className="messages-content">
-            <div className='room-title'>
-                <div className='room-picture'></div>
-                <h2>{RoomActive.tag}</h2>
-                <div className='room-settings'></div>
-            </div>
-            <div className="conversation">
-            {/* {messages.map((message: string, index: number) => (   
-                    <div key={index}>    
-                         <div>{message}</div>
-                    </div>
-                ))} */}
-            </div>
-            <div className="send-zone">
-            <input value={value} onChange={(e)=> setValue(e.target.value)} ></input>
-            <button className="btn btn-primary" >Envoyer</button>
+            <RoomDisplay/>
+            <Conversation messages={messages} />
+            <MessageInput send={send}/>
         </div>
-    </div>
     );
 }

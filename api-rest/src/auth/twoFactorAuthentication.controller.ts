@@ -28,6 +28,16 @@ import {
       private readonly authenticationService: AuthService
     ) {}
     
+
+    @Post('switch')
+    @UseGuards(JwtAuthGuard)
+    async switchTFA (@Req() request: RequestWithUser, @Res() response: Response,)
+    {
+      let user = await this.usersService.getUserById(parseInt(response.req.body.userId));
+
+      await this.twoFactorAuthenticationService.switchTFA(parseInt(response.req.body.userId));
+    }
+
     @Post('turn-on')
     @HttpCode(200)
     @UseGuards(JwtAuthGuard)

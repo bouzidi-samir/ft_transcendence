@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import { Socket } from "socket.io-client";
 
 const User = {
     id: "",
@@ -8,7 +9,9 @@ const User = {
     avatar_url: "",
     status: "",
     room_active: "",
+    rooms: [""],
     JWT_token: "",
+    TFOenabled : false,
 };
 
 const UserSlice = createSlice({
@@ -24,11 +27,39 @@ const UserSlice = createSlice({
             state.avatar_url = action.payload.avatar_url;
             state.status = action.payload.status;
             state.JWT_token = action.payload.JWT_token;
+            state.TFOenabled = action.payload.TFOenabled;
+        },
+        setRooms : (state, action) => {
+            let ret = [...action.payload]
+            let roomname : string[] = [];
+            ret.map(e => roomname.push(e.roomTag));
+            state.rooms = [...roomname];
+            return state;
+        },
+        addRoom : (state, action) => {
+            if (!state.rooms.some(e => e == action.payload))
+                state.rooms.push(action.payload);
+            return state;
         },
         logout : (state, action) => {
             state = User;
             return state;
-        }
+        },
+        setTwoFactor : (state, action) => {
+           // console.log(action.payload);
+            if (action.payload === true)
+                state.TFOenabled = false
+            else if (action.payload === false)
+                state.TFOenabled = true ;
+           // console.log(state.TFOenabled);
+            
+            return  (state);
+        },
+        setTwoFactorFalse : (state, action) => {
+            console.log("here");
+            state.TFOenabled = action.payload;
+            return state;
+        },
         },
     },
 );

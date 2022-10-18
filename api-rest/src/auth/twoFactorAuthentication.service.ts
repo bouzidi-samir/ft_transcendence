@@ -4,7 +4,7 @@ import User from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { toFileStream } from 'qrcode';
-import { Response } from 'express';
+import e, { Response } from 'express';
 
 @Injectable()
 export class TwoFactorAuthenticationService { // genere le secret et l url pour google authenticator
@@ -36,4 +36,20 @@ export class TwoFactorAuthenticationService { // genere le secret et l url pour 
   public async pipeQrCodeStream(stream: Response, otpauthUrl: string) { //genere le qr code
     return toFileStream(stream, otpauthUrl);
   }
+
+  public async switchTFA(userId: number): Promise<any> {
+    const user = await this.usersService.getUserById(userId);
+    if (user.isTwoFactorAuthenticationEnabled == true)
+    {
+		  return this.usersService.userRepository.update(userId,
+			  {isTwoFactorAuthenticationEnabled : false}
+		  );
+    }
+    else
+    {
+      return this.usersService.userRepository.update(userId,
+			  {isTwoFactorAuthenticationEnabled : true}
+		  );
+    }
+	}
 }
