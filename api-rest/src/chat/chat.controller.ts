@@ -15,9 +15,10 @@ export class ChatController {
         return await this.service.getAllRooms();
     }
 
-    @Get('/member')
-	async getMember(): Promise<any> {
-        return await this.service.getAllMember();
+    @Get('getRoomMembers/:roomTag')
+    async getRoomMembers(@Param('roomTag') roomTag: string, @Body() body: any): Promise<any> 
+    {
+        return await this.service.getRoomMembers(roomTag);
     }
 
     @UseGuards(JwtAuthGuard)

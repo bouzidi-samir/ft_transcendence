@@ -16,6 +16,9 @@ export class Member {
     @Column({nullable: true})
     nickname: string;
 
+    @Column({ type: 'varchar', default: 0 })
+	avatar_url: string;
+
     @Column({default: false})
     owner: boolean;
 

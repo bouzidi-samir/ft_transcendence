@@ -22,6 +22,9 @@ export class Rooms {
     @Column({default: false})
     friendly: boolean;
 
+    @Column({default: false})
+    privateMessage: boolean;
+
     @Column({nullable: true})
     password:string;
 

@@ -37,7 +37,6 @@ export default function Rooms() {
     
 
     async function handleRoom(room: any) {
-        console.log(room);
         if (room.tag == RoomActive.tag)
             return;
 

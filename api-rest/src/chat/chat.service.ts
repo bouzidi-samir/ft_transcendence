@@ -62,6 +62,8 @@ export class ChatService {
     const creator = await this.memberRepository.create();
 
     creator.username = user.username;
+    creator.nickname = user.nickname;
+    creator.avatar_url = user.avatar_url;
     creator.userId = user.id;
     creator.admin = true;
     creator.owner = true;
@@ -107,6 +109,8 @@ export class ChatService {
       const oneMember = await this.memberRepository.create();
       oneMember.userId = users[i].id;
       oneMember.username = users[i].username;
+      oneMember.nickname = users[i].nickname;
+      oneMember.avatar_url = users[i].avatar_url;
       oneMember.roomTag = 'global';
       oneMember.room = room;
       await this.memberRepository.save(oneMember);
@@ -212,6 +216,7 @@ export class ChatService {
     newMember.roomTag = body.tag;
     newMember.userId = user.id;
     newMember.username = body.username;
+    newMember.nickname = body.nickname;
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
@@ -549,6 +554,12 @@ async getRoomMessages(tag) {
     return sortMessages;
   } 
   return roomMessages;
+}
+
+async getRoomMembers(tag) {
+
+  const roomMembers = await this.memberRepository.find({where: {roomTag: tag}});
+  return roomMembers;
 }
 
   findAll() {
