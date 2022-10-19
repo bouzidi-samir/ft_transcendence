@@ -10,6 +10,7 @@ function Navbar() {
     function logout () : void {
         dispatch({type: "User/logout",payload: null});
         dispatch({type: "RoomList/logout",payload: null});
+        dispatch({type: "RoomActive/logout",payload: null});
     }
 
     return (

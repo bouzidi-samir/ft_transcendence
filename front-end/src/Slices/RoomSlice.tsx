@@ -13,6 +13,10 @@ const RoomActiveSlice = createSlice({
             state = {...action.payload};
             return state;
         },
+        logout : (state, action) => {
+            state = Room;
+            return state;
+        }
         },
     },
 );

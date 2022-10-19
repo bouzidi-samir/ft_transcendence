@@ -18,7 +18,7 @@ import { join } from 'path';
 			port: 5432,
 		//	username: 'user',
 		//	password: 'password',
-			database: 'master-pong',
+			database: 'postgres',
       autoLoadEntities: true,
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,

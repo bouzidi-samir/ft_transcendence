@@ -11,7 +11,6 @@ const RoomlistSlice = createSlice({
             return state;
         },
         addRoom : (state, action) => {
-            console.log("äddes");
             let Roomadded = {...action.payload}
             state.push(Roomadded);
             return state;

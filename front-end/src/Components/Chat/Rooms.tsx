@@ -5,6 +5,7 @@ import PrivateAcces from './PrivateAccess';
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
+import RoomCase from './RoomCase';
 
 
 export default function Rooms() {
@@ -37,6 +38,7 @@ export default function Rooms() {
     
 
     async function handleRoom(room: any) {
+
         if (room.tag == RoomActive.tag)
             return;
 
@@ -92,10 +94,7 @@ export default function Rooms() {
                     Roomlist.map((room: any) =>
                     <div className='room' key={room.id} onClick={
                         () => handleRoom(room)} >
-                            {room.privateMessage ? <img></img>
-                               : <div className='room-avatar'></div>
-                            }
-                            <p>{room.tag}</p>
+                           <RoomCase room={room}/>
                         </div>
                     )
                 }

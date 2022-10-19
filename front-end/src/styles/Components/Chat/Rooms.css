@@ -52,3 +52,12 @@
     height: 100%;
     margin-left: 2%;
 }
+
+.message-avatar {
+    background-image: url(../../../styles/img/icones/messager2.png);
+    background-position: center;
+    background-size: cover;
+    width: 20%;
+    height: 90%;
+    margin-left: 2%;
+}

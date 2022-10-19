@@ -77,6 +77,7 @@ export class ChatService {
       room.private = true;
     }
     room.tag = body.tag;
+    room.privateMessage = body.privateMessage;
     room.owner = user.username;
   
     if (body.password != ""){
@@ -115,7 +116,7 @@ export class ChatService {
       oneMember.room = room;
       await this.memberRepository.save(oneMember);
   }
-  return users;
+  return room;
 
   }
 

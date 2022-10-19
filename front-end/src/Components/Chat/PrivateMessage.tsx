@@ -5,15 +5,21 @@ export default function PrivateMessage(props: any) {
     const dispatch = useDispatch();
     const {interlocutor} = props;
     const User = useSelector((state: any) => state.User);
+    let Roomlist = useSelector((state: any) => state.RoomList);
+    const RoomActive = useSelector((state: any) => state.RoomActive);
     const values = Object.values(User.JWT_token);
 
     function openConversation(e : any) {
-
         e.preventDefault();
+        let check = Roomlist.filter((e: any) => e.tag == interlocutor.nickname)
+        if (check.length > 0){
+            dispatch({type: "RoomActive/setRoomActive",payload: check[0]});
+            return;
+        }
         let newRoom : any = {
             username: User.username,
             nickname: User.nickname,
-            tag: User.nickname + " " + interlocutor.nickname,
+            tag: interlocutor.nickname,
             public: false,
             private: true,
             privateMessage: true,
