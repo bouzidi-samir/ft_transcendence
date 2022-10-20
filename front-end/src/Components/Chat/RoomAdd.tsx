@@ -16,7 +16,7 @@ export default function RoomAdd({setAddroom} :any) {
     const dispatch = useDispatch();
     const [roomName, setRoomName] = useState<string>();
     const [privateRoom, setPrivate] = useState<boolean>(false);
-    const [publicRoom, setPublicRoom] = useState<boolean>(false);
+    const [publicRoom, setPublicRoom] = useState<boolean>(true);
     const [password, setPassword] = useState("");
     const [socket, setSocket] = useState<Socket>();
 
@@ -90,7 +90,7 @@ export default function RoomAdd({setAddroom} :any) {
                         value={roomName} name="type" className='room-type'></input>
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
-                        value={roomName} name="type" className='room-type' checked></input>
+                        value={roomName} name="type" className='room-type'></input>
                     <br></br>
                     <div className='pass-zone'>
                     {privateRoom ? 
