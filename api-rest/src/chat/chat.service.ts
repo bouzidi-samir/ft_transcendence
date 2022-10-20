@@ -52,9 +52,10 @@ export class ChatService {
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
+    if (!body.tag)
+      return {error: "Merci de saisir un nom"};
     if (check)
       return {error: "Ce nom de salon est déja utilisé"};
-
     const user = await this.userRepository.findOne({where: { username: body.username}});
     if (!user)
       return false;

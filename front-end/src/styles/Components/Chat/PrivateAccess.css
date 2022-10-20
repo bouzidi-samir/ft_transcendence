@@ -1,8 +1,9 @@
 .privateAccess {
     position:absolute;
-    margin-left: 30%;
-    margin-top: 8%;
-    width: 40%;
+    display: inline-block;
+    margin-left: 25%;
+    margin-top: 0%;
+    width: 50%;
     height: 35%;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
@@ -13,7 +14,7 @@
 
 .privateAccess label {
     color: white;
-    margin-top: 2%;
+    margin-top: 4%;
     margin-left: 2%;
 }
 

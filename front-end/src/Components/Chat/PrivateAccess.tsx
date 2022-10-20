@@ -57,12 +57,14 @@ export default function PrivateAcces(props : any) {
 }   
 
     return (
-        <form className="privateAccess">
+        <div className="privateAccess">
             <div onClick={()=>setPrivate(false)} className="cross-private"></div>
+        <form>
             <label>Veuillez saisir le mot de passe pour rejoindre le salon {privateRoom.tag}:</label>
             <input type="password" value={password} onChange={(e: any) => setPassword(e.target.value)}></input>
             <p className="error">{error}</p>
             <button onClick={handleRoom} className="btn btn-primary">Valider</button>
         </form>
+        </div>
     )
 }

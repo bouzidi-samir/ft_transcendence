@@ -21,12 +21,17 @@
 
 .roomlist {
     display: flex;
+    display: inline-block;
     flex-direction: column;
     width: 100%;
-    height: 80%;
-    flex-wrap: wrap;
+    height: 80%; 
     padding-top: 6%;
     overflow-y: scroll;
+}
+
+.roomlist::-webkit-scrollbar {
+    width: 9px; /* width of the entire scrollbar */
+    background-color: blueviolet;
 }
 
 .room {

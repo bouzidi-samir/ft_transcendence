@@ -36,25 +36,26 @@ export default function Rooms() {
     }, [alertListener])
     
     
-
+    
     async function handleRoom(room: any) {
-
+        
+        
         if (room.tag == RoomActive.tag)
-            return;
-
+        return;
+        
         if (room.private && !room.privateMessage) {
             setPrivate(room)
             return;
         }
         let url_a = "http://localhost:4000/chat/leaveRoom";
         await fetch(url_a, {
-          method: "POST",
-          headers: {
-            'Authorization': `Bearer ${values[0]}`,
-            'Content-Type': 'application/json',
-            'cors': 'true'
-          },
-          body: JSON.stringify({
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${values[0]}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+            },
+            body: JSON.stringify({
                 tag : RoomActive.tag,
                 username: User.username,
                 nickname: User.nickname,
@@ -63,21 +64,21 @@ export default function Rooms() {
         )
         let url_b = "http://localhost:4000/chat/joinRoom";
         const response =  await fetch(url_b, {method: "POST",
-          headers: {
+        headers: {
             'Authorization': `Bearer ${values[0]}`,
             'Content-Type': 'application/json',
             'cors': 'true'
-          },
-          body: JSON.stringify({
-                tag : room.tag,
-                username: User.username,
-                nickname: User.nickname,
-                avatar_url: User.avatar_url
-            })
-        }
-        ).then(rep => rep.json())
-        dispatch({type: "RoomActive/setRoomActive",payload: response});
-        dispatch({type: "User/addRoom",payload: response.tag})
+        },
+        body: JSON.stringify({
+            tag : room.tag,
+            username: User.username,
+            nickname: User.nickname,
+            avatar_url: User.avatar_url
+        })
+    }
+    ).then(rep => rep.json())
+    dispatch({type: "User/addRoom",payload: response.tag})
+    dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
 
         useEffect(() => {
