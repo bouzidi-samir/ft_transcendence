@@ -47,7 +47,6 @@ export default function RoomAdd({setAddroom} :any) {
         });
         let url = "http://localhost:4000/chat/createRoom"
 
-        socket?.emit("newRoomClient", alertRoom);
         
         let response = fetch(url, {method : 'POST',
         headers: {
@@ -56,6 +55,10 @@ export default function RoomAdd({setAddroom} :any) {
         },
         body: JSON.stringify(newRoom)
     }).then(setAddroom(false))
+    
+    if (newRoom.public == true){
+        socket?.emit("newRoomClient", alertRoom);
+    }
 }
 
 

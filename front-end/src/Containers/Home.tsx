@@ -53,15 +53,15 @@ export default function Home() {
   useEffect(() => {
     document.title = alert;
     if (alert != 'Pong'){
-      if (User.username == "ochichep"){
-        playMp3(mp3Sexy)
-      }
-      else{
+    //   if (User.username == "ochichep"){
+    //     playMp3(mp3Sexy)
+    //   }
+    //   else{
       playMp3(mp3);
       }
+      //   }
       setTimeout(function(){setAlert('Pong')}, 2000);
-    }
-  })
+    })
 
   useEffect(() => {
     let url = "http://localhost:4000/chat/createGlobalRoom";

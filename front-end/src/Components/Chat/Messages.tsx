@@ -15,6 +15,7 @@ export default function Messages() {
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
     const values = Object.values(User.JWT_token);
+    const Roomlist = useSelector((state: any) => state.RoomList);
     
 
     const alert = "NEW MESSAGE AVAILABLE";
@@ -39,8 +40,9 @@ export default function Messages() {
     }, [RoomActive])
 
     const send = (messageData: any) => {
-      socket?.emit("messageFromClient", { messageData })
-      socket?.emit("newMessageClient", alert );
+      socket?.emit("messageFromClient", { messageData });
+       if (Roomlist.some((e : any) => RoomActive.tag == e.tag)){
+        socket?.emit("newMessageClient", alert )}
       socket?.emit("newNotifClient", { alertNotif });
 
     }

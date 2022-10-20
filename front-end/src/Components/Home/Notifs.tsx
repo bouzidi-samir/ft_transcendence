@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from "socket.io-client";
 import { Link } from 'react-router-dom';
-
+import mp3 from '../../styles/Sound/new.mp3'
+import { Howl } from "howler";
 
 export default function Notifs() {
 
@@ -14,10 +15,16 @@ export default function Notifs() {
     const [socket, setSocket] = useState<Socket>();
     const [notifs, setNotifs] = useState<any[]>([]);
     const dispatch = useDispatch();
-    let Roomlist = useSelector((state: any) => state.RoomList);
+    const Roomlist = useSelector((state: any) => state.RoomList);
 
     
-
+    const playMp3 = (src: any) => {
+        const sound = new Howl({
+          src, 
+          html5: true,
+        });
+        sound.play()
+      };
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -35,17 +42,18 @@ export default function Notifs() {
         }
     }, [alertListener])
 
-// 
- 
-console.log('room active tag', RoomActive.tag)
-console.log('roomlist', Roomlist);
 
-    return (
+return (
         <div className='notifs-content'>
                 <p>Notifications</p>
                 {Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 
-                         <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
+                   
+                   { (Roomlist.some((e : any) => alert.alertNotif.room == e.tag)) ? (
+                    <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
+                    ) : (null)
+                   }
+                  
                     </div>
                 ))}
         </div>
