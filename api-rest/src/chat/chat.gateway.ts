@@ -60,6 +60,14 @@ import { Repository } from 'typeorm';
       console.log('Received message in Back', alert);
       this.server.emit('newRoomServer', alert);
     }
+
+    // @SubscribeMessage('newRoomTagClient')
+    // handleNewRoomTag(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+    //   console.log('Received message in Back', alert);
+    //   this.server.emit('newRoomTagServer', alert);
+    // }
+
+
     // @SubscribeMessage('createChat')
     // create(@MessageBody() createChatDto: CreateChatDto) {
     //   return this.chatService.create(createChatDto);

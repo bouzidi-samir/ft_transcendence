@@ -3,14 +3,19 @@ import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from "socket.io-client";
+import { Link } from 'react-router-dom';
 
 
 export default function Notifs() {
 
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
+    const RoomActive = useSelector((state: any) => state.RoomActive);
     const [socket, setSocket] = useState<Socket>();
     const [notifs, setNotifs] = useState<any[]>([]);
+    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false)
+    
 
 
     useEffect(() => {
@@ -29,13 +34,18 @@ export default function Notifs() {
         }
     }, [alertListener])
 
+// 
+ 
+console.log('ra tag', RoomActive.tag)
+console.log('ra tag notifs', notifs)
+
 
     return (
         <div className='notifs-content'>
                 <p>Notifications</p>
                 {Object.values(notifs).map((alert: any, index: number) => (   
                     <div key={index} > 
-                         <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p>
+                         <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: alert.alertNotif})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
                     </div>
                 ))}
         </div>

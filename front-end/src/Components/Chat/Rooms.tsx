@@ -79,10 +79,10 @@ export default function Rooms() {
         dispatch({type: "User/addRoom",payload: response.tag})
     }
 
-        useEffect(() => {
-            document.title = alertRoom;
-        })
 
+
+    console.log('room active', RoomActive.tag)
+  
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
@@ -99,7 +99,7 @@ export default function Rooms() {
                     )
                 }
                 {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
-                {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
+                {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null} 
             </div>
         </div>
     );
