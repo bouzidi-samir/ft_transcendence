@@ -88,28 +88,32 @@ export class ChatService {
 
     return {room, creator};
   }
+  
 
   async createGlobalRoom(){
 
     const room = await this.roomsRepository.findOne({where: {tag: "global"}});
-    if (room)
-      return false;
-    else{
+
+    if (!room){
       const room = await this.roomsRepository.create();
       room.global = true;
       room.tag = "global";
       await this.roomsRepository.save(room);
     }
+    
     const users = await this.userRepository.find();
 
     for (let i = 0; i < users.length; i++) {
 
-      const oneMember = await this.memberRepository.create();
-      oneMember.userId = users[i].id;
-      oneMember.username = users[i].username;
-      oneMember.roomTag = 'global';
-      oneMember.room = room;
-      await this.memberRepository.save(oneMember);
+      const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: "global"}});
+      if (!already){
+        const oneMember = await this.memberRepository.create();
+        oneMember.userId = users[i].id;
+        oneMember.username = users[i].username;
+        oneMember.roomTag = 'global';
+        oneMember.room = room;
+        await this.memberRepository.save(oneMember);
+      }
   }
   return users;
 

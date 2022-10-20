@@ -14,7 +14,8 @@ export default function Notifs() {
     const [socket, setSocket] = useState<Socket>();
     const [notifs, setNotifs] = useState<any[]>([]);
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false)
+    let Roomlist = useSelector((state: any) => state.RoomList);
+
     
 
 
@@ -37,11 +38,12 @@ export default function Notifs() {
 // 
  
 console.log('room active tag', RoomActive.tag)
+console.log('roomlist', Roomlist);
 
     return (
         <div className='notifs-content'>
                 <p>Notifications</p>
-                {Object.values(notifs).map((alert: any, index: number) => (   
+                {Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 
                          <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
                     </div>
