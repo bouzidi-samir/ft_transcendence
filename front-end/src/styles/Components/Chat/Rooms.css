@@ -26,6 +26,7 @@
     height: 80%;
     flex-wrap: wrap;
     padding-top: 6%;
+    overflow-y: scroll;
 }
 
 .room {

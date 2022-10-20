@@ -10,6 +10,7 @@ import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
 import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
 import { RuleTester } from 'eslint';
+import {checkPasswordFormat, checkPrivateAccess} from './chat.utils';
 
 @Injectable()
 export class ChatService {
@@ -52,7 +53,7 @@ export class ChatService {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
     if (check)
-      return false;
+      return {error: "Ce nom de salon est déja utilisé"};
 
     const user = await this.userRepository.findOne({where: { username: body.username}});
     if (!user)
@@ -80,7 +81,14 @@ export class ChatService {
     room.privateMessage = body.privateMessage;
     room.owner = user.username;
   
-    if (body.password != ""){
+
+    if (room.private == true) { 
+      let formatError = checkPasswordFormat(body.password);
+      if (formatError != true)
+          return {error: formatError}
+    }
+
+      if (body.password != ""){
       const salt = await bcrypt.genSalt();
       room.password = await bcrypt.hash(body.password, salt);
       creator.password = room.password;
@@ -171,11 +179,20 @@ export class ChatService {
   async joinRoom(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    const room = await this.roomsRepository.findOne({where: { tag: body.tag }}); 
+    
+    if (room.password) {
+      let authorize = checkPrivateAccess(body.password, room.password);
+      if (authorize != true)
+        return {error: authorize}
+    }
+
     if (alreadyMember){
       if (alreadyMember.blocked == true){
       return false;
       }
       else if (alreadyMember.in == true){
+       
         return this.getRoomByTag(body.tag);
       }
       else{
@@ -189,10 +206,6 @@ export class ChatService {
         return this.getRoomByTag(body.tag);
       }
     }
-
-    const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
-    if (room == null)
-      return 'no room';
     
     if (room.password){
       if(!body.password){

@@ -36,7 +36,8 @@
 
 .addroom-content .btn-primary {
     position: relative;
-    margin-left: 32%;
+    top: 16%;
+    right: 7%;
     width: 30%;
 
 } 
@@ -48,8 +49,8 @@
 }
 
 .group-avatar {
-    width: 20%;
-    height: 30%;
+    width: 50px;
+    height: 60px;
     margin-left: 40%;
     background-image: url(../../../styles/img/icones/groups.png);
     background-position: center;
@@ -58,21 +59,34 @@
 }
 
 .pass-label {
-    margin-top: 6%;
+    margin-top: 0px;
     
 }
 
 .password-input {
-    height: 30%;
+    height: 40%;
     margin-left: 3%;
 }
 
 .pass-zone {
-    height: 25%;
+    height: 55px;
     
 }
 
 .addroom-content .password {
 
     margin-bottom: 4%;
+}
+
+.space {
+    height: 50%;
+    width: 100%;
+}
+
+.addroom-content p {
+    color : red;
+    margin-left: 2%;
+    margin-right: 2%;
+    text-align: center;
+    font-size: 13px;
 }

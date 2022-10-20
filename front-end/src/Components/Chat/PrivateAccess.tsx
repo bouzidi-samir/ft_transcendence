@@ -46,6 +46,7 @@ export default function PrivateAcces(props : any) {
         })
     }
     ).then(response => response.json())
+    console.log(response);
     if (response.error) {
         setError(response.error)
         return;
