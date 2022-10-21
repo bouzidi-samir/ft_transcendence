@@ -33,7 +33,7 @@ export default function PrivateMessage(props: any) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(newRoom)
-    })
+    }).then(ret => ret.json()).then(data=>console.log(data))
     }
 
     return (

@@ -2,7 +2,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const Room = {
-
+    tag: "global",
+    public: true,
+    private: false,
+    privateMessage: false,
+    password: false
 };
 
 const RoomActiveSlice = createSlice({

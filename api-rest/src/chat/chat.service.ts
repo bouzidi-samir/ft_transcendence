@@ -83,7 +83,7 @@ export class ChatService {
     room.owner = user.username;
   
 
-    if (room.private == true) { 
+    if (room.private == true && room.privateMessage == false) { 
       let formatError = checkPasswordFormat(body.password);
       if (formatError != true)
           return {error: formatError}
