@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux';
 export default function ProfilCard() {
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
- console.log(User);
+ 
     return (
         <div className='profilCard-content'>
             <img src={User.avatar_url} className='vignette-card'></img>

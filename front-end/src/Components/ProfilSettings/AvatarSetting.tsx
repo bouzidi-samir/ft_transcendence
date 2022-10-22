@@ -8,7 +8,6 @@ export default function AvatarSetting(props : any) {
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const [avatar, setAvatar] = useState<File>();
-
     const handleChange = async (e: any) => setAvatar(e.target.files[0])
 
     async function handleForm() {
@@ -26,10 +25,7 @@ export default function AvatarSetting(props : any) {
 				body: formData,
 			}
 		).then(res => res.json())
-        dispatch({
-            type: "User/setUser",
-            payload: reponse,
-          });
+        dispatch({type: "User/setUser",payload: reponse,});
         props.setAvatarform(false);
     } 
 

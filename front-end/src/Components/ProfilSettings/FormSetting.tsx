@@ -56,7 +56,7 @@ export default function FormSetting() {
     }
 
     return (
-        <>
+        <>    
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
                 <Cross lastPage="/Home" />
