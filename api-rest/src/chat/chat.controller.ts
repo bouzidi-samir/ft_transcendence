@@ -99,6 +99,7 @@ export class ChatController {
 		return await this.service.unmuteMember(body);
 	}
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkMute')
     async checkMute(@Body() body:any): Promise<any> {
         return await this.service.checkMute(body);

@@ -34,23 +34,23 @@ body: JSON.stringify({
 }
 ).then(response => response.json())
     console.log(response);
+setMinutes("");
+setMute(false);
     
 }
 
 return (
     <div className='user-icon-mute' onClick={() => setMute(true)} >
         {mute ? (
-        <div >
-        <Cross lastPage="/Home" closeWindow={setMute}/> 
-        <form > 
-        <div className='pass-zone'>
-        <label className='pass-label'>Mutator:</label> 
-        <input className='password-input' type="password" value={minutes} 
-            onChange={(e)=> setMinutes(e.target.value)} placeholder='Nombre de minutes' ></input> 
-        <p >{error}</p>
-        </div>
-        </form>
-        <button onClick={handleMute} className='btn btn-primary'>Valider</button>
+        <div>
+            <form > 
+                <Cross lastPage="/Chat" closeWinwow={setMute}/> 
+                <div >
+                    <input className='password-input' type="password" value={minutes} 
+                    onChange={(e)=> setMinutes(e.target.value)} placeholder='Nombre de minutes' ></input> 
+                </div>
+                <button onClick={handleMute} className='btn btn-primary'>Valider</button>
+            </form>
         </div> ) : null} 
     </div>
     );
