@@ -25,7 +25,7 @@ export default function UserChat() {
 
     return (
         <div className="userchat-content">
-              <h2>En Ligne</h2>
+              <h2>Membres</h2>
          
               <div className='online-list'>
                   {

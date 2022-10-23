@@ -1,9 +1,10 @@
+
 .profilset-content .btn-add{
     display: inline;
     width: 20%;
     margin-left: 25%;
     margin-right: 10%;
-    margin-top: 7%;
+    margin-top: 4%;
 }
 
 .profilset-content .btn-secondary{
@@ -11,7 +12,7 @@
     width: 20%;
     margin-left: 2px;
     margin-right: 5%;
-    margin-top: 7%;
+    margin-top: 4%;
 }
 
 .profilset-content .btn-light{
@@ -33,4 +34,30 @@
  
     color: white;
 
+}
+
+.userprofil p {
+ 
+    color: goldenrod;
+    text-align: center;
+}
+
+.ecusson-user {
+    background-image: url(../../../styles/img/ecusson/gold.png);
+    background-position: center;
+    background-size: cover;
+    height: 22%;
+    margin-left: 40%;
+    margin-top: 2%;
+    width: 20%;
+}
+
+.vignette-user {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    margin-left: 35%;
+    margin-top: 1%;
+    margin-bottom: 0%;   
+    border: solid black 1px;
 }

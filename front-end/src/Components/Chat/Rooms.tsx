@@ -87,7 +87,7 @@ export default function Rooms() {
 
     return (
         <div className="rooms-content">
-            <h2>Rooms</h2>
+            <h2>Salons</h2>
             <button onClick={() => setAddroom(true)} className="btn btn-primary" >+</button>
             {addroom ? <RoomAdd setAddroom={setAddroom} /> : null}
             <div className='roomlist'>

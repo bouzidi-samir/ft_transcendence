@@ -27,9 +27,12 @@ export default function UserProfil() {
         <div className="profilset-content">
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
                 <Cross lastPage="/Chat"/>
-                <img  className="vignette-form" src={user.avatar_url}></img>
+                <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
                 <hr></hr>
+                <div className='ecusson-user'></div>
+                <p>Novice</p>
+            
                 <button className="btn btn-primary btn-add">Ajouter</button>
                 <button className="btn btn-secondary">Bloquer</button>
             </form>
