@@ -57,7 +57,11 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
             <div className='ChatMessageInput'>
                 <div className='Input'>
                     <input onChange={(e)=>{setValue(e.target.value); handleCheck(e)}} placeholder="Tapez votre message..." value={value} />
-                    <button className="btn btn-primary" onClick={() => handleClick(value)}>Envoyer</button>
+                    { check ? 
+                    (  <button className="btn btn-primary" onClick={() => {setValue(""); alert('You are muted')}}>Envoyer</button>)
+                    :
+                    ( <button className="btn btn-primary" onClick={() => handleClick(value)}>Envoyer</button>)
+                    }
                 </div>
             </div>
           </div>
