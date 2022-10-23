@@ -45,8 +45,6 @@ export default function RoomAdd({setAddroom} :any) {
         }
         let url = "http://localhost:4000/chat/createRoom"
         
-        //        socket?.emit("newRoomClient", alertRoom);
-        
         const response = await  fetch(url, {method : 'POST',
         headers: {
             'Authorization': `Bearer ${values[0]}`,
@@ -62,6 +60,10 @@ export default function RoomAdd({setAddroom} :any) {
     }
     dispatch({type: "Roomlist/addRoom", payload: newRoom,});
     setAddroom(false)
+
+    if (newRoom.public == true){
+        socket?.emit("newRoomClient", alertRoom);
+    }
 }
 
     function handleChange(e : any, element : string) {

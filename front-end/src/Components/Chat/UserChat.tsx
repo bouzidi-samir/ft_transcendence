@@ -39,7 +39,7 @@ export default function UserChat() {
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>
-                                    <MuteUser/>
+                                    <MuteUser toMute={user}/>
                             </div>
                             </div>
                         //    : null

@@ -81,9 +81,9 @@ export default function Rooms() {
     dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
 
-        useEffect(() => {
-            document.title = alertRoom;
-        })
+    useEffect(() => {
+        document.title = alertRoom;
+    })
 
     return (
         <div className="rooms-content">

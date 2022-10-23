@@ -104,26 +104,27 @@ export class ChatService {
   async createGlobalRoom(){
 
     const room = await this.roomsRepository.findOne({where: {tag: "global"}});
-    if (room)
-      return false;
-    else{
+
+    if (!room){
       const room = await this.roomsRepository.create();
       room.global = true;
       room.tag = "global";
       await this.roomsRepository.save(room);
     }
+    
     const users = await this.userRepository.find();
 
     for (let i = 0; i < users.length; i++) {
 
-      const oneMember = await this.memberRepository.create();
-      oneMember.userId = users[i].id;
-      oneMember.username = users[i].username;
-      oneMember.nickname = users[i].nickname;
-      oneMember.avatar_url = users[i].avatar_url;
-      oneMember.roomTag = 'global';
-      oneMember.room = room;
-      await this.memberRepository.save(oneMember);
+      const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: "global"}});
+      if (!already){
+        const oneMember = await this.memberRepository.create();
+        oneMember.userId = users[i].id;
+        oneMember.username = users[i].username;
+        oneMember.roomTag = 'global';
+        oneMember.room = room;
+        await this.memberRepository.save(oneMember);
+      }
   }
   return room;
 
@@ -483,21 +484,21 @@ async muteMember(body) {
   if (room == null || body.tag == 'global')
     return false;
 
-  const existingMember = await this.memberRepository.findOne({where: { username: body.toMuteUsername, roomTag: body.tag}});
+  const existingMember = await this.memberRepository.findOne({where: { nickname: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
-    return false;
+    return {error: "Not a member of this room"};
   if (existingMember.blocked == true)
-    return 'Already blocked';
+    return {error: "Already blocked"};
   
   const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
   if (oneAdmin == null)
-    return false;
+    return {error: "Need to be admin"};
  
   existingMember.muted = true;
   const millis = Date.now() + (body.minutes * 60 * 1000);
   existingMember.chronos = Math.floor(millis / 1000);
   await this.memberRepository.save(existingMember);
-  return existingMember;
+  return true;
   
 }
 
