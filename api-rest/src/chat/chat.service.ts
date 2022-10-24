@@ -341,7 +341,7 @@ export class ChatService {
     if (!sender)
       return false;
     const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
-    if (room.private && sender.admin == false)
+    if (!room || (room.private && sender.admin == false))
       return false;
     const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
     if (!receiver)
@@ -354,7 +354,7 @@ export class ChatService {
         relation.roomRequest = true;
         relation.roomTag = body.tag;
         await this.relationsRepository.save(relation);
-        return relation;
+        return relation.fromUsername;
       }
     }
     else {
@@ -366,32 +366,36 @@ export class ChatService {
       newRelation.roomTag = body.tag;
       newRelation.owner = receiver;
       await this.relationsRepository.save(newRelation);
-      return newRelation;
+      return newRelation.fromUsername;
     }
   }
 
   async checkRoomInvitation(body) {
 
     const invitations = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true}]});
-    return invitations ;
+    if (invitations){
+      return invitations ;
+    }
+    return false;
   }
 
   async acceptOneRoomInvitation(body) {
 
     const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, roomRequest: true, roomTag: body.tag} ]});
     if (!request)
-      return false;
-    if (request.acceptRoom == true)
-      return true;
+      return 'No roomRequest';
+    // if (request.acceptRoom == true)
+    //   return true;
 
     const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
     if (!requester)
-      return false;
+      return 'requester not a member';
     const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
     if (!room)
-      return false;
+      return 'room doesnt exist';
 
-    request.acceptRoom = true;
+    // request.acceptRoom = true;
+    request.roomRequest = false // on kill l'invitation de la liste
     await this.relationsRepository.save(request);
 
     const newMember = await this.memberRepository.create();
@@ -402,22 +406,23 @@ export class ChatService {
     newMember.password = requester.password;
     newMember.room = room;
     await this.memberRepository.save(newMember);
-    return request;
+    return newMember;
   }
 
-  // async acceptAllRoomInvitation(body) {
-
-  //   const requests = await this.relationsRepository.find({ where: [{ toUsername: body.username, roomRequest: true} ]});
-  //   for (let i = 0; i < requests.length; i++){
-  //       requests[i].acceptRoom = true;
-  //       await this.relationsRepository.save(requests[i]);
-  //       const newMember = await this.memberRepository.create();
-  //       newMember.username = body.username;
-  //       newMember.roomTag = requests[i].roomTag;
-  //       await this.memberRepository.save(newMember)
-  //   }
-  //   return requests;
-  // }
+  async refuseOneRoomInvitation(body){
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, roomRequest: true, roomTag: body.tag} ]});
+    if (!request)
+      return 'No roomRequest';
+    const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
+    if (!requester)
+      return 'requester not a member';
+    const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
+    if (!room)
+      return 'room doesnt exist';
+    request.roomRequest = false
+    await this.relationsRepository.save(request);
+    return true;
+  }
 
   async blockMember(body) {
 

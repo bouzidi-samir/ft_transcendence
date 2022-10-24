@@ -110,14 +110,22 @@ export class ChatController {
         return await this.service.roomInvitation(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkRoomInvitation')
 		async checkRoomInvitation(@Body() body: any): Promise<any> { // username
 			return await this.service.checkRoomInvitation(body);
 	}
 
+    @UseGuards(JwtAuthGuard)
     @Post('/acceptOneRoomInvitation')
 	async acceptOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
 		return await this.service.acceptOneRoomInvitation(body);
+	}
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/refuseOneRoomInvitation')
+	async refuseOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
+		return await this.service.refuseOneRoomInvitation(body);
 	}
 
 	// @Post('/acceptAllRoomInvitation')

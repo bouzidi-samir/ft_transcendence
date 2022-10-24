@@ -6,6 +6,7 @@ import { io, Socket } from "socket.io-client";
 import { Link } from 'react-router-dom';
 import mp3 from '../../styles/Sound/new.mp3'
 import { Howl } from "howler";
+import Invitation from './Invitation';
 
 export default function Notifs() {
 
@@ -45,7 +46,7 @@ export default function Notifs() {
 
 return (
         <div className='notifs-content'>
-                <p>Notifications</p>
+                <p style={{color: "yellow"}}>Notifications</p>
                 {Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 
                    
@@ -56,6 +57,7 @@ return (
                   
                     </div>
                 ))}
+                <Invitation/>
         </div>
     );
 }

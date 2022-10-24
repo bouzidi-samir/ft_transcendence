@@ -20,7 +20,7 @@ export default function Messages() {
 
     const alert = "NEW MESSAGE AVAILABLE";
     const  alertNotif = {
-        text: "new message",
+        text: "New message",
         from: String(User.nickname),
         room: String(RoomActive.tag)
     }
