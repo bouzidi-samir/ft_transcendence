@@ -35,11 +35,6 @@ export default function Accueil(props: any) {
     }
     return (
         <>
-        {
-            user.TFOenabled === true &&
-                (<div>test</div>)
-
-        }
         <div className="custom-content">
            <div className="pong" data-aos="fade-up" data-aos-duration="2000"></div>
            {custom == false ?

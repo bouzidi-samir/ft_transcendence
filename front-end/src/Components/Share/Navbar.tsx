@@ -37,20 +37,23 @@ function Navbar() {
 
     async function TfaSwitch(e : any) // changer l affichage selon si c est active ou non et pas un clic
     {
-        dispatch({
-            type : "User/setTwoFactor",
-            payload: user.TFOenabled
-        })
-        console.log(isEnabled);
+        console.log("here");
+        let userUpdate = {...User};
         if (isEnabled === true)
         {
+            userUpdate.TFOenabled = false;
             isEnabled = false;
         }
         else
         {
-           isEnabled = true;
+            userUpdate.TFOenabled = true;
+            isEnabled = true;
         }
-        console.log(isEnabled);
+        dispatch({
+            type : "User/setUser",
+            payload: userUpdate
+        })
+        console.log(user.JWT_token);
         const request = await fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
             method: 'POST',
             headers: {
@@ -91,11 +94,13 @@ function Navbar() {
                             className='home-icon'></div>
                         </Link>
                         </li> 
-                                <label className="switch">
-                                <input type="checkbox" onClick={TfaSwitch} defaultChecked={isEnabled}/>
-                                <span className="slider round"></span>
-                                </label>
-                        <li>   
+                        <li>
+                            <label className="switch">
+                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={isEnabled}/>
+                            <span className="slider round"></span>
+                            </label>
+                        </li>
+                        <li>
                         <Link  className="nav_link" to="/ProfilSettings">
                             <div 
                             className='profil-icon'></div>
@@ -128,63 +133,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-/*
-<li>
-<label className="switch">
-    {
-        TFAdisplay()
-    }
-    <span className="slider round"></span>
-</label>   
-</li>
-
-
-function TFAdisplay() {
-    //console.log(userValues[7]);
-    if (userValues[7] == true)
-        return(<input type="checkbox" onClick={TfaSwitch} defaultChecked/>);
-    else
-        return(<input type="checkbox" onClick={TfaSwitch}/>);
-}
-
-
-
-async function TfaSwitch(User : any) // changer l affichage selon si c est active ou non et pas un clic
-{
-    //setTwoFactor("switch");
-    //console.log(userValues[7]);
-   if (userValues[7] === true)
-    {
-        console.log("truecase");
-        console.log(userValues[7]);
-        dispatch({
-            type : "User/setTwoFactorFalse",
-            payload: "1",
-        })
-        console.log(userValues[7]);
-        userValues[7] = false;
-        console.log(userValues[7]);
-    }
-    else if (userValues[7] === false)
-    {
-        console.log("falsecase")
-        console.log(userValues[7]);
-        dispatch({
-            type : "User/setTwoFactorTrue",
-            payload: "1",
-        })
-        console.log(userValues[7]);
-        userValues[7] = true;
-        console.log(userValues[7]);
-    }
-    //console.log(userValues[7]);
-    const request = fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${jwtToken}`
-            },
-            body: JSON.stringify({userId : 24 })
-        })
-}*/

@@ -48,10 +48,7 @@ export default function NewMemberSet() {
           //  return navigation("/Home");
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
-        console.log(userUpdate.JWT_token);
-        console.log(userUpdate.TFOenabled);
         dispatch({type: "User/setUser", payload: userUpdate,});
-        console.log("here");
         let response = await fetch(`http://localhost:4000/users/${User.id}/nickname`,{
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
@@ -59,7 +56,6 @@ export default function NewMemberSet() {
                 }
             ).then(response => response.json());
         setError("");
-        console.log(userUpdate.TFOenabled);
         return navigation("/Home");
     }
 

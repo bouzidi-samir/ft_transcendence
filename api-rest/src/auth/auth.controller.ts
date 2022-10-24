@@ -36,6 +36,7 @@ export class AuthController {
 		@Param("code") code: string,
 		@Body() body: any
 	): Promise<string> {
+		console.log("bonjour");
 		let api = await this.service.getUserAccessToken(
 			'7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670', 
 			'8f0429ab7bec196067bb438e31cd08b9e07a79953cd6a932fc0f4595dced75d7',
@@ -48,8 +49,6 @@ export class AuthController {
 		user.email = infos.email;
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);
-		console.log("here");
-		console.log(finaluser.isTwoFactorAuthenticationEnabled);
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,

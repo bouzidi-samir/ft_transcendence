@@ -12,6 +12,7 @@ const User = {
     rooms: [""],
     JWT_token: "",
     TFOenabled : false,
+    qrcode : "",
 };
 
 const UserSlice = createSlice({
@@ -28,6 +29,7 @@ const UserSlice = createSlice({
             state.status = action.payload.status;
             state.JWT_token = action.payload.JWT_token;
             state.TFOenabled = action.payload.TFOenabled;
+            state.qrcode = action.payload.qrcode;
         },
         setRooms : (state, action) => {
             let ret = [...action.payload]

@@ -7,6 +7,8 @@ import {useDispatch} from 'react-redux';
 import {myIsalpha} from "../../Utils/Util";
 import { useParams, Navigate, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { responsePathAsArray } from "graphql";
+import NewMemberSet from "./NewMemberSet";
 
 export default function TFAset() {
     
@@ -15,61 +17,100 @@ export default function TFAset() {
     const dispatch = useDispatch();
     const[avatarform, setAvatarform] = useState(false);
     const[nickForm, setNickform] = useState(false);
-    const [nickname, setNickname] = useState("");
+    const [code, setCode] = useState("");
     const [error, setError] = useState("");
+    const [validated, setValidation] = useState(false);
     let navigation = useNavigate();
- 
-    function nickError(nickname: string) : boolean {
-        if ((nickname.length == 0) ) {
-            setError("Merci de choisir un pseudo.")
-            return false;
-        } else if ((nickname.length < 4 || nickname.length > 8) ) {
-            setError("Ton pseudo doit contenir entre 4 et 8 charactères.")
-            return false;
-        } else if(!myIsalpha(nickname)){
-            setError("Les trois premiers caracteres doivent etre des lettres.")
-            return false;
-        } else if (Userlist.some((e : any) => nickname == e.nickname)){
-            setError("Ce pseudo est déja utilié.")
+
+    function validateResponse(response : any) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+    }
+
+    async function getQRcode()
+    {
+        const response = await fetch(`http://localhost:4000/2fa/generate`, { // A remplacer avec le user
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${User.JWT_token['access_token']}`
+        },
+        
+        body: JSON.stringify({userId : User.id }),
+        })
+        const blob = await response.blob();
+        const url = await URL.createObjectURL(blob);
+        let userUpdate = {...User};
+        userUpdate.qrcode = url;
+        dispatch({type: "User/setUser", payload: userUpdate,});
+    }
+
+    async function checkCode() : Promise<any>
+    {
+        let ret;
+        const request = await fetch(`http://localhost:4000/2fa/authenticate`, { // A remplacer avec le user
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${User.JWT_token['access_token']}`
+            },
+            body: JSON.stringify({userId : User.id, code : code })
+        })
+        ret = await request.json();
+        return (ret);
+    }
+    
+    useEffect( () => {
+       getQRcode()
+    }, []
+    )
+
+    async function codeError(code: string) {
+        if ((code.length == 0) ) {
+            setError("Un code ne peut pas être vide.");
             return false;
         }
-        return true;
+        let ret = await checkCode();
+        if (ret.codeValidity == false)
+        {
+            setError("Le code envoyé n est pas bon.");
+            return false;
+        }
+        let userUpdate = {...User};
+        userUpdate.JWT_token = ret.JWT_token;
+        dispatch({type: "User/setUser", payload: userUpdate,});
+        return ret.codeValidity;
     } 
 
     function handlechange(e: any) {
-      setNickname(e.target.value);
+        setCode(e.target.value);
     }
 
     async function handleForm (e : any) {
-        e.preventDefault();
-        if (nickError(nickname) == false)
+       e.preventDefault();
+        if (await codeError(code) == false)
             return;
-        //if (!nickForm)
-          //  return navigation("/Home");
-        let userUpdate = {...User};
-        userUpdate.nickname = nickname;
-        dispatch({type: "User/setUser", payload: userUpdate,});
-        let response = await fetch(`http://localhost:4000/users/${User.id}/nickname`,{
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({nickname})
-                }
-            ).then(response => response.json());
         setError("");
-        return navigation("/Home");
+        setValidation(true);
     }
 
     return (
-        <>
+        <>  
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
-                <h1>Bienvenue! Rentre tes informations.</h1>
-            <form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000" >
-                <img  className="vignette-form" src={User.avatar_url}></img>
-                <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>               
-                  <input type="text" onChange={handlechange}></input>             
-                <button onClick={handleForm}  className="btn btn-primary">testTFA</button>
-                <p className="error-text">{error}</p>
-            </form>
+            {validated === false &&
+                <><h1>Bienvenue! Rentre tes informations.</h1><form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000">
+                    <img className="vignette-form" src={User.qrcode}></img>
+                    <input type="text" onChange={handlechange}></input>
+                    <button onClick={handleForm} className="btn btn-primary">Envoyer mon code confidentiel</button>
+                    <p className="error-text">{error}</p>
+                </form></>
+            }
+            {validated === true &&
+            
+                <NewMemberSet />
+            }
         </>
     );
 }

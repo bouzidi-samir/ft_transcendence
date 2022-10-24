@@ -4,12 +4,12 @@ import Particle from "./Particle";
 import Home from "../Containers/Home";
 import { useParams, Navigate, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import "../styles/Components/Share/LoadingPage.css"
+import "../styles/Components/Share/MatchingPage.css"
 import NewMemberSet from "./ProfilSettings/NewMemberSet";
 import TFAset from './ProfilSettings/TFAset'
 
 
-export default function LoadingPage (props : any) {
+export default function MatchingPage (props : any) {
 
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
@@ -18,23 +18,12 @@ export default function LoadingPage (props : any) {
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
 
-    useEffect( () => {  
-        let url : string = "http://localhost:4000/users";
-        fetch(url)
-        .then(response => response.json())
-        .then(data =>  dispatch({type: "Userlist/setUserlist",payload: data,}));
-    }, []
-    )
-
-    useEffect( () => {    
-        setInterval(() => {
-            setTime(time => time + 1);
-        },100)
-    }, []
-    )
+    useEffect( () => {
+        
+     }, []
+     )
 
     function redirect() {
-
        setTimeout(() => {
             navigation("/Home");
         }, 1000);
@@ -45,8 +34,12 @@ export default function LoadingPage (props : any) {
         <>
             <Particle/>
             
-            <h1 className="loading-title">{time}%</h1>
-                {User.registred === 'true' ? redirect() : User.TFOenabled === true ? <TFAset /> : <NewMemberSet/> }
+            <form className = 'form-newsetting'>
+            <button className="SingleButton">Single player.</button>
+            <button className="MultiButton">Multiplayer.</button>
+            </form>
+
+                
         </>
         </div>
     )

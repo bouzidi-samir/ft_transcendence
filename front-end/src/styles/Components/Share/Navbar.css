@@ -88,6 +88,7 @@
     .nav_link {
         margin: auto;
     }
+  }
     
 
 /* The switch - the box around the slider */
@@ -152,4 +153,3 @@
   .slider.round:before {
     border-radius: 50%;
   }
-}
