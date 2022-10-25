@@ -72,8 +72,8 @@ p {
     border-radius: 50%;
     width: 8%;
     height: 30%;
-    margin-top: 4%;
-    margin-left: 7%;
+    margin-top: 5%;
+    margin-left: 5%;
     margin-right: 2%;
     cursor: pointer;
 }
@@ -86,7 +86,7 @@ p {
     border-radius: 50%;
     width: 8%;
     height: 30%;
-    margin-top: 4%;
+    margin-top: 5%;
     margin-left: 5%;
     margin-right: 2%;
     cursor: pointer;
@@ -100,9 +100,10 @@ p {
     border-radius: 50%;
     width: 8%;
     height: 30%;
-    margin-top: 4%;
+    margin-top: 5%;
     margin-left: 5%;
     margin-right: 2%;
+    cursor: pointer;
 }
 
 .user-icon-mute {
@@ -113,6 +114,20 @@ p {
     border-radius: 50%;
     width: 8%;
     height: 30%;
-    margin-top: 4%;
+    margin-top: 5%;
     margin-left: 5%;
+    cursor: pointer;
+}
+
+.user-icon-bloc {
+    background-image: url(../../img/icones/bloque.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 30%;
+    margin-top: 5%;
+    margin-left: 5%;
+    cursor: pointer;
 }

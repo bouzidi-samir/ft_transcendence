@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
 import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
+import BlocUser from './BlocUser';
 
 
 export default function UserChat() {
@@ -40,6 +41,7 @@ export default function UserChat() {
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>
                                     <MuteUser/>
+                                    <BlocUser/>
                             </div>
                             </div>
                         //    : null
