@@ -35,11 +35,28 @@ export default function Rooms() {
         }
     }, [alertListener])
     
-    
-    
-    async function handleRoom(room: any) {
+
+    async function handleCheckBan(room: any) {
         
-        
+        let url_ = "http://localhost:4000/chat/checkBan";
+            const response_ = await fetch(url_, {method: "POST",
+            headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+            },
+            body: JSON.stringify({
+            username: User.username,
+            tag : room.tag,
+            })
+        }
+        )
+        const banned = await response_.json();
+
+        if (banned){
+            alert("You are banned from this room");
+            return;
+        }
         if (room.tag == RoomActive.tag)
         return;
         
@@ -47,6 +64,7 @@ export default function Rooms() {
             setPrivate(room)
             return;
         }
+
         let url_a = "http://localhost:4000/chat/leaveRoom";
         await fetch(url_a, {
             method: "POST",
@@ -60,25 +78,25 @@ export default function Rooms() {
                 username: User.username,
                 nickname: User.nickname,
             })
-        }
-        )
-        let url_b = "http://localhost:4000/chat/joinRoom";
-        const response =  await fetch(url_b, {method: "POST",
-        headers: {
-            'Authorization': `Bearer ${values[0]}`,
-            'Content-Type': 'application/json',
-            'cors': 'true'
-        },
-        body: JSON.stringify({
-            tag : room.tag,
-            username: User.username,
-            nickname: User.nickname,
-            avatar_url: User.avatar_url
         })
-    }
-    ).then(rep => rep.json())
-    dispatch({type: "User/addRoom",payload: response.tag})
-    dispatch({type: "RoomActive/setRoomActive",payload: response});
+
+        let url_b = "http://localhost:4000/chat/joinRoom";
+            const response =  await fetch(url_b, {method: "POST",
+            headers: {
+                'Authorization': `Bearer ${values[0]}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+            },
+            body: JSON.stringify({
+                tag : room.tag,
+                username: User.username,
+                nickname: User.nickname,
+                avatar_url: User.avatar_url
+            })
+        }
+        ).then(rep => rep.json())
+        dispatch({type: "User/addRoom",payload: response.tag})
+        dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
 
     useEffect(() => {
@@ -90,12 +108,12 @@ export default function Rooms() {
             <h2>Rooms</h2>
             <button onClick={() => setAddroom(true)} className="btn btn-primary" >+</button>
             {addroom ? <RoomAdd setAddroom={setAddroom} /> : null}
-            <div className='roomlist'>
+            <div className='roomlist' >
                 {
-                    Roomlist.map((room: any) =>
-                    <div className='room' key={room.id} onClick={
-                        () => handleRoom(room)} >
-                           <RoomCase room={room}/>
+                    Roomlist.map((room: any) => 
+                    
+                        <div  className='room' key={room.id}  onClick={() => {handleCheckBan(room)}} >
+                            <RoomCase room={room}/>
                         </div>
                     )
                 }

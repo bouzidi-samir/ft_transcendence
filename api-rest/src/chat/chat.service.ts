@@ -437,12 +437,13 @@ export class ChatService {
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (member == null || member.admin == false)
       return false;
-    if (existingMember.admin == true && member.owner == false)
-      return false;
+    // if (existingMember.admin == true && member.owner == false)
+    //   return false;
     
     existingMember.blocked = true;
     existingMember.in = false;
     existingMember.out = true;
+    existingMember.admin = false;
     if (existingMember.muted == true){
       existingMember.muted = false;
     }
