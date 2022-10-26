@@ -41,6 +41,7 @@ export default function UserChat() {
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>
                                     <MuteUser toMute={user}/>
+                                    <BanUser/>
                             </div>
                             </div>
                         //    : null
