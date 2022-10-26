@@ -40,7 +40,7 @@ export class AuthController {
 		user.username = infos.login;
 		user.avatar_url = infos.image_url; 
 		user.email = infos.email;
-		user.isTwoFactorAuthenticationEnabled = false; // button to create
+		user.isTwoFactorAuthenticationEnabled = false; 
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);
 		return JSON.stringify({

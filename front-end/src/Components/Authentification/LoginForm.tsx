@@ -32,12 +32,12 @@ export default function AuthForm() {
     <>
           <form className="auth-form">
           <h1>Master Pong</h1>
-              <input placeholder="Email"></input>
+              {/* <input placeholder="Email"></input>
               <input placeholder="Password"></input>
               <button className="btn btn-primary"> Login </button>
               <hr></hr>
               <p>or</p>
-              <button className="btn btn-secondary"> Register </button>
+              <button className="btn btn-secondary"> Register </button> */}
               <p>Sign with</p>
               <div className="sign">
                 <button onClick={handleFourtyTwo} 

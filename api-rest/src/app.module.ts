@@ -13,8 +13,8 @@ import { join } from 'path';
     ConfigModule.forRoot({ isGlobal:true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-			  host: 'localhost',
-    // host: 'postgres-db',
+		host: 'localhost',
+   // host: 'postgres-db',
 			port: 5432,
 		//	username: 'user',
 		//	password: 'password',

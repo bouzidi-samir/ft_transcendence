@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import Cross from './Cross';
+import { useLocation } from 'react-router-dom';
 
 export default function UserProfil() {
     const User = useSelector((state: any) => state.User);
@@ -12,6 +13,11 @@ export default function UserProfil() {
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
     const [user, setUser]  = useState(User);
+    const values = Object.values(User.JWT_token);
+    const location = useLocation();
+   
+    console.log("location", location.state.toBlock);
+       
 
     useEffect( () => {
         const url = `http://localhost:4000/users/${user_id.id}`
@@ -21,6 +27,47 @@ export default function UserProfil() {
     },
     []
     )
+    
+    async function handleBlock(e: any) {
+
+            e.preventDefault();
+            let url = "http://localhost:4000/users/blockUser";
+            const response = await fetch(url, {method: "POST",
+            headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            username: User.username,
+            targetUsername: location.state.toBlock.user.username,
+            })
+        }
+        ).then(response => response.json())
+            console.log('toblock', response);
+        
+        }
+
+        async function handleNewFriend(e: any) {
+
+            e.preventDefault();
+            let url = "http://localhost:4000/users/forceToBeMyFriend";
+            const response = await fetch(url, {method: "POST",
+            headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            myUsername: User.username,
+            otherUsername: location.state.toBlock.user.username,
+            })
+        }
+        ).then(response => response.json())
+            console.log('myFriend', response);
+        
+        }
+
     return (
         <div className='userprofil'>
         <Navbar></Navbar>
@@ -32,9 +79,8 @@ export default function UserProfil() {
                 <hr></hr>
                 <div className='ecusson-user'></div>
                 <p>Novice</p>
-            
-                <button className="btn btn-primary btn-add">Ajouter</button>
-                <button className="btn btn-secondary">Bloquer</button>
+                <button onClick={handleNewFriend} className="btn btn-primary btn-add">Ajouter</button>
+                <button onClick={handleBlock} className="btn btn-secondary">Bloquer</button>
             </form>
         </div>
         </div>

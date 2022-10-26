@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Header, Patch, 
-	UseInterceptors, UploadedFile, StreamableFile, Res, Put } from '@nestjs/common';
+	UseInterceptors, UploadedFile, StreamableFile, Res, Put, UseGuards } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DataSource } from 'typeorm';
@@ -9,6 +9,7 @@ import { extname } from 'path';
 import User from './entities/user.entity';
 
 import { UsersService } from './users.service'; 
+import { JwtAuthGuard } from 'src/auth/jwt-authguards';
 
 @Controller('users')
 export class UsersController {
@@ -130,6 +131,14 @@ export class UsersController {
 		return await this.service.getAllMyFriendships(body);
 	}
 
+	@UseGuards(JwtAuthGuard)
+	@Post('/forceToBeMyFriend')
+	async forceToBeMyFriend(
+		@Body() body: any): Promise<any> { // param myUsername: string, otherUsername: string
+			return await this.service.forceToBeMyFriend(body);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Post('/blockUser') // params: username: string, targetUsername: string
 	async blockUser(
 		@Body() body: any): Promise<any> {

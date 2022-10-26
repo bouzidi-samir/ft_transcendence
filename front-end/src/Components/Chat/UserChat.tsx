@@ -15,7 +15,7 @@ export default function UserChat() {
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const dispatch = useDispatch();
     const [members, setMembers] = useState([]);
-
+   
     useEffect( () => {    
         let url : string = `http://localhost:4000/chat/getRoomMembers/${RoomActive.tag}`;
         fetch(url)
@@ -36,12 +36,11 @@ export default function UserChat() {
                                 <p>{user.nickname}</p>
                         <div key={user.id} className="user-online">
                                     <img src={user.avatar_url} className="online-avatar"></img>
-                                <Link className='user-icon-profil'to = {"/UserProfil/" + user.userId} style={{textDecoration: 'none'}}>
+                                <Link  to={"/UserProfil/" + user.userId} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>
-                                    <MuteUser/>
-                                    <BanUser/>
+                                    <MuteUser toMute={user}/>
                             </div>
                             </div>
                         //    : null

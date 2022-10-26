@@ -79,9 +79,9 @@ export class ChatController {
         return this.service.leaveRoom(body);
     }
 
-    @Post('/blockMember') // tag, username, toBlockUsername, minutes (minutes to mute)
-    async blockMember( @Body() body: any): Promise<any> {
-        return this.service.blockMember(body);
+    @Post('/banMember') // tag, username, toBanUsername
+    async banMember( @Body() body: any): Promise<any> {
+        return this.service.banMember(body);
     }
 
     @Post('/unblockMember') // params: username: string, toUnblockUsername: string
@@ -99,6 +99,7 @@ export class ChatController {
 		return await this.service.unmuteMember(body);
 	}
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkMute')
     async checkMute(@Body() body:any): Promise<any> {
         return await this.service.checkMute(body);
@@ -109,14 +110,22 @@ export class ChatController {
         return await this.service.roomInvitation(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkRoomInvitation')
 		async checkRoomInvitation(@Body() body: any): Promise<any> { // username
 			return await this.service.checkRoomInvitation(body);
 	}
 
+    @UseGuards(JwtAuthGuard)
     @Post('/acceptOneRoomInvitation')
 	async acceptOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
 		return await this.service.acceptOneRoomInvitation(body);
+	}
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/refuseOneRoomInvitation')
+	async refuseOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
+		return await this.service.refuseOneRoomInvitation(body);
 	}
 
 	// @Post('/acceptAllRoomInvitation')
