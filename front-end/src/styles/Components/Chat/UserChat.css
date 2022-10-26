@@ -8,6 +8,12 @@
     border-radius: 2%;
 }
 
+.userchat-content .add {
+    width: 15%;
+    margin-left: 42%;
+    margin-bottom: 5%;
+}
+
 .online-list {
 
     width: 100%;
@@ -39,6 +45,7 @@
     flex-direction: row;
     width: 100%;
     height: 80%;
+    padding-bottom: 5%;
   
 }
 
@@ -46,9 +53,8 @@
 
 .online-avatar {
     width: 20%;
-    height: 78%;
+    height: 90%;
     margin-left: 2%;
-    margin-top: 0%;
     border-radius: 50%;
     border: solid blueviolet 1px;
     
@@ -62,6 +68,7 @@
 
 p {
     text-decoration: none;
+    
 }
 
 .user-icon-profil {
@@ -71,7 +78,7 @@ p {
     background-size: cover;
     border-radius: 50%;
     width: 8%;
-    height: 30%;
+    height: 40%;
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 2%;
@@ -85,7 +92,7 @@ p {
     background-size: cover;
     border-radius: 50%;
     width: 8%;
-    height: 30%;
+    height: 40%;
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 2%;
@@ -99,7 +106,7 @@ p {
     background-size: cover;
     border-radius: 50%;
     width: 8%;
-    height: 30%;
+    height: 40%;
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 2%;
@@ -113,7 +120,7 @@ p {
     background-size: cover;
     border-radius: 50%;
     width: 8%;
-    height: 30%;
+    height: 40%;
     margin-top: 5%;
     margin-left: 5%;
     cursor: pointer;
@@ -126,7 +133,7 @@ p {
     background-size: cover;
     border-radius: 50%;
     width: 8%;
-    height: 30%;
+    height: 40%;
     margin-top: 5%;
     margin-left: 5%;
     cursor: pointer;

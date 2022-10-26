@@ -16,7 +16,9 @@
 
 .rooms-content p {
     color: white;
-    margin-left: 22%;
+    margin-left: 25%;
+    margin-top: 3%;
+    font-size: 20px;
 }
 
 .roomlist {

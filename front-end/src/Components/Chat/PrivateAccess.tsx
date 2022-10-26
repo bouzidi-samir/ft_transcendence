@@ -57,6 +57,7 @@ export default function PrivateAcces(props : any) {
 }   
 
     return (
+        <div className="fond">
         <div className="privateAccess">
             <div onClick={()=>setPrivate(false)} className="cross-private"></div>
         <form>
@@ -65,6 +66,7 @@ export default function PrivateAcces(props : any) {
             <p className="error">{error}</p>
             <button onClick={handleRoom} className="btn btn-primary">Valider</button>
         </form>
+        </div>
         </div>
     )
 }

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
 import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
-import BlocUser from './BlocUser';
-
+import BanUser from './BanUser';
+import NewMember from './NewMember';
 
 export default function UserChat() {
     const User = useSelector((state: any) => state.User);
@@ -27,7 +27,7 @@ export default function UserChat() {
     return (
         <div className="userchat-content">
               <h2>Membres</h2>
-         
+              <NewMember/>
               <div className='online-list'>
                   {
                       members.map((user : any) => (
