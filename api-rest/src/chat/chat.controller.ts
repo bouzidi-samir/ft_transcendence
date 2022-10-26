@@ -79,9 +79,9 @@ export class ChatController {
         return this.service.leaveRoom(body);
     }
 
-    @Post('/blockMember') // tag, username, toBlockUsername, minutes (minutes to mute)
-    async blockMember( @Body() body: any): Promise<any> {
-        return this.service.blockMember(body);
+    @Post('/banMember') // tag, username, toBanUsername
+    async banMember( @Body() body: any): Promise<any> {
+        return this.service.banMember(body);
     }
 
     @Post('/unblockMember') // params: username: string, toUnblockUsername: string

@@ -17,7 +17,7 @@ const {toMute} = props;
 
 async function handleMute(e: any) {
 
-e.preventDefault();
+    e.preventDefault();
     let url = "http://localhost:4000/chat/muteMember";
     const response = await fetch(url, {method: "POST",
     headers: {
@@ -46,10 +46,12 @@ return (
             <form > 
                 <Cross lastPage="/Chat" closeWinwow={setMute}/> 
                 <div >
-                    <input className='password-input' type="password" value={minutes} 
-                    onChange={(e)=> setMinutes(e.target.value)} placeholder='Nombre de minutes' ></input> 
+                    <p>
+                    <input style={{width: "70px"}} value={minutes} 
+                    onChange={(e)=> setMinutes(e.target.value)} placeholder='Minutes' ></input> 
+                    <button style={{width: "70px"}} onClick={handleMute} >Valider</button>
+                    </p>
                 </div>
-                <button onClick={handleMute} className='btn btn-primary'>Valider</button>
             </form>
         </div> ) : null} 
     </div>

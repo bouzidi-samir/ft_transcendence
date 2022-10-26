@@ -158,8 +158,34 @@ export class UsersService {
         const friend = await this.relationsRepository.find({where: [{ toUsername: body.myUsername, fromUsername: body.otherUsername, acceptFriendship: true }, { toUsername: body.otherUsername, fromUsername: body.myUsername, acceptFriendship: true }]});
         for (let i = 0; i < friend.length; i++) {
             await this.relationsRepository.delete(friend[i]);
+           
         }
         
+    }
+
+    async forceToBeMyFriend(body) {
+
+        const friend = await this.relationsRepository.findOne({where: [{ toUsername:body.otherUsername , fromUsername: body.myUsername}]});
+        if (!friend){
+            const newFriend = await this.relationsRepository.create();
+            const Me = await this.userRepository.findOne({where: {username: body.myUsername}});
+            newFriend.fromUsername = body.myUsername;
+            newFriend.toUsername = body.otherUsername;
+            newFriend.friendshipRequest = true;
+            newFriend.acceptFriendship = true;
+            newFriend.owner = Me;
+            await this.relationsRepository.save(newFriend);
+            return newFriend;
+
+        }
+        else {
+            friend.friendshipRequest = true;
+            friend.acceptFriendship = true;
+            friend.blocked = false;
+            await this.relationsRepository.save(friend);
+            return friend;
+        }
+
     }
 
     async getAllMyFriendships(body) {
@@ -173,13 +199,14 @@ export class UsersService {
     
     async blockUser(body) {
 
-        const relation = await this.relationsRepository.find({where: [{fromUsername: body.username, toUsername: body.targetUsername}, {fromUsername: body.targetUsername, toUsername: body.username }]});
+        const relation = await this.relationsRepository.find({where: [{fromUsername: body.username, toUsername: body.targetUsername}]});
         
         if (!relation[0]) {
 
             const relation = await this.relationsRepository.create();
-            const blocked = await this.userRepository.findOne({where: {username: body.blockedUsername}});
-            relation.owner = blocked;
+            const blocker = await this.userRepository.findOne({where: {username: body.username}});
+            // const blocked = await this.userRepository.findOne({where: {username: body.targetUsername}});
+            relation.owner = blocker;  //le blocker est owner de la relation if blocked
             relation.fromUsername = body.username;
             relation.toUsername = body.targetUsername;
             relation.blocked = true;
@@ -197,6 +224,7 @@ export class UsersService {
         
         return relation;
     }
+
 
     async unBlockUser(body) {
 

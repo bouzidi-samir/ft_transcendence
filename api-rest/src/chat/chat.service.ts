@@ -424,7 +424,7 @@ export class ChatService {
     return true;
   }
 
-  async blockMember(body) {
+  async banMember(body) {
 
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
     if (room == null || body.tag == 'global')
@@ -432,30 +432,30 @@ export class ChatService {
 
     const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (oneAdmin == null)
-      return false;
+      return 'not admin';
    
-    const user = await this.userRepository.findOne({where: { username: body.toBlockUsername}});
+    // const user = await this.userRepository.findOne({where: { username: body.toBlockUsername}});
    
-    const existingMember = await this.memberRepository.findOne({where: { username: body.toBlockUsername, roomTag: body.tag}});
+    const existingMember = await this.memberRepository.findOne({where: { username: body.toBanUsername, roomTag: body.tag}});
     
     if (existingMember == null){
       
-      const member = await this.memberRepository.create();
-      member.roomTag = body.tag;
-      member.username = body.toBlockUsername;
-      member.userId = user.id;
-      member.blocked = true;
-      const millis = Date.now() + (body.minutes * 60 * 1000);
-      existingMember.chronos = Math.floor(millis / 1000);
-      await this.memberRepository.save(member);
-      return member;
+      // const member = await this.memberRepository.create();
+      // member.roomTag = body.tag;
+      // member.username = body.toBlockUsername;
+      // member.userId = user.id;
+      // member.blocked = true;
+      // const millis = Date.now() + (body.minutes * 60 * 1000);
+      // existingMember.chronos = Math.floor(millis / 1000);
+      // await this.memberRepository.save(member);
+      return 'not menber';
     }
     
     existingMember.blocked = true;
     if (existingMember.muted == true)
       existingMember.muted = false;
-    const millis = Date.now() + (body.minutes * 60 * 1000);
-    existingMember.chronos = Math.floor(millis / 1000);
+    // const millis = Date.now() + (body.minutes * 60 * 1000);
+    // existingMember.chronos = Math.floor(millis / 1000);
     await this.memberRepository.save(existingMember);
     return existingMember;
     
