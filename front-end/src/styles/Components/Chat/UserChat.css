@@ -74,7 +74,6 @@ p {
 .user-icon-profil {
     background-image: url(../../img/icones/profil2.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
@@ -88,7 +87,6 @@ p {
 .user-icon-mess {
     background-image: url(../../img/icones/messager2.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
@@ -102,7 +100,6 @@ p {
 .user-icon-game {
     background-image: url(../../img/icones/versus.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
@@ -116,7 +113,6 @@ p {
 .user-icon-mute {
     background-image: url(../../img/icones/mute.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
@@ -129,7 +125,6 @@ p {
 .user-icon-bloc {
     background-image: url(../../img/icones/bloque.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
