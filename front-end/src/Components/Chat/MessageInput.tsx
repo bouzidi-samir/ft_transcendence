@@ -7,7 +7,8 @@ import { User } from "../../Slices/UserSlice";
 export default function MessageInput({send}: {send: (messagedata: any) => void}) {
     
     const [value, setValue] = useState("");
-    const [check, setCheck] = useState<boolean>(false);
+    const [checkMute, setCheckMute] = useState<boolean>(false);
+    const [checkBan, setCheckBan] = useState<boolean>(false);
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const values = Object.values(User.JWT_token);
@@ -40,8 +41,22 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
         })
       }
       ).then(response => response.json())
-      console.log('response from mute', response);
-      setCheck(response);
+      setCheckMute(response);
+
+      let url_ = "http://localhost:4000/chat/checkBan";
+        const response_ = await fetch(url_, {method: "POST",
+        headers: {
+        'Authorization': `Bearer ${values[0]}`,
+        'Content-Type': 'application/json',
+        'cors': 'true'
+        },
+        body: JSON.stringify({
+          username: User.username,
+          tag : RoomActive.tag,
+        })
+      }
+      ).then(response_ => response_.json())
+      setCheckBan(response_);
     }
 
     const handleClick = (value: string) => { 
@@ -57,8 +72,10 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
             <div className='ChatMessageInput'>
                 <div className='Input'>
                     <input onChange={(e)=>{setValue(e.target.value); handleCheck(e)}} placeholder="Tapez votre message..." value={value} />
-                    { check ? 
-                    (  <button className="btn btn-primary" onClick={() => {setValue(""); alert('You are muted')}}>Envoyer</button>)
+                    { checkMute ? 
+                    ( <button className="btn btn-primary" onClick={() => {setValue(""); alert('You are temporary muted in this room')}}>Envoyer</button>)
+                    : checkBan ?
+                    ( <button className="btn btn-primary" onClick={() => {setValue(""); alert('You are Banned from this room')}}>Envoyer</button>)
                     :
                     ( <button className="btn btn-primary" onClick={() => handleClick(value)}>Envoyer</button>)
                     }

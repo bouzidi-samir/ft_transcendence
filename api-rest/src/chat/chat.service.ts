@@ -437,6 +437,8 @@ export class ChatService {
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (member == null || member.admin == false)
       return false;
+    if (existingMember.admin == true && member.owner == false)
+      return false;
     
     existingMember.blocked = true;
     existingMember.in = false;
@@ -447,6 +449,18 @@ export class ChatService {
     await this.memberRepository.save(existingMember);
     return existingMember;
     
+  }
+
+  async checkBan(body) {
+
+    const existingMember = await this.memberRepository.findOne({where: { username: body.username, roomTag: body.tag}});
+    if (existingMember == null)
+      return false;
+  
+    if (existingMember.blocked == true){
+      return true;
+    }
+    return false;
   }
 
   async unblockMember(body) {

@@ -85,6 +85,12 @@ export class ChatController {
         return this.service.banMember(body);
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Post('/checkBan') // tag, username
+    async checkBan( @Body() body: any): Promise<any> {
+        return this.service.checkBan(body);
+    }
+
     @Post('/unblockMember') // params: username: string, toUnblockUsername: string
 	async unBlockMember(@Body() body: any): Promise<any>  {
 		return await this.service.unblockMember(body);
