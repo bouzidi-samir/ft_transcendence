@@ -116,3 +116,16 @@ p {
     margin-top: 4%;
     margin-left: 5%;
 }
+
+.user-icon-bloc {
+    background-image: url(../../img/icones/bloque.png);
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    border-radius: 50%;
+    width: 8%;
+    height: 40%;
+    margin-top: 5%;
+    margin-left: 5%;
+    cursor: pointer;
+}

@@ -79,6 +79,7 @@ export class ChatController {
         return this.service.leaveRoom(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/banMember') // tag, username, toBanUsername
     async banMember( @Body() body: any): Promise<any> {
         return this.service.banMember(body);
