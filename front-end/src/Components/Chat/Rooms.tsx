@@ -89,7 +89,7 @@ export default function Rooms() {
         <div className="rooms-content">
             <h2>Salons</h2>
             <button onClick={() => setAddroom(true)} className="btn btn-primary" >+</button>
-            {addroom ? <RoomAdd setAddroom={setAddroom} /> : null}
+            {addroom ?  <RoomAdd setAddroom={setAddroom} /> : null}
             <div className='roomlist'>
                 {
                     Roomlist.map((room: any) =>
@@ -99,7 +99,7 @@ export default function Rooms() {
                         </div>
                     )
                 }
-                {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
+                {privateAcces ?  <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
                 {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
             </div>
         </div>

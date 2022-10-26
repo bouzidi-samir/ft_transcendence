@@ -1,6 +1,4 @@
 
-
-
 .privateAccess {
     position:absolute;
     top: 30%;
@@ -47,6 +45,32 @@
     position: relative;
     width: 3%;
     height: 8%;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cross-member {
+    position: relative;
+    width: 3%;
+    height: 3%;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cross-addroom {
+    position: relative;
+    width: 3%;
+    height: 4%;
     top: 1%;
     left: 1%;
     background-image: url(../../../styles/img/icones/cross.png);

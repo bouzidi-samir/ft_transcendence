@@ -83,8 +83,10 @@ export default function RoomAdd({setAddroom} :any) {
     }
 
     return (
+        <>
+        <div className='fond1'></div>
         <div className="addroom-content" data-aos="fade-up" data-aos-duration="1000">
-                <Cross lastPage="/Home" closeWinwow={setAddroom}/> 
+            <div onClick={()=>setAddroom(false)} className="cross-addroom"></div> 
             <form >
                 <div className='group-avatar'></div>
                 <h2>Informations du salon </h2>
@@ -113,5 +115,6 @@ export default function RoomAdd({setAddroom} :any) {
             </form>
                 <button onClick={handleForm}  className='btn btn-primary'>Valider</button>
         </div>
+        </>
     );
 }
