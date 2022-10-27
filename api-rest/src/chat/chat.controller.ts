@@ -38,6 +38,7 @@ export class ChatController {
         return this.service.createMyFriendsRoom(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkIfMember')
     async checkIfMember(@Body() body:any): Promise<any> {
         return this.service.checkIfMember(body);
@@ -79,9 +80,16 @@ export class ChatController {
         return this.service.leaveRoom(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/banMember') // tag, username, toBanUsername
     async banMember( @Body() body: any): Promise<any> {
         return this.service.banMember(body);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/checkBan') // tag, username
+    async checkBan( @Body() body: any): Promise<any> {
+        return this.service.checkBan(body);
     }
 
     @Post('/unblockMember') // params: username: string, toUnblockUsername: string

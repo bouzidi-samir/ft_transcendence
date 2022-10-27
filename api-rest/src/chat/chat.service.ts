@@ -171,10 +171,11 @@ export class ChatService {
   async checkIfMember(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
-    if (alreadyMember)
-      return true;
+    if (alreadyMember){
+      return {password: alreadyMember.password, member: true};
+    }
     else{
-        return false;
+        return {password: "", member: false};
     }
   }
 
@@ -430,36 +431,38 @@ export class ChatService {
     if (room == null || body.tag == 'global')
       return false;
 
-    const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
-    if (oneAdmin == null)
-      return 'not admin';
-   
-    // const user = await this.userRepository.findOne({where: { username: body.toBlockUsername}});
-   
-    const existingMember = await this.memberRepository.findOne({where: { username: body.toBanUsername, roomTag: body.tag}});
-    
-    if (existingMember == null){
-      
-      // const member = await this.memberRepository.create();
-      // member.roomTag = body.tag;
-      // member.username = body.toBlockUsername;
-      // member.userId = user.id;
-      // member.blocked = true;
-      // const millis = Date.now() + (body.minutes * 60 * 1000);
-      // existingMember.chronos = Math.floor(millis / 1000);
-      // await this.memberRepository.save(member);
-      return 'not menber';
+    const existingMember = await this.memberRepository.findOne({where: {username: body.toBanUsername, roomTag: body.tag}});
+    if (existingMember == null || existingMember.owner == true){
+      return false;
     }
+    const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
+    if (member == null || member.admin == false)
+      return false;
+    // if (existingMember.admin == true && member.owner == false)
+    //   return false;
     
     existingMember.blocked = true;
-    if (existingMember.muted == true)
+    existingMember.in = false;
+    existingMember.out = true;
+    existingMember.admin = false;
+    if (existingMember.muted == true){
       existingMember.muted = false;
-    // const millis = Date.now() + (body.minutes * 60 * 1000);
-    // existingMember.chronos = Math.floor(millis / 1000);
+    }
     await this.memberRepository.save(existingMember);
     return existingMember;
     
+  }
 
+  async checkBan(body) {
+
+    const existingMember = await this.memberRepository.findOne({where: { username: body.username, roomTag: body.tag}});
+    if (existingMember == null)
+      return false;
+  
+    if (existingMember.blocked == true){
+      return true;
+    }
+    return false;
   }
 
   async unblockMember(body) {

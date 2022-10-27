@@ -2,7 +2,7 @@ import { Room } from "../../Slices/RoomSlice"
 import "../../styles/Components/Chat/PrivateAccess.css"
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function PrivateAcces(props : any) {
@@ -14,10 +14,11 @@ export default function PrivateAcces(props : any) {
     const [error, setError] = useState("");
     const values = Object.values(User.JWT_token);
 
+
    async function handleRoom(e: any)  {
     e.preventDefault();
     let url_a = "http://localhost:4000/chat/leaveRoom";
-    await fetch(url_a, {
+    const res = await fetch(url_a, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${values[0]}`,
@@ -53,7 +54,7 @@ export default function PrivateAcces(props : any) {
     }
     dispatch({type: "RoomActive/setRoomActive",payload: response})
     dispatch({type: "User/addRoom",payload: response.tag})
-    setPrivate(false);
+    setPrivate(false);   
 }   
 
     return (
