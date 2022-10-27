@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react"
 
 
-
-
-
-
 export default function RoomCase ({room} :any) {
     
     const [members, setMembers] = useState<any>();
+
     
     useEffect (() => {
         let url = `http://localhost:4000/chat/getRoomMembers/${room.tag}`

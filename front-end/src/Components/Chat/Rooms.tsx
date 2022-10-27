@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import RoomCase from './RoomCase';
-
+import styled from 'styled-components';
 
 export default function Rooms() {
     const User = useSelector((state: any) => state.User);
@@ -18,7 +18,11 @@ export default function Rooms() {
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     const values = Object.values(User.JWT_token);
-
+    const [selected, setSelected] = useState("")
+   // const RoomStyle = styled.div `
+ //       background :${ RoomActive.tag == selected ? 'red' : null}
+   // `
+   
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
         setSocket(newSocket)
@@ -39,7 +43,8 @@ export default function Rooms() {
     
     async function handleRoom(room: any) {
         
-        
+        setSelected(room.tag);
+        console.log(selected);
         if (room.tag == RoomActive.tag)
         return;
         
