@@ -18,6 +18,8 @@ export default function Rooms() {
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     const values = Object.values(User.JWT_token);
+    const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
+    let p : [string | boolean][];
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -35,6 +37,27 @@ export default function Rooms() {
         }
     }, [alertListener])
     
+    useEffect(()=>{
+        handleCheckMember(RoomActive)
+    },[])
+
+    async function handleCheckMember(room: any) {
+            
+        let url_ = "http://localhost:4000/chat/checkIfMember";
+            const response = await fetch(url_, {method: "POST",
+            headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+            },
+            body: JSON.stringify({
+            username: User.username,
+            tag : room.tag,
+            })
+        })
+        let result  = await response.json();
+        p = Object.values(result);
+    }
 
     async function handleCheckBan(room: any) {
         
@@ -58,9 +81,8 @@ export default function Rooms() {
             return;
         }
         if (room.tag == RoomActive.tag)
-        return;
-        
-        if (room.private && !room.privateMessage) {
+            return;
+        if (room.private && !room.privateMessage && !p[1]) {
             setPrivate(room)
             return;
         }
@@ -91,10 +113,13 @@ export default function Rooms() {
                 tag : room.tag,
                 username: User.username,
                 nickname: User.nickname,
-                avatar_url: User.avatar_url
+                avatar_url: User.avatar_url,
+                password: p[0]
             })
         }
         ).then(rep => rep.json())
+        if (!response.tag)
+            response.tag = room.tag;
         dispatch({type: "User/addRoom",payload: response.tag})
         dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
@@ -102,6 +127,7 @@ export default function Rooms() {
     useEffect(() => {
         document.title = alertRoom;
     })
+
 
     return (
         <div className="rooms-content">
@@ -112,12 +138,12 @@ export default function Rooms() {
                 {
                     Roomlist.map((room: any) => 
                     
-                        <div  className='room' key={room.id}  onClick={() => {handleCheckBan(room)}} >
+                        <div  className='room' key={room.id}  onClick={() => {handleCheckMember(room); handleCheckBan(room)}} >
                             <RoomCase room={room}/>
                         </div>
                     )
                 }
-                {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
+                { privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
                 {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
             </div>
         </div>

@@ -171,10 +171,11 @@ export class ChatService {
   async checkIfMember(body) {
 
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
-    if (alreadyMember)
-      return true;
+    if (alreadyMember){
+      return {password: alreadyMember.password, member: true};
+    }
     else{
-        return false;
+        return {password: "", member: false};
     }
   }
 

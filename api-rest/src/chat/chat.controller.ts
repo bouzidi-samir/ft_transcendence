@@ -38,6 +38,7 @@ export class ChatController {
         return this.service.createMyFriendsRoom(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/checkIfMember')
     async checkIfMember(@Body() body:any): Promise<any> {
         return this.service.checkIfMember(body);
