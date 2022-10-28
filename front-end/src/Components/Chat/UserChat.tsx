@@ -7,6 +7,9 @@ import PrivateMessage from './PrivateMessage';
 import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
+import Notifs from '../Home/Notifs';
+import Invitation from '../Home/Invitation';
+import ChatNotifs from './ChatNotifs';
 
 
 export default function UserChat() {
@@ -48,6 +51,13 @@ export default function UserChat() {
                             )
                       )
                   }
+            </div>
+              <div className='online-notifs-title ' >
+                    <h2>Messagerie</h2>
+              </div>
+              <div>
+                <ChatNotifs/>
+                <Invitation/>
               </div>
         </div>
     );
