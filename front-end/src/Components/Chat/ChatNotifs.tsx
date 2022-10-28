@@ -51,7 +51,7 @@ return (
                 { Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 
                    
-                   { (Roomlist.some((e : any) => alert.alertNotif.room == e.tag && (alert.alertNotif.room != RoomActive.tag))) ? (
+                   { (Roomlist.some((e : any) => (alert.alertNotif.room == e.tag) && (alert.alertNotif.room != RoomActive.tag))) ? (
                     <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
                     )  : (null)
                    }
