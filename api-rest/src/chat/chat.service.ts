@@ -584,6 +584,12 @@ async getRoomMembers(tag) {
   return roomMembers;
 }
 
+async getRoomAdmin(tag) {
+
+  const roomMembers = await this.memberRepository.find({where: {roomTag: tag, admin: true}});
+  return roomMembers;
+}
+
   findAll() {
     return `This action returns all chat`;
   }
