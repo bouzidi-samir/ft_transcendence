@@ -23,10 +23,11 @@ export default function NewMember() {
     useEffect(() => {
         let url = `http://localhost:4000/chat/getRoomAdmin/${RoomActive.tag}`;
         fetch(url).then(ret => ret.json()).then(ret => setAdminList(ret))
-    }, []
+    }, [RoomActive]
     )
     
     function addMember() : any {
+       
         if (!adminList.some((e : any) => e.nickname == User.nickname )) {
             setAlert(true);
             return ;

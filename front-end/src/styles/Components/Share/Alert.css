@@ -20,7 +20,7 @@
     background-size: cover;
  
     width: 15%;
-    height: 32%;
+    height: 38%;
     border-radius: 10%;
     margin-top: 5%;
     margin-left: 40%;
@@ -32,4 +32,17 @@
     font-size: 20px;
     text-align: center;
     margin-top: 5%;
+}
+
+.cross-alert {
+    position: relative;
+    width: 3%;
+    height: 6%;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
 }

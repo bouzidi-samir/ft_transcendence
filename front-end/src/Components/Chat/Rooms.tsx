@@ -44,7 +44,7 @@ export default function Rooms() {
     async function handleRoom(room: any) {
         
         setSelected(room.tag);
-        console.log(selected);
+    
         if (room.tag == RoomActive.tag)
         return;
         

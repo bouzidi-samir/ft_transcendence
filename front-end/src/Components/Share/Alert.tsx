@@ -9,7 +9,7 @@ export default function Alert(props: any) {
     <>
         <div className='fond1'></div>
         <div className="alert">
-          <div onClick={()=>setWindow(false)} className="cross-member"></div>
+          <div onClick={()=>setWindow(false)} className="cross-alert"></div>
             <div className="alert-icon"></div>
             <p>{message}</p>
         </div>
