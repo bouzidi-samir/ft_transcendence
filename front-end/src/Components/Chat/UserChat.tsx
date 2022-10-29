@@ -8,6 +8,10 @@ import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import NewMember from './NewMember';
+import Notifs from '../Home/Notifs';
+import Invitation from '../Home/Invitation';
+import ChatNotifs from './ChatNotifs';
+
 
 export default function UserChat() {
     const User = useSelector((state: any) => state.User);
@@ -48,6 +52,13 @@ export default function UserChat() {
                             )
                       )
                   }
+            </div>
+              <div className='online-notifs-title ' >
+                    <h2>Messagerie</h2>
+              </div>
+              <div>
+                <ChatNotifs/>
+                <Invitation/>
               </div>
         </div>
     );

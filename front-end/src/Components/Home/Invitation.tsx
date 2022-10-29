@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate} from "react-router-dom";
 
 export default function Invitation() {
 
     const User = useSelector((state: any) => state.User);
     const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
 
     async function handleInvitation() {
 
@@ -25,7 +28,6 @@ export default function Invitation() {
         ).then(response => response.json()).then(data => setInvitations(data));
         console.log("room invitation", invitations);
         console.log('User', User.username)
-            
         }
         
         useEffect(() => {
@@ -50,6 +52,9 @@ export default function Invitation() {
         ).then(response => response.json())
             console.log('accept response', response); 
         handleInvitation();
+        navigate(`/Chat`);
+        dispatch({type: "RoomActive/setRoomActive",payload: {tag:invit.roomTag}})
+
         }
 
         async function handleRefuse(invit: any)  {
