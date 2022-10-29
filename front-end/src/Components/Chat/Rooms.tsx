@@ -79,6 +79,7 @@ export default function Rooms() {
             alert("You are banned from this room");
             return;
         }
+      
         if (room.tag == RoomActive.tag)
             return;
         if (room.private && !room.privateMessage && !p[1]) {
