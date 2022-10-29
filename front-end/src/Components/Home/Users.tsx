@@ -20,6 +20,7 @@ export default function Users() {
     return (
         <div className='users-content'>
                 <p>Mes Amis</p>
+                <hr></hr>
             <div className='friends'>   
                 {
                     Userlist.map((u : any)=> (
