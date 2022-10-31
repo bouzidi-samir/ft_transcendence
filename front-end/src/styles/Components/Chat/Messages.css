@@ -57,7 +57,7 @@
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    width: 8%;
+    width: 7%;
     height: 80%;
     margin-left: 2%;
  }
@@ -68,9 +68,9 @@
     background-size: cover;
     border-radius: 50%;
     margin-top: 1%;
-    width: 6%;
+    width: 5%;
     height: 60%;
-  
+    cursor: pointer;
  }
 
  .buble-zone {

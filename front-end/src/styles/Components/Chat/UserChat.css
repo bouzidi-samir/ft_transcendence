@@ -137,7 +137,6 @@ p {
 .user-icon-bloc {
     background-image: url(../../img/icones/bloque.png);
     background-position: center;
-    position: relative;
     background-size: cover;
     border-radius: 50%;
     width: 8%;
