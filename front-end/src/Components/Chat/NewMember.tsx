@@ -13,6 +13,7 @@ export default function NewMember() {
     const [adminList, setAdminList] = useState<any>([])
     const [statu, setStatu] = useState(""); 
     const [alert, setAlert] = useState(false);
+    const values = Object.values(User.JWT_token);
  
     useEffect(() => {
         let url = "http://localhost:4000/users";
@@ -35,8 +36,22 @@ export default function NewMember() {
         setIsAdmin(true)
     }
 
-    function sendInvitation() : void {
+    async function sendInvitation(toUser : any) {
 
+        let url = "http://localhost:4000/chat/roomInvitation";
+        const response =   fetch(url, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            tag : RoomActive.tag,
+            senderName: User.username,
+            receiverName: toUser.username
+        })
+    }
+    )
         setStatu("Inviation envoiyée!");
         setTimeout(() => {
             setStatu("");
@@ -62,7 +77,7 @@ export default function NewMember() {
                                     <div key={user.nickname} className='membertoadd-case'>
                                        <img src={user.avatar_url} className='membertoadd-avatar'></img>
                                        <h2>{user.nickname}</h2>
-                                       <button onClick={sendInvitation} className='btn btn-primary'>Inviter</button>
+                                       <button onClick={() => sendInvitation(user)} className='btn btn-primary'>Inviter</button>
                                     </div>
                                 ))
                             }               

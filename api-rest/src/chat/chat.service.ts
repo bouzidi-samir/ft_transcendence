@@ -355,7 +355,7 @@ export class ChatService {
         relation.roomRequest = true;
         relation.roomTag = body.tag;
         await this.relationsRepository.save(relation);
-        return relation.fromUsername;
+        return relation;
       }
     }
     else {
@@ -367,7 +367,7 @@ export class ChatService {
       newRelation.roomTag = body.tag;
       newRelation.owner = receiver;
       await this.relationsRepository.save(newRelation);
-      return newRelation.fromUsername;
+      return newRelation;
     }
   }
 

@@ -33,7 +33,6 @@ body: JSON.stringify({
     })
 }
 ).then(response => response.json())
-    console.log(response);
 setMinutes("");
 setMute(false);
     
