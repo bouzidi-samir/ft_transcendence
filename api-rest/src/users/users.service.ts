@@ -4,6 +4,7 @@ import { response } from 'express';
 import { Repository, DataSource } from 'typeorm';
 import User from './entities/user.entity';
 import { Relations } from './entities/relations.entity';
+import { Member } from 'src/chat/entities/member.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,8 @@ export class UsersService {
 		public userRepository: Repository<User>,
         @InjectRepository(Relations)
         public relationsRepository: Repository<Relations>,
+        @InjectRepository(Member)
+        public memberRepository: Repository<Member>,
 	) {}
     
     getAllUsers(): Promise<User[]> {
@@ -47,14 +50,21 @@ export class UsersService {
     async updateNickname(id: number, nickname: string): Promise<any> {
 		if (!nickname)
 			return {error: "Veuillez saisir un pseudo"}
-		return await this.userRepository.query(
+        await this.memberRepository.query(
+                `UPDATE "member" SET "nickname" = $1 WHERE "userId" = $2;`,
+                [nickname, id]
+            );
+        return await this.userRepository.query(
 			`UPDATE "user" SET "nickname" = $1, updated_at = NOW() WHERE id = $2;`,
 			[nickname, id]
 		);
-        //return await this.userRepository.findOne({where: {id: id}});
 	}
 
     async updateAvatar(id: number, image: string): Promise<any> {
+        await this.memberRepository.query(
+            `UPDATE "member" SET "avatar_url" = $1 WHERE "userId" = $2;`,
+            [image, id]
+        );
         await this.userRepository.query(
 			`UPDATE "user" SET "avatar_url" = $1, updated_at = NOW() WHERE id = $2;`,
 			[image, id]

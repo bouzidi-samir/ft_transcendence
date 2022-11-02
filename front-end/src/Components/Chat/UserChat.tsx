@@ -25,7 +25,7 @@ export default function UserChat() {
         fetch(url)
         .then(response => response.json())
         .then(data => setMembers(data));
-    }, []
+    }, [RoomActive]
     )
 
     return (
