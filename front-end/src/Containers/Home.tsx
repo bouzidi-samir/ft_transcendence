@@ -1,4 +1,5 @@
 import "../styles/Containers/Home.css"
+import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react'
 import Navbar from "../Components/Share/Navbar"
 import Dashboard from "../Components/Home/Dashboard"
@@ -14,6 +15,7 @@ import { Howl } from "howler";
 
 
 export default function Home() {
+  let navigation = useNavigate();
   const User = useSelector((state: any) => state.User);
   const Roomlist = useSelector((state: any) => state.RoomList);
   const dispatch = useDispatch();
@@ -73,7 +75,10 @@ export default function Home() {
         'cors': 'true'
       },
     }
-    );
+    ).then(ret => {
+      if(ret.status == 401)
+        navigation("/Unauthorized");
+    });
   }, []
   )
   
