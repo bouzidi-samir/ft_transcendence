@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Alert from '../Share/Alert';
+import '../../styles/Components/Chat/RoomSetting.css'
 
 
 export default function RoomSettings() {
@@ -30,6 +31,20 @@ export default function RoomSettings() {
     return (
         <>
             <div  onClick={setRoom} className='room-settings'></div>
+            {
+                isAdmin ? 
+                <>
+                    <div className='fond1'></div>
+                    <form className="room-settingsForm" data-aos="fade-up" data-aos-duration="1000">
+                        <div onClick={()=>setIsAdmin(false)} className="cross-member"></div>
+                        <h2>Configuration du salon </h2>
+                        <label>Nom du salon:</label>       
+                        <input type="text" className='room-name' placeholder='Nom du salon'></input>
+                
+                    </form>
+                </>
+                : null
+            }
             {alert ? <Alert message="Cet action est réservée aux admins du channel." setWindow={setAlert} /> : null}
         </>
     )

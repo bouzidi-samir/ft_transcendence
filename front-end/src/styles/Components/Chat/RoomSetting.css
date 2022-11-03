@@ -1,0 +1,40 @@
+.room-settingsForm {
+    position:absolute;
+    top: 8%;
+    left: 0%;
+    margin-left: 25%;
+    margin-top: 0%;
+    width: 50%;
+    height: 90%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border-radius: 5%;
+    padding-top: 1%;
+    padding-left: 1%;
+    border: solid gray 1px;
+
+}
+
+.room-settingsForm h2 {
+    margin-top: 2%;
+    margin-left: 25%;
+    width: 50%;
+    margin-bottom: 4%;
+}
+
+.room-settingsForm  label {
+    color: white;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 1%;
+    margin-left: 3%;
+    margin-top: 2%;
+}
+
+.room-settingsForm .room-name {
+    width: 40%;
+    border-radius: 4%;
+    margin-bottom: 3%;
+    margin-left: 3%;
+    height: 7%;
+}
