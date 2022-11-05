@@ -11,6 +11,11 @@ export default function RoomSettings() {
     const [adminList, setAdminList] = useState<any>([])
     const[isAdmin, setIsAdmin] = useState(false);
     const [alert, setAlert] = useState(false);
+    const [roomName, setRoomName] = useState<string>(RoomActive.tag);
+    const [privateRoom, setPrivate] = useState<boolean>(RoomActive.private);
+    const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     
     useEffect(() => {
@@ -27,6 +32,22 @@ export default function RoomSettings() {
         }
         setIsAdmin(true)
     }
+
+    function handleChange(e : any, element : string) {
+        switch(element) {
+            case("name"):
+                setRoomName(e.target.value);
+                break;
+            case("private"):
+                setPrivate(true);
+                setPublicRoom(false);
+                break
+            case("public"):
+                setPublicRoom(true);
+                setPrivate(false);
+                break;
+        }
+    }
     
     return (
         <>
@@ -37,11 +58,30 @@ export default function RoomSettings() {
                     <div className='fond1'></div>
                     <form className="room-settingsForm" data-aos="fade-up" data-aos-duration="1000">
                         <div onClick={()=>setIsAdmin(false)} className="cross-member"></div>
+                        <div className='group-avatar'></div>
                         <h2>Configuration du salon </h2>
                         <label>Nom du salon:</label>       
-                        <input type="text" className='room-name' placeholder='Nom du salon'></input>
-                
+                        <input type="text" className='room-name' placeholder={RoomActive.tag}></input>
+                        <label>Type:</label>
+                    <span>Privée</span>
+                    <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
+                        value={roomName} name="type" className='room-type'></input>
+                    <span>Public</span>
+                    <input type="radio" onChange={(e)=> handleChange(e, "public")} 
+                        value={roomName} name="type" className='room-type'></input>
+                    <br></br>
+                    <div className='pass-zone'>
+                    {privateRoom ? 
+                    <>
+                    <label className='pass-label'>Mot de passe:</label> 
+                    <input className='password-input' type="password" value={password} 
+                    onChange={(e)=> setPassword(e.target.value)} placeholder='Mot de passe' ></input> 
+                    </>
+                    : null}
+                    <p >{error}</p>
+                    </div>
                     </form>
+                    <button  className='btn btn-primary'>Valider</button>
                 </>
                 : null
             }

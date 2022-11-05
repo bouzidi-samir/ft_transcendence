@@ -255,7 +255,17 @@ export class ChatService {
     else if (body.status == "public") {
       room.public = true;
       room.private = false;
-      if(room.password) {
+    }
+    room.tag = body.tag;
+    room.privateMessage = body.privateMessage;
+    
+    if (room.private == true && room.privateMessage == false) { 
+      let formatError = checkPasswordFormat(body.password);
+      if (formatError != true)
+          return {error: formatError}
+    }
+
+    if(body.password != "") {
         const salt = await bcrypt.genSalt();
         room.password = await bcrypt.hash(body.password, salt);
         await this.roomsRepository.save(room);
@@ -265,7 +275,7 @@ export class ChatService {
           await this.memberRepository.save(members[i]);
         }
       }
-    }
+    
   }
 
   async getActiveRoom(id) {

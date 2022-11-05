@@ -36,5 +36,47 @@
     border-radius: 4%;
     margin-bottom: 3%;
     margin-left: 3%;
-    height: 7%;
+    height: 30px;
+}
+
+.room-settingsForm  .room-type {
+    margin-right: 5px;
+    margin-left: 3%;
+    width: 6%;
+    height: 2%;
+ }
+
+ .room-settingsForm .btn-primary {
+    position: relative;
+    top: 16%;
+    right: 7%;
+    width: 30%;
+
+} 
+
+
+ .room-settingsForm span {
+    color : white;
+    margin-right: 2%;
+    margin-left: 3%;
+}
+
+.room-settingsForm p {
+    color : red;
+    margin-left: 2%;
+    margin-right: 2%;
+    text-align: center;
+    font-size: 13px;
+}
+
+.room-settingsForm .password {
+
+    margin-bottom: 4%;
+}
+
+ .room-settingsForm .password-input {
+    height: 30px;
+    margin-left: 0%;
+    width: 30%;
+    margin-left: 3%;
 }
