@@ -11,6 +11,7 @@ export default function Rooms() {
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     let Roomlist = useSelector((state: any) => state.RoomList);
+    const [roomList, setRoomList] = useState([]);
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);

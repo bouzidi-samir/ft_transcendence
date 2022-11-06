@@ -279,6 +279,11 @@ export class ChatService {
 
   async updateRoom(roomTarget, body) {
 
+    const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
+    if (!body.tag)
+      return {error: "Merci de saisir un nom"};
+    if (check && check.tag != roomTarget)
+      return {error: "Ce nom de salon est déja utilisé"};
     if (body.private == true && body.privateMessage == false) { 
       let formatError = checkPasswordFormat(body.password);
       if (formatError != true)
@@ -287,7 +292,7 @@ export class ChatService {
       body.password = await bcrypt.hash(body.password, salt);
     }
     await this.roomsRepository.query(
-      `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3
+      `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3, "password" = $4
       WHERE "tag" = $5;`,
       [body.tag, body.public, body.private, body.password, roomTarget]
     );
@@ -295,6 +300,7 @@ export class ChatService {
       `UPDATE "member" SET "roomTag" = $1 WHERE "roomTag" = $2;`,
       [body.tag, roomTarget]
     );
+    return body;
   }  
 
 

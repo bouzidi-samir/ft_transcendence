@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Alert from '../Share/Alert';
 import '../../styles/Components/Chat/RoomSetting.css'
@@ -8,13 +8,14 @@ export default function RoomSettings() {
     
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
     const [adminList, setAdminList] = useState<any>([])
     const[isAdmin, setIsAdmin] = useState(false);
     const [alert, setAlert] = useState(false);
     const [roomName, setRoomName] = useState<string>(RoomActive.tag);
     const [privateRoom, setPrivate] = useState<boolean>(RoomActive.private);
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("d");
     const [error, setError] = useState("");
     const values = Object.values(User.JWT_token);
 
@@ -25,12 +26,18 @@ export default function RoomSettings() {
     }, [RoomActive]
     )
 
+    async function updateRoomList() {
+        let url = `http://localhost:4000/chat/rooms`;
+        let response = await fetch(url).then(ret => ret.json()) 
+        dispatch({type: "Roomlist/setRoomlist",payload: response,})
+    }
+
     function setRoom() : any {
-       
         if (!adminList.some((e : any) => e.nickname == User.nickname )) {
             setAlert(true);
             return ;
         }
+        setRoomName(RoomActive.tag);
         setIsAdmin(true)
     }
 
@@ -54,10 +61,12 @@ export default function RoomSettings() {
         body: JSON.stringify(roomUpdate)
         }).then(response => response.json())
         if (response.error) {
-        setError(response.error)
-        return;
-    }
-
+            setError(response.error)
+            return;
+        }
+        updateRoomList();
+        dispatch({type: "RoomActive/setRoomActive",payload: roomUpdate});
+       setIsAdmin(false);
     }
 
     function handleChange(e : any, element : string) {
@@ -88,7 +97,8 @@ export default function RoomSettings() {
                         <div className='group-avatar'></div>
                         <h2>Configuration du salon </h2>
                         <label>Nom du salon:</label>       
-                        <input type="text" className='room-name' placeholder={RoomActive.tag}></input>
+                        <input type="text"  onChange={(e)=> handleChange(e, "name")}  
+                           value={roomName} className='room-name' ></input>
                         <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
@@ -107,8 +117,8 @@ export default function RoomSettings() {
                     : null}
                     <p >{error}</p>
                     </div>
+                    <button onClick={handleForm}  className='btn btn-primary'>Valider</button>
                     </form>
-                    <button  className='btn btn-primary'>Valider</button>
                 </>
                 : null
             }
