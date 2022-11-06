@@ -8,9 +8,7 @@ function Navbar() {
     const dispatch = useDispatch();
 
     function logout () : void {
-        dispatch({type: "User/logout",payload: null});
-        dispatch({type: "RoomList/logout",payload: null});
-        dispatch({type: "RoomActive/logout",payload: null});
+        localStorage.clear();
     }
 
     return (

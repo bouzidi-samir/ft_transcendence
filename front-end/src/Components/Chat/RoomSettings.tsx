@@ -16,6 +16,7 @@ export default function RoomSettings() {
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const values = Object.values(User.JWT_token);
 
     
     useEffect(() => {
@@ -31,6 +32,32 @@ export default function RoomSettings() {
             return ;
         }
         setIsAdmin(true)
+    }
+
+    async function handleForm(e: any) {
+
+        e.preventDefault();
+        let roomUpdate : any = {
+            tag: roomName,
+            public: publicRoom,
+            private: privateRoom,
+            privateMessage: false,
+            password: password
+        }
+        let url = `http://localhost:4000/chat/updateRoom/${RoomActive.tag}`;
+        const response = await  fetch(url, {method : 'POST',
+        headers: {
+            'Authorization': `Bearer ${values[0]}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        },
+        body: JSON.stringify(roomUpdate)
+        }).then(response => response.json())
+        if (response.error) {
+        setError(response.error)
+        return;
+    }
+
     }
 
     function handleChange(e : any, element : string) {

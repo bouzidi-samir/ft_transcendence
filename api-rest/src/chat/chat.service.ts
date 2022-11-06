@@ -275,8 +275,28 @@ export class ChatService {
           await this.memberRepository.save(members[i]);
         }
       }
-    
   }
+
+  async updateRoom(roomTarget, body) {
+
+    if (body.private == true && body.privateMessage == false) { 
+      let formatError = checkPasswordFormat(body.password);
+      if (formatError != true)
+          return {error: formatError}
+      const salt = await bcrypt.genSalt();
+      body.password = await bcrypt.hash(body.password, salt);
+    }
+    await this.roomsRepository.query(
+      `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3
+      WHERE "tag" = $5;`,
+      [body.tag, body.public, body.private, body.password, roomTarget]
+    );
+    await this.memberRepository.query(
+      `UPDATE "member" SET "roomTag" = $1 WHERE "roomTag" = $2;`,
+      [body.tag, roomTarget]
+    );
+  }  
+
 
   async getActiveRoom(id) {
 
