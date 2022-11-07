@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Alert from '../Share/Alert';
 import '../../styles/Components/Chat/RoomSetting.css'
 
-
 export default function RoomSettings() {
     
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -15,12 +14,14 @@ export default function RoomSettings() {
     const [roomName, setRoomName] = useState<string>(RoomActive.tag);
     const [privateRoom, setPrivate] = useState<boolean>(RoomActive.private);
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
-    const [password, setPassword] = useState("d");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const values = Object.values(User.JWT_token);
 
-    
     useEffect(() => {
+        setPrivate(RoomActive.private);
+        setPublicRoom(RoomActive.public);
+        setPassword(RoomActive.password);
         let url = `http://localhost:4000/chat/getRoomAdmin/${RoomActive.tag}`;
         fetch(url).then(ret => ret.json()).then(ret => setAdminList(ret))
     }, [RoomActive]
@@ -102,10 +103,13 @@ export default function RoomSettings() {
                         <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
-                        value={roomName} name="type" className='room-type'></input>
+                        value={roomName} name="type" className='room-type' checked= {privateRoom}>
+                        </input>
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
-                        value={roomName} name="type" className='room-type'></input>
+                        value={roomName} name="type" className='room-type' checked= {publicRoom}>
+
+                        </input>
                     <br></br>
                     <div className='pass-zone'>
                     {privateRoom ? 

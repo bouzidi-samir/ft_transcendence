@@ -184,7 +184,7 @@ export class ChatService {
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }}); 
     
-    if (room.password) {
+    if (room.password && !alreadyMember) {
       let authorize = checkPrivateAccess(body.password, room.password);
       if (authorize != true)
         return {error: authorize}
