@@ -31,14 +31,15 @@ import { access } from 'fs';
     
 
     @Post('switch')
+    @HttpCode(200)
     @UseGuards(JwtAuthGuard)
-    async switchTFA (@Req() request: RequestWithUser, @Res() response: Response,)
+    async switchTFA (@Body() body : any)
     {
-      let user = await this.usersService.getUserById(parseInt(response.req.body.userId));
+      let user = await this.usersService.getUserById(parseInt(body.userId));
       console.log(user.isTwoFactorAuthenticationEnabled);
       console.log("back");
 
-      await this.twoFactorAuthenticationService.switchTFA(parseInt(response.req.body.userId));
+      await this.twoFactorAuthenticationService.switchTFA(parseInt(body.userId));
     }
 
     @Post('turn-on')

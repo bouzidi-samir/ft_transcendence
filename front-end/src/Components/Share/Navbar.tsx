@@ -62,6 +62,7 @@ function Navbar() {
             },
             body: JSON.stringify({userId : user.id })
         })
+        return (navigate("/qrcode"));
 }
 
     return (

@@ -13,6 +13,7 @@ import ProfilSettings from './Containers/ProfilSettings';
 import UserProfil from './Components/Share/UserProfil';
 import LoadingPage from './Components/LoadingPage';
 import MatchingPage from './Components/MatchingPage';
+import CodePage from './Components/Qrcode';
 
 function App() {
 
@@ -24,7 +25,8 @@ function App() {
         <Route path="/Home" element={<Home/>}/> 
         <Route path="/ProfilSettings" element={<ProfilSettings/>}/>
         <Route path="/UserProfil/:id" element={<UserProfil/>}/>
-        <Route path="/Chat" element={<Chat/>}/> 
+        <Route path="/Chat" element={<Chat/>}/>
+        <Route path="/qrcode" element={<CodePage/>}/> 
 		<Route path="/Game" element={<Game/>}/> 
         <Route path="/Loading" element={<LoadingPage/>}/>
         <Route path="/Matching" element={<MatchingPage/>}/>

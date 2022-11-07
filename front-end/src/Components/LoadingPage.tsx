@@ -46,7 +46,7 @@ export default function LoadingPage (props : any) {
             <Particle/>
             
             <h1 className="loading-title">{time}%</h1>
-                {User.registred === 'true' ? redirect() : User.TFOenabled === true ? <TFAset /> : <NewMemberSet/> }
+            {User.registred === 'true' ? redirect() : User.TFOenabled === true ? <TFAset /> : <NewMemberSet/> }
         </>
         </div>
     )
