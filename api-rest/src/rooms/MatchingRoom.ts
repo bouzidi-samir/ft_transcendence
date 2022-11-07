@@ -7,8 +7,12 @@ import { UsersService } from "../users/users.service";
 import { Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { timingSafeEqual } from "crypto";
 
 export class MatchingRoom extends Room<MyRoomState> {
+
+
+  clientsEllo : number[];
 
   onCreate (options: any) {
     this.setState(new MyRoomState());
@@ -18,36 +22,27 @@ export class MatchingRoom extends Room<MyRoomState> {
     console.log(client.sessionId, "joined!");
    // client.send(this.gameData) data de la partie a afficher
     
-  this.onMessage("p2Data", async (client, message) => {
-    //this.game.p2_userName = message.p2_userName;
-  })
+    this.onMessage("clientEllo", async (client, message) => {
+      let ello = parseInt(message.ello);
+      this.clientsEllo.push(parseInt(message.ello));
+      for (let j = 0 ; j < this.clients.length -1 ; j++)
+      {
+        if ((this.clientsEllo[j] - ello >= -50) && (this.clientsEllo[j] - ello <= 50))
+          client.send("matchFound", {});
+          this.clients[j].send("matchFound", {})
+          this.clientsEllo.splice(j);
+          this.clientsEllo.pop();
+          this.clients[j].leave();
+          client.leave();
+      }
+    })
+  }
 
-}
   async onLeave (client: Client, consented: boolean) {
-    if (this.clients.length > 1)
-    {
-      if (client == this.clients[0])
-      {
-        //this.game.winner = this.game.p2_userName;
-        this.onDispose();
-      }
-      else if (client == this.clients[1])
-      {
-        //this.game.winner = this.game.p1_userName;
-        this.onDispose();
-      }
-    }
     console.log(client.sessionId, "left!");
   }
 
   async onDispose() {
     console.log("room", this.roomId, "disposing...");
-    let request = await fetch("localhost:4000/games/result", {
-      method: "POST",
-      body: JSON.stringify({
-        //game : this.game,
-      })
-    })
   }
-
 }
