@@ -46,3 +46,14 @@
     border-radius: 80%;
     margin-left: 40%;
 }
+
+.ecusson {
+    background-image: url(../../../styles/img/ecusson/gold.png);
+    background-position: center;
+    background-size: cover;
+    height: 32%;
+    margin-left: 25%;
+    margin-top: 5%;
+    width: 50%;
+
+}

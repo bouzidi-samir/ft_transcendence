@@ -1,20 +1,47 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
-import PrivateAcces from './PrivateAcces';
+import PrivateAcces from './PrivateAccess';
 import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { io, Socket } from 'socket.io-client';
+
 
 export default function Rooms() {
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const Roomlist = useSelector((state: any) => state.RoomList);
+    let Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
-    const[addroom, setAddroom] = useState(false);
-    const[privateAcces, setPrivate] = useState(false);
+    const [addroom, setAddroom] = useState(false);
+    const [privateAcces, setPrivate] = useState(false);
+    const [socket, setSocket] = useState<Socket>();
+    const [alertRoom, setAlertRoom] = useState<string>("");
+    const values = Object.values(User.JWT_token);
+
+    useEffect(() => {
+        const newSocket = io('http://localhost:8000');
+        setSocket(newSocket)
+    }, [setSocket])
+
+    const alertListener = (alertRoom: string) => {
+        setAlertRoom(alertRoom);
+    }
     
-    async function handleRoom(room : any)  {
-        
+    useEffect(() => {
+        socket?.on("newRoomServer", alertListener);
+        return () => {
+            socket?.off("newRoomServer", alertListener)
+        }
+    }, [alertListener])
+    
+    
+
+    async function handleRoom(room: any) {
+
+
+        if (room.tag == RoomActive.tag)
+            return;
+
         if (room.private) {
             setPrivate(room)
             return;
@@ -23,6 +50,7 @@ export default function Rooms() {
         await fetch(url_a, {
           method: "POST",
           headers: {
+            'Authorization': `Bearer ${values[0]}`,
             'Content-Type': 'application/json',
             'cors': 'true'
           },
@@ -34,8 +62,9 @@ export default function Rooms() {
         }
         )
         let url_b = "http://localhost:4000/chat/joinRoom";
-        const response =  fetch(url_b, {method: "POST",
+        const response =  await fetch(url_b, {method: "POST",
           headers: {
+            'Authorization': `Bearer ${values[0]}`,
             'Content-Type': 'application/json',
             'cors': 'true'
           },
@@ -46,30 +75,31 @@ export default function Rooms() {
             })
         }
         ).then(rep => rep.json())
-        .then(data => 
-            dispatch({
-                type: "RoomActive/setRoomActive",
-                payload: data,
-              })
-        );
+        dispatch({type: "RoomActive/setRoomActive",payload: response});
+        dispatch({type: "User/addRoom",payload: response.tag})
     }
+
+        useEffect(() => {
+            document.title = alertRoom;
+        })
 
     return (
         <div className="rooms-content">
             <h2>Rooms</h2>
-            <button onClick={()=> setAddroom(true)} className="btn btn-primary" >+</button>
-            {addroom ? <RoomAdd setAddroom={setAddroom} />: null}
+            <button onClick={() => setAddroom(true)} className="btn btn-primary" >+</button>
+            {addroom ? <RoomAdd setAddroom={setAddroom} /> : null}
             <div className='roomlist'>
                 {
-                    Roomlist.map((room : any) => 
-                        <div className='room' key={room.id} onClick={
-                            ()=>  handleRoom(room) } >
+                    Roomlist.map((room: any) =>
+                    <div className='room' key={room.id} onClick={
+                        () => handleRoom(room)} >
                             <div className='room-avatar'></div>
                             <p>{room.tag}</p>
                         </div>
                     )
                 }
-                {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate}/> : null}
+                {privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}
+                {alertRoom ? setTimeout(function(){window.location.reload()}, 0) : null}
             </div>
         </div>
     );

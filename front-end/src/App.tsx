@@ -11,6 +11,8 @@ import { getSession, signIn, useSession } from 'next-auth/react'
 import Particle from './Components/Particle';
 import ProfilSettings from './Containers/ProfilSettings';
 import UserProfil from './Components/Share/UserProfil';
+import LoadingPage from './Components/LoadingPage';
+import MatchingPage from './Components/MatchingPage';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
         <Route path="/UserProfil/:id" element={<UserProfil/>}/>
         <Route path="/Chat" element={<Chat/>}/> 
 		<Route path="/Game" element={<Game/>}/> 
+        <Route path="/Loading" element={<LoadingPage/>}/>
+        <Route path="/Matching" element={<MatchingPage/>}/>
       </Routes>
     </Router>  
   );

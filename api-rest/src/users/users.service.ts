@@ -76,6 +76,10 @@ export class UsersService {
 		);
 	}
 
+    async logout (userId :number) : Promise<any>{
+        return (await this.userRepository.update(userId,{registred : 'false'}));
+    }
+
     async setTwoFactorAuthenticationSecret(secret: string, userId: number) { //save le secret dans la db
         return this.userRepository.update(userId, {
           twoFactorAuthenticationSecret: secret

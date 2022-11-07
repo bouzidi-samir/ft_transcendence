@@ -1,0 +1,117 @@
+.form-newsetting {
+    position: relative;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    border: solid black 1px;
+    border-radius: 2%;
+    margin-left: 25%;
+    margin-top: 4%;
+    width: 50%;
+    height: 80%;
+}
+
+h1 {
+    margin-top: 2%;
+    color: white;
+}
+
+.vignette-form {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 4%;
+    margin-bottom: 0%;
+  
+    
+    border: solid black 1px;
+}
+
+.form-newsetting .set-avatar {
+    position: relative;
+    width: 9%;
+    height: 10%;
+    top: -7%;
+    left: 12%;
+    background-image: url(../../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid black 2px;
+    border-radius: 80%;
+    margin-left: 40%;
+    cursor: pointer;
+}
+
+.form-newsetting .set-nickname {
+    position: relative;
+    width: 6%;
+    height: 7%;
+    top: -7%;
+    left: 25%;
+    background-image: url(../../../styles/img/icones/modif.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    border-radius: 80%;
+    margin-left: 40%;
+}
+
+.set-avatar :hover {
+    position: relative;
+    width: 7%;
+    height: 10%;
+    top: -15%;
+    left: 12%;
+    background-image: url(../../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid blue 2px;
+    border-radius: 10%;
+    margin-left: 40%;
+}
+
+.form-newsetting button {
+    width: 20%;
+    margin-left: 40%;
+}
+
+.form-newsetting h2 {
+    color: white;
+    border: solid white 1px;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 0%;
+    padding-bottom: 1%;
+    font-size: 160%;
+}
+
+.form-newsetting input {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+    border: solid white 1px;
+    width: 30%;
+    height: 8%;
+    margin-left: 35%;
+    margin-bottom: 0%;
+    font-size: 130%;
+    text-align: center;
+}
+
+.error-text {
+    color: red;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.close {
+
+    position: relative;
+    width: 5%;
+    height: 5%;
+    top: 2%;
+    left: 2%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}

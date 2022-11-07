@@ -8,7 +8,7 @@ export default class User {
 	@PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', nullable: true })
     username: string;
 
 	@Column({ type: 'varchar', default: 'offline' })

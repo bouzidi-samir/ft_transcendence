@@ -9,6 +9,17 @@ const UserlistSlice = createSlice({
             state = [...action.payload];
             return state;
         },
+        updateUser : (state, action) => {
+            let userupdate = action.payload;
+            let newList = [...state];
+            newList.forEach((e: any) => {
+                //if (e.id == userupdate.id)
+                  //  e.nickname == userupdate.nickname;
+            }
+            )
+            state = [...newList];
+            return state;
+        }
         },
     },
 );

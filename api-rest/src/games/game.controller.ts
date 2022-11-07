@@ -22,4 +22,13 @@ export class gameController {
 	): Promise<Game> {
 		return await this.service.getGameById(id);
 	}
+
+	@Post("result")
+	async gameResult(@Body() Body)
+	{
+		let game = new Game;
+		game = Body.game;
+		// rajouter dans l historique des joueurs par la suite
+		return await this.service.addGame(game);
+	}
 }

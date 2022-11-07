@@ -1,0 +1,22 @@
+.loading-content {
+    width: 100vw;
+    height: 100vh;
+}
+
+.loading-title{
+    position: absolute;
+    color: white;
+    font-size: 50px;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 25%; 
+}
+
+.loading-title{
+    position: absolute;
+    color: white;
+    font-size: 50px;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 25%; 
+}

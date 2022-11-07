@@ -1,51 +1,68 @@
 import '../../styles/Components/Share/Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
-import * as Colyseus from "colyseus.js";
-import Game from '../../Containers/Game';
+import { useParams } from 'react-router';
+import { useState, useEffect } from 'react';
 
 
-const client = new Colyseus.Client('ws://localhost:4000');
-
-async function JoinOrCreateRoom()
-{
-    try {
-        const room = await client.create("my_room");
-		if (room){
-            console.log("sakut")
-			room.onStateChange((newState:any) => {
-                console.log("test")
-				console.log(newState);
-			 });
-			}
-    // const room = await client.joinOrCreate("my_room", {mode: "duo", })
-    // console.log(room.sessionId, "joined", room.name);
-    
-    //     room.onMessage("clientsNb", (message) => {
-    //     console.log("here");
-    //     if (message.clientsNb === 1)
-    //         room.send("p1Data", {p1_score: 0, p1_userName : "qbrillai"}); // a changer si on arrive a faire marcher le usercontext
-    //     if (message.clientsNb === 2)
-    //         room.send("p2Data", {p2_score: 0, p2_userName : "test"});  
-    //     });
-    //     room.send("p1", {test : "test"});
-    
-    // room.send("move", {direction: "left"}); exemple pour envoyer des messages a la room
-    /*room.onMessage("powerup", (message) => {
-        console.log("message received from server");
-        console.log(message);
-      }); Exemple reception de messages */
-    }
-    catch (e){ console.log("Cant join or create")}
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here 
+    // is better than directly setting `value + 1`
 }
 
 function Navbar() {
     const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
+    const user_id = useParams();
+    const [user, setUser]  = useState(User);
+    const [twofactor, setTwoFactor]  = useState(false);
+    let isEnabled = user.TFOenabled;
+    const navigate = useNavigate();
 
     function logout () : void {
-        console.log('logout');
+        dispatch({type: "User/logout",payload: null});
+        dispatch({type: "RoomList/logout",payload: null});
+        fetch(`http://localhost:4000/auth/logout`, { // A remplacer avec le user
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+            },
+            body: JSON.stringify({userId : user.id })
+        })
     }
+
+    async function TfaSwitch(e : any) // changer l affichage selon si c est active ou non et pas un clic
+    {
+        console.log("here");
+        let userUpdate = {...User};
+        if (isEnabled === true)
+        {
+            userUpdate.TFOenabled = false;
+            isEnabled = false;
+        }
+        else
+        {
+            userUpdate.TFOenabled = true;
+            isEnabled = true;
+        }
+        dispatch({
+            type : "User/setUser",
+            payload: userUpdate
+        })
+        console.log(user.JWT_token);
+        const request = await fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+            },
+            body: JSON.stringify({userId : user.id })
+        })
+}
 
     return (
         <div className="Navbar">
@@ -65,10 +82,11 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="toggleMobileMenu">
                 
-                    <ul className="navbar-nav ms-auto text-center"> 
+                    <ul className="navbar-nav ms-auto text-center">                
+
                         <Link className="nav_link" to="/Home">
-                            <div 
-                            className='avatar'></div>
+                            <img src={User.avatar_url}
+                            className='avatar'></img>
                         </Link>
                         <li>   
                         <Link className="nav_link" to="/Home">
@@ -76,7 +94,13 @@ function Navbar() {
                             className='home-icon'></div>
                         </Link>
                         </li> 
-                        <li>   
+                        <li>
+                            <label className="switch">
+                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={isEnabled}/>
+                            <span className="slider round"></span>
+                            </label>
+                        </li>
+                        <li>
                         <Link  className="nav_link" to="/ProfilSettings">
                             <div 
                             className='profil-icon'></div>
@@ -88,8 +112,8 @@ function Navbar() {
                         </Link>
                         </li>  
                         <li>   
-                        <Link  onClick={Game} className="nav_link" to="/Game">
-                            <div className = 'game-icon'></div>
+                        <Link className="nav_link" to="/">
+                            <div className='game-icon'></div>
                         </Link>
                         </li>
                         <li>   

@@ -25,24 +25,44 @@ export class AuthController {
 		return JSON.stringify({url: url.toString()});
 	}
 
+	@Post("/logout")
+	async logout(@Body() body: any)
+	{
+		this.service.logout(body.userId);
+	}
+
 	@Post("/token/:code")
 	async login(
 		@Param("code") code: string,
 		@Body() body: any
 	): Promise<string> {
+		
+		console.log("code --> ", code)
+		console.log("redirect_uri", body.redirect_uri)
 		let api = await this.service.getUserAccessToken(
-			'7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670', 
-			'8f0429ab7bec196067bb438e31cd08b9e07a79953cd6a932fc0f4595dced75d7',
+			'6e52620f16bfa38095e26eae2231051c3fff5161197180b12228a4a2e04bbdb1', 
+			'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',
 			code, body.redirect_uri
 		);
+		console.log(api)
 		let infos = await this.service.getUserInformations(api.access_token);
+		console.log(infos)
 		let user = new User;
 		user.username = infos.login;
 		user.avatar_url = infos.image_url; 
 		user.email = infos.email;
-		user.isTwoFactorAuthenticationEnabled = false; // button to create
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);
+		console.log(JSON.stringify({
+			id: finaluser.id,
+			username: finaluser.username,
+			nickname: finaluser.nickname,
+			registred: finaluser.registred,
+			avatar_url: finaluser.avatar_url,
+			status: finaluser.status,
+			JWT_token: token,
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,		
+		}))
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,
@@ -51,7 +71,7 @@ export class AuthController {
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
 			JWT_token: token,
-			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,		
 		});
 	}
 	

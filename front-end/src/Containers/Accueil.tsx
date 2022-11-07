@@ -3,6 +3,7 @@ import React, {useState, useContext, useEffect,} from "react";
 import Custom from "../Components/Custom";
 import { useParams, Navigate, useNavigate } from "react-router";
 import Home from "./Home";
+import Particle from "../Components/Particle";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
@@ -13,17 +14,14 @@ export default function Accueil(props: any) {
     const [custom, setCustom] = useState(false);
     const [newMenber, setNewMenber] = useState(true);
     let navigation = useNavigate();
+    const [user, setUser]  = useState(User);
 
     useEffect( () => {    
         let url : string = "http://localhost:4000/users";
         fetch(url)
         .then(response => response.json())
         .then(data => 
-        dispatch({
-            type: "Userlist/setUserlist",
-            payload: data,
-          })
-        );
+        dispatch({type: "Userlist/setUserlist",payload: data,}));
     }, []
     )
 
@@ -34,8 +32,7 @@ export default function Accueil(props: any) {
         }
         else if (User.registred === 'true')
             navigation("/Home");
-    }   
- 
+    }
     return (
         <>
         <div className="custom-content">
