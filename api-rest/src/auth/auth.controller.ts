@@ -19,7 +19,7 @@ export class AuthController {
 		@Body() body: any
 	): string {
 		let url: URL = new URL("https://api.intra.42.fr/oauth/authorize");
-			url.searchParams.append("client_id", '7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670');
+			url.searchParams.append("client_id", '6e52620f16bfa38095e26eae2231051c3fff5161197180b12228a4a2e04bbdb1');
 			url.searchParams.append("redirect_uri", body.redirect_uri);
 			url.searchParams.append("response_type", "code");
 		return JSON.stringify({url: url.toString()});
