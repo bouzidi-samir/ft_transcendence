@@ -12,9 +12,8 @@ export class players extends Schema {
 	@type("number") y: number;
 }
 
-export class MyRoomState extends Schema {
+export class Game extends Schema {
 	@type(players) playerA = new players();
 	@type(players) playerB = new players();
 	@type(Ball) ball = new Ball();	
 }
-

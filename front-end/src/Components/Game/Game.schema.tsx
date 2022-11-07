@@ -24,11 +24,14 @@ export class Ball extends Schema {
 	x: number;
 	@type('number')
 	y: number;
+	@type('number')
+	score: number;
   
-	constructor(x = 0, y = 0) {
+	constructor(x = 0, y = 0, score = 0) {
 	  super();
 	  this.x = x;
 	  this.y = y;
+	  this.score = score 
 	}
   }
 
@@ -37,10 +40,13 @@ export class Ball extends Schema {
 	x: number;
 	@type('number')
 	y: number;
+	@type('number')
+	score: number;
   
-	constructor(x = 0, y = 0) {
+	constructor(x = 0, y = 0, score = 0) {
 	  super();
 	  this.x = x;
 	  this.y = y;
+	  this.score = score;
 	}
   }

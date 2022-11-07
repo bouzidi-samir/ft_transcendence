@@ -6,9 +6,20 @@
 }
 
 .gameCanvas {
-	height: 50vw;
+	height: 35vw;
 	padding: 0;
 	margin: auto; 
 	display: block;
 	background: linear-gradient(90deg, rgb(62, 162, 81), rgb(23, 44, 162));
+}
+
+.scorePlayer1 {
+	color: red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.scorePlayer2 {
+	color: red
 }

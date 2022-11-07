@@ -20,6 +20,7 @@ const reducer = combineReducers({
     RoomActive : RoomActiveSlice.reducer
 })
 
+
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store : any = configureStore({

@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { Server } from 'colyseus';
 import { AppModule } from './app.module';
-import { MyRoom } from './rooms/MyRoom';
+import { gameRoom } from './games/Rooms/Game.romms';
 
 (async () => {
 	const api = await NestFactory.create(AppModule, {
@@ -12,7 +12,7 @@ import { MyRoom } from './rooms/MyRoom';
 	api.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
 	const gameServer = new Server();
-	gameServer.define('my_room', MyRoom)
+	gameServer.define('my_room', gameRoom)
 	// .filterBy(['mode', 'userId']) // rajouter access token
 	// .enableRealtimeListing()
 	// .on("create", (room) => console.log("room created:", room.roomId))
