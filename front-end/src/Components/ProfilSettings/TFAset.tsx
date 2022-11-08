@@ -29,24 +29,6 @@ export default function TFAset() {
         return response;
     }
 
-    async function getQRcode()
-    {
-        const response = await fetch(`http://localhost:4000/2fa/generate`, { // A remplacer avec le user
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization' : `Bearer ${User.JWT_token['access_token']}`
-        },
-        
-        body: JSON.stringify({userId : User.id }),
-        })
-        const blob = await response.blob();
-        const url = await URL.createObjectURL(blob);
-        let userUpdate = {...User};
-        userUpdate.qrcode = url;
-        dispatch({type: "User/setUser", payload: userUpdate,});
-    }
-
     async function checkCode() : Promise<any>
     {
         let ret;
@@ -63,7 +45,6 @@ export default function TFAset() {
     }
     
     useEffect( () => {
-       getQRcode()
     }, []
     )
 
@@ -101,9 +82,8 @@ export default function TFAset() {
             {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             {validated === false &&
                 <><h1>Bienvenue! Rentre tes informations.</h1><form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000">
-                    <img className="vignette-form" src={User.qrcode}></img>
-                    <input type="text" onChange={handlechange}></input>
-                    <button onClick={handleForm} className="btn btn-primary">Envoyer mon code confidentiel</button>
+                    <input type="text" style={{marginTop: "200px"}} onChange={handlechange}></input>
+                    <button onClick={handleForm}className="btn btn-primary">Envoyer mon code qrcode</button>
                     <p className="error-text">{error}</p>
                 </form></>
             }

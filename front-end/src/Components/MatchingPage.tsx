@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../styles/Components/Share/MatchingPage.css"
 import NewMemberSet from "./ProfilSettings/NewMemberSet";
 import TFAset from './ProfilSettings/TFAset'
+import Navbar from "./Share/Navbar";
 
 
 export default function MatchingPage (props : any) {
@@ -33,6 +34,7 @@ export default function MatchingPage (props : any) {
         <div className="loading-content">
         <>
             <Particle/>
+            <Navbar />
             
             <form className = 'form-newsetting'>
             <button className="SingleButton">Single player.</button>

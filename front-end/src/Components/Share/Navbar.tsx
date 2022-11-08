@@ -19,7 +19,6 @@ function Navbar() {
     const user_id = useParams();
     const [user, setUser]  = useState(User);
     const [twofactor, setTwoFactor]  = useState(false);
-    let isEnabled = user.TFOenabled;
     const navigate = useNavigate();
 
     function logout () : void {
@@ -39,16 +38,10 @@ function Navbar() {
     {
         console.log("here");
         let userUpdate = {...User};
-        if (isEnabled === true)
-        {
+        if (User.TFOenabled === true)
             userUpdate.TFOenabled = false;
-            isEnabled = false;
-        }
         else
-        {
             userUpdate.TFOenabled = true;
-            isEnabled = true;
-        }
         dispatch({
             type : "User/setUser",
             payload: userUpdate
@@ -62,7 +55,17 @@ function Navbar() {
             },
             body: JSON.stringify({userId : user.id })
         })
-        return (navigate("/qrcode"));
+        console.log("herepast");
+        if (userUpdate.TFOenabled === true)
+        {
+            console.log('/qrcode')
+            return (navigate("/qrcode"));
+        }
+        else
+        {
+            console.log('/home')
+            return (navigate("/home"));
+        }
 }
 
     return (
@@ -97,7 +100,7 @@ function Navbar() {
                         </li> 
                         <li>
                             <label className="switch">
-                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={isEnabled}/>
+                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={User.TFOenabled == true}/>
                             <span className="slider round"></span>
                             </label>
                         </li>
@@ -113,7 +116,7 @@ function Navbar() {
                         </Link>
                         </li>  
                         <li>   
-                        <Link className="nav_link" to="/">
+                        <Link className="nav_link" to="/Matching">
                             <div className='game-icon'></div>
                         </Link>
                         </li>
