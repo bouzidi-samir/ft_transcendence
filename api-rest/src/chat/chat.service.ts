@@ -120,6 +120,7 @@ export class ChatService {
       if (!already){
         const oneMember = await this.memberRepository.create();
         oneMember.userId = users[i].id;
+        oneMember.avatar_url = users[i].avatar_url;
         oneMember.username = users[i].username;
         oneMember.roomTag = 'global';
         oneMember.room = room;
@@ -184,7 +185,7 @@ export class ChatService {
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }}); 
     
-    if (room.password) {
+    if (room.password && !alreadyMember) {
       let authorize = checkPrivateAccess(body.password, room.password);
       if (authorize != true)
         return {error: authorize}
@@ -255,7 +256,17 @@ export class ChatService {
     else if (body.status == "public") {
       room.public = true;
       room.private = false;
-      if(room.password) {
+    }
+    room.tag = body.tag;
+    room.privateMessage = body.privateMessage;
+    
+    if (room.private == true && room.privateMessage == false) { 
+      let formatError = checkPasswordFormat(body.password);
+      if (formatError != true)
+          return {error: formatError}
+    }
+
+    if(body.password != "") {
         const salt = await bcrypt.genSalt();
         room.password = await bcrypt.hash(body.password, salt);
         await this.roomsRepository.save(room);
@@ -265,8 +276,34 @@ export class ChatService {
           await this.memberRepository.save(members[i]);
         }
       }
-    }
   }
+
+  async updateRoom(roomTarget, body) {
+
+    const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
+    if (!body.tag)
+      return {error: "Merci de saisir un nom"};
+    if (check && check.tag != roomTarget)
+      return {error: "Ce nom de salon est déja utilisé"};
+    if (body.private == true && body.privateMessage == false) { 
+      let formatError = checkPasswordFormat(body.password);
+      if (formatError != true)
+          return {error: formatError}
+      const salt = await bcrypt.genSalt();
+      body.password = await bcrypt.hash(body.password, salt);
+    }
+    await this.roomsRepository.query(
+      `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3, "password" = $4
+      WHERE "tag" = $5;`,
+      [body.tag, body.public, body.private, body.password, roomTarget]
+    );
+    await this.memberRepository.query(
+      `UPDATE "member" SET "roomTag" = $1 WHERE "roomTag" = $2;`,
+      [body.tag, roomTarget]
+    );
+    return body;
+  }  
+
 
   async getActiveRoom(id) {
 

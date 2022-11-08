@@ -12,6 +12,11 @@
     overflow-y: scroll;
 }
 
+.notifs-content::-webkit-scrollbar {
+    width: 9px; /* width of the entire scrollbar */
+    background-color: blueviolet;
+}
+
 .notifs-content p {
     color: white;
     text-align: center;

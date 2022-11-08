@@ -11,6 +11,7 @@ export default function Rooms() {
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     let Roomlist = useSelector((state: any) => state.RoomList);
+    const [roomList, setRoomList] = useState([]);
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
@@ -120,6 +121,7 @@ export default function Rooms() {
         ).then(rep => rep.json())
         if (!response.tag)
             response.tag = room.tag;
+        console.log(response);
         dispatch({type: "User/addRoom",payload: response.tag})
         dispatch({type: "RoomActive/setRoomActive",payload: response});
     }

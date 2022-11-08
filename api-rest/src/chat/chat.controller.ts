@@ -62,6 +62,17 @@ export class ChatController {
         return this.service.editRoom(body);
     }
 
+    @Post('/updateRoom/:roomtag')
+    async updateRoom(
+        @Param('roomtag') roomTarget : string,
+        @Body() body:any
+        )
+        : Promise<any> { 
+            return this.service.updateRoom(roomTarget, body);
+    }
+
+
+
     @Get('/getActiveRoom/:id') // username
     async getActiveRoom(
         @Param('id', ParseIntPipe) id: number,

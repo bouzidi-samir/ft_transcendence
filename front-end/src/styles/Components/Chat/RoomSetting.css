@@ -5,7 +5,8 @@
     margin-left: 25%;
     margin-top: 0%;
     width: 50%;
-    height: 90%;
+    
+    display: inline-block;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 5%;
@@ -36,5 +37,62 @@
     border-radius: 4%;
     margin-bottom: 3%;
     margin-left: 3%;
-    height: 7%;
+    height: 30px;
+}
+
+.room-settingsForm  .room-type {
+    margin-right: 5px;
+    margin-left: 3%;
+    width: 6%;
+    height: 2%;
+ }
+
+ .room-settingsForm .btn-primary {
+    position: relative;
+    top: 26%;
+    right: 0%;
+    left: 35%;
+    width: 30%;
+    margin-top: 10%;
+    margin-bottom: 6%;
+} 
+
+
+ .room-settingsForm span {
+    color : white;
+    margin-right: 2%;
+    margin-left: 3%;
+}
+
+.room-settingsForm p {
+    color : red;
+    margin-left: 2%;
+    margin-right: 2%;
+    text-align: center;
+    font-size: 13px;
+}
+
+.room-settingsForm .password {
+
+    margin-bottom: 4%;
+}
+
+ .room-settingsForm .password-input {
+    height: 30px;
+    margin-left: 0%;
+    width: 40%;
+    margin-left: 3%;
+}
+
+.cross-setting {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
 }
