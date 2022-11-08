@@ -5,7 +5,8 @@
     margin-left: 25%;
     margin-top: 0%;
     width: 50%;
-    height: 90%;
+    
+    display: inline-block;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 5%;
@@ -52,7 +53,8 @@
     right: 0%;
     left: 35%;
     width: 30%;
-
+    margin-top: 10%;
+    margin-bottom: 6%;
 } 
 
 
@@ -80,4 +82,17 @@
     margin-left: 0%;
     width: 40%;
     margin-left: 3%;
+}
+
+.cross-setting {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 1%;
+    left: 1%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
 }

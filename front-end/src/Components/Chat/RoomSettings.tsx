@@ -94,7 +94,7 @@ export default function RoomSettings() {
                 <>
                     <div className='fond1'></div>
                     <form className="room-settingsForm" data-aos="fade-up" data-aos-duration="1000">
-                        <div onClick={()=>setIsAdmin(false)} className="cross-member"></div>
+                        <div onClick={()=>setIsAdmin(false)} className="cross-setting"></div>
                         <div className='group-avatar'></div>
                         <h2>Configuration du salon </h2>
                         <label>Nom du salon:</label>       

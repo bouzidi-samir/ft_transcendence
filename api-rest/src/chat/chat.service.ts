@@ -120,6 +120,7 @@ export class ChatService {
       if (!already){
         const oneMember = await this.memberRepository.create();
         oneMember.userId = users[i].id;
+        oneMember.avatar_url = users[i].avatar_url;
         oneMember.username = users[i].username;
         oneMember.roomTag = 'global';
         oneMember.room = room;
