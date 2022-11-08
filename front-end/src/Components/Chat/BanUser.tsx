@@ -7,7 +7,6 @@ export default function BanUser(props: any) {
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const [error, setError] = useState("");
-    const values = Object.values(User.JWT_token);
     const [ban, setBan] = useState(false);
     const {toBan} = props;
 
@@ -18,7 +17,7 @@ async function handleBan(e: any) {
     let url = "http://localhost:4000/chat/banMember";
     const response = await fetch(url, {method: "POST",
     headers: {
-    'Authorization': `Bearer ${values[0]}`,
+    'Authorization': `Bearer ${User.JWT_token}`,
     'Content-Type': 'application/json',
     'cors': 'true'
 },

@@ -13,7 +13,6 @@ export default function UserProfil() {
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
     const [user, setUser]  = useState(User);
-    const values = Object.values(User.JWT_token);
     const location = useLocation();
    
     console.log("location", location.state.toBlock);
@@ -34,7 +33,7 @@ export default function UserProfil() {
             let url = "http://localhost:4000/users/blockUser";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -54,7 +53,7 @@ export default function UserProfil() {
             let url = "http://localhost:4000/users/forceToBeMyFriend";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },

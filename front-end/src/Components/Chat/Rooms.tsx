@@ -17,7 +17,6 @@ export default function Rooms() {
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
-    const values = Object.values(User.JWT_token);
     const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
     let p : [string | boolean][];
 
@@ -46,7 +45,7 @@ export default function Rooms() {
         let url_ = "http://localhost:4000/chat/checkIfMember";
             const response = await fetch(url_, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
             },
@@ -64,7 +63,7 @@ export default function Rooms() {
         let url_ = "http://localhost:4000/chat/checkBan";
             const response_ = await fetch(url_, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
             },
@@ -92,7 +91,7 @@ export default function Rooms() {
         await fetch(url_a, {
             method: "POST",
             headers: {
-                'Authorization': `Bearer ${values[0]}`,
+                'Authorization': `Bearer ${User.JWT_token}`,
                 'Content-Type': 'application/json',
                 'cors': 'true'
             },
@@ -106,7 +105,7 @@ export default function Rooms() {
         let url_b = "http://localhost:4000/chat/joinRoom";
             const response =  await fetch(url_b, {method: "POST",
             headers: {
-                'Authorization': `Bearer ${values[0]}`,
+                'Authorization': `Bearer ${User.JWT_token}`,
                 'Content-Type': 'application/json',
                 'cors': 'true'
             },
@@ -121,7 +120,7 @@ export default function Rooms() {
         ).then(rep => rep.json())
         if (!response.tag)
             response.tag = room.tag;
-        console.log(response);
+     
         dispatch({type: "User/addRoom",payload: response.tag})
         dispatch({type: "RoomActive/setRoomActive",payload: response});
     }

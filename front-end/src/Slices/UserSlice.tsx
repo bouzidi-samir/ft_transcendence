@@ -10,6 +10,7 @@ const User = {
     status: "",
     room_active: "",
     rooms: [""],
+    session:  "",
     JWT_token: "",
 };
 
@@ -19,24 +20,14 @@ const UserSlice = createSlice({
     reducers: {
 
         setUser : (state, action) => {
-            state.id = action.payload.id;
-            state.username = action.payload.username;
-            state.nickname = action.payload.nickname;
-            state.registred = action.payload.registred;
-            state.avatar_url = action.payload.avatar_url;
-            state.status = action.payload.status;
-            state.JWT_token = action.payload.JWT_token;
+            state = {...action.payload};
+            return state;
         },
         setRooms : (state, action) => {
             let ret = [...action.payload]
             let roomname : string[] = [];
             ret.map(e => roomname.push(e.roomTag));
             state.rooms = [...roomname];
-            return state;
-        },
-        addRoom : (state, action) => {
-            if (!state.rooms.some(e => e == action.payload))
-                state.rooms.push(action.payload);
             return state;
         },
         logout : (state, action) => {

@@ -58,7 +58,7 @@ export default function NewMemberSet() {
         setError("");
         return navigation("/Home");
     }
-console.log(User);
+
     return (
         <>
             {avatarform ? <NewMemberAvatar setAvatarform={setAvatarform} /> : null}

@@ -15,8 +15,7 @@ export default function LoadingPage (props : any) {
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
-    const values = Object.values(User.JWT_token);
-
+  
     useEffect( () => {    
         let url : string = "http://localhost:4000/users";
         fetch(url)
@@ -45,7 +44,7 @@ export default function LoadingPage (props : any) {
         <>  
             {setTimeout(() => {
                 User.registred === 'true' ? redirect() : <NewMemberSet/>
-            }, 0) 
+            }, 100) 
         }
             {User.registred === 'false' ? <NewMemberSet/> :   <h1 className="loading-title">{time}%</h1> }
 

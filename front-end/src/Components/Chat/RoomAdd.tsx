@@ -21,9 +21,6 @@ export default function RoomAdd({setAddroom} :any) {
     const [password, setPassword] = useState("");
     const [socket, setSocket] = useState<Socket>();
     const [error, setError] = useState("");
-
-
-    const values = Object.values(User.JWT_token);
     const alertRoom = "NEW ROOM AVAILABLE !!!";
 
     useEffect(() => {
@@ -47,7 +44,7 @@ export default function RoomAdd({setAddroom} :any) {
         
         const response = await  fetch(url, {method : 'POST',
         headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             "Content-Type": "application/json",
             'cors': 'true'
         },

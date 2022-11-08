@@ -11,8 +11,6 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
     const [checkBan, setCheckBan] = useState<boolean>(false);
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const values = Object.values(User.JWT_token);
-
     
     const messagedata = {
       fromUsername: String(User.username),
@@ -31,7 +29,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
       let url = "http://localhost:4000/chat/checkMute";
         const response = await fetch(url, {method: "POST",
         headers: {
-        'Authorization': `Bearer ${values[0]}`,
+        'Authorization': `Bearer ${User.JWT_token}`,
         'Content-Type': 'application/json',
         'cors': 'true'
         },
@@ -46,7 +44,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
       let url_ = "http://localhost:4000/chat/checkBan";
         const response_ = await fetch(url_, {method: "POST",
         headers: {
-        'Authorization': `Bearer ${values[0]}`,
+        'Authorization': `Bearer ${User.JWT_token}`,
         'Content-Type': 'application/json',
         'cors': 'true'
         },

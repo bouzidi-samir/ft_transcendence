@@ -120,3 +120,13 @@ h1 {
     background-size: cover;
     cursor: pointer;
 }
+
+.newbtn {
+    position: relative;
+    bottom: 8%;
+    height: 30%;
+    width: 40px;
+    left: 1%;
+    font-size: 2px;
+    padding: 0%;
+}

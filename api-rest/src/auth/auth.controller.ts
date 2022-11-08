@@ -7,6 +7,7 @@ import { URLSearchParams } from 'url';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt-authguards'
 import { LocalAuthGuard } from './local-auth.guards'
+import { Console } from 'console';
 
 @Controller('auth')
 export class AuthController {
@@ -50,7 +51,7 @@ export class AuthController {
 			registred: finaluser.registred,
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
-			JWT_token: token,
+			JWT_token: token.access_token,
 			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
 		});
 	}

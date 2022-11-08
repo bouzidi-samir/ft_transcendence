@@ -5,7 +5,6 @@ import { useNavigate} from "react-router-dom";
 export default function Invitation() {
 
     const User = useSelector((state: any) => state.User);
-    const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function Invitation() {
             let url = "http://localhost:4000/chat/checkRoomInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -26,8 +25,6 @@ export default function Invitation() {
             })
         }
         ).then(response => response.json()).then(data => setInvitations(data));
-        console.log("room invitation", invitations);
-        console.log('User', User.username)
         }
         
         useEffect(() => {
@@ -39,7 +36,7 @@ export default function Invitation() {
             let url = "http://localhost:4000/chat/acceptOneRoomInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -62,7 +59,7 @@ export default function Invitation() {
             let url = "http://localhost:4000/chat/refuseOneRoomInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },

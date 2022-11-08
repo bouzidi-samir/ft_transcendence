@@ -14,7 +14,6 @@ export default function Messages() {
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
-    const values = Object.values(User.JWT_token);
     const Roomlist = useSelector((state: any) => state.RoomList);
     
 
@@ -27,7 +26,6 @@ export default function Messages() {
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
-        console.log('New socket', newSocket?.id);
         setSocket(newSocket)
     }, [setSocket])
     
@@ -52,7 +50,6 @@ export default function Messages() {
         if (messages.length > 0)
             MessagesList = [...messages];
         MessagesList.push(message.messageData);
-        console.log(MessagesList);
         setMessages(MessagesList);
     }
     

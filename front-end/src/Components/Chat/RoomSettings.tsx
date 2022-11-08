@@ -16,8 +16,7 @@ export default function RoomSettings() {
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const values = Object.values(User.JWT_token);
-
+  
     useEffect(() => {
         setPrivate(RoomActive.private);
         setPublicRoom(RoomActive.public);
@@ -55,7 +54,7 @@ export default function RoomSettings() {
         let url = `http://localhost:4000/chat/updateRoom/${RoomActive.tag}`;
         const response = await  fetch(url, {method : 'POST',
         headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             "Content-Type": "application/json",
             'cors': 'true'
         },

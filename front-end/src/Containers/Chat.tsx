@@ -32,15 +32,7 @@ export default function Chat() {
     );
   }, []
   )
-
-  useEffect(() => {
-    let url = "http://localhost:4000/chat/member";
-    const ret = fetch(url)
-    .then(response => response.json())
-    .then(data => dispatch({type: "User/setRooms", payload: data,}));
-  }, []
-  )
-
+  
     return (
       <>
         <Navbar/> 

@@ -9,7 +9,6 @@ export default function MuteUser(props : any) {
 const User = useSelector((state: any) => state.User);
 const RoomActive = useSelector((state: any) => state.RoomActive);
 const [error, setError] = useState("");
-const values = Object.values(User.JWT_token);
 const [mute, setMute] = useState(false);
 const [minutes, setMinutes] = useState("");
 const {toMute} = props;
@@ -21,7 +20,7 @@ async function handleMute(e: any) {
     let url = "http://localhost:4000/chat/muteMember";
     const response = await fetch(url, {method: "POST",
     headers: {
-    'Authorization': `Bearer ${values[0]}`,
+    'Authorization': `Bearer ${User.JWT_token}`,
     'Content-Type': 'application/json',
     'cors': 'true'
 },

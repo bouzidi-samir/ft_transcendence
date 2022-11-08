@@ -27,7 +27,9 @@ export default function NewMemberAvatar(props : any) {
 			}
 		).then(res => res.json())
         console.log(reponse);
+        console.log(User)
         dispatch({type: "User/setUser",payload: reponse,});
+        console.log(User)
         props.setAvatarform(false);
     } 
 
@@ -35,7 +37,7 @@ export default function NewMemberAvatar(props : any) {
         <form className="setavatar-content">
             <input type='file' accept="image/*" multiple={false}  onChange={handleChange} ></input>
             <br></br>       
-                    <button onClick={handleForm} className="btn btn-primary">Valider</button>            
+                    <button onClick={handleForm} className="btn btn-primary newbtn">ok</button>            
         </form>
     )
 }

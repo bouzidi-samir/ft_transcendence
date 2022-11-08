@@ -21,7 +21,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState<Socket>();
   const [alert, setAlert] = useState<string>("Pong");
-  const values = Object.values(User.JWT_token);
 
   const playMp3 = (src: any) => {
     const sound = new Howl({
@@ -34,7 +33,7 @@ export default function Home() {
   useEffect(() => {
       const newSocket = io('http://localhost:8000', {
       extraHeaders: {
-        Authorization: `Bearer ${values[0]}`
+        Authorization: `Bearer ${User.JWT_token}`
       }
       });
       setSocket(newSocket)
@@ -70,7 +69,7 @@ export default function Home() {
     const response = fetch(url, {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${values[0]}`,
+        'Authorization': `Bearer ${User.JWT_token}`,
         'Content-Type': 'application/json',
         'cors': 'true'
       },
