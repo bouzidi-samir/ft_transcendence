@@ -29,7 +29,7 @@ export default function Authentification() {
 				headers: {'Content-Type': 'application/json','cors': 'true'},
 				body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
 			})
-			request.then(response => response.json()
+			.then(response => response.json()
       .then((response) => {dispatch({type: "User/setUser", payload: response,});}))
 			request.catch(e => {console.error(e)})
 		}

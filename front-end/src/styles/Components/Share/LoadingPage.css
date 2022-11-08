@@ -1,6 +1,9 @@
 .loading-content {
     width: 100vw;
     height: 100vh;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    padding-top: 5%;
 }
 
 .loading-title{

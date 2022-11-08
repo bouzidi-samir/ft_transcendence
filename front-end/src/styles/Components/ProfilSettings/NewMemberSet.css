@@ -1,13 +1,11 @@
 .form-newsetting {
-    position: relative;
     background: rgb(2,0,36);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
-    border: solid black 1px;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border: solid grey 1px;
     border-radius: 2%;
     margin-left: 25%;
-    margin-top: 4%;
     width: 50%;
-    height: 80%;
+    height: 90%;
 }
 
 h1 {
@@ -70,10 +68,15 @@ h1 {
     margin-left: 40%;
 }
 
-.form-newsetting button {
+.form-newsetting .valid {
+    position: relative;
     width: 20%;
-    margin-left: 40%;
-    margin-top: 6%;
+    right: 5%;
+    bottom: 4%;
+    margin-top: 3%;
+    height: 6%;
+    font-size: 14px;
+    padding: 0%;
 }
 
 .form-newsetting h2 {
@@ -88,7 +91,7 @@ h1 {
 
 .form-newsetting input {
     background: rgb(2,0,36);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
     color: white;
     border: solid white 1px;
     width: 30%;

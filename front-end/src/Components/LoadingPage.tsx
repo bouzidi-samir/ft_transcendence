@@ -33,7 +33,7 @@ export default function LoadingPage (props : any) {
     )
 
     function redirect() {
-
+     
        setTimeout(() => {
             navigation("/Home");
         }, 1000);
@@ -41,11 +41,14 @@ export default function LoadingPage (props : any) {
 
     return (
         <div className="loading-content">
-        <>
-            <Particle/>
-            
-            <h1 className="loading-title">{time}%</h1>
-                {User.registred === 'true' ? redirect() : <NewMemberSet/> }
+
+        <>  
+            {setTimeout(() => {
+                User.registred === 'true' ? redirect() : <NewMemberSet/>
+            }, 0) 
+        }
+            {User.registred === 'false' ? <NewMemberSet/> :   <h1 className="loading-title">{time}%</h1> }
+
         </>
         </div>
     )

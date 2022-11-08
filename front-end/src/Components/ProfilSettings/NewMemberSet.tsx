@@ -1,6 +1,6 @@
 import "../../styles/Components/ProfilSettings/NewMemberSet.css"
 import React, { useContext, useEffect, useState } from 'react'
-import AvatarSetting from "./AvatarSetting";
+import NewMemberAvatar from "./NewMemberAvatar";
 import Cross from "../Share/Cross";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
@@ -18,7 +18,7 @@ export default function NewMemberSet() {
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
     let navigation = useNavigate();
- 
+    
     function nickError(nickname: string) : boolean {
         if ((nickname.length == 0) ) {
             setError("Merci de choisir un pseudo.")
@@ -58,17 +58,18 @@ export default function NewMemberSet() {
         setError("");
         return navigation("/Home");
     }
-
+console.log(User);
     return (
         <>
-            {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
-            <form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000" >
+            {avatarform ? <NewMemberAvatar setAvatarform={setAvatarform} /> : null}
+            <form  
+                className="form-newsetting" data-aos="fade-up" data-aos-duration="1000" >
                 <h1>Configure ton profil:</h1>
                 <img  className="vignette-form" src={User.avatar_url}></img>
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>               
                   <input type="text" onChange={handlechange}></input>             
-                <button onClick={handleForm}  className="btn btn-primary">Valider</button>
                 <p className="error-text">{error}</p>
+                <button onClick={handleForm}  className="btn btn-primary valid">Valider</button>
             </form>
         </>
     );
