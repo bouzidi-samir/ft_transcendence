@@ -8,6 +8,7 @@ import "../styles/Components/Share/MatchingPage.css"
 import NewMemberSet from "./ProfilSettings/NewMemberSet";
 import TFAset from './ProfilSettings/TFAset'
 import Navbar from "./Share/Navbar";
+import { Link } from "react-router-dom";
 
 
 export default function MatchingPage (props : any) {
@@ -37,8 +38,8 @@ export default function MatchingPage (props : any) {
             <Navbar />
             
             <form className = 'form-newsetting'>
-            <button className="SingleButton">Single player.</button>
-            <button className="MultiButton">Multiplayer.</button>
+            <Link to="/game" className="SingleButton">Single player.</Link>
+            <Link to ="/game2" className="MultiButton">Multiplayer.</Link>
             </form>
 
                 

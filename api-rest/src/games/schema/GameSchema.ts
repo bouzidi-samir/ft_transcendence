@@ -8,8 +8,14 @@ export class Ball extends Schema {
 }
 
 export class players extends Schema {
-	@type("number") x: number;
-	@type("number") y: number;
+	@type('number')
+	x: number;
+	@type('number')
+	y: number;
+	@type('number')
+	score: number;
+	@type('number')
+	id: number;
 }
 
 export class Game extends Schema {

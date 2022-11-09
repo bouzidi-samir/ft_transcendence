@@ -26,12 +26,15 @@ export class Ball extends Schema {
 	y: number;
 	@type('number')
 	score: number;
+	@type('number')
+	id: number;
   
-	constructor(x = 0, y = 0, score = 0) {
+	constructor(x = 0, y = 0, score = 0, id = 0) {
 	  super();
 	  this.x = x;
 	  this.y = y;
-	  this.score = score 
+	  this.score = score;
+	  this.id = id;
 	}
   }
 

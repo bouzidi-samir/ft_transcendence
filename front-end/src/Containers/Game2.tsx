@@ -94,7 +94,7 @@ export default function Game2() {
 
 		context.beginPath(); // permet d'effacer tout les tracages possible pour n'avoir qu'une balle
 		context.fillStyle = 'white';
-		context.arc(ball.x , ball.y, setting_game.ball_raduis, 0, Math.PI * 2, false);
+		context.arc(ball.x , ball.y, setting_game.ball_radius, 0, Math.PI * 2, false);
 		context.fill(); // permet de dessiner l'interieure
 	}
 	document.addEventListener('DOMContentLoaded', function () {

@@ -14,7 +14,7 @@ import { MatchingRoom } from './rooms/MatchingRoom';
 	api.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
 	const gameServer = new Server();
-	gameServer.define('my_room', MyRoom)
+	gameServer.define('my_room', gameRoom)
 	.filterBy(['mode', 'userId']) // rajouter access token
 	.enableRealtimeListing()
 	.on("create", (room) => console.log("room created:", room.roomId))

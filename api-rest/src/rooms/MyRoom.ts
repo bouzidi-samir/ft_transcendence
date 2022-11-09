@@ -22,9 +22,9 @@ export class MyRoom extends Room<MyRoomState> {
   private userService: UsersService;
 
   gameData = null;
-  game : Game;
   player1 : User;
   player2 : User;
+  game : Game;
   //faire un auth avec le jwttoken verif
 
   onCreate (options: any) {
@@ -35,9 +35,12 @@ export class MyRoom extends Room<MyRoomState> {
   async onJoin (client: Client, options: any) {
     console.log(client.sessionId, "joined!");
    // client.send(this.gameData) data de la partie a afficher
-    client.send("clientsNb", {clientsNb :this.clients.length});
-    client.send("gameData", {gameData: this.gameData});
-    
+   
+   //client.send("clientsNb", {clientsNb :this.clients.length});
+   
+   //client.send("gameData", {gameData: this.gameData});
+
+	client.send("client", {client : client, clientsNb : this.clients.length})
   this.onMessage("p1Data", async (client, message) => {
       this.game.p1_userName = message.p1_userName;
   })
@@ -83,12 +86,12 @@ export class MyRoom extends Room<MyRoomState> {
       if (client == this.clients[0])
       {
         this.game.winner = this.game.p2_userName;
-        this.onDispose();
+        this.disconnect();
       }
       else if (client == this.clients[1])
       {
         this.game.winner = this.game.p1_userName;
-        this.onDispose();
+        this.disconnect();
       }
     }
     console.log(client.sessionId, "left!");
