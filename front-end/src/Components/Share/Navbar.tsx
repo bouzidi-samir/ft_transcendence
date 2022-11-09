@@ -9,6 +9,8 @@ function Navbar() {
 
     function logout () : void {
         localStorage.clear();
+        sessionStorage.clear();
+        
     }
 
     return (

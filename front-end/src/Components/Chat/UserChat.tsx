@@ -54,7 +54,7 @@ export default function UserChat() {
                   }
             </div>
               <div className='online-notifs-title ' >
-                    <h2>Messagerie</h2>
+                   
               </div>
               <div>
                 <ChatNotifs/>

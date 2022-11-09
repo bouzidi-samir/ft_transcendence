@@ -15,6 +15,7 @@ export default function Messages() {
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
     const Roomlist = useSelector((state: any) => state.RoomList);
+    const dispatch = useDispatch();
     
 
     const alert = "NEW MESSAGE AVAILABLE";
@@ -22,6 +23,12 @@ export default function Messages() {
         text: "New message",
         from: String(User.nickname),
         room: String(RoomActive.tag)
+    }
+
+    async function updateRoomList() {
+        let url = `http://localhost:4000/chat/rooms`;
+        let response = await fetch(url).then(ret => ret.json()) 
+        dispatch({type: "Roomlist/setRoomlist",payload: response,})
     }
 
     useEffect(() => {
@@ -45,12 +52,14 @@ export default function Messages() {
     }
 
     const messageListener = (message: any) => {
-        console.log(message);
         let MessagesList : any[] = [];
         if (messages.length > 0)
             MessagesList = [...messages];
-        MessagesList.push(message.messageData);
-        setMessages(MessagesList);
+        if (message.messageData.room == RoomActive.tag) {
+            MessagesList.push(message.messageData);
+            setMessages(MessagesList);
+        }
+        updateRoomList();
     }
     
     useEffect(() => {

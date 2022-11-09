@@ -46,7 +46,7 @@ export default function Notifs() {
 return (
         <div className='notifs-content'>
             
-                <p style={{color: "yellow"}}>Messages</p>
+                <p >Messages</p>
                 
                 { Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 

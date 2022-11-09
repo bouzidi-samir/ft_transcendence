@@ -15,6 +15,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
     const messagedata = {
       fromUsername: String(User.username),
       fromNickname: String(User.nickname),
+      fromAvatar: String(User.avatar_url),
         time:
           new Date(Date.now()).getHours() +
           ":" +

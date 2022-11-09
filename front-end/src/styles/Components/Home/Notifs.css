@@ -17,10 +17,16 @@
     background-color: blueviolet;
 }
 
-.notifs-content p {
+.notifs-content h2 {
     color: white;
     text-align: center;
     font-size: 120%;
+}
+
+.notifs-content p {
+    color: white;
+    text-align: center;
+    font-size: 15px;
 }
 
 .notifs-content hr {

@@ -47,13 +47,17 @@ export default function Notifs() {
 return (
         <div className='notifs-content'>
             
-                <p style={{color: "white"}}>Messages</p>
+                <h2 style={{color: "white"}}>Messages</h2>
                 <hr></hr>
                 { Object.values(notifs).map((alert: any, index: number) => (  
                     <div key={index} > 
                    
                    { (Roomlist.some((e : any) => alert.alertNotif.room == e.tag)) ? (
-                    <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
+                    <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}>
+                        <div>
+                            <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p>
+                        </div>
+                    </Link>
                     )  : (null)
                    }
                   

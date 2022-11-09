@@ -77,7 +77,7 @@ export default function Invitation() {
 
     return (
         <div className='notifs-content'>
-            <p style={{color: "white"}}>Invitations</p>
+            <h2>Invitations</h2>
             <hr></hr>
             { invitations.length > 0 ? (
                 invitations.map((invit: any) => (

@@ -17,24 +17,39 @@ export default function Rooms() {
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
+    const [notifs, setNotifs] = useState<any[]>([]);
     const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
     let p : [string | boolean][];
+    const [notifStyle, setNotifStyle] = useState("") 
 
+    
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
         setSocket(newSocket)
     }, [setSocket])
 
-    const alertListener = (alertRoom: string) => {
-        setAlertRoom(alertRoom);
+   // const alertListener = (alertRoom: string) => {
+       // setAlertRoom(alertRoom);
+    //}
+
+    const alertListener = (alert: string) => {
+        setNotifs([...notifs,alert]);
+        console.log(notifs);
+        
     }
     
     useEffect(() => {
-        socket?.on("newRoomServer", alertListener);
+        socket?.on("newNotifServer", alertListener);
         return () => {
-            socket?.off("newRoomServer", alertListener)
+            socket?.off("newNotifServer", alertListener)
         }
     }, [alertListener])
+    //useEffect(() => {
+    //    socket?.on("newRoomServer", alertListener);
+    //    return () => {
+    //        socket?.off("newRoomServer", alertListener)
+    //    }
+    //}, [alertListener])
     
     useEffect(()=>{
         handleCheckMember(RoomActive)
@@ -139,7 +154,8 @@ export default function Rooms() {
                 {
                     Roomlist.map((room: any) => 
                     
-                        <div  className='room' key={room.id}  onClick={() => {handleCheckMember(room); handleCheckBan(room)}} >
+                        <div className='room' key={room.id}  
+                        onClick={() => {handleCheckMember(room); handleCheckBan(room)}} >
                             <RoomCase room={room}/>
                         </div>
                     )

@@ -122,6 +122,7 @@ export class ChatService {
         oneMember.userId = users[i].id;
         oneMember.avatar_url = users[i].avatar_url;
         oneMember.username = users[i].username;
+        oneMember.nickname = users[i].nickname;
         oneMember.roomTag = 'global';
         oneMember.room = room;
         await this.memberRepository.save(oneMember);
@@ -600,6 +601,7 @@ async saveMessage(message) {
   newMessage.time = message.messageData.time;
   newMessage.text = message.messageData.text;
   newMessage.roomTag = message.messageData.room;
+  newMessage.fromAvatar = message.messageData.fromAvatar;
   // newMessage.owner = user;
   await this.messagesRepository.save(newMessage);
   return newMessage;

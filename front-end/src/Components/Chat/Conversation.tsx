@@ -17,7 +17,7 @@ export default function Conversation (props : any) {
     , [ messages]
     )
 
-   // console.log(element);
+
     return (
         <div className="conversation" id="conv">
         {

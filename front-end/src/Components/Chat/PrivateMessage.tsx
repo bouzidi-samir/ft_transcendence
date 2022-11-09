@@ -7,14 +7,14 @@ export default function PrivateMessage(props: any) {
     const User = useSelector((state: any) => state.User);
     let Roomlist = useSelector((state: any) => state.RoomList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
- 
+
     function openConversation(e : any) {
         e.preventDefault();
         let check = Roomlist.filter((e: any) => e.tag == interlocutor.nickname)
-        if (check.length > 0){
-            dispatch({type: "RoomActive/setRoomActive",payload: check[0]});
-            return;
-        }
+      //  if (check.length > 0){
+        //    dispatch({type: "RoomActive/setRoomActive",payload: check[0]});
+          //  return;
+        //}
         let newRoom : any = {
             username: User.username,
             nickname: User.nickname,
@@ -24,6 +24,7 @@ export default function PrivateMessage(props: any) {
             privateMessage: true,
             password: ""
         }
+        console.log(newRoom);
         dispatch({type: "Roomlist/addRoom", payload: newRoom,});
         let url = "http://localhost:4000/chat/createRoom"
         let response = fetch(url, {method : 'POST',
