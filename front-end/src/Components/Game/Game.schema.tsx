@@ -28,13 +28,16 @@ export class Ball extends Schema {
 	score: number;
 	@type('number')
 	id: number;
+	@type ('string')
+	userName : string;
   
-	constructor(x = 0, y = 0, score = 0, id = 0) {
+	constructor(x = 0, y = 0, score = 0, id = 0, userName = "") {
 	  super();
 	  this.x = x;
 	  this.y = y;
 	  this.score = score;
 	  this.id = id;
+	  this.userName = userName;
 	}
   }
 

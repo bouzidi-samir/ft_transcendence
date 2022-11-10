@@ -7,7 +7,8 @@ import * as setting_game from "../Components/Game/Game.config";
 import Navbar from "../Components/Share/Navbar";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { wait } from "@testing-library/user-event/dist/utils";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 
 
 let clientsNb;
@@ -15,6 +16,10 @@ let clientsNb;
 export default function Game() {
 	// const [p1_score, setp1_score] = useState(0);
 	// const [p2_score, setp2_score] = useState(0);
+	const User = useSelector((state: any) => state.User);
+    const dispatch = useDispatch();
+    const user_id = useParams();
+    const [user, setUser]  = useState(User);
 	const score = [0, 0];
 	const [connected, setConnect] = useState(0);
 	const result = useMemo(() => Math.random(), []);
@@ -39,9 +44,15 @@ export default function Game() {
 			room.onMessage("client", (message) => {
 				clientsNb = message.clientsNb;
 				if (clientsNb === 1)
+				{
+					player.userName = user.username;
 					player.id = message.client.sessionId;
+				}
 				else if (clientsNb === 2)
+				{
+					player2.userName = user.username;
 					player2.id = message.client.sessionId;
+				}
 				clientId = message.client.sessionId;
 			});
 		}
@@ -172,9 +183,9 @@ export default function Game() {
 			else 
 				player.score++;
 			// Reset speed
-			if (player2.score === setting_game.score_limits)
+			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
-				room.send("gameEnd", {player1 : player , player2 : player2})
+				room.send("gameEnd", {player_username : player.userName, player_score: player.score , player2_username : player2.userName, player_2score : player2.score})
 				navigation('/Home');
 			}
 			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);

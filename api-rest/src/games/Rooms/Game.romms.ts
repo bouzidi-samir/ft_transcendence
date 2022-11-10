@@ -3,8 +3,8 @@ import { Room, Client } from "colyseus";
 import { Game, players } from "../schema/GameSchema";
 
 export class gameRoom extends Room {
-	player1 : players;
-	player2: players;
+	player1 : players = new players();
+	player2: players = new players();
 	game : Game;
 
 	onCreate(options: any){
@@ -34,10 +34,12 @@ export class gameRoom extends Room {
 			}
 		});
 		this.onMessage("gameEnd", (client, message) => {
-			this.player1 = message.player1;
-			this.player2 = message.player2;
-			console.log(this.player1);
-			console.log(this.player2);
+			console.log(message);
+			this.player1.username = message.player_username;
+			this.player2.username = message.player2_username;
+			this.player1.score = message.player_score;
+			this.player2.score = message.player2_score;
+			console.log(message);
 			this.disconnect();
 		});
 	}
@@ -46,10 +48,6 @@ export class gameRoom extends Room {
 	onLeave(client: Client, consented?: boolean){
 		console.log("client leave " + client.sessionId);
 		// permet de detruire la room une fois le player leave
-		if(client.sessionId === client[0].sessionId)
-			this.player1.score = 0;
-		if(client.sessionId === client[1].sessionId)
-			this.player2.score = 0;
 		this.disconnect();
 	}
 
