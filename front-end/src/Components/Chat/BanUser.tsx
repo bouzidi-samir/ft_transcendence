@@ -37,25 +37,20 @@ setBan(false);
 }
 
 return (
-    <div className='user-icon-bloc' onClick={() => setBan(true)} >
-        {ban ? (
-        <div>
-            <form > 
-                <Cross lastPage="/Chat" closeWinwow={setBan}/> 
-                <div >
-                    <p style={{color: "red"}}>
-                    "Sur?!"
-                    <button style={{width: "70px"}} onClick={handleBan} >Valider</button>
-                    </p>
-                </div>
+    <>
+    <div className='user-icon-bloc' onClick={() => setBan(true)} >   </div>
+        {ban ? 
+        <>
+            <div className='fond1'></div>
+            <form  className="mute-form" > 
+            <div onClick={()=>setBan(false)} className="cross-setting"></div>
+                    <label  style={{fontSize: "16px", marginLeft: "25%"}}>
+                        Veux tu vraiment banir {toBan.nickname}? 
+                    </label>
+                    <button onClick={handleBan} >Confirmer</button>
             </form>
-        </div> ) : null} 
-    </div>
+        </> : null} 
     );
-
-    return (
-        <div className='user-icon-bloc'></div>
-    )
-
-
+    </> 
+)
 }

@@ -205,6 +205,11 @@ export class UsersService {
 
     }
 
+    async getFriends(username) {
+        const friends = await this.relationsRepository.find({ where: [{toUsername: username,  acceptFriendship: true}, {fromUsername: username, acceptFriendship: true}]});
+        return friends;   
+    }
+
     // ------------------------------------------- BLOCK ----------------------------------------
     
     async blockUser(body) {

@@ -6,32 +6,25 @@ import Dashboard from "../Components/Home/Dashboard"
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { useEffect } from "react";
-import { User } from "../Slices/UserSlice";
 import { io, Socket } from "socket.io-client";
-import mp3Sexy from '../styles/Sound/sexy.mp3';
 import mp3 from '../styles/Sound/new.mp3';
 import { Howl } from "howler";
 
 
-
 export default function Home() {
+  const {hostname, port} = document.location;
   let navigation = useNavigate();
   const User = useSelector((state: any) => state.User);
-  const Roomlist = useSelector((state: any) => state.RoomList);
-  const dispatch = useDispatch();
   const [socket, setSocket] = useState<Socket>();
   const [alert, setAlert] = useState<string>("Pong");
 
   const playMp3 = (src: any) => {
-    const sound = new Howl({
-      src, 
-      html5: true,
-    });
+    const sound = new Howl({src, html5: true,});
     sound.play()
   };
   
   useEffect(() => {
-      const newSocket = io('http://localhost:8000', {
+      const newSocket = io(`http://${hostname}:8000`, {
       extraHeaders: {
         Authorization: `Bearer ${User.JWT_token}`
       }
@@ -45,29 +38,20 @@ export default function Home() {
 
   useEffect(() => {
       socket?.on("newMessageServer", alertListener);
-      return () => {
-          socket?.off("newMessageServer", alertListener)
-          
-      }
+      return () => {socket?.off("newMessageServer", alertListener)}
   }, [alertListener])
 
   useEffect(() => {
     document.title = alert;
-    if (alert != 'Pong'){
-      // if (User.username == "ochichep"){
-      //   playMp3(mp3Sexy)
-      // }
-      // else{
+    if (alert !== 'Pong'){
       playMp3(mp3);
-      // }
       setTimeout(function(){setAlert('Pong')}, 2000);
     }
   })
 
   useEffect(() => {
-    let url = "http://localhost:4000/chat/createGlobalRoom";
-    const response = fetch(url, {
-      method: "POST",
+    let url = `http://${hostname}:4000/chat/createGlobalRoom`;
+   fetch(url, {method: "POST",
       headers: {
         'Authorization': `Bearer ${User.JWT_token}`,
         'Content-Type': 'application/json',
@@ -75,7 +59,7 @@ export default function Home() {
       },
     }
     ).then(ret => {
-      if(ret.status == 401)
+      if(ret.status === 401)
         navigation("/Unauthorized");
     });
   }, []

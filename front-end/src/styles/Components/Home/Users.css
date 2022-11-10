@@ -9,8 +9,13 @@
     flex-wrap:wrap;
     padding-top: 1%;
     margin-bottom: 3%;
+    overflow-y: scroll;
 }
 
+.users-content::-webkit-scrollbar {
+    width: 9px; /* width of the entire scrollbar */
+    background-color: blueviolet;
+}
 .users-content h2 {
     color: white;
     font-size: 20px;
@@ -34,9 +39,21 @@
     justify-content: space-around;
 }
 
+.friend{
+    border: 1px solid blueviolet;
+    height: 40%;
+    display: flex;
+}
+
+.friend p {
+    font-size: 15px;
+    text-align: center;
+    margin-left: 20%;
+}
+
 .user-avatar{
-    width: 20%;
-    height: 26%;
+    width: 18%;
+    height: 90%;
     margin-left: 2%;
     border-radius: 60%;
     border: solid black 1px;

@@ -1,13 +1,9 @@
-import { useContext } from 'react';
-import { from } from '@apollo/client';
 import '../../styles/Components/Home/ProfilCard.css'
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
 export default function ProfilCard() {
     const User = useSelector((state: any) => state.User);
-    const dispatch = useDispatch();
- 
     return (
         <div className='profilCard-content'>
             <img src={User.avatar_url} className='vignette-card'></img>

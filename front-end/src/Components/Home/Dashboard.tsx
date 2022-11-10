@@ -11,9 +11,9 @@ export default function Dashboard() {
             <ProfilCard/>
             <Stats/>
             <div className='user-infos'>
-            <Users/>
-            <Notifs/>
-            <Invitation/>
+                <Users/>
+                <Notifs/>
+                <Invitation/>
             </div>
         </div>
     );

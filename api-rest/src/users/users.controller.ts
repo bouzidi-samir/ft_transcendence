@@ -84,6 +84,12 @@ export class UsersController {
         res.sendFile(filename, { root: './upload' });
     }
 
+	@Get('/friends/:username')
+	async getFriends(
+	@Param('username') username: string)
+	{
+		return await this.service.getFriends(username);
+	}
 		//-----------------------------------------------------------------------------
 
 		@Post('/sendFriendshipRequest')

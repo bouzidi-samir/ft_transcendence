@@ -1,0 +1,47 @@
+.mute-form{
+    position:absolute;
+    top: 8%;
+    left: 0%;
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 40%;
+    
+    display: inline-block;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border-radius: 5%;
+    padding-top: 1%;
+    padding-left: 1%;
+    border: solid gray 1px;
+
+}
+
+.mute-form  label {
+    color: white;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 1%;
+    margin-left: 45%;
+    margin-top: 2%;
+}
+
+.mute-form input {
+    width: 30%;
+    border-radius: 4%;
+    margin-bottom: 5%;
+    margin-left: 35%;
+    height: 30px;
+    margin-top: 0%;
+}
+
+.mute-form button {
+    width: 20%;
+    border-radius: 4%;
+    margin-bottom: 5%;
+    margin-left: 40%;
+   
+}
+
+.sur  {
+    font-size: 20px;
+}
