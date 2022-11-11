@@ -1,17 +1,17 @@
 .auth-form {
-    width: 30%;
+    width: 40%;
     /* position: relative; */
     position: absolute;
     display: inline-block;
     /* max-width: 650px; */
     /* min-width: 300px; */
     height: 30%;
-    background-color: #050125;
+   
     padding-bottom: 3%;
-    margin-left: 35%;
+    margin-left: 30%;
     border-radius: 2%;
-    margin-top: 10%;
-    border: solid white 1px;
+    margin-top: 15%;
+  
 }
 
 .auth-form input {
@@ -33,9 +33,9 @@ h1,h2 {
 
 .auth-form h1 {
     padding-top: 2%;
-    color: goldenrod;
+    color: white;
     opacity: 70%;
-    font-size: 400%;
+    font-size: 450%;
     font-family: 'calvierregular';
 }
 
@@ -62,8 +62,8 @@ h1,h2 {
 }
 
 .sign button {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     margin: auto;
 }
 
@@ -71,7 +71,7 @@ h1,h2 {
     background-image: url(../../img/42logo.jpeg);
     background-size: cover;
     background-position: center;
-    width: 10%;
+    width: 20%;
     height: 10%;
     margin: auto;
    

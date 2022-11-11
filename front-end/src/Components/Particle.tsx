@@ -70,11 +70,11 @@ export default function Particle() {
                               direction: "none",
                               enable: true,
                               outModes: {
-                                default: "bounce",
+                                default: "out",
                               },
                               random: false,
-                              speed: 3,
-                              straight: false,
+                              speed: 2,
+                              straight: true,
                             },
                             number: {
                               density: {
