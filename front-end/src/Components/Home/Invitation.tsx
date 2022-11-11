@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 
 export default function Invitation() {
-
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const [invitations, setInvitations] = useState([]);
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export default function Invitation() {
 
     async function handleInvitation() {
 
-            let url = "http://localhost:4000/chat/checkRoomInvitation";
+            let url = `http://${hostname}:4000/chat/checkRoomInvitation`;
             const response = await fetch(url, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -33,7 +33,7 @@ export default function Invitation() {
 
         async function handleAccept(invit: any)  {
             console.log('accept')
-            let url = "http://localhost:4000/chat/acceptOneRoomInvitation";
+            let url = `http://${hostname}:4000/chat/acceptOneRoomInvitation`;
             const response = await fetch(url, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -47,7 +47,6 @@ export default function Invitation() {
             })
         }
         ).then(response => response.json())
-            console.log('accept response', response); 
         handleInvitation();
         navigate(`/Chat`);
         dispatch({type: "RoomActive/setRoomActive",payload: {tag:invit.roomTag}})
@@ -56,7 +55,7 @@ export default function Invitation() {
 
         async function handleRefuse(invit: any)  {
             console.log('accept')
-            let url = "http://localhost:4000/chat/refuseOneRoomInvitation";
+            let url = `http://${hostname}:4000/chat/refuseOneRoomInvitation`;
             const response = await fetch(url, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -69,8 +68,7 @@ export default function Invitation() {
             tag: invit.roomTag,
             })
         }
-        ).then(response => response.json())
-            console.log('refuse response', response); 
+        ).then(response => response.json()) 
         handleInvitation();
         }
     

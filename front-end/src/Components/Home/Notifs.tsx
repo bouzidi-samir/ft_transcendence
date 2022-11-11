@@ -10,6 +10,7 @@ import Invitation from './Invitation';
 
 export default function Notifs() {
 
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -20,15 +21,12 @@ export default function Notifs() {
 
     
     const playMp3 = (src: any) => {
-        const sound = new Howl({
-          src, 
-          html5: true,
-        });
+        const sound = new Howl({src, html5: true,});
         sound.play()
       };
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
   
@@ -38,9 +36,7 @@ export default function Notifs() {
 
     useEffect(() => {
         socket?.on("newNotifServer", alertListener);
-        return () => {
-            socket?.off("newNotifServer", alertListener)
-        }
+        return () => {socket?.off("newNotifServer", alertListener)}
     }, [alertListener])
 
 
