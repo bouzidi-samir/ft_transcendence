@@ -11,13 +11,13 @@ export default function Stats() {
             </div>
             <div className='match-stats'>
                 <div className='win-lost'> 
-                    <div className='circle'>
+                    <div className='circle1'>
                         <p>0</p>
                     </div>
                         <p>Victoires</p>
                 </div>
                 <div className='win-lost'>
-                    <div className='circle'>
+                    <div className='circle1'>
                         <p>0</p>
                     </div>
                         <p>Défaites</p>

@@ -29,7 +29,7 @@ function Navbar() {
                     aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="toggleMobileMenu">
+                <div className=" navbar-collapse" id="toggleMobileMenu">
                 
                     <ul className="navbar-nav ms-auto text-center">                
 

@@ -11,11 +11,29 @@
    
 }
 
+@media only screen and (max-width: 1000px) {
+
+    .Navbar {
+        height: 30px;
+        text-decoration: none;
+        position: fixed;
+        margin-bottom: 0%;
+        margin-top: 0%;
+        padding-bottom: 5%;
+        padding-top: 1%;
+        padding-right: 2%;
+        background: rgb(110, 109, 117);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+       
+    }
+ }
+
+
 .nav_link {
     text-decoration: none;
     margin-right: 80px;
     font-size: 120%;
-    color: black
+    color: black;
 }
 
 .profil-icon {
@@ -27,6 +45,19 @@
     background-size: cover;
 }
 
+@media only screen and (max-width: 1000px) {
+
+    .profil-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/profil.png);
+        background-position: center;
+        background-size: cover;
+    }  
+ }
+
 .home-icon {
     width: 42px;
     height: 42px;
@@ -35,6 +66,19 @@
     background-position: center;
     background-size: cover;
 }
+
+@media only screen and (max-width: 1000px) {
+
+    .home-icon {
+        width: 42px;
+        height: 42px;
+        margin-left: 20px;
+        margin-top: 25%;
+        background-image: url(../../../styles/img/icones/accueil.png);
+        background-position: center;
+        background-size: cover;
+    }     
+ }
 
 .chat-icon {
     width: 40px;
@@ -45,6 +89,22 @@
     background-size: cover;
 }
 
+@media only screen and (max-width: 1000px) {
+
+    .chat-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/messenger.png);
+        background-position: center;
+        background-size: cover;
+    }
+ }
+
+
+
+
 .game-icon {
     width: 40px;
     height: 40px;
@@ -54,6 +114,20 @@
     background-size: cover;
 }
 
+@media only screen and (max-width: 1000px) {
+
+    .game-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/controle-du-jeu-2.png);
+        background-position: center;
+        background-size: cover;
+    }
+     
+ }
+
 .logout-icon {
     width: 40px;
     height: 40px;
@@ -62,6 +136,22 @@
     background-position: center;
     background-size: cover;
 }
+
+@media only screen and (max-width: 1000px) {
+
+    .logout-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/logout.png);
+        background-position: center;
+        background-size: cover;
+    }
+     
+ }
+
+
 
 .avatar {
     position: absolute;
