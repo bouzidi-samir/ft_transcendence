@@ -4,7 +4,7 @@ import Alert from '../Share/Alert';
 import '../../styles/Components/Chat/RoomSetting.css'
 
 export default function RoomSettings() {
-    
+    const {hostname} = document.location;
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
@@ -21,19 +21,24 @@ export default function RoomSettings() {
         setPrivate(RoomActive.private);
         setPublicRoom(RoomActive.public);
         setPassword(RoomActive.password);
-        let url = `http://localhost:4000/chat/getRoomAdmin/${RoomActive.tag}`;
+        let url = `http://${hostname}:4000/chat/getRoomAdmin/${RoomActive.tag}`;
         fetch(url).then(ret => ret.json()).then(ret => setAdminList(ret))
     }, [RoomActive]
     )
 
     async function updateRoomList() {
-        let url = `http://localhost:4000/chat/rooms`;
-        let response = await fetch(url).then(ret => ret.json()) 
+        let url = `http://${hostname}:4000/chat/rooms`;
+        let response = await fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(ret => ret.json()) 
         dispatch({type: "Roomlist/setRoomlist",payload: response,})
     }
 
     function setRoom() : any {
-        if (!adminList.some((e : any) => e.nickname == User.nickname )) {
+        if (!adminList.some((e : any) => e.nickname === User.nickname )) {
             setAlert(true);
             return ;
         }
@@ -51,7 +56,7 @@ export default function RoomSettings() {
             privateMessage: false,
             password: password
         }
-        let url = `http://localhost:4000/chat/updateRoom/${RoomActive.tag}`;
+        let url = `http://${hostname}:4000/chat/updateRoom/${RoomActive.tag}`;
         const response = await  fetch(url, {method : 'POST',
         headers: {
             'Authorization': `Bearer ${User.JWT_token}`,

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 
 export default function AvatarSetting(props : any) {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const [avatar, setAvatar] = useState<File>();
@@ -18,10 +19,12 @@ export default function AvatarSetting(props : any) {
         const formData = new FormData();
         formData.append("file", avatar, avatar.name);
         let reponse = await fetch(
-			`http://localhost:4000/users/${User.id}/upload`,
+			`http://${hostname}:4000/users/${User.id}/upload`,
 			{
 				method: "POST",
-				headers: {},
+				headers: {
+                    'Authorization': `Bearer ${User.JWT_token}`,
+                },
 				body: formData,
 			}
 		).then(res => res.json())

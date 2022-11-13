@@ -1,28 +1,29 @@
 import '../../styles/Components/Chat/UserChat.css'
 import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
 import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import NewMember from './NewMember';
-import Notifs from '../Home/Notifs';
 import Invitation from '../Home/Invitation';
 import ChatNotifs from './ChatNotifs';
 
 
 export default function UserChat() {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
-    const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const dispatch = useDispatch();
     const [members, setMembers] = useState([]);
    
     useEffect( () => {    
-        let url : string = `http://localhost:4000/chat/getRoomMembers/${RoomActive.tag}`;
-        fetch(url)
+        let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
+        fetch(url, {headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          }})
         .then(response => response.json())
         .then(data => setMembers(data));
     }, [RoomActive]

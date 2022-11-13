@@ -4,12 +4,15 @@ import Rooms from "../Components/Chat/Rooms";
 import Messages from "../Components/Chat/Messages";
 import UserChat from "../Components/Chat/UserChat";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
 
 export default function Chat() {
-  const Roomlist = useSelector((state: any) => state.RoomList);
+  const {hostname} = document.location;
   const dispatch = useDispatch();
+  const User = useSelector((state: any) => state.User);
+  let navigation = useNavigate();
   const [alert, setAlert] = useState<string>("Pong");
   
 
@@ -25,11 +28,19 @@ export default function Chat() {
   useTitle(alert);
   
   useEffect(() => {
-    let url = "http://localhost:4000/chat/rooms";
-    const ret = fetch(url)
-    .then(response => response.json())
-    .then(data => dispatch({type: "Roomlist/setRoomlist",payload: data,})
-    );
+    let url = `http://${hostname}:4000/chat/rooms`;
+    let ret = fetch(url, {headers: 
+      {'Authorization': `Bearer ${User.JWT_token}`,
+      'Content-Type': 'application/json',
+      'cors': 'true'
+    },})
+    .then((response) => {
+      if(response.status === 401)
+        navigation("/Unauthorized");
+      else
+       return response.json()})
+    .then(data => dispatch({type: "Roomlist/setRoomlist",payload: data,}));
+  
   }, []
   )
   

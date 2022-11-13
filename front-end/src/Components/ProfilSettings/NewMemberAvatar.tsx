@@ -26,10 +26,7 @@ export default function NewMemberAvatar(props : any) {
 				body: formData,
 			}
 		).then(res => res.json())
-        console.log(reponse);
-        console.log(User)
         dispatch({type: "User/setUser",payload: reponse,});
-        console.log(User)
         props.setAvatarform(false);
     } 
 

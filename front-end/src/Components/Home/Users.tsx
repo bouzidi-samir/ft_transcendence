@@ -19,13 +19,6 @@ export default function Users() {
     }, []
     )
 
-    useEffect( () => {    
-        let url : string = `http://${hostname}:4000/users/friend/${User.username}`;
-        fetch(url,{headers: {'Authorization': `Bearer ${User.JWT_token}`}})
-        .then(response => response.json())
-        .then(data =>  setFriends(data));
-    }, []
-    )
     
     return (
         <div className='users-content'>

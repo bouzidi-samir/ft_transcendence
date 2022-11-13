@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import Navbar from "../Components/Share/Navbar"
 import Dashboard from "../Components/Home/Dashboard"
 import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
 import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import mp3 from '../styles/Sound/new.mp3';
@@ -12,7 +11,7 @@ import { Howl } from "howler";
 
 
 export default function Home() {
-  const {hostname, port} = document.location;
+  const {hostname} = document.location;
   let navigation = useNavigate();
   const User = useSelector((state: any) => state.User);
   const [socket, setSocket] = useState<Socket>();

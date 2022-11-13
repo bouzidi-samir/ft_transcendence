@@ -16,7 +16,11 @@ export default function NewMember() {
   
     useEffect(() => {
         let url = "http://localhost:4000/users";
-        fetch(url).then(ret => ret.json()).then(ret => setUserlist(ret))
+        fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },}).then(ret => ret.json()).then(ret => setUserlist(ret))
     }, []
     )
 

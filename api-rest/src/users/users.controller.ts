@@ -17,11 +17,13 @@ export class UsersController {
     @Inject(UsersService)
 	private readonly service: UsersService;
 
+	@UseGuards(JwtAuthGuard)
     @Get()
 	async getUsers(): Promise<User[]> {
         return await this.service.getAllUsers();
     }
 
+	@UseGuards(JwtAuthGuard)
     @Get(":id")
 	async getUserById(
 		@Param('id') id: number
@@ -29,6 +31,7 @@ export class UsersController {
 		return await this.service.getUserById(id);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Get("/search/:username")
 	async searchUser(
 		@Param('username') username: string
@@ -36,6 +39,7 @@ export class UsersController {
 		return await this.service.getUserByUsername(username);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post("/register/:id")
 	async setRegister(
 		@Param('id', ParseIntPipe) id: number,
@@ -44,6 +48,7 @@ export class UsersController {
 		return await this.service.setRegister(id)
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post("/register/:id")
 	async setStatus(
 		@Param('id', ParseIntPipe) id: number,
@@ -52,6 +57,7 @@ export class UsersController {
 		return await this.service.setRegister(id)
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post('/:id/nickname')
 	async updateNickname(
 		@Param('id', ParseIntPipe) id: number,
@@ -84,6 +90,7 @@ export class UsersController {
         res.sendFile(filename, { root: './upload' });
     }
 
+	@UseGuards(JwtAuthGuard)
 	@Get('/friends/:username')
 	async getFriends(
 	@Param('username') username: string)

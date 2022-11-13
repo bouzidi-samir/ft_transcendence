@@ -8,23 +8,20 @@ import { io, Socket } from 'socket.io-client';
 import RoomCase from './RoomCase';
 
 export default function Rooms() {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     let Roomlist = useSelector((state: any) => state.RoomList);
-    const [roomList, setRoomList] = useState([]);
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     const [notifs, setNotifs] = useState<any[]>([]);
-    const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
     let p : [string | boolean][];
-    const [notifStyle, setNotifStyle] = useState("") 
-
     
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
 
@@ -57,7 +54,7 @@ export default function Rooms() {
 
     async function handleCheckMember(room: any) {
             
-        let url_ = "http://localhost:4000/chat/checkIfMember";
+        let url_ = `http://${hostname}:4000/chat/checkIfMember`;
             const response = await fetch(url_, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -75,7 +72,7 @@ export default function Rooms() {
 
     async function handleCheckBan(room: any) {
         
-        let url_ = "http://localhost:4000/chat/checkBan";
+        let url_ = `http://${hostname}:4000/chat/checkBan`;
             const response_ = await fetch(url_, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -95,14 +92,14 @@ export default function Rooms() {
             return;
         }
       
-        if (room.tag == RoomActive.tag)
+        if (room.tag === RoomActive.tag)
             return;
         if (room.private && !room.privateMessage && !p[1]) {
             setPrivate(room)
             return;
         }
 
-        let url_a = "http://localhost:4000/chat/leaveRoom";
+        let url_a = `http://${hostname}:4000/chat/leaveRoom`;
         await fetch(url_a, {
             method: "POST",
             headers: {
@@ -117,7 +114,7 @@ export default function Rooms() {
             })
         })
 
-        let url_b = "http://localhost:4000/chat/joinRoom";
+        let url_b = `http://${hostname}:4000/chat/joinRoom`;
             const response =  await fetch(url_b, {method: "POST",
             headers: {
                 'Authorization': `Bearer ${User.JWT_token}`,
