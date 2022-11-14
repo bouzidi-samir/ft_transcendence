@@ -1,5 +1,5 @@
 import '../../styles/Components/Chat/Messages.css'
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
@@ -9,9 +9,9 @@ import Conversation from './Conversation';
 
 
 export default function Messages() {
-   const [socket, setSocket] = useState<Socket>();
+    const {hostname} = document.location;
+    const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<any[]>([]);
-    const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
     const Roomlist = useSelector((state: any) => state.RoomList);
@@ -26,20 +26,28 @@ export default function Messages() {
     }
 
     async function updateRoomList() {
-        let url = `http://localhost:4000/chat/rooms`;
-        let response = await fetch(url).then(ret => ret.json()) 
+        let url = `http://${hostname}:4000/chat/rooms`;
+        let response = await fetch(url, { headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        }})
+        .then(ret => ret.json()) 
         dispatch({type: "Roomlist/setRoomlist",payload: response,})
     }
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
     
-    // Récupération des messages de la room active.
     useEffect(() => {
-        let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
-        const ret = fetch(url)
+        let url : string = `http://${hostname}:4000/chat/getRoomMessages/${RoomActive.tag}`;
+        const ret = fetch(url, { headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        }})
         .then(response => response.json())
         .then(data => setMessages(data))
     }, [RoomActive])

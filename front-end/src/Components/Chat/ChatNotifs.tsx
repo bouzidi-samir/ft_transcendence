@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // import { Howl } from "howler";
 
 export default function Notifs() {
-
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -17,17 +17,8 @@ export default function Notifs() {
     const dispatch = useDispatch();
     const Roomlist = useSelector((state: any) => state.RoomList);
 
-    
-    // const playMp3 = (src: any) => {
-    //     const sound = new Howl({
-    //       src, 
-    //       html5: true,
-    //     });
-    //     sound.play()
-    //   };
-
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
   
@@ -42,7 +33,6 @@ export default function Notifs() {
         }
     }, [alertListener])
 
-
 return (
         <div className='notifs-content'>
             
@@ -54,8 +44,7 @@ return (
                    { (Roomlist.some((e : any) => (alert.alertNotif.room == e.tag) && (alert.alertNotif.room != RoomActive.tag))) ? (
                     <Link to="/Chat"  onClick={() => dispatch({type: "RoomActive/setRoomActive",payload: {tag:alert.alertNotif.room}})}> <p>{alert.alertNotif.text} from: {alert.alertNotif.from} in room: {alert.alertNotif.room}</p></Link>
                     )  : (null)
-                   }
-                  
+                   }                  
                     </div>
                 )) }
         </div>

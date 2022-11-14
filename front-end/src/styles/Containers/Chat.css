@@ -16,3 +16,7 @@
     color: white;
     height: 3px;
 }
+
+.alert-message {
+    color: red;
+}

@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { User } from "../../Slices/UserSlice";
-// import { Message } from "./Messages";
-
 
 export default function MessageInput({send}: {send: (messagedata: any) => void}) {
-    
+    const {hostname} = document.location;
     const [value, setValue] = useState("");
     const [checkMute, setCheckMute] = useState<boolean>(false);
     const [checkBan, setCheckBan] = useState<boolean>(false);
@@ -15,7 +12,6 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
     const messagedata = {
       fromUsername: String(User.username),
       fromNickname: String(User.nickname),
-      fromAvatar: String(User.avatar_url),
         time:
           new Date(Date.now()).getHours() +
           ":" +
@@ -27,7 +23,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
     async function handleCheck(e: any) {
 
       e.preventDefault();
-      let url = "http://localhost:4000/chat/checkMute";
+      let url = `http://${hostname}:4000/chat/checkMute`;
         const response = await fetch(url, {method: "POST",
         headers: {
         'Authorization': `Bearer ${User.JWT_token}`,
@@ -42,7 +38,7 @@ export default function MessageInput({send}: {send: (messagedata: any) => void})
       ).then(response => response.json())
       setCheckMute(response);
 
-      let url_ = "http://localhost:4000/chat/checkBan";
+      let url_ = `http://${hostname}:4000/chat/checkBan`;
         const response_ = await fetch(url_, {method: "POST",
         headers: {
         'Authorization': `Bearer ${User.JWT_token}`,

@@ -25,14 +25,8 @@ export default function Rooms() {
         setSocket(newSocket)
     }, [setSocket])
 
-   // const alertListener = (alertRoom: string) => {
-       // setAlertRoom(alertRoom);
-    //}
-
     const alertListener = (alert: string) => {
-        setNotifs([...notifs,alert]);
-        console.log(notifs);
-        
+        setNotifs([...notifs,alert]);        
     }
     
     useEffect(() => {
@@ -41,13 +35,7 @@ export default function Rooms() {
             socket?.off("newNotifServer", alertListener)
         }
     }, [alertListener])
-    //useEffect(() => {
-    //    socket?.on("newRoomServer", alertListener);
-    //    return () => {
-    //        socket?.off("newRoomServer", alertListener)
-    //    }
-    //}, [alertListener])
-    
+   
     useEffect(()=>{
         handleCheckMember(RoomActive)
     },[])

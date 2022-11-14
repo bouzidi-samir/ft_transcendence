@@ -1,23 +1,22 @@
 import "../../styles/Components/Chat/MuteUser.css"
 import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
 import { useState } from "react";
-import Cross from "../Share/Cross";
+import Alert from "../Share/Alert";
 
 export default function MuteUser(props : any) {
-
+const {hostname} = document.location;
 const User = useSelector((state: any) => state.User);
 const RoomActive = useSelector((state: any) => state.RoomActive);
-const [error, setError] = useState("");
 const [mute, setMute] = useState(false);
 const [minutes, setMinutes] = useState("");
+const [alert, setAlert] = useState(false);
 const {toMute} = props;
 
 
 async function handleMute(e: any) {
 
     e.preventDefault();
-    let url = "http://localhost:4000/chat/muteMember";
+    let url = `http://${hostname}:4000/chat/muteMember`;
     const response = await fetch(url, {method: "POST",
     headers: {
     'Authorization': `Bearer ${User.JWT_token}`,
@@ -32,9 +31,10 @@ body: JSON.stringify({
     })
 }
 ).then(response => response.json())
-setMinutes("");
+if (response === false){
+    setAlert(true)
+}
 setMute(false);
-    
 }
 
 return (
@@ -54,8 +54,7 @@ return (
                     <button className='btn btn-primary' onClick={handleMute} >Valider</button>
             </form>
         </>  : null} 
-        
-    
+        {alert ? <Alert message="Cet action est réservée aux admins du channel." setWindow={setAlert} /> : null}
     </>
 )
 }

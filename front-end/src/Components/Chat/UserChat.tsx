@@ -58,7 +58,6 @@ export default function UserChat() {
                    
               </div>
               <div>
-                <ChatNotifs/>
                 <Invitation/>
               </div>
         </div>

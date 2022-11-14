@@ -22,7 +22,12 @@ export default function RoomSettings() {
         setPublicRoom(RoomActive.public);
         setPassword(RoomActive.password);
         let url = `http://${hostname}:4000/chat/getRoomAdmin/${RoomActive.tag}`;
-        fetch(url).then(ret => ret.json()).then(ret => setAdminList(ret))
+        fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(ret => ret.json()).then(ret => setAdminList(ret))
     }, [RoomActive]
     )
 

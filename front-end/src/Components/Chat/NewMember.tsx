@@ -1,11 +1,10 @@
 import '../../styles/Components/Chat/NewMember.css'
 import { useEffect, useState } from 'react'
-import Cross from '../Share/Cross';
 import { useSelector } from "react-redux";
 import Alert from '../Share/Alert';
 
 export default function NewMember() {
-
+    const {hostname} = document.location;
     const[isAdmin, setIsAdmin] = useState(false);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
@@ -15,24 +14,30 @@ export default function NewMember() {
     const [alert, setAlert] = useState(false);
   
     useEffect(() => {
-        let url = "http://localhost:4000/users";
+        let url = `http://${hostname}:4000/users`;
         fetch(url, {headers: 
             {'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
-          },}).then(ret => ret.json()).then(ret => setUserlist(ret))
+          },}
+    ).then(ret => ret.json()).then(ret => setUserlist(ret))
     }, []
     )
 
     useEffect(() => {
-        let url = `http://localhost:4000/chat/getRoomAdmin/${RoomActive.tag}`;
-        fetch(url).then(ret => ret.json()).then(ret => setAdminList(ret))
+        let url = `http://${hostname}:4000/chat/getRoomAdmin/${RoomActive.tag}`;
+        fetch(url, { headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        },})
+        .then(ret => ret.json()).then(ret => setAdminList(ret))
     }, [RoomActive]
     )
     
     function addMember() : any {
        
-        if (!adminList.some((e : any) => e.nickname == User.nickname )) {
+        if (!adminList.some((e : any) => e.nickname === User.nickname )) {
             setAlert(true);
             return ;
         }
@@ -41,7 +46,7 @@ export default function NewMember() {
 
     async function sendInvitation(toUser : any) {
 
-        let url = "http://localhost:4000/chat/roomInvitation";
+        let url = `http://${hostname}:4000/chat/roomInvitation`;
         const response =   fetch(url, {method: "POST",
         headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -80,9 +85,10 @@ export default function NewMember() {
                                     <div key={user.nickname} className='membertoadd-case'>
                                        <img src={user.avatar_url} className='membertoadd-avatar'></img>
                                        <h2>{user.nickname}</h2>
-                                       <button onClick={() => sendInvitation(user)} className='btn btn-primary'>Inviter</button>
+                                       <button onClick={() => sendInvitation(user)} className='btn btn-primary'>+Membre</button>
+                                       <button onClick={() => sendInvitation(user)} className='btn btn-primary'>+Admin</button>
                                     </div>
-                                ))
+                                ))  
                             }               
                         </div>
                             <p>{statu}</p>

@@ -7,7 +7,7 @@ export default function NewMessage(props: any) {
     let bubleStyle : {bullDirection : any, bullColor : string};
     let avatar : string;
 
-    if (message.fromUsername == User.username) { 
+    if (message.fromUsername === User.username) { 
         bubleStyle = {bullDirection: "start", bullColor : "blueviolet"};
         avatar = User.avatar_url;
     }

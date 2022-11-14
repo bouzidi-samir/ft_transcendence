@@ -4,6 +4,8 @@ import { io, Socket } from 'socket.io-client';
 
 export default function RoomCase ({room} :any) {
     
+    const {hostname} = document.location;
+    const User = useSelector((state: any) => state.User);
     const [members, setMembers] = useState<any>();
     const [notifStyle, setNotifStyle] = useState("");
     const dispatch = useDispatch();
@@ -13,7 +15,7 @@ export default function RoomCase ({room} :any) {
     const [socket, setSocket] = useState<Socket>();
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
 
@@ -43,8 +45,13 @@ export default function RoomCase ({room} :any) {
     ) 
     
     useEffect (() => {
-        let url = `http://localhost:4000/chat/getRoomMembers/${room.tag}`
-        fetch(url).then(response => response.json())
+        let url = `http://${hostname}:4000/chat/getRoomMembers/${room.tag}`
+        fetch(url, {    headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(response => response.json())
         .then(data => setMembers(data[0]))
     }, []    
     )
@@ -56,7 +63,7 @@ export default function RoomCase ({room} :any) {
                 }
                 <div className="room-infos">
                     <p className="room-tag">{room.tag}</p>
-                    <p className="room-notif">{notif}</p>
+                    <p style={{fontSize: '12px'}} className="room-notif">{notif}</p>
                 </div>
        </div>
     )

@@ -10,7 +10,7 @@ export class ChatController {
     @Inject(ChatService)
     private readonly service: ChatService
 
-    @UseGuards(JwtAuthGuard)
+ 
     @Get('/rooms')
 	async getUsers(): Promise<any> {
         return await this.service.getAllRooms();

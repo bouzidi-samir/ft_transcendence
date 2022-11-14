@@ -11,7 +11,7 @@ export default function Alert(props: any) {
         <div className="alert">
           <div onClick={()=>setWindow(false)} className="cross-alert"></div>
             <div className="alert-icon"></div>
-            <p>{message}</p>
+            <p className="alert-message">{message}</p>
         </div>
     </>
     )

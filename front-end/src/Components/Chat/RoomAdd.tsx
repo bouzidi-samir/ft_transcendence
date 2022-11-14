@@ -1,19 +1,12 @@
-
 import { useState } from 'react';
 import '../../styles/Components/Chat/RoomAdd.css'
-import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import {useDispatch} from 'react-redux';
-import Cross from '../Share/Cross';
-import { User } from "../../Slices/UserSlice";
+import {useDispatch, useSelector} from 'react-redux';
 import React, { useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { couldStartTrivia } from 'typescript';
-
 
 export default function RoomAdd({setAddroom} :any) {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
-    const Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
     const [roomName, setRoomName] = useState<string>();
     const [privateRoom, setPrivate] = useState<boolean>(false);
@@ -24,13 +17,12 @@ export default function RoomAdd({setAddroom} :any) {
     const alertRoom = "NEW ROOM AVAILABLE !!!";
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
     
     
    async function handleForm(e: any)  {
-        
         e.preventDefault();
         let newRoom : any = {
             username: User.username,
@@ -40,7 +32,7 @@ export default function RoomAdd({setAddroom} :any) {
             privateMessage: false,
             password: password
         }
-        let url = "http://localhost:4000/chat/createRoom"
+        let url = `http://${hostname}:4000/chat/createRoom`;
         
         const response = await  fetch(url, {method : 'POST',
         headers: {
@@ -58,7 +50,7 @@ export default function RoomAdd({setAddroom} :any) {
     dispatch({type: "Roomlist/addRoom", payload: newRoom,});
     setAddroom(false)
 
-    if (newRoom.public == true){
+    if (newRoom.public === true){
         socket?.emit("newRoomClient", alertRoom);
     }
 }

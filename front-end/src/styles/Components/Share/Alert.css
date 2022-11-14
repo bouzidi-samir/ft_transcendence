@@ -27,11 +27,13 @@
    
 }
 
-.alert p {
+.alert .alert-message {
     color: white;
     font-size: 20px;
     text-align: center;
     margin-top: 5%;
+    width: 60%;
+    margin-left: 20%;
 }
 
 .cross-alert {
@@ -45,4 +47,8 @@
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.alert-message {
+    color: red;
 }

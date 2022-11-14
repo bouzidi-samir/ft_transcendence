@@ -5,23 +5,30 @@ import Navbar from './Navbar';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import Cross from './Cross';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function UserProfil() {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
     const [user, setUser]  = useState(User);
     const location = useLocation();
+    let navigation = useNavigate();
    
-    console.log("location", location.state.toBlock);
-       
-
     useEffect( () => {
-        const url = `http://localhost:4000/users/${user_id.id}`
-        fetch(url)
-        .then(response => response.json())
+        const url = `http://${hostname}:4000/users/${user_id.id}`
+        fetch(url, {headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        }})
+        .then((response) => {
+        if(response.status === 401)
+            navigation("/Unauthorized");
+        else
+           return response.json()})
         .then (data => setUser(data));
     },
     []
@@ -30,7 +37,7 @@ export default function UserProfil() {
     async function handleBlock(e: any) {
 
             e.preventDefault();
-            let url = "http://localhost:4000/users/blockUser";
+            let url = `http://${hostname}:4000/users/blockUser`;
             const response = await fetch(url, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -50,7 +57,7 @@ export default function UserProfil() {
         async function handleNewFriend(e: any) {
 
             e.preventDefault();
-            let url = "http://localhost:4000/users/forceToBeMyFriend";
+            let url = `http://${hostname}:4000/users/forceToBeMyFriend`;
             const response = await fetch(url, {method: "POST",
             headers: {
             'Authorization': `Bearer ${User.JWT_token}`,

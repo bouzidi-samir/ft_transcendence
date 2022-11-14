@@ -1,20 +1,19 @@
-import { useState } from "react";
+import { useState} from "react";
 import { useSelector } from "react-redux";
-import Cross from "../Share/Cross";
+import Alert from "../Share/Alert";
 
 export default function BanUser(props: any) {
-    
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const [error, setError] = useState("");
+    const [alert, setAlert] = useState(false);
     const [ban, setBan] = useState(false);
     const {toBan} = props;
-
 
 async function handleBan(e: any) {
 
     e.preventDefault();
-    let url = "http://localhost:4000/chat/banMember";
+    let url = `http://${hostname}:4000/chat/banMember`;
     const response = await fetch(url, {method: "POST",
     headers: {
     'Authorization': `Bearer ${User.JWT_token}`,
@@ -28,9 +27,8 @@ body: JSON.stringify({
     })
 }
 ).then(response => response.json())
-    console.log(response);
-if (response == false){
-    alert("You are not allowed to Ban this user");
+if (response === false){
+    setAlert(true)
 }
 setBan(false);
     
@@ -47,10 +45,10 @@ return (
                     <label  style={{fontSize: "16px", marginLeft: "25%"}}>
                         Veux tu vraiment banir {toBan.nickname}? 
                     </label>
-                    <button onClick={handleBan} >Confirmer</button>
+                    <button  className='btn btn-primary' onClick={handleBan} >Confirmer</button>
             </form>
         </> : null} 
-    );
+    )   {alert ? <Alert message="Cet action est réservée aux admins du channel." setWindow={setAlert} /> : null}
     </> 
 )
 }

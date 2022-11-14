@@ -1,11 +1,11 @@
-import { Room } from "../../Slices/RoomSlice"
 import "../../styles/Components/Chat/PrivateAccess.css"
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function PrivateAcces(props : any) {
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const {privateRoom, setPrivate} = props;
@@ -15,8 +15,8 @@ export default function PrivateAcces(props : any) {
 
    async function handleRoom(e: any)  {
     e.preventDefault();
-    let url_a = "http://localhost:4000/chat/leaveRoom";
-    const res = await fetch(url_a, {
+    let url_a = `http://${hostname}:4000/chat/leaveRoom`;
+    await fetch(url_a, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${User.JWT_token}`,
@@ -30,7 +30,7 @@ export default function PrivateAcces(props : any) {
         })
     }
     )
-    let url_b = "http://localhost:4000/chat/joinRoom";
+    let url_b = `http://${hostname}:4000/chat/joinRoom`;
     const response = await fetch(url_b, {method: "POST",
       headers: {
         'Authorization': `Bearer ${User.JWT_token}`,
@@ -45,7 +45,6 @@ export default function PrivateAcces(props : any) {
         })
     }
     ).then(response => response.json())
-    console.log(response);
     if (response.error) {
         setError(response.error)
         return;

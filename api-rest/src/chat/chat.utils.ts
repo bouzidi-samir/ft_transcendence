@@ -14,6 +14,18 @@ function checkPasswordFormat(password : string) : boolean | string {
     return true
 }
 
+function checkRoomName(roomName : string) : boolean | string {
+    if (roomName.length == 0 )
+        return "Merci de saisir un nom";
+    else if (roomName.length < 3 )
+        return "Le nom du salon doit contenir au moins trois caractères."
+    else if (roomName.length > 10 )
+        return "Le nom du salon doit contenir maximum dix caractères."
+    else if (roomName.match(/[^a-zA-Z\d]/g))
+        return "Le nom du salon ne doit pas contenir de caractères spéciaux."
+    return true
+}
+
 function checkPrivateAccess(input : string, password : string ) : boolean | string {
     if(!password)
         return "L'acces à cette room nécessite un mot de passe"
@@ -23,4 +35,4 @@ function checkPrivateAccess(input : string, password : string ) : boolean | stri
     return true
 }
 
-export {checkPasswordFormat, checkPrivateAccess}
+export {checkPasswordFormat, checkPrivateAccess, checkRoomName}

@@ -10,7 +10,7 @@ import { ok } from 'assert';
 import { Relations } from '../users/entities/relations.entity';
 import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
 import { RuleTester } from 'eslint';
-import {checkPasswordFormat, checkPrivateAccess} from './chat.utils';
+import {checkPasswordFormat, checkPrivateAccess, checkRoomName} from './chat.utils';
 
 @Injectable()
 export class ChatService {
@@ -52,10 +52,11 @@ export class ChatService {
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
-    if (!body.tag)
-      return {error: "Merci de saisir un nom"};
     if (check)
       return {error: "Ce nom de salon est déja utilisé"};
+    let format = checkRoomName(body.tag);
+    if (format != true)
+        return {error: format}
     const user = await this.userRepository.findOne({where: { username: body.username}});
     if (!user)
       return false;
@@ -282,8 +283,9 @@ export class ChatService {
   async updateRoom(roomTarget, body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
-    if (!body.tag)
-      return {error: "Merci de saisir un nom"};
+    let format = checkRoomName(body.tag);
+    if (format != true)
+        return {error: format}
     if (check && check.tag != roomTarget)
       return {error: "Ce nom de salon est déja utilisé"};
     if (body.private == true && body.privateMessage == false) { 
@@ -302,7 +304,7 @@ export class ChatService {
       `UPDATE "member" SET "roomTag" = $1 WHERE "roomTag" = $2;`,
       [body.tag, roomTarget]
     );
-    return body;
+    return true;
   }  
 
 
