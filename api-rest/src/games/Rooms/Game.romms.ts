@@ -33,13 +33,15 @@ export class gameRoom extends Room {
 					this.clients[i].send("player2", {player2_y : message.player2_y});
 			}
 		});
+		this.onMessage("players", (client,message) => {
+			for (let i = 0; i < this.clients.length; i++)
+				this.clients[i].send("players", {player1_username : message.player1_username , player2_username : message.player2_username});
+		})
 		this.onMessage("gameEnd", (client, message) => {
-			console.log(message);
 			this.player1.username = message.player_username;
 			this.player2.username = message.player2_username;
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
-			console.log(message);
 			this.disconnect();
 		});
 	}
@@ -52,7 +54,18 @@ export class gameRoom extends Room {
 	}
 
 	// effacer les rooms
-	onDispose(){
+	async onDispose(){
+		console.log(this.player1.username);
+		console.log(this.player2.username);
+		let request = await fetch("http://localhost:4000/games/result", {
+			method: "POST",
+			body: JSON.stringify({
+			  player1_username : this.player1.username,
+			  player2_username : this.player2.username,
+			  player1_score : this.player1.score,
+			  player2_score : this.player2.score,
+			})
+		  })
 		console.log("room destroy " );
 
 	}

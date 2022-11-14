@@ -76,6 +76,18 @@ export class UsersService {
 		);
 	}
 
+    async gameWonAdd(userId: number, gameWon : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_won: gameWon}
+		);
+	}
+
+    async gamePlayedAdd(userId: number, gamePlayed : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_played: gamePlayed}
+		);
+	}
+
     async logout (userId :number) : Promise<any>{
         return (await this.userRepository.update(userId,{registred : 'false'}));
     }

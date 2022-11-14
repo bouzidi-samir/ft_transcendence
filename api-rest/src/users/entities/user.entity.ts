@@ -44,6 +44,18 @@ export default class User {
 	})
     ello: number;
 
+	@Column({
+		type: 'integer',
+		default : 0
+	})
+    game_won: number;
+
+	@Column({
+		type: 'integer',
+		default : 0
+	})
+    game_played: number;
+
 	// @Column("integer", { array: true, default: {} })
 	// GamesPlayedId: number[];
 

@@ -37,6 +37,15 @@ export default function Game() {
 	let animationRequest: number;
 
 
+	/*var unload = require('unload');
+	unload.add(function(){
+    	console.log('Ouch, I\'m dying.');
+	}); // detecte si un user quitte la page.
+
+	if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+		alert('Ouch, Im dying.');
+	} // detecte si un user use le bouton retour du navigateur*/
+
 	const connect = async () => {
 		room = await client?.joinOrCreate("my_room", {mode: "multi", });
 		if (room)
@@ -52,7 +61,12 @@ export default function Game() {
 				{
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
+					room.send("player", {player1_username : player.userName, player2_username: player2.userName})
 				}
+				room.onMessage("players", (message) => {
+					player.userName = message.player1_username;
+					player2.userName = message.player2_username;
+				})
 				clientId = message.client.sessionId;
 			});
 		}
@@ -168,7 +182,7 @@ export default function Game() {
 		// 	computer.y += ball.velocity_y * 0.85;
 		// }
 
-	function collide(playerCurrent: Player) {
+	async function collide(playerCurrent: Player) {
 		//preventDefault();
 		// The player does not hit the ball
 		if (ball.y < playerCurrent.y || ball.y > playerCurrent.y + setting_game.paddle_height)
@@ -185,7 +199,8 @@ export default function Game() {
 			// Reset speed
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
-				room.send("gameEnd", {player_username : player.userName, player_score: player.score , player2_username : player2.userName, player_2score : player2.score})
+				console.log(player2.userName);
+				room.send("gameEnd", {player_username : player.userName, player_score: player.score , player2_username : player2.userName, player_2score : player2.score});
 				navigation('/Home');
 			}
 			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);
@@ -236,8 +251,7 @@ export default function Game() {
 
 	return(
 		<>
-		<Navbar/>
-
+		<Navbar / >
 		<div className="visual">
 			<div>
 				

@@ -19,6 +19,18 @@ export default class Game {
 	p2_userName: string;
 
     @Column({
+		type : 'integer',
+        default: 0
+	})
+	p1_score: number;
+
+    @Column({
+		type : 'integer',
+        default: 0
+	})
+	p2_score: number;
+
+    @Column({
         default : 'No winner',
     })
     winner : string;
