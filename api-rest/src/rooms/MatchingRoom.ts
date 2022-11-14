@@ -10,44 +10,33 @@ import { Repository } from 'typeorm';
 
 export class MatchingRoom extends Room<MyRoomState> {
 
+  ello_list : string [];
+  new_ello : string;
+
   onCreate (options: any) {
     this.setState(new MyRoomState());
   }
 
   async onJoin (client: Client, options: any) {
     console.log(client.sessionId, "joined!");
-   // client.send(this.gameData) data de la partie a afficher
-    
-  this.onMessage("p2Data", async (client, message) => {
-    //this.game.p2_userName = message.p2_userName;
-  })
-
-}
-  async onLeave (client: Client, consented: boolean) {
-    if (this.clients.length > 1)
+    this.onMessage("new", (client, message) => {
+      this.ello_list.push(message.ello);
+      this.new_ello = message.ello;
+    })
+    for (let i = 0; i < this.ello_list.length; i++)
     {
-      if (client == this.clients[0])
-      {
-        //this.game.winner = this.game.p2_userName;
-        this.onDispose();
-      }
-      else if (client == this.clients[1])
-      {
-        //this.game.winner = this.game.p1_userName;
-        this.onDispose();
-      }
+      
     }
+  }
+
+  async onLeave (client: Client, consented: boolean) {
+   
     console.log(client.sessionId, "left!");
   }
 
   async onDispose() {
     console.log("room", this.roomId, "disposing...");
-    let request = await fetch("localhost:4000/games/result", {
-      method: "POST",
-      body: JSON.stringify({
-        //game : this.game,
-      })
-    })
+
   }
 
 }

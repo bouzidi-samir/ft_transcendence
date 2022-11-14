@@ -38,8 +38,8 @@ export default function MatchingPage (props : any) {
             <Navbar />
             
             <form className = 'form-newsetting'>
-            <Link to="/game" className="SingleButton">Single player.</Link>
-            <Link to ="/game2" className="MultiButton">Multiplayer.</Link>
+            <Link to="/game2" className="SingleButton">Single player.</Link>
+            <Link to ="/WaitingRoom" className="MultiButton">Multiplayer.</Link>
             </form>
 
                 

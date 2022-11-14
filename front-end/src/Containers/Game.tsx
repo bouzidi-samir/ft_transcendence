@@ -9,6 +9,7 @@ import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { wait } from "@testing-library/user-event/dist/utils";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import { createImportSpecifier } from "typescript";
 
 
 let clientsNb;
@@ -24,6 +25,8 @@ export default function Game() {
 	const [connected, setConnect] = useState(0);
 	const result = useMemo(() => Math.random(), []);
 	let navigation = useNavigate();
+
+	
 
 	let client: Client = new Colyseus.Client('ws://localhost:4000');
 	let clientId : number;
@@ -65,6 +68,12 @@ export default function Game() {
 					room.send("player2_name", {player2_username : player2.userName});
 				}
 				clientId = message.client.sessionId;
+				room.onMessage("players_names", (message) => {
+					player.userName = message.player_name;
+					player2.userName = message.player2_name;
+					console.log(player.userName);
+					console.log(player2.userName);
+				})
 			});
 		}
 	}
@@ -80,10 +89,12 @@ export default function Game() {
 
 		context.fillStyle = "black";
 		context.font = "30px Arial";
+		context.fillText(player.userName, canvas.current.width / 4 - 35, canvas.current.height / 3);
 		context.fillText(player.score, canvas.current.width / 4, canvas.current.height / 2);
 
 		context.fillStyle = "black";
 		context.font = "30px Arial";
+		context.fillText(player2.userName, 3 * canvas.current.width / 4 - 35, canvas.current.height / 3);
 		context.fillText(player2.score, 3 * canvas.current.width / 4, canvas.current.height / 2);
 
 				// draw paddle_player
@@ -189,9 +200,15 @@ export default function Game() {
 			// player.y = canvas.height / 2 - setting_game.paddle_height / 2;
 			// player2.y = canvas.height / 2 - setting_game.paddle_height / 2;
 			if(playerCurrent === player)
+			{
 				player2.score++;
+				room.send("updateScore", {player_score: player.score , player2_score : player2.score});
+			}
 			else 
+			{
 				player.score++;
+				room.send("updateScore", {player_score: player.score , player2_score : player2.score});
+			}
 			// Reset speed
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
@@ -211,16 +228,42 @@ export default function Game() {
 		// gestion de la balle contre les murs
 	function ballMove() {
 		// gestion collision haut et bas 
-		if (ball?.y > canvas.current.height || ball?.y < 0) {
-			ball.velocity_y *= -1;
+		if (clientId === player.id)
+		{
+			if (ball?.y > canvas.current.height || ball?.y < 0) {
+				ball.velocity_y *= -1;
+			}
+			if (ball?.x + setting_game.ball_radius > canvas.current.width - setting_game.paddle_width) {
+				collide(player2);
+			} else if (ball?.x - setting_game.ball_radius < setting_game.paddle_width) {
+				collide(player);
+			}
+			ball.x += ball.velocity_x;
+			ball.y += ball.velocity_y;
+			room.send("ballPos", {ball_x : ball.x, ball_y : ball.y});
 		}
-		if (ball?.x + setting_game.ball_radius > canvas.current.width - setting_game.paddle_width) {
-			collide(player2);
-		} else if (ball?.x - setting_game.ball_radius < setting_game.paddle_width) {
-			collide(player);
-		}
-		ball.x += ball.velocity_x;
-		ball.y += ball.velocity_y;
+		room.onMessage("ballPos", (message) => {
+			ball.x = message.ball_x;
+			ball.y = message.ball_y;	
+		})
+		room.onMessage("updateScore", (message) => {
+			player.score = message.player_score;
+			player2.score = message.player2_score;
+			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
+			{
+				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
+				navigation('/Home');
+			}
+		})
+		room.onMessage("leaver", (message) => {
+			if (message.leaver === player.id)
+				player.score = -1;
+			if (message.leaver === player2.id)
+				player2.score = -1;
+			room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
+			navigation('/Home');
+		})
+		room.send("pong", {id : clientId});
 	}
 
 	const display = () => {
