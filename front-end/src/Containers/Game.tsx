@@ -56,21 +56,17 @@ export default function Game() {
 				{
 					player.userName = user.username;
 					player.id = message.client.sessionId;
+					room.send("player1_name", {player1_username : player.userName});
 				}
 				else if (clientsNb === 2)
 				{
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
-					room.send("player", {player1_username : player.userName, player2_username: player2.userName})
+					room.send("player2_name", {player2_username : player2.userName});
 				}
-				room.onMessage("players", (message) => {
-					player.userName = message.player1_username;
-					player2.userName = message.player2_username;
-				})
 				clientId = message.client.sessionId;
 			});
 		}
-		
 	}
 
 	const draw = () => {
@@ -199,8 +195,7 @@ export default function Game() {
 			// Reset speed
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
-				console.log(player2.userName);
-				room.send("gameEnd", {player_username : player.userName, player_score: player.score , player2_username : player2.userName, player_2score : player2.score});
+				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 				navigation('/Home');
 			}
 			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);
@@ -215,7 +210,6 @@ export default function Game() {
 
 		// gestion de la balle contre les murs
 	function ballMove() {
-
 		// gestion collision haut et bas 
 		if (ball?.y > canvas.current.height || ball?.y < 0) {
 			ball.velocity_y *= -1;

@@ -21,7 +21,7 @@ export class gameRoom extends Room {
 		console.log(client.sessionId + " join");
 		this.onMessage("player", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
-			{	
+			{
 				if (this.clients[i].sessionId != client.sessionId)
 					this.clients[i].send("player", {player_y : message.player_y});
 			}
@@ -33,13 +33,13 @@ export class gameRoom extends Room {
 					this.clients[i].send("player2", {player2_y : message.player2_y});
 			}
 		});
-		this.onMessage("players", (client,message) => {
-			for (let i = 0; i < this.clients.length; i++)
-				this.clients[i].send("players", {player1_username : message.player1_username , player2_username : message.player2_username});
+		this.onMessage("player1_name", (client,message) => {
+			this.player1.username = message.player1_username;
+		})
+		this.onMessage("player2_name", (client,message) => {
+			this.player2.username = message.player2_username;
 		})
 		this.onMessage("gameEnd", (client, message) => {
-			this.player1.username = message.player_username;
-			this.player2.username = message.player2_username;
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
 			this.disconnect();
@@ -55,10 +55,16 @@ export class gameRoom extends Room {
 
 	// effacer les rooms
 	async onDispose(){
-		console.log(this.player1.username);
-		console.log(this.player2.username);
+		//console.log(this.player1.username);
+		//console.log(this.player2.username);
+		//console.log(this.player1.score);
+		//console.log(this.player2.score);
 		let request = await fetch("http://localhost:4000/games/result", {
 			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			  },
 			body: JSON.stringify({
 			  player1_username : this.player1.username,
 			  player2_username : this.player2.username,

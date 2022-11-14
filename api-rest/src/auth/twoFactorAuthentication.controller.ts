@@ -66,7 +66,6 @@ import { access } from 'fs';
     @UseGuards(JwtAuthGuard)
     async register(@Res() response: Response, @Body() body: any) {
       let userId = body.userId;
-      console.log(body.userId);
       let user = await this.usersService.getUserById(userId);
       const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(user);
       response.setHeader('content-type', 'image/png');

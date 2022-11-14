@@ -76,9 +76,15 @@ export class UsersService {
 		);
 	}
 
-    async gameWonAdd(userId: number, gameWon : number): Promise<any> {
+    async gameWonAdd(userId: number, gameWon : number, ello : number): Promise<any> {
 		return this.userRepository.update(userId,
-			{game_won: gameWon}
+			{game_won: gameWon, ello : ello}
+		);
+	}
+
+    async gameLostAdd(userId: number, gameLose : number, ello : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_lost : gameLose, ello : ello}
 		);
 	}
 

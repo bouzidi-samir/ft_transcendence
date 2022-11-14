@@ -54,6 +54,12 @@ export default class User {
 		type: 'integer',
 		default : 0
 	})
+    game_lost: number;
+
+	@Column({
+		type: 'integer',
+		default : 0
+	})
     game_played: number;
 
 	// @Column("integer", { array: true, default: {} })
