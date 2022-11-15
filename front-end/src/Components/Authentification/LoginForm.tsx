@@ -14,7 +14,8 @@ export default function AuthForm() {
    let request = await fetch(`http://${hostname}:4000/auth/authorize`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+        'cors': 'true'
 			},
 			body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
 		});

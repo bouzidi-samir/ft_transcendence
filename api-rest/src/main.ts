@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 (async () => {
 	const api = await NestFactory.create(AppModule, {
-		cors: { credentials:true, origin: 'http://localhost:3000'}
+		cors: { credentials:true, origin: `http://10.13.2.5:3000`}
 	});
 
 	api.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));

@@ -20,14 +20,37 @@ export default function Rooms() {
     const [notifs, setNotifs] = useState<any[]>([]);
     let p : [string | boolean][];
     
+    async function updateRoomList() {
+        let url = `http://${hostname}:4000/chat/rooms`;
+        let response = await fetch(url, { headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        }})
+        .then(ret => ret.json()) 
+        dispatch({type: "Roomlist/setRoomlist",payload: response,})
+    }
+
     useEffect(() => {
         const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
 
-    const alertListener = (alert: string) => {
-        setNotifs([...notifs,alert]);        
+//    const alertListener = (alert: string) => {
+  //      setNotifs([...notifs,alert]);        
+    //}
+
+    const alertListener = (alertRoom: string) => {
+        //setAlertRoom(alertRoom);
+        updateRoomList();
     }
+
+    useEffect(() => {
+        socket?.on("newRoomServer", alertListener);
+        return () => {
+            socket?.off("newRoomServer", alertListener)
+        }
+    }, [alertListener])
     
     useEffect(() => {
         socket?.on("newNotifServer", alertListener);

@@ -6,8 +6,8 @@ export default function NewMessage(props: any) {
     const message = props.message;
     let bubleStyle : {bullDirection : any, bullColor : string};
     let avatar : string;
-    console.log(message);
-    if (message.fromUsername === User.username) { 
+ 
+    if (message.fromNickname == User.nickname) { 
         bubleStyle = {bullDirection: "start", bullColor : "blueviolet"};
         avatar = User.avatar_url;
     }
@@ -15,6 +15,7 @@ export default function NewMessage(props: any) {
         bubleStyle = {bullDirection: "end", bullColor : "coral"};
         avatar = message.fromAvatar;
     }
+
     return (
         <div key={message.index} className="buble-zone" style={{justifyContent: bubleStyle.bullDirection}}>
             <img src={avatar} className="avatar-buble"></img>   
