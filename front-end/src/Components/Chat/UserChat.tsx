@@ -9,13 +9,32 @@ import BanUser from './BanUser';
 import NewMember from './NewMember';
 import Invitation from '../Home/Invitation';
 import ChatNotifs from './ChatNotifs';
-
+import { io, Socket } from "socket.io-client";
 
 export default function UserChat() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
+    const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const [members, setMembers] = useState([]);
+    const [socket, setSocket] = useState<Socket>();
+    const [alert, setAlert] = useState<string>("Pong");
+
+    useEffect(() => {
+        const newSocket = io(`http://${hostname}:8000`, {
+        extraHeaders: {Authorization: `Bearer ${User.JWT_token}`}
+        });
+        setSocket(newSocket)
+    }, [setSocket])
+  
+    const alertListener = (alert: string) => {
+      setAlert(alert);
+    }
+    
+    useEffect(() => {
+        socket?.on("newMessageServer", alertListener);
+        return () => {socket?.off("newMessageServer", alertListener)}
+    }, [alertListener])
    
     useEffect( () => {    
         let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
@@ -54,8 +73,7 @@ export default function UserChat() {
                       )
                   }
             </div>
-              <div className='online-notifs-title ' >
-                   
+              <div className='online-notifs-title ' >                  
               </div>
               <div>
                 <Invitation/>

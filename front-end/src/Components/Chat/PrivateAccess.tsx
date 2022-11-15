@@ -41,6 +41,7 @@ export default function PrivateAcces(props : any) {
             tag : privateRoom.tag,
             username: User.username,
             nickname: User.nickname,
+            avatar_url: User.avatar_url,
             password: password
         })
     }

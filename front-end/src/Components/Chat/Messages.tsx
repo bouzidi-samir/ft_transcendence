@@ -67,7 +67,7 @@ export default function Messages() {
             MessagesList.push(message.messageData);
             setMessages(MessagesList);
         }
-        updateRoomList();
+        //updateRoomList();
     }
     
     useEffect(() => {
