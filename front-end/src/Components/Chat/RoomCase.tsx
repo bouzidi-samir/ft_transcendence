@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux";
 
 
 
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react"
 export default function RoomCase ({room} :any) {
     
     const [members, setMembers] = useState<any>();
+    const RoomActive = useSelector((state: any) => state.RoomActive);
     
     useEffect (() => {
         let url = `http://localhost:4000/chat/getRoomMembers/${room.tag}`
@@ -17,7 +19,8 @@ export default function RoomCase ({room} :any) {
 
     }, []    
     )
-
+    console.log('room', room)
+    console.log('room active', RoomActive)
 
     return (
         <>

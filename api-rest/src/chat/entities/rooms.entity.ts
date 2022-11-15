@@ -27,6 +27,9 @@ export class Rooms {
 
     @Column({nullable: true})
     password:string;
+    
+    @Column({default: 0})
+    counter: number;
 
     @Column({nullable: true})
     owner: string;

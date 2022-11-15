@@ -41,7 +41,7 @@ export default function RoomAdd({setAddroom} :any) {
             public: publicRoom,
             private: privateRoom,
             privateMessage: false,
-            password: password
+            password: password,
         }
         let url = "http://localhost:4000/chat/createRoom"
         

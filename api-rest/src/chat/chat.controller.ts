@@ -156,4 +156,16 @@ export class ChatController {
         return await this.service.saveMessage(body);
     }
 
+    // @UseGuards(JwtAuthGuard)
+    // @Post('increment')
+    // async increment(@Body() body:any): Promise<any> {
+    //     return await this.service.increment(body);
+    // }
+
+    // @UseGuards(JwtAuthGuard)
+    // @Post('zero')
+    // async zero(@Body() body:any): Promise<any> {
+    //     return await this.service.zero(body);
+    // }
+
 }

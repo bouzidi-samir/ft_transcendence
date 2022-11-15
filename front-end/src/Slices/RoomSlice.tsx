@@ -6,7 +6,7 @@ const Room = {
     public: true,
     private: false,
     privateMessage: false,
-    password: false
+    password: false,
 };
 
 const RoomActiveSlice = createSlice({
@@ -24,4 +24,4 @@ const RoomActiveSlice = createSlice({
         },
     },
 );
-export {RoomActiveSlice, Room};
+export {RoomActiveSlice,  Room};

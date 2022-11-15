@@ -190,8 +190,10 @@ export class UsersService {
 
     async getAllMyFriendships(body) {
 
-        const friends = await this.relationsRepository.find({ where: [{toUsername: body.username,  acceptFriendship: true}, {fromUsername: body.username, acceptFriendship: true}]});
-        return friends;   
+        const friends = await this.relationsRepository.find({ where: {fromUsername: body.username, acceptFriendship: true}});
+        if (friends)
+            return friends;  
+        return "no friends"; 
 
     }
 

@@ -102,6 +102,8 @@ export default function Rooms() {
             })
         })
 
+       
+
         let url_b = "http://localhost:4000/chat/joinRoom";
             const response =  await fetch(url_b, {method: "POST",
             headers: {
@@ -121,13 +123,13 @@ export default function Rooms() {
         if (!response.tag)
             response.tag = room.tag;
         dispatch({type: "User/addRoom",payload: response.tag})
-        dispatch({type: "RoomActive/setRoomActive",payload: response});
+        dispatch({type: "RoomActive/setRoomActive",payload: response}); 
+        
     }
 
     useEffect(() => {
         document.title = alertRoom;
     })
-
 
     return (
         <div className="rooms-content">

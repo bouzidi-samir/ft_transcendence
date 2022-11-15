@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from "socket.io-client";
 import { Link } from 'react-router-dom';
-// import mp3 from '../../styles/Sound/new.mp3'
-// import { Howl } from "howler";
+import { Room } from '../../Slices/RoomSlice';
+
 
 export default function Notifs() {
 
@@ -16,15 +16,8 @@ export default function Notifs() {
     const [notifs, setNotifs] = useState<any[]>([]);
     const dispatch = useDispatch();
     const Roomlist = useSelector((state: any) => state.RoomList);
+    const values = Object.values(User.JWT_token);
 
-    
-    // const playMp3 = (src: any) => {
-    //     const sound = new Howl({
-    //       src, 
-    //       html5: true,
-    //     });
-    //     sound.play()
-    //   };
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');

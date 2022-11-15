@@ -13,7 +13,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-authguards';
 
 @Controller('users')
 export class UsersController {
+
     constructor(private readonly usersService: UsersService) {}
+	
     @Inject(UsersService)
 	private readonly service: UsersService;
 
@@ -124,7 +126,7 @@ export class UsersController {
 			return await this.service.deleteOneFriendship(body);
 		}
 
-
+	@UseGuards(JwtAuthGuard)
 	@Post('/getAllMyFriendships')
 	async getAllMyFriends(
 		@Body() body: any): Promise<any> { // param username: string
