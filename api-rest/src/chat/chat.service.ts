@@ -98,7 +98,20 @@ export class ChatService {
     
     await this.roomsRepository.save(room);
     await this.memberRepository.save(creator);
-
+    const users = await this.userRepository.find();
+    for (let i = 0; i < users.length; i++) {
+      const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: body.tag}});
+      if (!already){
+        const oneMember = await this.memberRepository.create();
+        oneMember.userId = users[i].id;
+        oneMember.avatar_url = users[i].avatar_url;
+        oneMember.username = users[i].username;
+        oneMember.nickname = users[i].nickname;
+        oneMember.roomTag = body.tag;
+        oneMember.room = room;
+        await this.memberRepository.save(oneMember);
+      }
+  }
     return {room, creator};
   }
 
@@ -294,16 +307,49 @@ export class ChatService {
           return {error: formatError}
       const salt = await bcrypt.genSalt();
       body.password = await bcrypt.hash(body.password, salt);
+      await this.roomsRepository.query(
+        `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3, "password" = $4
+        WHERE "tag" = $5;`,
+        [body.tag, body.public, body.private, body.password, roomTarget]
+      );
+      const members = await this.memberRepository.find({where: {roomTag: roomTarget}})
+      for (let i = 0; i < members.length; i++) {
+        members[i].password = body.password;
+        await this.memberRepository.save(members[i]);
+      }
     }
+    if (body.public == true ){
+    body.password = null;
     await this.roomsRepository.query(
       `UPDATE "rooms" SET "tag" = $1, "public" = $2, "private" = $3, "password" = $4
       WHERE "tag" = $5;`,
       [body.tag, body.public, body.private, body.password, roomTarget]
     );
+    }
+
     await this.memberRepository.query(
       `UPDATE "member" SET "roomTag" = $1 WHERE "roomTag" = $2;`,
       [body.tag, roomTarget]
     );
+    
+    if (body.public == true) {
+      const users = await this.userRepository.find();
+      for (let i = 0; i < users.length; i++) {
+        const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: roomTarget}});
+        if (!already){
+          const oneMember = await this.memberRepository.create();
+          oneMember.userId = users[i].id;
+          oneMember.avatar_url = users[i].avatar_url;
+          oneMember.username = users[i].username;
+          oneMember.nickname = users[i].nickname;
+          oneMember.roomTag = roomTarget;
+          oneMember.password = null;
+          oneMember.room = check;
+          await this.memberRepository.save(oneMember);
+        }
+      }
+    }
+
     return true;
   }  
 

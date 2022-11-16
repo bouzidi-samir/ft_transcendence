@@ -43,8 +43,8 @@
 .room-settingsForm  .room-type {
     margin-right: 5px;
     margin-left: 3%;
-    width: 6%;
-    height: 2%;
+    width: 20px;
+    height: 20px;
  }
 
  .room-settingsForm .btn-primary {
