@@ -250,10 +250,7 @@ export class ChatService {
     newMember.userId = user.id;
     newMember.username = body.username;
     newMember.nickname = body.nickname;
-<<<<<<< HEAD
     newMember.avatar_url = body.avatar_url;
-=======
->>>>>>> gameQuentin
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);

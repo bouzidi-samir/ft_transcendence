@@ -25,7 +25,7 @@ export default function Home() {
     const sound = new Howl({src, html5: true,});
     sound.play()
   };
-  
+  console.log(User.JWT_token);
   useEffect(() => {
       const newSocket = io(`http://${hostname}:8000`, {
       extraHeaders: {Authorization: `Bearer ${User.JWT_token}`}
@@ -61,8 +61,8 @@ export default function Home() {
       },
     }
     ).then(ret => {
-      if(ret.status === 401)
-        navigation("/Unauthorized");
+    //  if(ret.status === 401)
+      //  navigation("/Unauthorized");
     });
   }, []
   )

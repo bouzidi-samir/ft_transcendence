@@ -9,7 +9,6 @@ import Conversation from './Conversation';
 
 
 export default function Messages() {
-<<<<<<< HEAD
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<any[]>([]);
@@ -49,39 +48,11 @@ export default function Messages() {
             "Content-Type": "application/json",
             'cors': 'true'
         }})
-=======
-   const [socket, setSocket] = useState<Socket>();
-    const [messages, setMessages] = useState<any[]>([]);
-    const [value, setValue] = useState<string>("");
-    const RoomActive = useSelector((state: any) => state.RoomActive);
-    const User = useSelector((state: any) => state.User);
-  const values = Object.values(User.JWT_token);
-    
-
-    const alert = "NEW MESSAGE AVAILABLE";
-    const  alertNotif = {
-        text: "new message",
-        from: String(User.nickname),
-        room: String(RoomActive.tag)
-    }
-
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        console.log('New socket', newSocket?.id);
-        setSocket(newSocket)
-    }, [setSocket])
-    
-    // Récupération des messages de la room active.
-    useEffect(() => {
-        let url : string = `http://localhost:4000/chat/getRoomMessages/${RoomActive.tag}`;
-        const ret = fetch(url)
->>>>>>> gameQuentin
         .then(response => response.json())
         .then(data => setMessages(data))
     }, [RoomActive])
 
     const send = (messageData: any) => {
-<<<<<<< HEAD
         socket?.emit("messageFromClient", { messageData });
          if (Roomlist.some((e : any) => RoomActive.tag == e.tag)){
           socket?.emit("newMessageClient", alert )}
@@ -97,18 +68,6 @@ export default function Messages() {
             setMessages(MessagesList);
         }
         //updateRoomList();
-=======
-      socket?.emit("messageFromClient", { messageData })
-      socket?.emit("newMessageClient", alert );
-      socket?.emit("newNotifClient", { alertNotif });
-
-    }
-
-    const messageListener = (message: any) => {
-        let MessagesList = [...messages];
-        MessagesList.push(message.messageData);
-        setMessages(MessagesList);
->>>>>>> gameQuentin
     }
     
     useEffect(() => {
