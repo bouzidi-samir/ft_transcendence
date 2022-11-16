@@ -80,7 +80,7 @@ export default function MatchingPage (props : any) {
                     type : "User/setUser",
                     payload: userUpdate
                 });
-                room.send('room_id', {id : room.id})
+                room.send('room_id', {id : userUpdate.room.id})
                 room.leave();
                 navigation('/game');
             })

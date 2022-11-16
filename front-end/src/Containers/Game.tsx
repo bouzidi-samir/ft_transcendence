@@ -10,6 +10,7 @@ import { wait } from "@testing-library/user-event/dist/utils";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { createImportSpecifier } from "typescript";
+import { useSearchParams } from "react-router-dom";
 
 
 let clientsNb;
@@ -25,6 +26,8 @@ export default function Game() {
 	const [connected, setConnect] = useState(0);
 	const result = useMemo(() => Math.random(), []);
 	let navigation = useNavigate();
+	const [fortyTwo, setFortyTwo] = useState(false);
+	const [params] = useSearchParams();
 
 	
 
@@ -49,10 +52,27 @@ export default function Game() {
 		alert('Ouch, Im dying.');
 	} // detecte si un user use le bouton retour du navigateur*/
 
-	const connect = async () => {
+	function updateData()
+	{
+		const code = params.get("code")
+		const {hostname, port} = document.location;
+    	if (code)
+		{
+      		setFortyTwo(true);
+			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json','cors': 'true'},
+				body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
+			})
+			request.then(response => response.json()
+      			.then((response) => {dispatch({type: "User/setUser", payload: response,});}))
+					request.catch(e => {console.error(e)})
+	}
+		return () => {}
+	}
 
-		
-		room = await client?.joinOrCreate("my_room", {mode: "multi", });
+	const connect = async () => {
+		room = User.room;
 		if (room)
 		{
 			room.onMessage("client", (message) => {
@@ -215,6 +235,7 @@ export default function Game() {
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
+				updateData();
 				navigation('/Home');
 			}
 			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);
@@ -254,6 +275,7 @@ export default function Game() {
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
+				updateData();
 				navigation('/Home');
 			}
 		})
@@ -263,6 +285,7 @@ export default function Game() {
 			if (message.leaver === player2.userName)
 				player2.score = -1;
 			room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
+			updateData();
 			navigation('/Home');
 		})
 		room.send("pong", {id : clientId});

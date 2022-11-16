@@ -22,12 +22,13 @@ export class MatchingRoom extends Room<MyRoomState> {
     this.onMessage("clientEllo", async (client, message) => {
       let ello = parseInt(message.ello);
       this.clientsEllo.push(parseInt(message.ello));
-      for (let j = 0 ; j < this.clients.length -1 ; j++)
+      for (let j = 0 ; j < (this.clients.length -1) ; j++)
       {
         if ((this.clientsEllo[j] - ello >= -50) && (this.clientsEllo[j] - ello <= 50))
           client.send("createRoom", {});
-          await this.onMessage("room_id", async(client, message) =>
+          this.onMessage("room_id", async(client, message) =>
           {
+            console.log(message.id);
             this.clients[j].send("joinRoom", {id : message.id});
           })
       }

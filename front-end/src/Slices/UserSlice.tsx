@@ -15,6 +15,9 @@ const User = {
     TFOenabled : false,
     qrcode : "",
     ello : 0,
+    gamePlayed : 0,
+    gameWon : 0,
+    gameLost : 0,
     room : undefined,
 };
 
@@ -35,6 +38,9 @@ const UserSlice = createSlice({
             state.qrcode = action.payload.qrcode;
             state.ello = action.payload.ello;
             state.room = action.payload.room;
+            state.gamePlayed = action.payload.gamePlayed;
+            state.gameWon = action.payload.gameWon;
+            state.gameLost = action.payload.gameLost;
         },
         setRooms : (state, action) => {
             let ret = [...action.payload]

@@ -58,7 +58,10 @@ export class AuthController {
 			status: finaluser.status,
 			JWT_token: token,
 			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,
-			ello : finaluser.ello,		
+			ello : finaluser.ello,
+			gamePlayed : finaluser.game_played,
+			gameWon : finaluser.game_won,
+			gameLost : finaluser.game_lost,	
 		});
 	}
 	
