@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { createTypeReferenceDirectiveResolutionCache } from "typescript";
 import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
+import { RoomInternalState } from "colyseus";
 
 
 export default function MatchingPage (props : any) {
@@ -25,6 +26,7 @@ export default function MatchingPage (props : any) {
 
     let client: Client = new Colyseus.Client('ws://localhost:4000');
     let room : Colyseus.Room<unknown>;
+    let userUpdate = {...User};
 
    function refresh()
    {
@@ -71,8 +73,27 @@ export default function MatchingPage (props : any) {
        room = await client?.joinOrCreate("matching_room", {});
        if (room)
        {
-           
-       }
+           room.send("clientEllo", {ello : User.ello});
+           room.onMessage("createRoom", async (message) => {
+                userUpdate.room = await client?.create("my_room", {}); 
+                dispatch({
+                    type : "User/setUser",
+                    payload: userUpdate
+                });
+                room.send('room_id', {id : room.id})
+                room.leave();
+                navigation('/game');
+            })
+            room.onMessage('joinRoom', async (message) => {
+                userUpdate.room = await client?.joinById(message.id, {});
+                dispatch({
+                    type : "User/setUser",
+                    payload: userUpdate
+                });
+                room.leave();
+                navigation('/game');
+            })
+        }
    }
 
     useEffect( () => {

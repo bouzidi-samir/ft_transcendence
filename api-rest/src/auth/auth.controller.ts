@@ -57,7 +57,8 @@ export class AuthController {
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
 			JWT_token: token,
-			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,		
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,
+			ello : finaluser.ello,		
 		});
 	}
 	

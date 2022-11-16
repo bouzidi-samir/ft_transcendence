@@ -50,6 +50,8 @@ export default function Game() {
 	} // detecte si un user use le bouton retour du navigateur*/
 
 	const connect = async () => {
+
+		
 		room = await client?.joinOrCreate("my_room", {mode: "multi", });
 		if (room)
 		{
@@ -256,9 +258,9 @@ export default function Game() {
 			}
 		})
 		room.onMessage("leaver", (message) => {
-			if (message.leaver === player.id)
+			if (message.leaver === player.userName)
 				player.score = -1;
-			if (message.leaver === player2.id)
+			if (message.leaver === player2.userName)
 				player2.score = -1;
 			room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 			navigation('/Home');

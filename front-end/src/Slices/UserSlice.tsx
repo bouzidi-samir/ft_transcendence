@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { Socket } from "socket.io-client";
+import * as Colyseus from "colyseus.js";
 
 const User = {
     id: "",
@@ -13,6 +14,8 @@ const User = {
     JWT_token: "",
     TFOenabled : false,
     qrcode : "",
+    ello : 0,
+    room : undefined,
 };
 
 const UserSlice = createSlice({
@@ -30,6 +33,8 @@ const UserSlice = createSlice({
             state.JWT_token = action.payload.JWT_token;
             state.TFOenabled = action.payload.TFOenabled;
             state.qrcode = action.payload.qrcode;
+            state.ello = action.payload.ello;
+            state.room = action.payload.room;
         },
         setRooms : (state, action) => {
             let ret = [...action.payload]

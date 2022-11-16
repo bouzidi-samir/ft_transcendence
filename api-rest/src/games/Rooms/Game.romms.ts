@@ -14,21 +14,27 @@ export class gameRoom extends Room {
 
 	onCreate(options: any){
 		this.setState(new Game);
-		this.my_job = cron.schedule('*/2 * * * * *', () => {
+		this.my_job = cron.schedule('*/1 * * * * *', () => {
 			setTimeout( () => 
 			{
-				if (this.p1_ping === 0)
+				if(this.clients[0])
 				{
-					for (let i = 0; i < this.clients.length; i++)
+					if (this.p1_ping === 0)
 					{
-						this.clients[i].send("leaver", {leaver : this.clients[0].sessionId});
+						for (let i = 0; i < this.clients.length; i++)
+						{
+							this.clients[i].send("leaver", {leaver : this.player1.username});
+						}
 					}
 				}
-				if (this.p2_ping === 0)
+				if (this.clients[1])
 				{
-					for (let i = 0; i < this.clients.length; i++)
+					if (this.p2_ping === 0)
 					{
-						this.clients[i].send("leaver", {leaver : this.clients[1].sessionId});
+						for (let i = 0; i < this.clients.length; i++)
+						{
+							this.clients[i].send("leaver", {leaver : this.player2.username});
+						}
 					}
 				}
 				this.p1_ping = 0;
@@ -87,10 +93,16 @@ export class gameRoom extends Room {
 			this.disconnect();
 		});
 		this.onMessage("pong", (client, message) => {
-			if (message.id === this.clients[0].sessionId)
-				this.p1_ping = 1;
-			if (message.id === this.clients[1].sessionId)
-				this.p2_ping = 1;
+			if(this.clients[0])
+			{
+				if (message.id === this.clients[0].sessionId)
+					this.p1_ping = 1;
+			}
+			if(this.clients[1])
+			{
+				if (message.id === this.clients[1].sessionId)
+					this.p2_ping = 1;
+			}
 		});
 	}
 
