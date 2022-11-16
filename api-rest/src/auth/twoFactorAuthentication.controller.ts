@@ -17,6 +17,7 @@ import {
   import { Response } from 'express';
   import { AuthService } from './auth.service';
   import User from '../users/entities/user.entity';
+import { access } from 'fs';
   
    
   @Controller('2fa')
@@ -28,6 +29,19 @@ import {
       private readonly authenticationService: AuthService
     ) {}
     
+
+    @Post('switch')
+    @HttpCode(200)
+    @UseGuards(JwtAuthGuard)
+    async switchTFA (@Body() body : any)
+    {
+      let user = await this.usersService.getUserById(parseInt(body.userId));
+      console.log(user.isTwoFactorAuthenticationEnabled);
+      console.log("back");
+
+      await this.twoFactorAuthenticationService.switchTFA(parseInt(body.userId));
+    }
+
     @Post('turn-on')
     @HttpCode(200)
     @UseGuards(JwtAuthGuard)
@@ -50,11 +64,12 @@ import {
     @Post('generate') /* {userId : 19, email : qbrillai@student.42nice.fr, avatar_url : https://cdn.intra.42.fr/users/qbrillai.jpg, 
     registred: false, nickname: offline, username: qbrillai}  */
     @UseGuards(JwtAuthGuard)
-    async register(@Res() response: Response, @Req() request: Request) {
-      let userId = response.req.query.user['userId'];
+    async register(@Res() response: Response, @Body() body: any) {
+      let userId = body.userId;
       let user = await this.usersService.getUserById(userId);
       const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(user);
-   
+      response.setHeader('content-type', 'image/png');
+      // console.log(await this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl))
       return this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl);
     }
   
@@ -63,29 +78,24 @@ import {
     @HttpCode(200)
     @UseGuards(JwtAuthGuard)
     async authenticate(
-      @Req() request: RequestWithUser,
-      @Res() response: Response
-    ) {
-        let twoFactorAuthenticationCode = response.req.query.twoFactorAuthenticationCode;
+      @Body() body : any
+    ) : Promise<string>{
+        let twoFactorAuthenticationCode = body.code;
         twoFactorAuthenticationCode = twoFactorAuthenticationCode.toString();
-        let user = await this.usersService.getUserById(request.user['userId']);
-        const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
+        let user = await this.usersService.getUserById(body.userId);
+        const isCodeValid = await this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
           twoFactorAuthenticationCode , user
-          );
+        );
         if (!isCodeValid) {
-          throw new UnauthorizedException('Wrong authentication code');
+          return JSON.stringify({
+            codeValidity : false,
+          });
         }
    
-        const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id, true);
-   
+        const accessTokenCookie = await this.authenticationService.getCookieWithJwtAccessToken(user.id, true);
         return JSON.stringify({
-                id: "",
-                username: user.username,
-                nickname: user.nickname,
-                registred: user.registred,
-                avatar_url: user.avatar_url,
-                status: "online",
                 JWT_token: accessTokenCookie,	
+                codeValidity : true,
             });
      }
   }

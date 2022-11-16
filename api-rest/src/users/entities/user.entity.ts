@@ -8,7 +8,7 @@ export default class User {
 	@PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', nullable: true })
     username: string;
 
 	@Column({ type: 'varchar', default: ''})
@@ -20,7 +20,7 @@ export default class User {
 	@Column({ default: false })
 	public isTwoFactorAuthenticationEnabled: boolean;
 
-	@Column({ type: 'varchar', unique: true, nullable: true })
+	@Column({ type: 'varchar', unique: true , nullable: true})
 	email: string;
 	
 	@Column({ type: 'varchar', default: 'false'})
@@ -37,6 +37,33 @@ export default class User {
 
 	@Column({ type : 'text', nullable: true })
 	JWT_token: string;
+
+	@Column({
+		type: 'integer',
+		default : 1200
+	})
+    ello: number;
+
+	@Column({
+		type: 'integer',
+		default : 0
+	})
+    game_won: number;
+
+	@Column({
+		type: 'integer',
+		default : 0
+	})
+    game_lost: number;
+
+	@Column({
+		type: 'integer',
+		default : 0
+	})
+    game_played: number;
+
+	// @Column("integer", { array: true, default: {} })
+	// GamesPlayedId: number[];
 
 	@CreateDateColumn()
 	created_at: Date;

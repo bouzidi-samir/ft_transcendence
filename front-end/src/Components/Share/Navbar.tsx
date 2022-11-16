@@ -1,17 +1,77 @@
 import '../../styles/Components/Share/Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
+import { useParams } from 'react-router';
+import { useState, useEffect } from 'react';
+
+
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here 
+    // is better than directly setting `value + 1`
+}
 
 function Navbar() {
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
+    const user_id = useParams();
+    const [user, setUser]  = useState(User);
+    const [twofactor, setTwoFactor]  = useState(false);
+    const navigate = useNavigate();
 
-    function logout () : void {
+    function logout1 () : void {
         localStorage.clear();
-        sessionStorage.clear();
-        
     }
+
+    async function logout ()  {
+        dispatch({type: "User/logout",payload: null});
+        dispatch({type: "RoomList/logout",payload: null});
+        await fetch(`http://localhost:4000/auth/logout`, { // A remplacer avec le user
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+            },
+            body: JSON.stringify({userId : user.id })
+        })
+        localStorage.clear();
+    }
+
+    async function TfaSwitch(e : any) // changer l affichage selon si c est active ou non et pas un clic
+    {
+        console.log("here");
+        let userUpdate = {...User};
+        if (User.TFOenabled === true)
+            userUpdate.TFOenabled = false;
+        else
+            userUpdate.TFOenabled = true;
+        dispatch({
+            type : "User/setUser",
+            payload: userUpdate
+        })
+        console.log(user.JWT_token);
+        const request = await fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+            },
+            body: JSON.stringify({userId : user.id })
+        })
+        console.log("herepast");
+        if (userUpdate.TFOenabled === true)
+        {
+            console.log('/qrcode')
+            return (navigate("/qrcode"));
+        }
+        else
+        {
+            console.log('/home')
+            return (navigate("/home"));
+        }
+}
 
     return (
         <div className="Navbar">
@@ -43,7 +103,13 @@ function Navbar() {
                             className='home-icon'></div>
                         </Link>
                         </li> 
-                        <li>   
+                        <li>
+                            <label className="switch">
+                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={User.TFOenabled == true}/>
+                            <span className="slider round"></span>
+                            </label>
+                        </li>
+                        <li>
                         <Link  className="nav_link" to="/ProfilSettings">
                             <div 
                             className='profil-icon'></div>
@@ -55,7 +121,7 @@ function Navbar() {
                         </Link>
                         </li>  
                         <li>   
-                        <Link className="nav_link" to="/">
+                        <Link className="nav_link" to="/Matching">
                             <div className='game-icon'></div>
                         </Link>
                         </li>

@@ -50,6 +50,17 @@ export class AuthService {
         return user;
 	}
 
+    async getUserById(userId: number): Promise<User>
+	{
+	    const user = await this.users.userRepository.findOneOrFail({where: {id: userId}});
+        return user;
+	}
+
+    async logout(userId: number)
+	{
+	    return await this.users.logout(userId);
+	}
+
     async addUser(user: User)
 	{
         try {

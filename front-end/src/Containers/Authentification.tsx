@@ -12,7 +12,6 @@ export default function Authentification() {
   const dispatch = useDispatch();
   const [params] = useSearchParams();
   const [fortyTwo, setFortyTwo] = useState(false);
-
   useEffect(() => {
     const code = params.get("code")
 		const {hostname, port} = document.location;

@@ -86,6 +86,28 @@ export class UsersService {
 		);
 	}
 
+    async gameWonAdd(userId: number, gameWon : number, ello : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_won: gameWon, ello : ello}
+		);
+	}
+
+    async gameLostAdd(userId: number, gameLose : number, ello : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_lost : gameLose, ello : ello}
+		);
+	}
+
+    async gamePlayedAdd(userId: number, gamePlayed : number): Promise<any> {
+		return this.userRepository.update(userId,
+			{game_played: gamePlayed}
+		);
+	}
+
+    async logout (userId :number) : Promise<any>{
+        return (await this.userRepository.update(userId,{registred : 'false'}));
+    }
+
     async setTwoFactorAuthenticationSecret(secret: string, userId: number) { //save le secret dans la db
         return this.userRepository.update(userId, {
           twoFactorAuthenticationSecret: secret

@@ -26,11 +26,18 @@ export class AuthController {
 		return JSON.stringify({url: url.toString()});
 	}
 
+	@Post("/logout")
+	async logout(@Body() body: any)
+	{
+		this.service.logout(body.userId);
+	}
+
 	@Post("/token/:code")
 	async login(
 		@Param("code") code: string,
 		@Body() body: any
 	): Promise<string> {
+		
 		let api = await this.service.getUserAccessToken(
 			// '7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670','8f0429ab7bec196067bb438e31cd08b9e07a79953cd6a932fc0f4595dced75d7',
 			process.env.FORTY_TWO_ID, process.env.FORTY_TWO_CLIENT_SECRET,
@@ -51,8 +58,12 @@ export class AuthController {
 			registred: finaluser.registred,
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
-			JWT_token: token.access_token,
-			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
+			JWT_token: token,
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,
+			ello : finaluser.ello,
+			gamePlayed : finaluser.game_played,
+			gameWon : finaluser.game_won,
+			gameLost : finaluser.game_lost,	
 		});
 	}
 	

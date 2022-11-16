@@ -208,7 +208,7 @@ export class ChatService {
 
     if (alreadyMember){
       if (alreadyMember.blocked == true){
-      return false;
+        return false;
       }
       else if (alreadyMember.in == true){
        
@@ -232,7 +232,7 @@ export class ChatService {
       }
       const match = bcrypt.compareSync(body.password, room.password);
       if (!match)
-      return {error: "Mot de passe invalide"};
+        return {error: "Mot de passe invalide"};
     }
 
     const newMember = await this.memberRepository.create();
@@ -250,13 +250,14 @@ export class ChatService {
     newMember.userId = user.id;
     newMember.username = body.username;
     newMember.nickname = body.nickname;
+<<<<<<< HEAD
     newMember.avatar_url = body.avatar_url;
+=======
+>>>>>>> gameQuentin
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
-
     return newMember;
-
   }
 
   async editRoom(body) {

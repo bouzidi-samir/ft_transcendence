@@ -6,8 +6,11 @@ import Dashboard from "../Components/Home/Dashboard"
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
+import { User } from "../Slices/UserSlice";
+import mp3Sexy from '../styles/Sound/sexy.mp3';
 import mp3 from '../styles/Sound/new.mp3';
 import { Howl } from "howler";
+
 
 
 export default function Home() {
