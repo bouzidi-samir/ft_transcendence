@@ -24,7 +24,7 @@ export default function CodePage (props : any) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization' : `Bearer ${User.JWT_token['access_token']}`
+            'Authorization' : `Bearer ${User.JWT_token}`
         },
         
         body: JSON.stringify({userId : User.id }),

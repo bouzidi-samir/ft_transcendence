@@ -32,7 +32,7 @@ function Navbar() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+                'Authorization' : `Bearer ${User.JWT_token}`
             },
             body: JSON.stringify({userId : user.id })
         })
@@ -56,7 +56,7 @@ function Navbar() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${user.JWT_token['access_token']}`
+                'Authorization' : `Bearer ${User.JWT_token}`
             },
             body: JSON.stringify({userId : user.id })
         })

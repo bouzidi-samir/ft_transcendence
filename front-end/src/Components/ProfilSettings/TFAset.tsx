@@ -8,7 +8,7 @@ import {myIsalpha} from "../../Utils/Util";
 import { useParams, Navigate, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { responsePathAsArray } from "graphql";
-import NewMemberSet from "./NewMemberSet";
+import Home from "../../Containers/Home";
 
 export default function TFAset() {
     
@@ -36,11 +36,12 @@ export default function TFAset() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${User.JWT_token['access_token']}`
+                'Authorization' : `Bearer ${User.JWT_token}`
             },
             body: JSON.stringify({userId : User.id, code : code })
         })
         ret = await request.json();
+        console.log(ret);
         return (ret);
     }
     
@@ -71,6 +72,7 @@ export default function TFAset() {
 
     async function handleForm (e : any) {
        e.preventDefault();
+       console.log(validated)
         if (await codeError(code) == false)
             return;
         setError("");
@@ -79,7 +81,6 @@ export default function TFAset() {
 
     return (
         <>  
-            {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             {validated === false &&
                 <><h1>Bienvenue! Rentre tes informations.</h1><form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000">
                     <input type="text" style={{marginTop: "200px"}} onChange={handlechange}></input>
@@ -87,10 +88,7 @@ export default function TFAset() {
                     <p className="error-text">{error}</p>
                 </form></>
             }
-            {validated === true &&
-            
-                <NewMemberSet />
-            }
+            {validated === true ? navigation("/Home") : null}
         </>
     );
 }
