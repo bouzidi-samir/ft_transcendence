@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/Components/Share/LoadingPage.css"
 import NewMemberSet from "./ProfilSettings/NewMemberSet";
+import TFAset from './ProfilSettings/TFAset'
 
 
 export default function LoadingPage (props : any) {
+
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect( () => {  
+        let url : string = "http://localhost:4000/users";
+        fetch(url)
+        .then(response => response.json())
+        .then(data =>  dispatch({type: "Userlist/setUserlist",payload: data,}));
+    }, []
+    )
    
     useEffect( () => {    
         setInterval(() => {
@@ -29,7 +40,7 @@ export default function LoadingPage (props : any) {
 
         <>  
             {setTimeout(() => {
-                User.registred === 'true' ? redirect() : <NewMemberSet/>
+                User.registred === 'true' ? redirect() : User.TFOenabled === true ? <TFAset /> : <NewMemberSet/>
             }, 100) 
         }
             {User.registred === 'false' ? <NewMemberSet/> :   <h1 className="loading-title">{time}%</h1> }

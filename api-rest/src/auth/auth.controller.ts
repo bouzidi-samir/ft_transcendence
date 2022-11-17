@@ -52,7 +52,12 @@ export class AuthController {
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
 			JWT_token: token.access_token,
-			isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled		
+			// isTwoFactorAuthenticationEnabled: finaluser.isTwoFactorAuthenticationEnabled,
+			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,
+			// ello : finaluser.ello,
+			// gamePlayed : finaluser.game_played,
+			// gameWon : finaluser.game_won,
+			// gameLost : finaluser.game_lost,			
 		});
 	}
 	

@@ -8,6 +8,7 @@ import UserProfil from './Components/Share/UserProfil';
 import LoadingPage from './Components/LoadingPage';
 import Unauthorized from './Components/Share/Unauthorized';
 import NotFound from './Components/Share/NotFound';
+import CodePage from './Components/Qrcode';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/UserProfil/:id" element={<UserProfil/>}/>
         <Route path="/Chat" element={<Chat/>}/> 
         <Route path="/Loading" element={<LoadingPage/>}/>
+        <Route path="/qrcode" element={<CodePage/>}/> 
         <Route path="/Unauthorized" element={<Unauthorized/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>

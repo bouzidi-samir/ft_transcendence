@@ -12,6 +12,13 @@ const User = {
     rooms: [""],
     session:  "",
     JWT_token: "",
+    TFOenabled : false,
+    qrcode : "",
+    // ello : 0,
+    // gamePlayed : 0,
+    // gameWon : 0,
+    // gameLost : 0,
+    // room : undefined,
 };
 
 const UserSlice = createSlice({
@@ -21,6 +28,20 @@ const UserSlice = createSlice({
 
         setUser : (state, action) => {
             state = {...action.payload};
+            // state.id = action.payload.id;
+            // state.username = action.payload.username;
+            // state.nickname = action.payload.nickname;
+            // state.registred = action.payload.registred;
+            // state.avatar_url = action.payload.avatar_url;
+            // state.status = action.payload.status;
+            // state.JWT_token = action.payload.JWT_token;
+            // state.TFOenabled = action.payload.TFOenabled;
+            // state.qrcode = action.payload.qrcode;
+            // state.ello = action.payload.ello;
+            // state.room = action.payload.room;
+            // state.gamePlayed = action.payload.gamePlayed;
+            // state.gameWon = action.payload.gameWon;
+            // state.gameLost = action.payload.gameLost;
             return state;
         },
         setRooms : (state, action) => {
@@ -33,7 +54,22 @@ const UserSlice = createSlice({
         logout : (state, action) => {
             state = User;
             return state;
-        }
+        },
+        setTwoFactor : (state, action) => {
+            // console.log(action.payload);
+             if (action.payload === true)
+                 state.TFOenabled = false
+             else if (action.payload === false)
+                 state.TFOenabled = true ;
+            // console.log(state.TFOenabled);
+             
+             return  (state);
+         },
+         setTwoFactorFalse : (state, action) => {
+             console.log("here");
+             state.TFOenabled = action.payload;
+             return state;
+         },
         },
     },
 );

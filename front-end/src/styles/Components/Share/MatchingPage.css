@@ -1,0 +1,44 @@
+.SingleButton{
+    position: relative;
+    color: white;
+    background-color: blue;
+    font-size: 200%;
+    padding-right : 0%;
+    padding-left: 5%;
+    width: 20%;
+    margin-left : 35%; 
+    white-space:nowrap;
+    text-align: center;
+    right : 7%;
+    top : 20%;
+}
+
+.MultiButton{
+    position: relative;
+    color: white;
+    background-color: blue;
+    font-size: 200%;
+    padding-right : 5%;
+    padding-left: 5%;
+    width: 20%;
+    margin-top:60%;
+    white-space:nowrap;
+    text-align: center;
+    right : 48.5%;
+    top : 35%;
+}
+
+.form-newsetting {
+    position: relative;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    border: solid black 1px;
+    border-radius: 2%;
+    margin-left: 25%;
+    margin-top: 4%;
+    width: 50%;
+    height: 80%;
+    padding: 10%;
+    padding:0%;
+    border:0%;
+}
