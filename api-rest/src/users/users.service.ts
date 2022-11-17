@@ -54,11 +54,13 @@ export class UsersService {
                 `UPDATE "member" SET "nickname" = $1 WHERE "userId" = $2;`,
                 [nickname, id]
             );
-        return await this.userRepository.query(
+        await this.userRepository.query(
 			`UPDATE "user" SET "nickname" = $1, updated_at = NOW() WHERE id = $2;`,
 			[nickname, id]
 		);
-	}
+        const user = await this.userRepository.findOne({where: {id : id}});
+        return user; 
+    }
 
     async updateAvatar(id: number, image: string): Promise<any> {
         await this.memberRepository.query(
