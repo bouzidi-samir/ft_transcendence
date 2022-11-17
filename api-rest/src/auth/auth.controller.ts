@@ -58,7 +58,7 @@ export class AuthController {
 			registred: finaluser.registred,
 			avatar_url: finaluser.avatar_url,
 			status: finaluser.status,
-			JWT_token: token,
+			JWT_token: token.access_token,
 			TFOenabled: finaluser.isTwoFactorAuthenticationEnabled,
 			ello : finaluser.ello,
 			gamePlayed : finaluser.game_played,
