@@ -47,7 +47,6 @@ export default function Game() {
 	unload.add(function(){
     	console.log('Ouch, I\'m dying.');
 	}); // detecte si un user quitte la page.
-
 	if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
 		alert('Ouch, Im dying.');
 	} // detecte si un user use le bouton retour du navigateur*/
@@ -342,4 +341,3 @@ export default function Game() {
 	// 		});
 	// 	}
 	// }
-
