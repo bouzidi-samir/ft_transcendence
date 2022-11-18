@@ -65,10 +65,11 @@ export default function FormSetting() {
 
     return (
         <>    
-            {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
             <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
                 <Cross lastPage="/Home" />
-                <img  className="vignette-form" src={User.avatar_url}></img>
+                <img  className="vignette-form" src={User.avatar_url}>         
+                </img>
+            {avatarform ? <AvatarSetting setAvatarform={setAvatarform} /> : null}
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>
                
                     {!nickForm ? <h2>{User.nickname}</h2> 

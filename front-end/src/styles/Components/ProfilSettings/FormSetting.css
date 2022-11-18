@@ -2,7 +2,7 @@
     position: relative;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
-    border: solid black 1px;
+    border: solid gray 1px;
     border-radius: 2%;
     margin-left: 25%;
     width: 50%;
