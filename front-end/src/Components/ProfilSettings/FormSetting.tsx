@@ -2,6 +2,7 @@ import "../../styles/Components/ProfilSettings/FormSetting.css"
 import React, {useState } from 'react'
 import AvatarSetting from "./AvatarSetting";
 import Cross from "../Share/Cross";
+import TfaButton from "./TfaButton";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import {myIsalpha} from "../../Utils/Util";
@@ -72,7 +73,8 @@ export default function FormSetting() {
                
                     {!nickForm ? <h2>{User.nickname}</h2> 
                         : <input type="text" onChange={handlechange}></input>}
-               
+
+                <TfaButton/>
                 <div onClick={()=> setNickform(true)}  className='set-nickname'></div>
         
                 <button onClick={handleForm}  className="btn btn-primary">Valider</button>

@@ -25,54 +25,6 @@ function Navbar() {
         localStorage.clear();
     }
 
-    async function logout ()  {
-     dispatch({type: "User/logout",payload: null});
-        dispatch({type: "RoomList/logout",payload: null});
-        await fetch(`http://localhost:4000/auth/logout`, { // A remplacer avec le user
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${User.JWT_token}`
-            },
-            body: JSON.stringify({userId : user.id })
-        })
-        localStorage.clear();
-    }
-
-    async function TfaSwitch(e : any) // changer l affichage selon si c est active ou non et pas un clic
-    {
-        console.log("here");
-        let userUpdate = {...User};
-        if (User.TFOenabled === true)
-            userUpdate.TFOenabled = false;
-        else
-            userUpdate.TFOenabled = true;
-        dispatch({
-            type : "User/setUser",
-            payload: userUpdate
-        })
-        console.log(user.JWT_token);
-        const request = await fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${User.JWT_token}`
-            },
-            body: JSON.stringify({userId : user.id })
-        })
-        console.log("herepast");
-        if (userUpdate.TFOenabled === true)
-        {
-            console.log('/qrcode')
-            return (navigate("/qrcode"));
-        }
-        else
-        {
-            console.log('/home')
-            return (navigate("/home"));
-        }
-}
-
     return (
         <div className="Navbar">
             <div className="container-fluid">
@@ -93,7 +45,7 @@ function Navbar() {
                 
                     <ul className="navbar-nav ms-auto text-center">                
 
-                        <Link className="nav_link" to="/Home">
+                        <Link className="nav_link" to="/ProfilSettings">
                             <img src={User.avatar_url}
                             className='avatar'></img>
                         </Link>
@@ -103,12 +55,6 @@ function Navbar() {
                             className='home-icon'></div>
                         </Link>
                         </li> 
-                        <li>
-                            <label className="switch">
-                            <input type="checkbox" onClick={TfaSwitch} defaultChecked={User.TFOenabled == true}/>
-                            <span className="slider round"></span>
-                            </label>
-                        </li>
                         <li>
                         <Link  className="nav_link" to="/ProfilSettings">
                             <div 
