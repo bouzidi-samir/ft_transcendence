@@ -31,7 +31,7 @@ export default function LoadingPage (props : any) {
         <>  
             {User.TFOenabled === true ? <TFAset /> : null}
             {setTimeout(() => {
-                User.registred === 'true' ? redirect() : <NewMemberSet/>
+                User.registred === 'true' && User.TFOenabled === false ? redirect() : <NewMemberSet/>
             }, 100) 
             }
             {User.registred === 'false' ? <NewMemberSet/> :   <h1 className="loading-title">{time}%</h1> }

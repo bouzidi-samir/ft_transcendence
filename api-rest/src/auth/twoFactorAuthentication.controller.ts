@@ -95,7 +95,7 @@ import { access } from 'fs';
    
         const accessTokenCookie = await this.authenticationService.getCookieWithJwtAccessToken(user.id, true);
         return JSON.stringify({
-                JWT_token: accessTokenCookie,	
+                JWT_token: accessTokenCookie.access_token,	
                 codeValidity : true,
             });
      }

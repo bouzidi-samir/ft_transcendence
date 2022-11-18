@@ -25,7 +25,6 @@ export default function Users() {
         })
         let result = await response.json();
         setFriends([...result]);
-        console.log('response', result);
     }
 
     useEffect( () => {    

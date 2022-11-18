@@ -26,7 +26,7 @@ function Navbar() {
     }
 
     async function logout ()  {
-        dispatch({type: "User/logout",payload: null});
+     dispatch({type: "User/logout",payload: null});
         dispatch({type: "RoomList/logout",payload: null});
         await fetch(`http://localhost:4000/auth/logout`, { // A remplacer avec le user
             method: 'POST',
@@ -126,7 +126,7 @@ function Navbar() {
                         </Link>
                         </li>
                         <li>   
-                        <Link onClick={logout} className="nav_link" to="/">
+                        <Link onClick={logout1} className="nav_link" to="/">
                             <div className='logout-icon'></div>
                         </Link>
                         </li>
