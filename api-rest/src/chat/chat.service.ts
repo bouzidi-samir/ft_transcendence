@@ -98,8 +98,10 @@ export class ChatService {
     
     await this.roomsRepository.save(room);
     await this.memberRepository.save(creator);
-    const users = await this.userRepository.find();
-    for (let i = 0; i < users.length; i++) {
+      
+    if (body.public) {
+      const users = await this.userRepository.find();
+      for (let i = 0; i < users.length; i++) {
       const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: body.tag}});
       if (!already){
         const oneMember = await this.memberRepository.create();
@@ -110,8 +112,9 @@ export class ChatService {
         oneMember.roomTag = body.tag;
         oneMember.room = room;
         await this.memberRepository.save(oneMember);
+        }
       }
-  }
+    }
     return {room, creator};
   }
 

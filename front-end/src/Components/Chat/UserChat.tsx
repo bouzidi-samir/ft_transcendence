@@ -73,11 +73,8 @@ export default function UserChat() {
                       )
                   }
             </div>
-              <div className='online-notifs-title ' >                  
-              </div>
-              <div>
-                <Invitation/>
-              </div>
+
+         
         </div>
     );
 }

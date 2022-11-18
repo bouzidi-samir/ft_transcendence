@@ -52,11 +52,6 @@ const UserSlice = createSlice({
             state.rooms = [...roomname];
             return state;
         },
-        addRoom : (state, action) => {
-            if (!state.rooms.some(e => e == action.payload))
-                state.rooms.push(action.payload);
-            return state;
-        },
         logout : (state, action) => {
             state = User;
             return state;

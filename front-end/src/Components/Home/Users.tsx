@@ -37,10 +37,12 @@ export default function Users() {
             <div className='friends'>   
                 {
                     Object.values(friends).map((f : any)=> (
+                        f.toUsername != User.username ?
                         <div key={f.id}>
                         {/* <img  className='user-avatar' src={f.avatar_url}></img> */}
                         <p>{f.toUsername}</p>
                         </div>
+                        : null
                     )
                     )
                 }

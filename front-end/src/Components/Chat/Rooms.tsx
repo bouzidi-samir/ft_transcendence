@@ -36,10 +36,6 @@ export default function Rooms() {
         setSocket(newSocket)
     }, [setSocket])
 
-//    const alertListener = (alert: string) => {
-  //      setNotifs([...notifs,alert]);        
-    //}
-
     const alertListener = (alertRoom: string) => {
         //setAlertRoom(alertRoom);
         updateRoomList();
@@ -143,8 +139,6 @@ export default function Rooms() {
         ).then(rep => rep.json())
         if (!response.tag)
             response.tag = room.tag;
-     
-        dispatch({type: "User/addRoom",payload: response.tag})
         dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
 
