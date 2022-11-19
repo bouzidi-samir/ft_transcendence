@@ -31,7 +31,7 @@ export class UsersController {
 		return await this.service.getUserById(id);
 	}
 
-	@UseGuards(JwtAuthGuard)
+	//@UseGuards(JwtAuthGuard)
 	@Get("/search/:username")
 	async searchUser(
 		@Param('username') username: string

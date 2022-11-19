@@ -60,7 +60,7 @@ export default function UserChat() {
                                 <p>{user.nickname}</p>
                         <div key={user.id} className="user-online">
                                     <img src={user.avatar_url} className="online-avatar"></img>
-                                <Link  to={"/UserProfil/" + user.userId} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
+                                <Link  to={"/UserProfil/" + user.username} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
                                     <GameInvitation/>

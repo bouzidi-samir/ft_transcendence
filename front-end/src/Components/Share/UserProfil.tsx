@@ -17,18 +17,15 @@ export default function UserProfil() {
     const location = useLocation();
     let navigation = useNavigate();
    
+    console.log(user_id);
     useEffect( () => {
-        const url = `http://${hostname}:4000/users/${user_id.id}`
+        const url = `http://${hostname}:4000/users/search/${user_id.id}`
         fetch(url, {headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         }})
-        .then((response) => {
-        if(response.status === 401)
-            navigation("/Unauthorized");
-        else
-           return response.json()})
+        .then(response => response.json())
         .then (data => setUser(data));
     },
     []
@@ -73,7 +70,7 @@ export default function UserProfil() {
             console.log('myFriend', response);
         
         }
-
+console.log(user.nickname);
     return (
         <div className='userprofil'>
         <Navbar></Navbar>
