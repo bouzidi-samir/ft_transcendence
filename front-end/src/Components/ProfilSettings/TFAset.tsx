@@ -82,11 +82,14 @@ export default function TFAset() {
     return (
         <>  
             {validated === false &&
-                <><h1>Bienvenue! Rentre tes informations.</h1><form className="form-newsetting" data-aos="fade-up" data-aos-duration="1000">
-                    <input type="text" style={{marginTop: "200px"}} onChange={handlechange}></input>
-                    <button onClick={handleForm}className="btn btn-primary">Envoyer mon code qrcode</button>
+                <form className="qr-form" data-aos="fade-up" data-aos-duration="1000">
+                    <div className="qr-icone"></div>
+                    <p className="p-qr">Bienvenue {User.nickname}.</p>
+                    <p className="p-qr"> Merci de saisir ton code d'authentification:</p>
+                    <input className="qr-input" type="text"  onChange={handlechange}></input>
+                    <button onClick={handleForm}className="btn btn-primary">Envoyer</button>
                     <p className="error-text">{error}</p>
-                </form></>
+                </form>
             }
             {validated === true ? navigation("/Home") : null}
         </>
