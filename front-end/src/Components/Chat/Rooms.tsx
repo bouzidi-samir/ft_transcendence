@@ -139,7 +139,6 @@ export default function Rooms() {
         ).then(rep => rep.json())
         if (!response.tag)
             response.tag = room.tag;
-            console.log(response)
         dispatch({type: "RoomActive/setRoomActive",payload: response});
     }
 

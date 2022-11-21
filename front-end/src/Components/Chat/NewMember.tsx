@@ -66,7 +66,7 @@ export default function NewMember() {
     }
 
     async function setAdmin(toUser : any) {
-        let url = `http://${hostname}:4000/chat//adminizer`;
+        let url = `http://${hostname}:4000/chat/adminizer`;
         const response =   fetch(url, {method: "POST",
         headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -80,7 +80,7 @@ export default function NewMember() {
         })
     }
     )
-        setStatu(`Inviation envoiyée!`);
+        setStatu(`${toUser.nickname} est désormais admin de ce salon`);
         setTimeout(() => {
             setStatu("");
         }, 1000);
@@ -106,7 +106,7 @@ export default function NewMember() {
                                        <img src={user.avatar_url} className='membertoadd-avatar'></img>
                                        <h2>{user.nickname}</h2>
                                        <button onClick={() => sendInvitation(user)} className='btn btn-primary'>+Membre</button>
-                                       <button onClick={() => sendInvitation(user)} className='btn btn-primary'>+Admin</button>
+                                       <button onClick={() => setAdmin(user)} className='btn btn-primary'>+Admin</button>
                                     </div>
                                 ))  
                             }               

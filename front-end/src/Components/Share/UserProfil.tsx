@@ -14,11 +14,12 @@ export default function UserProfil() {
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
     const [user, setUser]  = useState(User);
+    const [friend, setFriend] = useState(false);
     const location = useLocation();
     let navigation = useNavigate();
    
     console.log(user_id);
-    useEffect( () => {
+    async function fetchData(){
         const url = `http://${hostname}:4000/users/search/${user_id.id}`
         fetch(url, {headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -27,9 +28,26 @@ export default function UserProfil() {
         }})
         .then(response => response.json())
         .then (data => setUser(data));
-    },
-    []
-    )
+        const url_ =   `http://${hostname}:4000/users/checkFriendship`
+        const res = await fetch(url_, {method: 'POST',  headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },body: JSON.stringify({
+            fromUsername: User.username,
+            toUsername: location.state.toBlock.user.username,
+        })})
+        let result_ = await res.json();
+        let p = Object.values(result_)
+        if (p.length > 0){
+            setFriend(true);
+        }
+    }
+
+    useEffect(()=>{
+        setFriend(false);
+        fetchData();
+    }, [])
     
     async function handleBlock(e: any) {
 
@@ -54,23 +72,47 @@ export default function UserProfil() {
         async function handleNewFriend(e: any) {
 
             e.preventDefault();
-            let url = `http://${hostname}:4000/users/forceToBeMyFriend`;
-            const response = await fetch(url, {method: "POST",
-            headers: {
-            'Authorization': `Bearer ${User.JWT_token}`,
-            'Content-Type': 'application/json',
-            'cors': 'true'
-        },
-        body: JSON.stringify({
-            myUsername: User.username,
-            otherUsername: location.state.toBlock.user.username,
-            })
+
+            if (friend == true){
+                console.log('friend == true, deleteOnefriendship');
+                console.log('user in delete', user);
+                console.log('User in delete', User);
+                let urll = `http://${hostname}:4000/users/deleteOneFriendship`;
+                const response = await fetch(urll, {method: "POST",
+                headers: {
+                'Authorization': `Bearer ${User.JWT_token}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+                },
+                body: JSON.stringify({
+                    fromUsername: User.username,
+                    toUsername: user.username,
+                    })
+                }
+                )
+                let result = await response.json();
+                console.log('myFriend is killed', result);
+            }
+            else {
+                if (User.username != location.state.toBlock.user.username) {
+                let url = `http://${hostname}:4000/users/forceToBeMyFriend`;
+                const response = await fetch(url, {method: "POST",
+                headers: {
+                'Authorization': `Bearer ${User.JWT_token}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+                },
+                 body: JSON.stringify({
+                myUsername: User.username,
+                otherUsername: location.state.toBlock.user.username,
+                })
+                }
+                ).then(response => response.json())
+                console.log('myFriend', response);
+                }
+            }
         }
-        ).then(response => response.json())
-            console.log('myFriend', response);
-        
-        }
-console.log(user.nickname);
+
     return (
         <div className='userprofil'>
         <Navbar></Navbar>
@@ -82,7 +124,10 @@ console.log(user.nickname);
                 <hr></hr>
                 <div className='ecusson-user'></div>
                 <p>Novice</p>
-                <button onClick={handleNewFriend} className="btn btn-primary btn-add">Ajouter</button>
+                { friend == true  ? 
+                <button onClick={handleNewFriend} className="btn btn-primary btn-add">Enlever</button>
+                : <button onClick={handleNewFriend} className="btn btn-primary btn-add">Ajouter</button>
+                }
                 <button onClick={handleBlock} className="btn btn-secondary">Bloquer</button>
             </form>
         </div>
