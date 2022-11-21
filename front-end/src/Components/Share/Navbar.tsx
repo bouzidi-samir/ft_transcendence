@@ -4,8 +4,6 @@ import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-
 
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
