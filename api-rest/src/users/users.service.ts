@@ -136,6 +136,14 @@ export class UsersService {
         return requests;
     }
 
+    async checkFriendship(body) {
+
+        const friend = await this.relationsRepository.find({ where: [{ fromUsername: body.fromUsername, toUsername: body.toUsername, acceptFriendship: true}]});
+        if (friend)
+            return friend;
+        return null;
+    }
+
     async acceptOneFrienshipRequest(body) {
 
         const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.from, friendshipRequest: true} ]});
@@ -165,11 +173,12 @@ export class UsersService {
 
     async deleteOneFriendship(body) {
 
-        const friend = await this.relationsRepository.find({where: [{ toUsername: body.myUsername, fromUsername: body.otherUsername, acceptFriendship: true }, { toUsername: body.otherUsername, fromUsername: body.myUsername, acceptFriendship: true }]});
-        for (let i = 0; i < friend.length; i++) {
-            await this.relationsRepository.delete(friend[i]);
-           
-        }
+        const friend = await this.relationsRepository.findOne({where: [{ fromUsername: body.fromUsername, toUsername: body.toUsername, acceptFriendship: true}]});
+            if (friend){
+                friend.acceptFriendship = false;
+                await this.relationsRepository.save(friend);
+            }
+        return friend;
         
     }
 
