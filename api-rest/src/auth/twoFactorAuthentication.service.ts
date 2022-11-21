@@ -27,15 +27,10 @@ export class TwoFactorAuthenticationService { // genere le secret et l url pour 
   }
 
   public isTwoFactorAuthenticationCodeValid(twoFactorAuthenticationCode: string, user: User) { // compare pour voir si le code est bon
-    console.log(twoFactorAuthenticationCode)
-    console.log(user.twoFactorAuthenticationSecret)
-    if (twoFactorAuthenticationCode !== user.twoFactorAuthenticationSecret )
-      return false
-    //return authenticator.verify({
-      //token: twoFactorAuthenticationCode,
-      //secret: user.twoFactorAuthenticationSecret
-    //})
-    return true
+    return authenticator.verify({
+      token: twoFactorAuthenticationCode,
+      secret: user.twoFactorAuthenticationSecret
+    })
   }
 
   public async pipeQrCodeStream(stream: Response, otpauthUrl: string) { //genere le qr code

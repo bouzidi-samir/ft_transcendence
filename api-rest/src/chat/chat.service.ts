@@ -257,7 +257,7 @@ export class ChatService {
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
-    return newMember;
+    return this.getRoomByTag(body.tag);;
   }
 
   async editRoom(body) {

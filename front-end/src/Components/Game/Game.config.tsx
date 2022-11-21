@@ -3,7 +3,7 @@ export const paddle_height = 50;
 export const paddle_width = 10;
 
 export const ball_radius = 5;
-export const score_limits = 3;
+export const score_limits = 8;
 
      // taille de la fenetre du canvas 
 export const canvas_width = 680;

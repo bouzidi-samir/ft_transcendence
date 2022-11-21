@@ -51,11 +51,11 @@ export default function UserChat() {
     return (
         <div className="userchat-content">
               <h2>Membres</h2>
-              <NewMember/>
+              {RoomActive.privateMessage === false ? <NewMember/> : null}
               <div className='online-list'>
                   {
                       members.map((user : any) => (
-                      //  user.username != User.username ? 
+                        user.username != User.username ? 
                         <div className='user-block'>
                                 <p>{user.nickname}</p>
                         <div key={user.id} className="user-online">
@@ -68,7 +68,7 @@ export default function UserChat() {
                                     <BanUser toBan={user}/>
                             </div>
                             </div>
-                        //    : null
+                            : null
                             )
                       )
                   }

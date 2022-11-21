@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 
 function useForceUpdate(){
@@ -20,9 +21,12 @@ function Navbar() {
     const [user, setUser]  = useState(User);
     const [twofactor, setTwoFactor]  = useState(false);
     const navigate = useNavigate();
-
+    
     function logout1 () : void {
+     
         localStorage.clear();
+
+     
     }
 
     return (

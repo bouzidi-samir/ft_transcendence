@@ -10,7 +10,7 @@ import TFAset from './ProfilSettings/TFAset';
 import Navbar from './Share/Navbar';
 
 export default function CodePage (props : any) {
-
+    const {hostname} = document.location;
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
@@ -20,7 +20,7 @@ export default function CodePage (props : any) {
 
     async function getQRcode()
     {
-        const response = await fetch(`http://localhost:4000/2fa/generate`, { // A remplacer avec le user
+        const response = await fetch(`http://${hostname}:4000/2fa/generate`, { // A remplacer avec le user
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

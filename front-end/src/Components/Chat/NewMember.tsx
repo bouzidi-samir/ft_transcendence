@@ -45,7 +45,6 @@ export default function NewMember() {
     }
 
     async function sendInvitation(toUser : any) {
-
         let url = `http://${hostname}:4000/chat/roomInvitation`;
         const response =   fetch(url, {method: "POST",
         headers: {
@@ -64,8 +63,29 @@ export default function NewMember() {
         setTimeout(() => {
             setStatu("");
         }, 1000);
-
     }
+
+    async function setAdmin(toUser : any) {
+        let url = `http://${hostname}:4000/chat//adminizer`;
+        const response =   fetch(url, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            username: User.username,
+            tag: RoomActive.tag,
+            targetName: toUser.username
+        })
+    }
+    )
+        setStatu(`Inviation envoiyée!`);
+        setTimeout(() => {
+            setStatu("");
+        }, 1000);
+    }
+
 
     return (
         <>
@@ -77,7 +97,7 @@ export default function NewMember() {
                 <div className='fond1'></div>
                 <div className='addMember'  data-aos="fade-up" data-aos-duration="1000">
                         <div onClick={()=>setIsAdmin(false)} className="cross-member"></div>
-                        <h2>Invite un nouveau membre:</h2>
+                        <h2>Gestionnaire des membres:</h2>
                         <div className='membertoadd'>
                          
                             {

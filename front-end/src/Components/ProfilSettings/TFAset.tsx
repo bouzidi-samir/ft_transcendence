@@ -11,7 +11,7 @@ import { responsePathAsArray } from "graphql";
 import Home from "../../Containers/Home";
 
 export default function TFAset() {
-    
+    const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export default function TFAset() {
     async function checkCode() : Promise<any>
     {
         let ret;
-        const request = await fetch(`http://localhost:4000/2fa/authenticate`, { // A remplacer avec le user
+        const request = await fetch(`http://${hostname}:4000/2fa/authenticate`, { // A remplacer avec le user
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
