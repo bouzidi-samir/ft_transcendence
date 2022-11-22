@@ -86,6 +86,14 @@ export class gameRoom extends Room {
 			{
 				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
 			}
+			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
+		})
+		this.onMessage("viewer", (client,message) => {
+			for (let i = 0; i < this.clients.length; i++)
+			{
+				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
+			}
+			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
 		})
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;

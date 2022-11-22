@@ -9,7 +9,10 @@ import NewMemberSet from "./ProfilSettings/NewMemberSet";
 import TFAset from './ProfilSettings/TFAset'
 import Navbar from "./Share/Navbar";
 import { Link } from "react-router-dom";
-
+import * as Colyseus from "colyseus.js";
+import { Client } from "colyseus.js";
+import { Any } from "typeorm";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 export default function MatchingPage (props : any) {
 
@@ -19,9 +22,20 @@ export default function MatchingPage (props : any) {
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
+    const [hide, setHide] = useState(0);
+    const {hostname} = document.location;
+    let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
+    const [rooms, setRooms] = useState<Colyseus.RoomAvailable<any>[]>();
+    let roomsNb : number | undefined;
+    let userUpdate = {...User};
+
+    async function defineRooms()
+    {
+       await setRooms(await client.getAvailableRooms("my_room"));
+    }
 
     useEffect( () => {
-        
+        defineRooms();
      }, []
      )
 
@@ -31,15 +45,57 @@ export default function MatchingPage (props : any) {
         }, 1000);
     }
 
+    const enableMenu = async (e : any) =>
+    {
+        e.preventDefault();
+        roomsNb = rooms?.length;
+        if (hide === 0)
+            setHide(1);
+        else
+            setHide(0);
+    }
+
+    async function spectate(event : any, key : any)
+    {
+        if (rooms)
+        {
+            userUpdate.room = await client?.joinById(rooms[key].roomId, {});
+            dispatch({
+                type : "User/setUser",
+                payload: userUpdate
+            });
+            navigation('/game');
+        }
+    }
+
+    const getList =  () =>
+    {
+        let content = [];
+        if (rooms && rooms.length > 0)
+        {
+            for (let i = 0; i < rooms.length; i++) {
+                content.push(<li className="listButton" key={i} onClick={event => spectate(event, i)}>{rooms[i].metadata.player1} VS {rooms[i].metadata.player2}</li>);
+            }
+        }
+        else 
+        {
+            content.push(<li className="listButton">No games found.</li>)
+        }
+        return content;
+    }
+
     return (
-        <div className="loading-content">
+        <div className="loading-contents">
         <>
             <Particle/>
             <Navbar />
             
-            <form className = 'form-newsetting'>
-            <Link to="/game2" className="SingleButton">Single player.</Link>
-            <Link to ="/WaitingRoom" className="MultiButton">Multiplayer.</Link>
+            <form className = 'form-newsettings'>
+                <Link to ="/WaitingRoom" className="MultiButtons">Multiplayer.</Link>
+                <button onClick={enableMenu} className="SingleButtons">Spectate.</button>
+                {hide === 1 &&
+                    <ul className="list_match">{getList()}</ul>
+                }
             </form>
 
                 

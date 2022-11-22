@@ -17,10 +17,11 @@ export default function CodePage (props : any) {
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
+    const {hostname} = document.location;
 
     async function getQRcode()
     {
-        const response = await fetch(`http://localhost:4000/2fa/generate`, { // A remplacer avec le user
+        const response = await fetch(`http://${hostname}:4000/2fa/generate`, { // A remplacer avec le user
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

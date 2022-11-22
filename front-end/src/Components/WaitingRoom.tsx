@@ -16,15 +16,15 @@ import { RoomInternalState } from "colyseus";
 
 
 export default function MatchingPage (props : any) {
-
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
+    const {hostname} = document.location;
 
-    let client: Client = new Colyseus.Client('ws://localhost:4000');
+    let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
     let room : Colyseus.Room<unknown>;
     let userUpdate = {...User};
 

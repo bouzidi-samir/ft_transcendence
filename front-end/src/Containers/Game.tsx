@@ -28,10 +28,12 @@ export default function Game() {
 	let navigation = useNavigate();
 	const [fortyTwo, setFortyTwo] = useState(false);
 	const [params] = useSearchParams();
+	const {hostname} = document.location;
+	
 
 	
 
-	let client: Client = new Colyseus.Client('ws://localhost:4000');
+	let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
 	let clientId : number;
 	let canvas : any = useRef(null);
 	let ball : Ball;
@@ -54,7 +56,7 @@ export default function Game() {
 	function updateData()
 	{
 		const code = params.get("code")
-		const {hostname, port} = document.location;
+		const {port} = document.location;
     	if (code)
 		{
       		setFortyTwo(true);
@@ -87,6 +89,10 @@ export default function Game() {
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
 					room.send("player2_name", {player2_username : player2.userName});
+				}
+				else
+				{
+					room.send("viewer", {})
 				}
 				clientId = message.client.sessionId;
 				room.onMessage("players_names", (message) => {
