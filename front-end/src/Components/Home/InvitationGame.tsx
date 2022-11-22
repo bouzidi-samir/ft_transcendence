@@ -11,6 +11,7 @@ export default function InvitationGame() {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const [socket, setSocket] = useState<Socket>();
+    const [alertGame, setAlertGame] = useState<string>("");
     const acceptGame =  "OK";
     const refuseGame = "KO";
 
@@ -19,6 +20,18 @@ export default function InvitationGame() {
         const newSocket = io('http://localhost:8000');
         setSocket(newSocket)
     }, [setSocket])
+
+
+    const alertListener = (alertGame: string) => {
+        setAlertGame(alertGame);
+    }
+    
+    useEffect(() => {
+        socket?.on("invitationGameServer", alertListener);
+        return () => {
+            socket?.off("invitationGameServer", alertListener)
+        }
+    }, [alertListener])
 
     async function handleInvitation() {
 
@@ -39,7 +52,7 @@ export default function InvitationGame() {
         
         useEffect(() => {
             handleInvitation();
-        }, []);
+        }, [alertGame]);
 
         async function handleAccept(invit: any)  {
             console.log('accept')
