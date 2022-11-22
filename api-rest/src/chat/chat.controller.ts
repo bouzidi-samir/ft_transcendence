@@ -136,6 +136,26 @@ export class ChatController {
 		return await this.service.refuseOneRoomInvitation(body);
 	}
 
+    //--------------------------------- GAME   -------------------------------------------
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/checkGameInvitation')
+		async checkGameInvitation(@Body() body: any): Promise<any> { 
+			return await this.service.checkGameInvitation(body);
+	}
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/acceptOneGameInvitation')
+	async acceptOneGameInvitation(@Body() body: any): Promise<any> { 
+		return await this.service.acceptOneGameInvitation(body);
+	}
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/refuseOneGameInvitation')
+	async refuseOneGameInvitation(@Body() body: any): Promise<any> { 
+		return await this.service.refuseOneGameInvitation(body);
+	}
+
 	// @Post('/acceptAllRoomInvitation')
 	// async acceptAllRoomInvitation(
 	// 	@Body() body: any): Promise<any> { // username: string

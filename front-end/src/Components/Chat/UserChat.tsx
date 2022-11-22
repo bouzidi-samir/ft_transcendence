@@ -10,6 +10,7 @@ import BanUser from './BanUser';
 import Notifs from '../Home/Notifs';
 import Invitation from '../Home/Invitation';
 import ChatNotifs from './ChatNotifs';
+import InvitationGame from '../Home/InvitationGame';
 
 
 export default function UserChat() {
@@ -58,6 +59,7 @@ export default function UserChat() {
               <div>
                 <ChatNotifs/>
                 <Invitation/>
+                <InvitationGame/>
               </div>
         </div>
     );

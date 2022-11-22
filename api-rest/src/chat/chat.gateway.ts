@@ -61,6 +61,18 @@ import { Repository } from 'typeorm';
       this.server.emit('newRoomServer', alert);
     }
 
+    @SubscribeMessage('acceptGame')
+    acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('acceptGameServer', alert);
+    }
+
+    @SubscribeMessage('refuseGame')
+    refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('refuseGameServer', alert);
+    }
+
     // @SubscribeMessage('createChat')
     // create(@MessageBody() createChatDto: CreateChatDto) {
     //   return this.chatService.create(createChatDto);

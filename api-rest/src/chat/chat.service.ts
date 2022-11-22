@@ -425,6 +425,42 @@ export class ChatService {
     return true;
   }
 
+
+  // ----------------------------   GAME   --------------------------------------------------------------
+
+
+  async checkGameInvitation(body) {
+
+    const invitations = await this.relationsRepository.find({ where: [{ toUsername: body.username, gameRequest: true}]});
+    if (invitations){
+      return invitations ;
+    }
+    return false;
+  }
+
+  async acceptOneGameInvitation(body) {
+
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, gameRequest: true} ]});
+    if (!request)
+      return 'No Request';
+
+    request.gameRequest = false
+    request.acceptGame = true;
+    await this.relationsRepository.save(request);
+    return request;
+  }
+
+  async refuseOneGameInvitation(body){
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, gameRequest: true} ]});
+    if (!request)
+      return 'No roomRequest';
+    request.gameRequest = false
+    await this.relationsRepository.save(request);
+    return request;
+  }
+
+  //------------------------------------------------------------------------------------------------------
+  
   async banMember(body) {
 
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
