@@ -75,6 +75,19 @@ import { Repository } from 'typeorm';
       return this.chatService.findOne(id);
     }
   
+
+    @SubscribeMessage('acceptGame')
+    acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('acceptGameServer', alert);
+    }
+
+    @SubscribeMessage('refuseGame')
+    refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('refuseGameServer', alert);
+    }
+    
     // @SubscribeMessage('updateChat')
     // update(@MessageBody() updateChatDto: UpdateChatDto) {
     //   return this.chatService.update(updateChatDto.id, updateChatDto);

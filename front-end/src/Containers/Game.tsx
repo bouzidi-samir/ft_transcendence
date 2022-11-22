@@ -285,15 +285,9 @@ export default function Game() {
 			}
 		})
 		room.onMessage("leaver", (message) => {
-			if (message.leaver === player.userName)
-				player.score = -1;
-			if (message.leaver === player2.userName)
-				player2.score = -1;
-			room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 			updateData();
 			navigation('/Home');
 		})
-		room.send("pong", {id : clientId});
 	}
 
 	const display = () => {
@@ -312,6 +306,11 @@ export default function Game() {
 		console.log(result);
 
 		return () => {
+			if(room)
+			{
+				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
+				room.leave();
+			}
 			cancelAnimationFrame(animationRequest);
 		}
 	}, [canvas.current]);

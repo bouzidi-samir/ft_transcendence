@@ -8,8 +8,7 @@ import { Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-export class MatchingRoom extends Room<MyRoomState> {
-  clientsEllo : number[] = [];
+export class PrivateRoom extends Room<MyRoomState> {
 
   onCreate (options: any) {
     this.setState(new MyRoomState());
@@ -33,11 +32,6 @@ export class MatchingRoom extends Room<MyRoomState> {
   }
 
   async onLeave (client: Client, consented: boolean) {
-   for (let j = 0; j < this.clientsEllo.length; j++)
-   {
-     if (this.clients[j] === client)
-        this.clientsEllo.splice(j);
-   }
     console.log(client.sessionId, "left!");
   }
 
