@@ -63,8 +63,7 @@ export default function UserChat() {
                                 <Link  to={"/UserProfil/" + user.userId} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
-                                    <GameInvitation/>
-                                    <MuteUser toMute={user}/>
+                                    <GameInvitation player2={user}/>
                                     <BanUser toBan={user}/>
                             </div>
                             </div>
