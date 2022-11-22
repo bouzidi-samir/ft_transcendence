@@ -19,22 +19,19 @@ export default function UserChat() {
     const [members, setMembers] = useState([]);
     const [socket, setSocket] = useState<Socket>();
     const [alert, setAlert] = useState<string>("Pong");
-
+  
     useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`, {
-        extraHeaders: {Authorization: `Bearer ${User.JWT_token}`}
-        });
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
   
-    const alertListener = (alert: string) => {
-      setAlert(alert);
+    const memberListener = (alert: string) => {
     }
     
     useEffect(() => {
-        socket?.on("newMessageServer", alertListener);
-        return () => {socket?.off("newMessageServer", alertListener)}
-    }, [alertListener])
+        socket?.on("newMemberServer", memberListener);
+        return () => {socket?.off("newMemberServer", memberListener)}
+    }, [memberListener])
    
     useEffect( () => {    
         let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
@@ -45,13 +42,13 @@ export default function UserChat() {
           }})
         .then(response => response.json())
         .then(data => setMembers(data));
-    }, [RoomActive]
+    }, [RoomActive, memberListener]
     )
 
     return (
         <div className="userchat-content">
               <h2>Membres</h2>
-              {RoomActive.privateMessage === false ? <NewMember/> : null}
+              {RoomActive.privateMessage === false ? <NewMember members={members} setMembers={setMembers}/> : null}
               <div className='online-list'>
                   {
                       members.map((user : any) => (

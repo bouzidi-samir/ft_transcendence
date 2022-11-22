@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { io, Socket } from 'socket.io-client';
 import Alert from '../Share/Alert';
 import '../../styles/Components/Chat/RoomSetting.css'
 
@@ -16,7 +17,22 @@ export default function RoomSettings() {
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-  
+    const [socket, setSocket] = useState<Socket>();
+    const alertRoom = "NEW ROOM AVAILABLE !!!";
+
+    useEffect(() => {
+        const newSocket = io(`http://${hostname}:8000`);
+        setSocket(newSocket)
+    }, [setSocket])
+
+    const alertListener = (alertRoom: string) => {
+    }
+
+    useEffect(() => {
+        socket?.on("newAdminServer", alertListener);
+        return () => {socket?.off("newAdminServer", alertListener)}
+    }, [alertListener])
+    
     useEffect(() => {
         setPrivate(RoomActive.private);
         setPublicRoom(RoomActive.public);
@@ -28,7 +44,7 @@ export default function RoomSettings() {
             'cors': 'true'
           },})
         .then(ret => ret.json()).then(ret => setAdminList(ret))
-    }, [RoomActive]
+    }, [RoomActive, alertListener]
     )
 
     async function updateRoomList() {
@@ -76,6 +92,7 @@ export default function RoomSettings() {
         }
         updateRoomList();
         dispatch({type: "RoomActive/setRoomActive",payload: roomUpdate});
+        socket?.emit("newRoomClient", alertRoom);
        setIsAdmin(false);
     }
 

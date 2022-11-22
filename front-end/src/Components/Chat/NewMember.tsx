@@ -2,8 +2,9 @@ import '../../styles/Components/Chat/NewMember.css'
 import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import Alert from '../Share/Alert';
+import { io, Socket } from 'socket.io-client';
 
-export default function NewMember() {
+export default function NewMember(props : any) {
     const {hostname} = document.location;
     const[isAdmin, setIsAdmin] = useState(false);
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -12,7 +13,36 @@ export default function NewMember() {
     const [adminList, setAdminList] = useState<any>([])
     const [statu, setStatu] = useState(""); 
     const [alert, setAlert] = useState(false);
-  
+    const [socket, setSocket] = useState<Socket>();
+    const alertAdmin = "NEW ROOM ADMiN !!!";
+
+    async function updateMemberList() {
+        let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
+        fetch(url, {headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          }})
+        .then(response => response.json())
+        .then(data => props.setMembers(data));
+    }
+
+    useEffect(() => {
+        const newSocket = io(`http://${hostname}:8000`);
+        setSocket(newSocket)
+    }, [setSocket])
+
+    const adminListener = (alertRoom: string) => {
+        updateMemberList();
+    }
+
+    useEffect(() => {
+        socket?.on("newAdminServer", adminListener);
+        return () => {
+            socket?.off("newAdminServer", adminListener)
+        }
+    }, [adminListener])
+    
     useEffect(() => {
         let url = `http://${hostname}:4000/users`;
         fetch(url, {headers: 
@@ -84,6 +114,7 @@ export default function NewMember() {
         setTimeout(() => {
             setStatu("");
         }, 1000);
+        socket?.emit("newAdmin", alertAdmin);
     }
 
 

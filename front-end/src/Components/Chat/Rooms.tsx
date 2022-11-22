@@ -19,6 +19,7 @@ export default function Rooms() {
     const [alertRoom, setAlertRoom] = useState<string>("");
     const [notifs, setNotifs] = useState<any[]>([]);
     let p : [string | boolean][];
+    const alertMember = "NEW MEMBER !!!";
     
     async function updateRoomList() {
         let url = `http://${hostname}:4000/chat/rooms`;
@@ -37,7 +38,6 @@ export default function Rooms() {
     }, [setSocket])
 
     const alertListener = (alertRoom: string) => {
-        //setAlertRoom(alertRoom);
         updateRoomList();
     }
 
@@ -140,6 +140,7 @@ export default function Rooms() {
         if (!response.tag)
             response.tag = room.tag;
         dispatch({type: "RoomActive/setRoomActive",payload: response});
+        socket?.emit("newMember", alertMember);
     }
 
     useEffect(() => {
