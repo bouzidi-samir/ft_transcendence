@@ -43,6 +43,7 @@ export default function Invitation() {
         body: JSON.stringify({
             username:  User.username,
             fromUsername:invit.fromUSername,
+            avatar_url: User.avatar_url,
             tag: invit.roomTag,
             })
         }

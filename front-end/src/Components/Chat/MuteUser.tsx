@@ -31,7 +31,7 @@ body: JSON.stringify({
     })
 }
 ).then(response => response.json())
-if (response === false){
+if (response == false){
     setAlert(true)
 }
 setMute(false);
@@ -54,7 +54,7 @@ return (
                     <button className='btn btn-primary' onClick={handleMute} >Valider</button>
             </form>
         </>  : null} 
-        {alert ? <Alert message="Cet action est réservée aux admins du channel." setWindow={setAlert} /> : null}
+        {alert ? <Alert message="Tu n'est pas autorisé a réalié cette action." setWindow={setAlert} /> : null}
     </>
 )
 }

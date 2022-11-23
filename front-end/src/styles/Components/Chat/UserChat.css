@@ -57,6 +57,7 @@
     margin-left: 2%;
     border-radius: 50%;
     border: solid blueviolet 1px;
+    object-fit: cover;
     
 }
 
