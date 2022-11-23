@@ -428,6 +428,33 @@ export class ChatService {
 
   // ----------------------------   GAME   --------------------------------------------------------------
 
+  async gameInvitation(body) {
+
+    
+    const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
+    if (!receiver)
+      return false;
+
+
+    const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName}})
+    if (relation){
+      if (relation.gameRequest == false) {
+        relation.gameRequest = true;
+        await this.relationsRepository.save(relation);
+        return relation;
+      }
+    }
+    else {
+
+      const newRelation = await this.relationsRepository.create();
+      newRelation.fromUsername = body.senderName;
+      newRelation.toUsername = body.receiverName;
+      newRelation.gameRequest = true;
+      newRelation.owner = receiver;
+      await this.relationsRepository.save(newRelation);
+      return newRelation;
+    }
+  }
 
   async checkGameInvitation(body) {
 

@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
-import GameInvitation from './GameInvitation';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import Notifs from '../Home/Notifs';
 import Invitation from '../Home/Invitation';
 import ChatNotifs from './ChatNotifs';
 import InvitationGame from '../Home/InvitationGame';
+import GameLauncher from './GameLauncher';
 
 
 export default function UserChat() {
@@ -43,7 +43,7 @@ export default function UserChat() {
                                 <Link  to={"/UserProfil/" + user.userId} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
-                                    <GameInvitation/>
+                                    <GameLauncher player2={user}/>
                                     <MuteUser toMute={user}/>
                                     <BanUser toBan={user}/>
                             </div>

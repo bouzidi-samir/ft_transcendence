@@ -138,6 +138,11 @@ export class ChatController {
 
     //--------------------------------- GAME   -------------------------------------------
 
+    @Post('gameInvitation')
+    async gameInvitation(@Body() body: any): Promise<any> {
+        return await this.service.gameInvitation(body);
+    }
+
     @UseGuards(JwtAuthGuard)
     @Post('/checkGameInvitation')
 		async checkGameInvitation(@Body() body: any): Promise<any> { 
