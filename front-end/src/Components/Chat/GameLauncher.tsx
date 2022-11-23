@@ -61,9 +61,10 @@ export default function GameLauncher(props: any) {
     async function createGame()
     {
         if (alertGame ==  "OK")
-        console.log("le jeu est OK");
+        console.log("le player2 est OK pour jouer");
+        
         if (alertGame ==  "KO")
-        console.log("le jeu est KO");
+        console.log("le player2 est KO (pas OK) pour jouer");
 
         // let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
         // const player1 = User.username;
