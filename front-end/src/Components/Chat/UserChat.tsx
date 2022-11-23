@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
-import GameInvitation from './GameInvitation';
+import GameLauncher from './GameLauncher';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import NewMember from './NewMember';
 import Invitation from '../Home/Invitation';
 import ChatNotifs from './ChatNotifs';
+import InvitationGame from '../Home/InvitationGame';
 import { io, Socket } from "socket.io-client";
 
 export default function UserChat() {
@@ -60,7 +61,7 @@ export default function UserChat() {
                                 <Link  to={"/UserProfil/" + user.username} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
-                                    <GameInvitation/>
+                                    <GameLauncher  player2={user} />
                                     <MuteUser toMute={user}/>
                                     <BanUser toBan={user}/>
                             </div>
@@ -69,9 +70,10 @@ export default function UserChat() {
                             )
                       )
                   }
-            </div>
-
-         
+            </div>  
+            <div>
+                  <InvitationGame/>
+            </div>      
         </div>
     );
 }
