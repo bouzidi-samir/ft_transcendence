@@ -585,7 +585,7 @@ async muteMember(body) {
     return {error: "Already blocked"};
   
   const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
-  if (oneAdmin == null)
+  if (oneAdmin.admin == false)
     return {error: "Need to be admin"};
  
   existingMember.muted = true;
