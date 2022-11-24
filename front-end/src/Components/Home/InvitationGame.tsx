@@ -8,8 +8,6 @@ export default function InvitationGame() {
     const User = useSelector((state: any) => state.User);
     const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
-    const dispatch = useDispatch();
-    let navigate = useNavigate();
     const [socket, setSocket] = useState<Socket>();
     const [alertGame, setAlertGame] = useState<string>("");
     const acceptGame =  "OK";
