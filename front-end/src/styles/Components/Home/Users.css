@@ -63,18 +63,36 @@
 .friend-case{
     display: flex;
     width: 100%;
-    height: 40%;
+    height: 50%;
     border: solid 1px blueviolet;
     cursor: pointer;
     padding-bottom: 2%;
 }
 
+.friend-case:hover {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    border: solid 1px blueviolet;
+    cursor: pointer;
+    padding-bottom: 2%;
+    background-color: blueviolet;
+}
+
+
 .friend-case img {
     border-radius: 50%;
     height: 90%;
     margin-left: 6%;
-    margin-right: 7%;
+    margin-right: 20%;
     width: 20%;
     margin-top: 2%;
     margin-bottom: 2%;
+}
+
+
+.friend-case p {
+    margin-top: 3%;
+    color: white;
+    font-size: 20px;
 }

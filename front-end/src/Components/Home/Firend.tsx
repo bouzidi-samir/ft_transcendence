@@ -8,8 +8,7 @@ export default function Friend(props: any) {
     const User = useSelector((state: any) => state.User);
     const friendtoGet = props.friend.toUsername; 
     const [friend, setFriend]  = useState(User); 
-    console.log(friendtoGet);
-
+ 
     useEffect(() => {
         const url = `http://${hostname}:4000/users/search/${friendtoGet}`
         fetch(url, {headers: {

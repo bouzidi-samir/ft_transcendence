@@ -157,7 +157,7 @@ export default function Rooms() {
                 {
                     Roomlist.map((room: any) => 
                     
-                        <div className='room' key={room.id}  
+                        <div className='room' key={room.id + room.tag}  
                         onClick={() => {handleCheckMember(room); handleCheckBan(room)}} >
                             <RoomCase room={room}/>
                         </div>

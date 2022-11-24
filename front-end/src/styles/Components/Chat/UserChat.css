@@ -27,7 +27,7 @@
 }
 
 .user-block {
-    height: 25%;
+    height: 28%;
     width: 100%;
     border: solid 1px black;
     
@@ -55,10 +55,10 @@
     width: 20%;
     height: 90%;
     margin-left: 2%;
+    
     border-radius: 50%;
     border: solid blueviolet 1px;
-    object-fit: cover;
-    
+    object-fit: cover;    
 }
 
 .user-online p {

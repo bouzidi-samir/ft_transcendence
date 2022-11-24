@@ -54,9 +54,9 @@ export default function UserChat() {
                   {
                       members.map((user : any) => (
                         user.username != User.username ? 
-                        <div className='user-block'>
+                        <div key={user.id + user.username} className='user-block'>
                                 <p>{user.nickname}</p>
-                        <div key={user.id} className="user-online">
+                        <div className="user-online">
                                     <img src={user.avatar_url} className="online-avatar"></img>
                                 <Link  to={"/UserProfil/" + user.username} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>

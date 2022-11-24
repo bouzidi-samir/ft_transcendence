@@ -121,6 +121,7 @@ export default function UserProfil() {
                 <Cross lastPage="/Chat"/>
                 <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
+                <p>{user.status}e</p>
                 <hr></hr>
                 <div className='ecusson-user'></div>
                 <p>Novice</p>

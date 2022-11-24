@@ -39,7 +39,7 @@ export default function Users() {
                 {
                     Object.values(friends).map((f : any)=> (
                         f.toUsername != User.username ?
-                        <Friend key={f.id} friend={f}/>
+                        <Friend key={f.id + f.username} friend={f}/>
                         : null
                     )
                     )
