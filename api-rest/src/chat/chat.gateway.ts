@@ -76,6 +76,13 @@ import { Repository } from 'typeorm';
     }
   
 
+    
+    @SubscribeMessage('invitationGame')
+    invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('invitationGameServer', alert);
+    }
+    
     @SubscribeMessage('acceptGame')
     acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       console.log('Received message in Back', alert);

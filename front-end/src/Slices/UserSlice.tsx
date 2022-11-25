@@ -8,7 +8,7 @@ const User = {
     nickname: "",
     registred:"",
     avatar_url: "",
-    status: "",
+    status: "offline",
     room_active: "",
     rooms: [""],
     session:  "",

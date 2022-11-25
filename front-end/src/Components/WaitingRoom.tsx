@@ -75,6 +75,7 @@ export default function MatchingPage (props : any) {
        {
            room.send("clientEllo", {ello : User.ello});
            room.onMessage("createRoom", async (message) => {
+               userUpdate.status = "In game";
                 userUpdate.room = await client?.create("my_room", {}); 
                 dispatch({
                     type : "User/setUser",
@@ -85,6 +86,7 @@ export default function MatchingPage (props : any) {
                 navigation('/game');
             })
             room.onMessage('joinRoom', async (message) => {
+                userUpdate.status = "In game";
                 userUpdate.room = await client?.joinById(message.id, {});
                 dispatch({
                     type : "User/setUser",

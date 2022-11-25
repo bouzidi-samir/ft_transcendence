@@ -55,21 +55,39 @@ export default function Game() {
 
 	function updateData()
 	{
-		const code = params.get("code")
-		const {port} = document.location;
-    	if (code)
+		let userUpdate = {...User};
+		if (player.userName === User.username)
 		{
-      		setFortyTwo(true);
-			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json','cors': 'true'},
-				body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
-			})
-			request.then(response => response.json()
-      			.then((response) => {dispatch({type: "User/setUser", payload: response,});}))
-					request.catch(e => {console.error(e)})
-	}
-		return () => {}
+			if (player.score > player2.score)
+			{
+				userUpdate.gameWon += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello += 10;
+			}
+			else
+			{
+				userUpdate.gameLost += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello -= 10;
+			}
+		}
+		else if (player2.userName === User.username)
+		{
+			if (player2.score > player.score)
+			{
+				userUpdate.gameWon += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello += 10;
+			}
+			else
+			{
+				userUpdate.gameLost += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello -= 10;
+			}
+		}
+		userUpdate.status = "online";
+		dispatch({type: "User/setUser", payload: userUpdate,});
 	}
 
 	const connect = async () => {
