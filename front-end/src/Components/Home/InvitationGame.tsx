@@ -101,7 +101,7 @@ export default function InvitationGame() {
         }
 
         async function handleRefuse(invit: any)  {
-            console.log('accept')
+            console.log('refuse')
             let url = "http://localhost:4000/chat/refuseOneGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {

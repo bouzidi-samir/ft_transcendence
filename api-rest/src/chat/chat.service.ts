@@ -472,8 +472,8 @@ export class ChatService {
     const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, roomRequest: true, roomTag: body.tag} ]});
     if (!request)
       return 'No roomRequest';
-    // if (request.acceptRoom == true)
-    //   return true;
+     if (request.acceptRoom == true)
+       return true;
 
     const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
     if (!requester)
