@@ -8,8 +8,6 @@ export default function InvitationGame() {
     const User = useSelector((state: any) => state.User);
     const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
-    const dispatch = useDispatch();
-    let navigate = useNavigate();
     const [socket, setSocket] = useState<Socket>();
     const [alertGame, setAlertGame] = useState<string>("");
     const acceptGame =  "OK";
@@ -38,7 +36,7 @@ export default function InvitationGame() {
             let url = "http://localhost:4000/chat/checkGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -59,7 +57,7 @@ export default function InvitationGame() {
             let url = "http://localhost:4000/chat/acceptOneGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -79,7 +77,7 @@ export default function InvitationGame() {
             let url = "http://localhost:4000/chat/refuseOneGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
-            'Authorization': `Bearer ${values[0]}`,
+            'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'
         },
@@ -95,19 +93,21 @@ export default function InvitationGame() {
 
         }
     
-
     return (
         <div className='notifs-content'>
             { invitations.length > 0 ? (
                 invitations.map((invit: any) => (
-                    <div key={invit.id}>
-                    <p>Game invitation from : {invit.fromUsername + ' ' }
-                    <button  onClick={() => handleAccept(invit)}>Accepter</button>
-                    <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
-                    </p> 
-                    </div>  
+                    invit.toUsername == User.username ?
+                        <div key={invit.id}>
+                        <p>Game invitation from : {invit.fromUsername + ' ' }
+                        <button  onClick={() => handleAccept(invit)}>Accepter</button>
+                        <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
+                        </p> 
+                        </div>
+                        : null  
                     ))) : (null)
             }
         </div>
         );
 }
+      

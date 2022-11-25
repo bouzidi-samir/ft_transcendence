@@ -690,4 +690,64 @@ async getRoomAdmin(tag) {
     return `This action removes a #${id} chat`;
   }
 
+  // ----------------------------   GAME   --------------------------------------------------------------
+
+  async gameInvitation(body) {
+
+    
+    const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
+    if (!receiver)
+      return false;
+
+
+    const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName}})
+    if (relation){
+      if (relation.gameRequest == false) {
+        relation.gameRequest = true;
+        await this.relationsRepository.save(relation);
+        return relation;
+      }
+    }
+    else {
+
+      const newRelation = await this.relationsRepository.create();
+      newRelation.fromUsername = body.senderName;
+      newRelation.toUsername = body.receiverName;
+      newRelation.gameRequest = true;
+      newRelation.owner = receiver;
+      await this.relationsRepository.save(newRelation);
+      return newRelation;
+    }
+  }
+
+  async checkGameInvitation(body) {
+
+    const invitations = await this.relationsRepository.find({ where: [{ toUsername: body.username, gameRequest: true}]});
+    if (invitations){
+      return invitations ;
+    }
+    return false;
+  }
+
+  async acceptOneGameInvitation(body) {
+
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, gameRequest: true} ]});
+    if (!request)
+      return 'No Request';
+
+    request.gameRequest = false
+    request.acceptGame = true;
+    await this.relationsRepository.save(request);
+    return request;
+  }
+
+  async refuseOneGameInvitation(body){
+    const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, gameRequest: true} ]});
+    if (!request)
+      return 'No roomRequest';
+    request.gameRequest = false
+    await this.relationsRepository.save(request);
+    return request;
+  }
+
 }

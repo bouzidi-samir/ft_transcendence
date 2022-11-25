@@ -82,4 +82,23 @@ import { Repository } from 'typeorm';
     remove(@MessageBody() id: number) {
       return this.chatService.remove(id);
     }
+
+    @SubscribeMessage('invitationGame')
+    invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('invitationGameServer', alert);
+    }
+    
+    @SubscribeMessage('acceptGame')
+    acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('acceptGameServer', alert);
+    }
+
+    @SubscribeMessage('refuseGame')
+    refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back', alert);
+      this.server.emit('refuseGameServer', alert);
+    }
+    
   }
