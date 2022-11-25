@@ -10,14 +10,13 @@ import TFAset from './ProfilSettings/TFAset';
 import Navbar from './Share/Navbar';
 
 export default function CodePage (props : any) {
-
+    const {hostname} = document.location;
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
-    const {hostname} = document.location;
 
     async function getQRcode()
     {
@@ -49,16 +48,17 @@ export default function CodePage (props : any) {
     }
 
     return (
-        <div className="loading-content">
         <>
-            <Particle/>
             <Navbar />
+        <div className="loading-content">
             <form className = 'form-newsetting'>
             <img style={{marginTop: "100px"}}className="vignette-form" src={User.qrcode}></img>
+            <p className="p-qr">Scane ce QR Code pour récupérer ton code</p>
+            <p className="p-qr">Ce dernier te sera demandé lors de ta prochaine connection.</p>
             </form>
 
                 
-        </>
         </div>
+        </>
     )
 }

@@ -28,6 +28,16 @@
     }
  }
 
+.status-nav {
+    flex-direction: column;
+}
+
+.status {
+    position: relative;
+    color: yellow;
+    left: 1%;
+}
+
 
 .nav_link {
     text-decoration: none;

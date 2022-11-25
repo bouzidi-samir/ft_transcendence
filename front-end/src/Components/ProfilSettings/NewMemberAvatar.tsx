@@ -1,4 +1,4 @@
-import "../../styles/Components/ProfilSettings/AvatarSetting.css"
+import "../../styles/Components/ProfilSettings/NewAvatarSet.css"
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
@@ -33,10 +33,13 @@ export default function NewMemberAvatar(props : any) {
     } 
 
     return (
-        <form className="setavatar-content">
-            <input type='file' accept="image/*" multiple={false}  onChange={handleChange} ></input>
-            <br></br>       
-                    <button onClick={handleForm} className="btn btn-primary newbtn">ok</button>            
+        <>
+        <form className="newavatar-content">
+        <button onClick={handleForm} className="btn btn-primary ">Valider</button>            
+        <div onClick={()=> props.setAvatarform(false)} className="cross-setting"></div>
+            <input className="avatar-input" type='file' accept="image/*" multiple={false}  onChange={handleChange} ></input>
+               
         </form>
+        </>
     )
 }

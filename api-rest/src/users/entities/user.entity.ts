@@ -29,7 +29,7 @@ export default class User {
 	@Column({ type: 'varchar', default: 0 })
 	avatar_url: string;
 
-	@Column({ type: 'varchar', default: 'offline'})
+	@Column({ type: 'varchar', default: 'Hors-Ligne'})
 	status: string;
 
 	@Column({ type: 'varchar', nullable: true })

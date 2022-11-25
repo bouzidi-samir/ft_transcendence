@@ -1,5 +1,5 @@
 
-import { configureStore, createSlice, combineReducers} from "@reduxjs/toolkit";
+import { configureStore, createSlice, combineReducers, getDefaultMiddleware} from "@reduxjs/toolkit";
 import { persistStore} from "redux-persist";
 import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "redux-persist/lib/storage";
@@ -25,6 +25,10 @@ const reducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store : any = configureStore({
-    reducer: persistedReducer
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 

@@ -22,20 +22,15 @@ import { Repository } from 'typeorm';
     server: Server;
 
     afterInit(server: Server) {
-      // throw new Error('Method not implemented.');
       console.log('initialized');
     }
     
     handleConnection(client: Socket, ...args: any[]) {
       console.log(`Client connected: ${client.id}`);
-  
-      // throw new Error('Method not implemented.');
     }
     
     handleDisconnect(client: Socket) {
       console.log(`Client disconnected: ${client.id}`);
-  
-      // throw new Error('Method not implemented.');
     }
 
     @SubscribeMessage('newMessageClient')
@@ -60,11 +55,19 @@ import { Repository } from 'typeorm';
       console.log('Received message in Back', alert);
       this.server.emit('newRoomServer', alert);
     }
-    // @SubscribeMessage('createChat')
-    // create(@MessageBody() createChatDto: CreateChatDto) {
-    //   return this.chatService.create(createChatDto);
-    // }
-  
+    
+    @SubscribeMessage('newAdmin')
+    handleNewAdmin(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received message in Back admin', alert);
+      this.server.emit('newAdminServer', alert);
+    }
+
+    @SubscribeMessage('newMember')
+    handleNewMember(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('New Member', alert);
+      this.server.emit('newMemberServer', alert);
+    }
+
     @SubscribeMessage('findAllChat')
     findAll() {
       return this.chatService.findAll();
@@ -75,8 +78,11 @@ import { Repository } from 'typeorm';
       return this.chatService.findOne(id);
     }
   
+    @SubscribeMessage('removeChat')
+    remove(@MessageBody() id: number) {
+      return this.chatService.remove(id);
+    }
 
-    
     @SubscribeMessage('invitationGame')
     invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       console.log('Received message in Back', alert);
@@ -95,13 +101,4 @@ import { Repository } from 'typeorm';
       this.server.emit('refuseGameServer', alert);
     }
     
-    // @SubscribeMessage('updateChat')
-    // update(@MessageBody() updateChatDto: UpdateChatDto) {
-    //   return this.chatService.update(updateChatDto.id, updateChatDto);
-    // }
-  
-    @SubscribeMessage('removeChat')
-    remove(@MessageBody() id: number) {
-      return this.chatService.remove(id);
-    }
   }

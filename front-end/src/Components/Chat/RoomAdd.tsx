@@ -49,9 +49,7 @@ export default function RoomAdd({setAddroom} :any) {
     }
     dispatch({type: "Roomlist/addRoom", payload: newRoom,});
     setAddroom(false)
-
-        socket?.emit("newRoomClient", alertRoom);
-    
+    socket?.emit("newRoomClient", alertRoom);
 }
 
     function handleChange(e : any, element : string) {

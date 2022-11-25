@@ -2,6 +2,7 @@ import '../../styles/Components/Home/Users.css'
 import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
+import Friend from './Firend';
 
 export default function Users() {
     const {hostname} = document.location;
@@ -38,10 +39,7 @@ export default function Users() {
                 {
                     Object.values(friends).map((f : any)=> (
                         f.toUsername != User.username ?
-                        <div key={f.id}>
-                        {/* <img  className='user-avatar' src={f.avatar_url}></img> */}
-                        <p>{f.toUsername}</p>
-                        </div>
+                        <Friend key={f.id + f.username} friend={f}/>
                         : null
                     )
                     )

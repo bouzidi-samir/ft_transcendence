@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
-import GameInvitation from './GameLauncher';
 import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import NewMember from './NewMember';
@@ -21,22 +20,19 @@ export default function UserChat() {
     const [members, setMembers] = useState([]);
     const [socket, setSocket] = useState<Socket>();
     const [alert, setAlert] = useState<string>("Pong");
-
+  
     useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`, {
-        extraHeaders: {Authorization: `Bearer ${User.JWT_token}`}
-        });
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
   
-    const alertListener = (alert: string) => {
-      setAlert(alert);
+    const memberListener = (alert: string) => {
     }
     
     useEffect(() => {
-        socket?.on("newMessageServer", alertListener);
-        return () => {socket?.off("newMessageServer", alertListener)}
-    }, [alertListener])
+        socket?.on("newMemberServer", memberListener);
+        return () => {socket?.off("newMemberServer", memberListener)}
+    }, [memberListener])
    
     useEffect( () => {    
         let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
@@ -47,38 +43,35 @@ export default function UserChat() {
           }})
         .then(response => response.json())
         .then(data => setMembers(data));
-    }, [RoomActive]
+    }, [RoomActive, memberListener]
     )
 
     return (
         <div className="userchat-content">
               <h2>Membres</h2>
-              <NewMember/>
+              {RoomActive.privateMessage === false ? <NewMember members={members} setMembers={setMembers}/> : null}
               <div className='online-list'>
                   {
                       members.map((user : any) => (
-                      //  user.username != User.username ? 
-                        <div className='user-block'>
+                        user.username != User.username ? 
+                        <div key={user.id + user.username} className='user-block'>
                                 <p>{user.nickname}</p>
-                        <div key={user.id} className="user-online">
+                        <div className="user-online">
                                     <img src={user.avatar_url} className="online-avatar"></img>
-                                <Link  to={"/UserProfil/" + user.userId} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
+                                <Link  to={"/UserProfil/" + user.username} state={{toBlock: {user}}} className='user-icon-profil'style={{textDecoration: 'none'}}>
                                 </Link>
                                     <PrivateMessage interlocutor={user}/> 
-                                    <GameLauncher player2={user}/>
+                                    <GameLauncher  player2={user} />
+                                    <MuteUser toMute={user}/>
                                     <BanUser toBan={user}/>
-                        <div>  <InvitationGame/></div>
                             </div>
                             </div>
-                        //    : null
+                            : null
                             )
                       )
                   }
-            </div>
-            <div>
-                <InvitationGame/>
-            </div>
-         
+            </div> 
+            <InvitationGame/>
         </div>
     );
 }

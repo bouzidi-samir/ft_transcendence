@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 
-
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
     return () => setValue(value => value + 1); // update state to force render
@@ -20,9 +19,12 @@ function Navbar() {
     const [user, setUser]  = useState(User);
     const [twofactor, setTwoFactor]  = useState(false);
     const navigate = useNavigate();
-
+    
     function logout1 () : void {
+     
         localStorage.clear();
+
+     
     }
 
     return (
@@ -44,10 +46,9 @@ function Navbar() {
                 <div className=" navbar-collapse" id="toggleMobileMenu">
                 
                     <ul className="navbar-nav ms-auto text-center">                
-
                         <Link className="nav_link" to="/ProfilSettings">
-                            <img src={User.avatar_url}
-                            className='avatar'></img>
+                                <img src={User.avatar_url}className='avatar'>
+                                </img>
                         </Link>
                         <li>   
                         <Link className="nav_link" to="/Home">

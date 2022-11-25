@@ -2,6 +2,7 @@ import "../../styles/Components/Chat/PrivateAccess.css"
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { useState } from "react";
+import { io, Socket } from 'socket.io-client';
 
 
 export default function PrivateAcces(props : any) {
@@ -12,6 +13,8 @@ export default function PrivateAcces(props : any) {
     const dispatch = useDispatch();
     const [password, setPassword] = useState();
     const [error, setError] = useState("");
+    const [socket, setSocket] = useState<Socket>();
+    const alertMember = "NEW MEMBER !!!";
 
    async function handleRoom(e: any)  {
     e.preventDefault();
@@ -51,6 +54,7 @@ export default function PrivateAcces(props : any) {
         return;
     }
     dispatch({type: "RoomActive/setRoomActive",payload: response})
+    socket?.emit("newMember", alertMember);
     setPrivate(false);   
 }   
 

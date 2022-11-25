@@ -31,7 +31,7 @@ export class UsersController {
 		return await this.service.getUserById(id);
 	}
 
-	@UseGuards(JwtAuthGuard)
+	//@UseGuards(JwtAuthGuard)
 	@Get("/search/:username")
 	async searchUser(
 		@Param('username') username: string
@@ -117,6 +117,13 @@ export class UsersController {
 		return await this.service.acceptOneFrienshipRequest(body);
 	}
 
+	@UseGuards(JwtAuthGuard)
+	@Post('/checkFriendship')
+		async checkFriendship(
+			@Body() body: any): Promise<any> { // param: username
+			return await this.service.checkFriendship(body);
+	}
+
 	@Post('/acceptAllFriendshipRequest')
 	async acceptAllFriendshipRequest(
 		@Body() body: any): Promise<any> { // param username: string
@@ -131,7 +138,8 @@ export class UsersController {
 	}
 
 	
-	@Put('deleteOneFriendship')
+	@UseGuards(JwtAuthGuard)
+	@Post('deleteOneFriendship')
 	async deleteOneFriendship(
 		@Body() body: any): Promise<any> { // param myUsername: string, otherUsername: string
 			return await this.service.deleteOneFriendship(body);

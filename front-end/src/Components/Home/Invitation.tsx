@@ -43,6 +43,7 @@ export default function Invitation() {
         body: JSON.stringify({
             username:  User.username,
             fromUsername:invit.fromUSername,
+            avatar_url: User.avatar_url,
             tag: invit.roomTag,
             })
         }
@@ -79,7 +80,7 @@ export default function Invitation() {
             <hr></hr>
             { invitations.length > 0 ? (
                 invitations.map((invit: any) => (
-                    <div key={invit.id}>
+                    <div className="invit-block" key={invit.id}>
                     <p>Chat invitation from : {invit.fromUsername + ' ' }
                     <button  onClick={() => handleAccept(invit)}>Accepter</button>
                     <button  onClick={()=> handleRefuse(invit)}>Refuser</button>

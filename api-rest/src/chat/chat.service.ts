@@ -257,7 +257,7 @@ export class ChatService {
     newMember.password = room.password;
     newMember.in = true;
     await this.memberRepository.save(newMember);
-    return newMember;
+    return this.getRoomByTag(body.tag);;
   }
 
   async editRoom(body) {
@@ -489,6 +489,7 @@ export class ChatService {
     const newMember = await this.memberRepository.create();
     const invited = await this.userRepository.findOne({where: {username: body.username}})
     newMember.username = body.username;
+    newMember.avatar_url = body.avatar_url;
     newMember.userId = invited.id;
     newMember.roomTag = body.tag;
     newMember.password = requester.password;
@@ -515,28 +516,19 @@ export class ChatService {
   async banMember(body) {
 
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
-    if (room == null || body.tag == 'global')
-      return false;
+    //if (room == null || body.tag == 'global')
+      //return false;
 
     const existingMember = await this.memberRepository.findOne({where: {username: body.toBanUsername, roomTag: body.tag}});
-    if (existingMember == null || existingMember.owner == true){
-      return false;
-    }
+    //if (existingMember == null || existingMember.owner == true){
+      //return false;
+   // }
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (member == null || member.admin == false)
       return false;
-    // if (existingMember.admin == true && member.owner == false)
-    //   return false;
-    
-    existingMember.blocked = true;
-    existingMember.in = false;
-    existingMember.out = true;
-    existingMember.admin = false;
-    if (existingMember.muted == true){
-      existingMember.muted = false;
-    }
-    await this.memberRepository.save(existingMember);
-    return existingMember;
+      console.log("ók");
+    await this.memberRepository.delete({username: existingMember.username});
+    return true;
     
   }
 
@@ -581,14 +573,15 @@ async muteMember(body) {
 
   const existingMember = await this.memberRepository.findOne({where: { nickname: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
-    return {error: "Not a member of this room"};
+    return false;
   if (existingMember.blocked == true)
-    return {error: "Already blocked"};
+    return false;
   
   const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
-  if (oneAdmin == null)
-    return {error: "Need to be admin"};
- 
+  if (oneAdmin.admin == false)
+    return false;
+  if (existingMember.owner == true)
+    return false;
   existingMember.muted = true;
   const millis = Date.now() + (body.minutes * 60 * 1000);
   existingMember.chronos = Math.floor(millis / 1000);
@@ -691,6 +684,12 @@ async getRoomAdmin(tag) {
 
   // ----------------------------   GAME   --------------------------------------------------------------
 
+  remove(id: number) {
+    return `This action removes a #${id} chat`;
+  }
+
+  // ----------------------------   GAME   --------------------------------------------------------------
+
   async gameInvitation(body) {
 
     
@@ -718,7 +717,7 @@ async getRoomAdmin(tag) {
       return newRelation;
     }
   }
-  // GAME
+
   async checkGameInvitation(body) {
 
     const invitations = await this.relationsRepository.find({ where: [{ toUsername: body.username, gameRequest: true}]});
@@ -747,14 +746,6 @@ async getRoomAdmin(tag) {
     request.gameRequest = false
     await this.relationsRepository.save(request);
     return request;
-  }
-
-  // update(id: number, updateChatDto: UpdateChatDto) {
-  //   return `This action updates a #${id} chat`;
-  // }
-
-  remove(id: number) {
-    return `This action removes a #${id} chat`;
   }
 
 }
