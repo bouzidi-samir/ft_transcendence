@@ -7,7 +7,7 @@ import { EntityManager } from 'typeorm';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import User from './entities/user.entity';
-
+import { Relations } from './entities/relations.entity';
 import { UsersService } from './users.service'; 
 import { JwtAuthGuard } from 'src/auth/jwt-authguards';
 
@@ -23,6 +23,20 @@ export class UsersController {
         return await this.service.getAllUsers();
     }
 
+	//@UseGuards(JwtAuthGuard)
+    @Get('/relations')
+	async getRelations(): Promise<Relations[]> {
+        return await this.service.getRelations();
+    }
+
+	//@UseGuards(JwtAuthGuard)
+    @Get('/blockedPeople/:username')
+	async getBlockedList(
+		@Param('username') username : string
+	): Promise<Relations[]> {
+        return await this.service.getBlockedList(username);
+    }
+
 	@UseGuards(JwtAuthGuard)
     @Get(":id")
 	async getUserById(
@@ -31,7 +45,7 @@ export class UsersController {
 		return await this.service.getUserById(id);
 	}
 
-	//@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	@Get("/search/:username")
 	async searchUser(
 		@Param('username') username: string
@@ -49,7 +63,7 @@ export class UsersController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Post("/register/:id")
+	@Post("/setStatus/:id")
 	async setStatus(
 		@Param('id', ParseIntPipe) id: number,
 		@Body() body: any

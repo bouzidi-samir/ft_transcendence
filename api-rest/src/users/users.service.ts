@@ -18,8 +18,21 @@ export class UsersService {
 	) {}
     
     getAllUsers(): Promise<User[]> {
-        return this.userRepository.find() // SELECT * from user
+        return this.userRepository.find() 
     }
+
+    async getRelations(): Promise<Relations[]> {
+        return await this.relationsRepository.find() 
+    }
+
+    async getBlockedList(username :string): Promise<Relations[]> {
+        let rep =  await this.relationsRepository.query(
+			`SELECT "toUsername" FROM "relations" WHERE "fromUsername" = $1 AND 
+            "blocked" = true;`,
+			[username]
+		);
+        return rep;
+    }    
 
     async getUserById(id: number): Promise<User>
     {
@@ -250,7 +263,6 @@ export class UsersService {
         const relation = await this.relationsRepository.find({where: [{fromUsername: body.username, toUsername: body.targetUsername}]});
         
         if (!relation[0]) {
-
             const relation = await this.relationsRepository.create();
             const blocker = await this.userRepository.findOne({where: {username: body.username}});
             // const blocked = await this.userRepository.findOne({where: {username: body.targetUsername}});
@@ -261,15 +273,12 @@ export class UsersService {
             await this.relationsRepository.save(relation);
 
         } else {
-
             for (let i = 0; i < relation.length; i++) {
 
                 relation[i].blocked = true;
                 await this.relationsRepository.save(relation[i]);
             }
-           
         }
-        
         return relation;
     }
 

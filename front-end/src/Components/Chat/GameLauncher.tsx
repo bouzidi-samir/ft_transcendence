@@ -28,6 +28,7 @@ export default function GameLauncher(props: any) {
     }, [setSocket])
 
     const alertListener = (alertGame: string) => {
+        console.log(alertGame);
         setAlertGame(alertGame);
     }
     
