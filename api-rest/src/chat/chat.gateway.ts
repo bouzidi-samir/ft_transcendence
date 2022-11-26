@@ -90,15 +90,15 @@ import { Repository } from 'typeorm';
     }
     
     @SubscribeMessage('acceptGame')
-    acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
-      this.server.emit('acceptGameServer', alert);
+    acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  acceptGame: any): void {
+      console.log('Received message in Back', acceptGame);
+      this.server.emit('acceptGameServer', acceptGame);
     }
 
     @SubscribeMessage('refuseGame')
-    refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
-      this.server.emit('refuseGameServer', alert);
+    refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  refuseGame: any): void {
+      console.log('Received message in Back', refuseGame);
+      this.server.emit('refuseGameServer', refuseGame);
     }
     
   }

@@ -67,11 +67,16 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername:invit.fromUsername,
             })
         }
         ).then(response => response.json())
         handleInvitation();
+        const acceptGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "OK"
+            };
         socket?.emit("acceptGame", acceptGame);
         let client: Client = new Colyseus.Client(`ws://localhost:4000`);
         async function join ()
@@ -111,12 +116,17 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername:invit.fromUsername,
             })
         }
         ).then(response => response.json())
             console.log('refuse response', response); 
         handleInvitation();
+        const refuseGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "KO"
+            };
         socket?.emit("refuseGame", refuseGame);
 
         }
