@@ -10,7 +10,7 @@ export default function InvitationGame() {
     const [invitations, setInvitations] = useState([]);
     const [socket, setSocket] = useState<Socket>();
     const [alertGame, setAlertGame] = useState<string>("");
-    const acceptGame =  "OK";
+    let acceptGame =  "OK";
     const refuseGame = "KO";
 
 
@@ -20,8 +20,8 @@ export default function InvitationGame() {
     }, [setSocket])
 
 
-    const alertListener = (alertGame: string) => {
-        setAlertGame(alertGame);
+    const alertListener = (alert: string) => {
+        setAlertGame(alert);
     }
     
     useEffect(() => {
@@ -53,7 +53,6 @@ export default function InvitationGame() {
         }, [alertGame]);
 
         async function handleAccept(invit: any)  {
-            console.log('accept')
             let url = "http://localhost:4000/chat/acceptOneGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
@@ -63,17 +62,21 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername:invit.fromUsername,
             })
         }
         ).then(response => response.json())
         handleInvitation();
-        socket?.emit("acceptGame", acceptGame);
+        const acceptGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "OK"
+            };
+        socket?.emit("acceptGame", acceptGame)
 
         }
 
         async function handleRefuse(invit: any)  {
-            console.log('accept')
             let url = "http://localhost:4000/chat/refuseOneGameInvitation";
             const response = await fetch(url, {method: "POST",
             headers: {
@@ -83,12 +86,17 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername: invit.fromUsername,
             })
         }
         ).then(response => response.json())
             console.log('refuse response', response); 
         handleInvitation();
+        const refuseGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "KO"
+            };
         socket?.emit("refuseGame", refuseGame);
 
         }
@@ -98,12 +106,14 @@ export default function InvitationGame() {
         <div className='notifs-content'>
             { invitations.length > 0 ? (
                 invitations.map((invit: any) => (
+                    invit.toUsername == User.username ?
                     <div key={invit.id}>
                     <p>Game invitation from : {invit.fromUsername + ' ' }
                     <button  onClick={() => handleAccept(invit)}>Accepter</button>
                     <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
                     </p> 
-                    </div>  
+                    </div> 
+                    : null  
                     ))) : (null)
             }
         </div>
