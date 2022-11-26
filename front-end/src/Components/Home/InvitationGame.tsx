@@ -11,8 +11,8 @@ export default function InvitationGame() {
     const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<[]>();
-    const acceptGame =  "OK";
+    const [alertGame, setAlertGame] = useState<string>("");
+    let acceptGame =  "OK";
     const refuseGame = "KO";
     let navigation = useNavigate();
     const dispatch = useDispatch();
@@ -24,8 +24,8 @@ export default function InvitationGame() {
     }, [setSocket])
 
 
-    const alertListener = (alertGame: []) => {
-        setAlertGame(alertGame);
+    const alertListener = (alert: string) => {
+        setAlertGame(alert);
     }
     
     useEffect(() => {
@@ -67,12 +67,18 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername:invit.fromUsername,
             })
         }
         ).then(response => response.json())
         handleInvitation();
+        const acceptGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "OK"
+            };
         socket?.emit("acceptGame", acceptGame);
+
         let client: Client = new Colyseus.Client(`ws://localhost:4000`);
         async function join ()
                     {
@@ -82,7 +88,7 @@ export default function InvitationGame() {
                         rooms = await client.getAvailableRooms("private_room")
                         for (let i = 0; i < rooms.length; i++)
                         {
-                            if (rooms[i].metadata.player1 === invit.fromUSername)
+                            if (rooms[i].metadata.player1 === invit.fromUsername)
                             {
                                 room = await client?.joinById(rooms[i].roomId, {});
                                 room.send("joined", {});
@@ -111,12 +117,17 @@ export default function InvitationGame() {
         },
         body: JSON.stringify({
             username:  User.username,
-            fromUsername:invit.fromUSername,
+            fromUsername:invit.fromUsername,
             })
         }
         ).then(response => response.json())
             console.log('refuse response', response); 
         handleInvitation();
+        const refuseGame = {
+            // toUsername:  User.username,
+            fromUsername: invit.fromUsername,
+            text: "KO"
+            };
         socket?.emit("refuseGame", refuseGame);
 
         }

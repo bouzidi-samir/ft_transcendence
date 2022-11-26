@@ -15,7 +15,7 @@ export default function GameLauncher(props: any) {
     const [user, setUser]  = useState(User);
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<string>("");
+    const [alertGame, setAlertGame] = useState<any>();
     let userUpdate = {...User};
     const invitation = {
         fromUsername: User.username,
@@ -30,16 +30,18 @@ export default function GameLauncher(props: any) {
         setSocket(newSocket)
     }, [setSocket])
 
-    const alertListener = (alertGame: string) => {
-        setAlertGame(alertGame);
+    const alertAnswer = (answer: string) => {
+        setAlertGame(answer);
     }
     
     useEffect(() => {
-        socket?.on("invitationGameServer", alertListener);
+        socket?.on( "acceptGameServer",   alertAnswer);
+        socket?.on( 'refuseGameServer',   alertAnswer);
         return () => {
-            socket?.off("invitationGameServer", alertListener)
+            socket?.off("acceptGameServer",  alertAnswer);
+            socket?.off("refuseGameServer",  alertAnswer);
         }
-    }, [alertListener])
+    }, [alertAnswer])
 
 
     async function sendInvitation() {
@@ -65,22 +67,23 @@ export default function GameLauncher(props: any) {
             })
             })
             let result = await response.json();
-            console.log(result);
             socket?.emit("invitationGame", invitation);
         }
     }
 
     useEffect(()=>{
         createGame();
-    },[alertGame])
+    },[alertAnswer])
 
 
     async function createGame()
     {
-        console.log("createGame");
-        if (alertGame ==  "OK")
-        {
+        // if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
+        if (alertGame.text ==  "OK"){
+            console.log('alertGame', alertGame)
             console.log("le player2 est OK pour jouer");
+            setAlertGame({})
+
             let room = await client?.create("private_room", {});
             room.send("clientName", {player1 : player1});
                 room.onMessage("createRoom", async (message) => {
@@ -95,9 +98,11 @@ export default function GameLauncher(props: any) {
                 }
             )
         }
-        if (alertGame ==  "KO")
-        {
-            console.log("le player2 est KO (pas OK) pour jouer");
+        // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
+        if (alertGame.text ==  "KO"){
+        console.log('alertGame', alertGame)
+        console.log("le player2 est KO (pas OK) pour jouer");
+        setAlertGame({})
             // POP UP POUR DIRE QUE LE JOUEUR A REFUSE
         }
     }
