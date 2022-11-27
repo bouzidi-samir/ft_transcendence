@@ -6,6 +6,7 @@ export default function Block(props: any) {
     const User = useSelector((state: any) => state.User);
     const {toUsername} = props;
     const [blockedList, setBlockedList] = useState([]);
+    const [status, setStatus] = useState("");
 
     useEffect(() => {
         let url = `http://${hostname}:4000/users/blockedPeople/${User.username}`;
@@ -16,13 +17,16 @@ export default function Block(props: any) {
           },})
         .then(ret => ret.json()).then((ret) => { 
             let list : any  = ret.map((e: any) => (e.toUsername));
+            if (status == "")
+                list.some((e : any) => e == toUsername) ? setStatus('Débloquer') : setStatus('Bloquer')
             setBlockedList(list)
-        })}, []
+        })}, [status]
     )
 
     async function handleBlock(e: any) {
         e.preventDefault();
-        if (blockedList.every((e :any) => e ==! toUsername)) {
+        if (status == "Bloquer") {
+            setStatus('Débloquer');
             let url = `http://${hostname}:4000/users/blockUser`;
             const response = await fetch(url, {method: "POST",
             headers: {
@@ -36,17 +40,25 @@ export default function Block(props: any) {
             })})
         }
         else {
-
+            setStatus('Bloquer');
+            let url = `http://${hostname}:4000/users/unblockUser`;
+            const response = await fetch(url, {method: "POST",
+            headers: {
+                'Authorization': `Bearer ${User.JWT_token}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+            },
+            body: JSON.stringify({
+            username: User.username,
+            targetUsername: toUsername,
+            })})
         }
     }
   
     return (
         <>
             {
-                blockedList.every((e :any) => e ==! toUsername) ?
-                    <button onClick={handleBlock} className="btn btn-alert">Bloquer</button>
-                :
-                <button onClick={handleBlock} className="btn btn-secondary">Débloquer</button>
+                <button onClick={handleBlock} className="btn btn-secondary">{status}</button>
             }
         </>
   )
