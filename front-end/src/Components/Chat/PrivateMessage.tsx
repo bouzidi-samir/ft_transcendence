@@ -9,7 +9,9 @@ export default function PrivateMessage(props: any) {
    
     function openConversation(e : any) {
         e.preventDefault();
-        let check = Roomlist.filter((e: any) => e.tag === interlocutor.nickname)
+        let check = Roomlist.filter((e: any) => 
+                e.tag === User.nickname + interlocutor.nickname || e.tag === interlocutor.nickname + User.nickname
+            )
        if (check.length > 0){
            dispatch({type: "RoomActive/setRoomActive",payload: check[0]});
             return;
@@ -17,7 +19,7 @@ export default function PrivateMessage(props: any) {
         let newRoom : any = {
             username: User.username,
             nickname: User.nickname,
-            tag: interlocutor.nickname,
+            tag: User.nickname + interlocutor.nickname,
             public: false,
             private: true,
             privateMessage: true,

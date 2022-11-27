@@ -49,7 +49,8 @@ export default function UserChat() {
     return (
         <div className="userchat-content">
               <h2>Membres</h2>
-              {RoomActive.privateMessage === false ? <NewMember members={members} setMembers={setMembers}/> : null}
+              {RoomActive.privateMessage === false && RoomActive.tag !== "global" ? 
+              <NewMember members={members} setMembers={setMembers}/> : null}
               <div className='online-list'>
                   {
                       members.map((user : any) => (

@@ -9,7 +9,7 @@ export default function RoomDisplay() {
         <div className='room-title'>
         <div className='room-picture'></div>
         <h2>{RoomActive.tag}</h2>
-        {RoomActive.privateMessage === false ? <RoomSettings/> : null}
+        {RoomActive.privateMessage === false && RoomActive.tag !== "global" ? <RoomSettings/> : null}
     </div>
     )
 }

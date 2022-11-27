@@ -55,7 +55,7 @@ export class ChatService {
     if (check)
       return {error: "Ce nom de salon est déja utilisé"};
     let format = checkRoomName(body.tag);
-    if (format != true)
+    if (format != true && body.private == false)
         return {error: format}
     const user = await this.userRepository.findOne({where: { username: body.username}});
     if (!user)
