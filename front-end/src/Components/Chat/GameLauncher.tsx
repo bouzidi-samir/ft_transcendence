@@ -9,35 +9,36 @@ import { io, Socket } from "socket.io-client";
 export default function GameLauncher(props: any) {
     const location = useLocation();
     const User = useSelector((state: any) => state.User);
-    const [time , setTime] = useState(0);
+    // const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
-    const [user, setUser]  = useState(User);
+    // const [user, setUser]  = useState(User);
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<string>("");
-    let userUpdate = {...User};
+    const [alertGame, setAlertGame] = useState<any>();
+    // let userUpdate = {...User};
     const invitation = {
         fromUsername: User.username,
         toUsername: props.player2.username,
     };
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io(`http://${hostname}:8000`);
         setSocket(newSocket)
     }, [setSocket])
 
-    const alertListener = (alertGame: string) => {
-        console.log(alertGame);
-        setAlertGame(alertGame);
+    const alertAnswer = (answer: any) => {
+        setAlertGame(answer);
     }
     
     useEffect(() => {
-        socket?.on("invitationGameServer", alertListener);
+        socket?.on( "acceptGameServer",   alertAnswer);
+        socket?.on( 'refuseGameServer',   alertAnswer);
         return () => {
-            socket?.off("invitationGameServer", alertListener)
+            socket?.off("acceptGameServer",  alertAnswer);
+            socket?.off("refuseGameServer",  alertAnswer);
         }
-    }, [alertListener])
+    }, [alertAnswer])
 
 
     async function sendInvitation() {
@@ -48,27 +49,37 @@ export default function GameLauncher(props: any) {
             'cors': 'true'
           },
           body: JSON.stringify({
-            fromUsername: User.username,
-            toUsername: props.player2.username,
+            senderName: User.username,
+            receiverName: props.player2.username,
               })
           })
         let result = await response.json();
-        console.log(result);
         socket?.emit("invitationGame", invitation);
     }
 
     useEffect(()=>{
         createGame();
-    },[alertGame])
+    },[alertAnswer])
 
 
     async function createGame()
     {
-        if (alertGame ==  "OK")
-        console.log("le player2 est OK pour jouer");
+        // if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
+        if (alertGame.text == undefined) 
+            return; 
+        if (alertGame.text ==  "OK"){
+           // console.log('alertGame', alertGame)
+           console.log("le player2 est OK pour jouer");
+            setAlertGame({})
+        }
         
-        if (alertGame ==  "KO")
-        console.log("le player2 est KO (pas OK) pour jouer");
+        // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
+            if (alertGame.text ==  "KO"){
+           // console.log('alertGame', alertGame)
+            //console.log("le player2 est KO (pas OK) pour jouer");
+            setAlertGame({})
+        }
+
 
         // let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
         // const player1 = User.username;
