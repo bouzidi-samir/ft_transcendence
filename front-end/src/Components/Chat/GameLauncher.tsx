@@ -15,7 +15,7 @@ export default function GameLauncher(props: any) {
     // const [user, setUser]  = useState(User);
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<any>();
+    const [alertGame, setAlertGame] = useState<any>({});
     // let userUpdate = {...User};
     const invitation = {
         fromUsername: User.username,
@@ -53,7 +53,7 @@ export default function GameLauncher(props: any) {
             receiverName: props.player2.username,
               })
           })
-        let result = await response.json();
+        await response;
         socket?.emit("invitationGame", invitation);
     }
 
@@ -64,17 +64,13 @@ export default function GameLauncher(props: any) {
 
     async function createGame()
     {
-        // if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
-        if (alertGame.text == undefined) 
-            return; 
-        if (alertGame.text ==  "OK"){
+        if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
            // console.log('alertGame', alertGame)
            console.log("le player2 est OK pour jouer");
             setAlertGame({})
         }
         
-        // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
-            if (alertGame.text ==  "KO"){
+        if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
            // console.log('alertGame', alertGame)
             //console.log("le player2 est KO (pas OK) pour jouer");
             setAlertGame({})

@@ -23,13 +23,13 @@ export class UsersController {
         return await this.service.getAllUsers();
     }
 
-	//@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
     @Get('/relations')
 	async getRelations(): Promise<Relations[]> {
         return await this.service.getRelations();
     }
 
-	//@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
     @Get('/blockedPeople/:username')
 	async getBlockedList(
 		@Param('username') username : string

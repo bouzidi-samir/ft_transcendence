@@ -23,7 +23,7 @@ export default function Friend(props: any) {
 
     return (
         <>
-        <Link  to={"/UserProfil/" + friend.username} >
+        <Link  to={"/UserProfil/" + friend.username} state={{toBlock: {friend}}} >
        <div className="friend-case">
                 <img src={friend.avatar_url}></img>
                 <p>{friend.nickname}</p>            

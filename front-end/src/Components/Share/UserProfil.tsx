@@ -18,7 +18,7 @@ export default function UserProfil() {
     const [friend, setFriend] = useState(false);
     const location = useLocation();
     let navigation = useNavigate();
-   console.log(user_id);
+  
     async function fetchData(){
         const url = `http://${hostname}:4000/users/search/${user_id.id}`
         await fetch(url, {headers: {
@@ -27,7 +27,10 @@ export default function UserProfil() {
             'cors': 'true'
         }})
         .then(response => response.json())
-        .then (data => setUser(data));
+        .then ((data) => {
+            setUser(data);
+        }
+            );
         const url_ =   `http://${hostname}:4000/users/checkFriendship`
         const res = await fetch(url_, {method: 'POST',  headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -38,6 +41,7 @@ export default function UserProfil() {
             toUsername: location.state.toBlock.user.username,
         })})
         let result_ = await res.json();
+        console.log(result_);
         let p = Object.values(result_)
         if (p.length > 0){
             setFriend(true);
@@ -72,7 +76,7 @@ export default function UserProfil() {
                 console.log('myFriend is killed', result);
             }
             else {
-                if (User.username != location.state.toBlock.user.username) {
+                if (User.username != user.username) {
                 let url = `http://${hostname}:4000/users/forceToBeMyFriend`;
                 const response = await fetch(url, {method: "POST",
                 headers: {
@@ -82,7 +86,7 @@ export default function UserProfil() {
                 },
                  body: JSON.stringify({
                 myUsername: User.username,
-                otherUsername: location.state.toBlock.user.username,
+                otherUsername: user.username,
                 })
                 }
                 ).then(response => response.json())
@@ -99,7 +103,7 @@ export default function UserProfil() {
                 <Cross lastPage="/Chat"/>
                 <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
-                <p>{user.status}e</p>
+                <p>{user.status}</p>
                 <hr></hr>
                 <div className='ecusson-user'></div>
                 <p>Novice</p>

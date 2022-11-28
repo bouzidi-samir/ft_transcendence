@@ -708,8 +708,6 @@ async getRoomAdmin(tag) {
     const receiver = await this.userRepository.findOne({where: {username: body.receiverName}});
     if (!receiver)
       return false;
-
-
     const relation = await this.relationsRepository.findOne({where: {fromUsername: body.senderName, toUsername: body.receiverName}})
     if (relation){
       if (relation.gameRequest == false) {
