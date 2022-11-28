@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 
 export class PrivateRoom extends Room<MyRoomState> {
 
+  gameId : number;
   onCreate (options: any) {
     this.setState(new MyRoomState());
   }
@@ -22,13 +23,14 @@ export class PrivateRoom extends Room<MyRoomState> {
         this.setMetadata({ player1: message.player1});
     })
 
-    this.onMessage("joined", (client, message) =>{
-      this.clients[0].send("createRoom", {});
+    this.onMessage("gameId", (client, message) =>{
+      this.gameId = message.id;
     })
 
-    this.onMessage("gameId", (client, message) =>{
-      this.clients[1].send("joinRoom", {id : message.id});
-    })
+    if (this.clients.length === 2)
+    {
+      this.clients[1].send("joinRoom", {id : this.gameId});
+    }
   }
 
   async onLeave (client: Client, consented: boolean) {

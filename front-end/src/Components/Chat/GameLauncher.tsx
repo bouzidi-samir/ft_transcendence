@@ -24,6 +24,7 @@ export default function GameLauncher(props: any) {
     let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
     const player1 = invitation.fromUsername
     const player2 = invitation.toUsername;
+    let room : Colyseus.Room<unknown>;
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -73,30 +74,31 @@ export default function GameLauncher(props: any) {
 
     useEffect(()=>{
         createGame();
+        return () => {
+         //   if(room)
+          //      room.leave()
+        }
     },[alertAnswer])
 
 
     async function createGame()
     {
+        
         // if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
         if (alertGame.text ==  "OK"){
+           // room = room = await client?.create("private_room", {});
+          //  room.send("clientName", {player1 : player1});
             console.log('alertGame', alertGame)
             console.log("le player2 est OK pour jouer");
             setAlertGame({})
-
-            let room = await client?.create("private_room", {});
-            room.send("clientName", {player1 : player1});
-                room.onMessage("createRoom", async (message) => {
-                    userUpdate.room = await client?.create("my_room", {}); 
-                    dispatch({
-                        type : "User/setUser",
-                        payload: userUpdate
-                    });
-                    room.send("gameId", {id: userUpdate.room.id});
-                    room.leave();
-                    navigation('/game');
-                }
-            )
+            userUpdate.room = await client?.create("my_room", {}); 
+            dispatch({
+                    type : "User/setUser",
+                    payload: userUpdate
+            })
+            //room.send("gameId", {id : userUpdate.room.id})
+           // room.leave();
+            navigation('/game');
         }
         // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
         if (alertGame.text ==  "KO"){

@@ -50,6 +50,7 @@ export class gameRoom extends Room {
 		});
 		this.onMessage("player1_name", (client,message) => {
 			this.player1.username = message.player1_username;
+			this.setMetadata({ player1: message.player1_username});
 		})
 		this.onMessage("player2_name", (client,message) => {
 			this.player2.username = message.player2_username;
