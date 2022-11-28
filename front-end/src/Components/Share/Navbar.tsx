@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 
+
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
     return () => setValue(value => value + 1); // update state to force render
@@ -21,10 +22,11 @@ function Navbar() {
     const navigate = useNavigate();
     
     function logout1 () : void {
-     
+        //setCookie('name', "_intra_42_session_production", 30);
+        //document.cookie = '_intra_42_session_production=e0e6ed570f292eeed6b80e510af6b961'; //Crée ou met à jour un cookie 'user'
+        console.log(document.cookie);
         localStorage.clear();
-
-     
+        document.cookie = "_intra_42_session_production=e0e6ed570f292eeed6b80e510af6b961; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     }
 
     return (
