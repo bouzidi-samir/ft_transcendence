@@ -19,17 +19,14 @@ export class PrivateRoom extends Room<MyRoomState> {
     console.log(client.sessionId, "joined!");
    // client.send(this.gameData) data de la partie a afficher
 
-    this.onMessage("clientName", (client, message) => {
-        this.setMetadata({ player1: message.player1});
-    })
-
     this.onMessage("gameId", (client, message) =>{
       this.gameId = message.id;
+      this.clients[1].send("joinRoom", {id : this.gameId});
     })
 
     if (this.clients.length === 2)
     {
-      this.clients[1].send("joinRoom", {id : this.gameId});
+      this.clients[0].send("createRoom", {});
     }
   }
 

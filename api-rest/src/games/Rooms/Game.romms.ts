@@ -15,10 +15,9 @@ export class gameRoom extends Room {
 	}
 
 	onJoin(client: Client, options?: any){
-		this.onMessage("test", (client, message) => {
-			console.log(client.sessionId, " join ", message);
-		});
-		client.send("client", {client : client, clientsNb : this.clients.length})
+		this.onMessage("requestClient", () => {
+			client.send("client", {client : client, clientsNb : this.clients.length});
+		})
 		console.log(client.sessionId + " join");
 		this.onMessage("player", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
@@ -50,7 +49,6 @@ export class gameRoom extends Room {
 		});
 		this.onMessage("player1_name", (client,message) => {
 			this.player1.username = message.player1_username;
-			this.setMetadata({ player1: message.player1_username});
 		})
 		this.onMessage("player2_name", (client,message) => {
 			this.player2.username = message.player2_username;
@@ -65,7 +63,6 @@ export class gameRoom extends Room {
 			{
 				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
 			}
-			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
 		})
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;

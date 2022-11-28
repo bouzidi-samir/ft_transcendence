@@ -4,6 +4,7 @@ import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
+import { Room } from "../../Slices/RoomSlice";
 
 export default function InvitationGame() {
 
@@ -72,40 +73,27 @@ export default function InvitationGame() {
         }
         ).then(response => response.json())
         handleInvitation();
+        let client: Client = new Colyseus.Client(`ws://localhost:4000`);
+        let userUpdate = {...User};
+        let room = await client?.create("private_room", {}); 
+        //room.send("gameId", {id : userUpdate.room.id})
         const acceptGame = {
             // toUsername:  User.username,
             fromUsername: invit.fromUsername,
-            text: "OK"
-            };
+            text: "OK",
+            id: room.id
+        };
         socket?.emit("acceptGame", acceptGame);
-        let client: Client = new Colyseus.Client(`ws://localhost:4000`);
-        let rooms;
-        let room : Colyseus.Room<unknown>;
-        let userUpdate = {...User};
-        rooms = await client.getAvailableRooms("my_room")
-        for (let i = 0; i < rooms.length; i++)
-        {
-            if (rooms[i].metadata.player1 === invit.toUsername)
-            {
-                //room = await client?.joinById(rooms[i].roomId, {});
-                /*room.onMessage('joinRoom', async (message) => {
-                    userUpdate.room = await client?.joinById(message.id, {});
-                    dispatch({
-                        type : "User/setUser",
-                        payload: userUpdate
-                    });
-                    room.leave();
-                    navigation('/game');
-                })*/
-                
-                userUpdate.room = await client?.joinById(rooms[i].roomId, {});
-                    dispatch({
-                        type : "User/setUser",
-                        payload: userUpdate
-                    });
-                navigation('/game');
-            }
-        }
+        room.onMessage("createRoom", async (message)  => {
+            userUpdate.room = await client?.create("my_room", {}); 
+            await dispatch({
+                type : "User/setUser",
+                payload: userUpdate
+            })
+            room.send("gameId", {id : userUpdate.room.id});
+            room.leave();
+            navigation('/game');
+        })
         }
 
         async function handleRefuse(invit: any)  {

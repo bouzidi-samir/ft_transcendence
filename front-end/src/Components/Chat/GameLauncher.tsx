@@ -15,8 +15,7 @@ export default function GameLauncher(props: any) {
     const [user, setUser]  = useState(User);
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<any>();
-    let userUpdate = {...User};
+    const [alertGame, setAlertGame] = useState<any>({});
     const invitation = {
         fromUsername: User.username,
         toUsername: props.player2.username,
@@ -84,21 +83,26 @@ export default function GameLauncher(props: any) {
     async function createGame()
     {
         
-        // if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
-        if (alertGame.text ==  "OK"){
+        if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
+        //if (alertGame.text ==  "OK"){
            // room = room = await client?.create("private_room", {});
           //  room.send("clientName", {player1 : player1});
             console.log('alertGame', alertGame)
             console.log("le player2 est OK pour jouer");
             setAlertGame({})
-            userUpdate.room = await client?.create("my_room", {}); 
-            dispatch({
+            let client: Client = new Colyseus.Client(`ws://localhost:4000`);
+            let rooms;
+            let userUpdate = {...User};
+            let room = await client?.joinById(alertGame.id, {}); 
+            room.onMessage("joinRoom", async (message)  => {
+                userUpdate.room = await client?.joinById(message.id, {});
+                await dispatch({
                     type : "User/setUser",
                     payload: userUpdate
+                });
+                room.leave();
+                navigation('/game'); 
             })
-            //room.send("gameId", {id : userUpdate.room.id})
-           // room.leave();
-            navigation('/game');
         }
         // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
         if (alertGame.text ==  "KO"){

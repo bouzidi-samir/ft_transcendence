@@ -94,6 +94,7 @@ export default function Game() {
 		room = User.room;
 		if (room)
 		{
+			room.send("requestClient", {});
 			room.onMessage("client", (message) => {
 				clientsNb = message.clientsNb;
 				if (clientsNb === 1)
