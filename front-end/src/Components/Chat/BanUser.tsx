@@ -10,8 +10,7 @@ export default function BanUser(props: any) {
     const [ban, setBan] = useState(false);
     const {toBan} = props;
 
-async function handleBan(e: any) {
-
+async function handleBan(e: any) { 
     e.preventDefault();
     let url = `http://${hostname}:4000/chat/banMember`;
     const response = await fetch(url, {method: "POST",
@@ -23,7 +22,7 @@ async function handleBan(e: any) {
 body: JSON.stringify({
     tag : RoomActive.tag,
     username: User.username,
-    toBanUsername: toBan.userName,
+    toBanUsername: toBan.username,
     })
 }
 ).then(response => response.json())

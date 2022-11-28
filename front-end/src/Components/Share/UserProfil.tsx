@@ -18,10 +18,10 @@ export default function UserProfil() {
     const [friend, setFriend] = useState(false);
     const location = useLocation();
     let navigation = useNavigate();
-   
+   console.log(user_id);
     async function fetchData(){
         const url = `http://${hostname}:4000/users/search/${user_id.id}`
-        fetch(url, {headers: {
+        await fetch(url, {headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',
             'cors': 'true'

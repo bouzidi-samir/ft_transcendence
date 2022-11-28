@@ -43,8 +43,12 @@ export class UsersService {
     
     async getUserByUsername(username: string): Promise<User>
     {
-        const user = await this.userRepository.findOne({where: {username: username}});
-        return user; 
+        let rep =  await this.userRepository.query(
+			`SELECT FROM "user" WHERE "username" = $1;`,
+			[username]
+		);
+        const user = await this.userRepository.findOne({where: {username: username}})
+        return (user); 
     }
 
     async addUser(user: User): Promise<User> {

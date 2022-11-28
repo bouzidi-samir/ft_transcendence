@@ -10,12 +10,18 @@ const RoomActive = useSelector((state: any) => state.RoomActive);
 const [mute, setMute] = useState(false);
 const [minutes, setMinutes] = useState("");
 const [alert, setAlert] = useState(false);
+const [alertmess, setAlertMess] = useState("Tu n'est pas autorisé a réalisé cette action.");
 const {toMute} = props;
 
 
 async function handleMute(e: any) {
 
     e.preventDefault();
+    if (minutes < "0" &&  minutes > "100" ) {
+        setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
+        setAlert(true)
+        return
+    }
     let url = `http://${hostname}:4000/chat/muteMember`;
     const response = await fetch(url, {method: "POST",
     headers: {
@@ -54,7 +60,7 @@ return (
                     <button className='btn btn-primary' onClick={handleMute} >Valider</button>
             </form>
         </>  : null} 
-        {alert ? <Alert message="Tu n'est pas autorisé a réalié cette action." setWindow={setAlert} /> : null}
+        {alert ? <Alert message={alertmess} setWindow={setAlert} /> : null}
     </>
 )
 }

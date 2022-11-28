@@ -514,20 +514,28 @@ export class ChatService {
   }
 
   async banMember(body) {
-
+    console.log(body)
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
     //if (room == null || body.tag == 'global')
       //return false;
 
     const existingMember = await this.memberRepository.findOne({where: {username: body.toBanUsername, roomTag: body.tag}});
-    //if (existingMember == null || existingMember.owner == true){
-      //return false;
-   // }
+    if (existingMember.owner == true){
+      return false;
+    }
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (member == null || member.admin == false)
       return false;
-      console.log("ók");
-    await this.memberRepository.delete({username: existingMember.username});
+    //await this.memberRepository.delete({username: existingMember.username});
+    existingMember.blocked = true;
+    existingMember.in = false;
+    existingMember.out = true;
+    existingMember.admin = false;
+    if (existingMember.muted == true){
+      existingMember.muted = false;
+    }
+    await this.memberRepository.save(existingMember);
+    
     return true;
     
   }
@@ -570,7 +578,9 @@ async muteMember(body) {
   const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
   if (room == null || body.tag == 'global')
     return false;
-
+  if (body.minutes > 1 && body.minutes > 100)
+     return false 
+  // return {error: "Merci de rentre un chiffre en tre 1 et 100"};
   const existingMember = await this.memberRepository.findOne({where: { nickname: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
     return false;
