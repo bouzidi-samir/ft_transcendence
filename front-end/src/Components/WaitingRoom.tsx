@@ -16,15 +16,15 @@ import { RoomInternalState } from "colyseus";
 
 
 export default function MatchingPage (props : any) {
-
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
+    const {hostname} = document.location;
 
-    let client: Client = new Colyseus.Client('ws://localhost:4000');
+    let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
     let room : Colyseus.Room<unknown>;
     let userUpdate = {...User};
 
@@ -75,6 +75,7 @@ export default function MatchingPage (props : any) {
        {
            room.send("clientEllo", {ello : User.ello});
            room.onMessage("createRoom", async (message) => {
+               userUpdate.status = "In game";
                 userUpdate.room = await client?.create("my_room", {}); 
                 dispatch({
                     type : "User/setUser",
@@ -85,6 +86,7 @@ export default function MatchingPage (props : any) {
                 navigation('/game');
             })
             room.onMessage('joinRoom', async (message) => {
+                userUpdate.status = "In game";
                 userUpdate.room = await client?.joinById(message.id, {});
                 dispatch({
                     type : "User/setUser",

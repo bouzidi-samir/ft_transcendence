@@ -28,10 +28,12 @@ export default function Game() {
 	let navigation = useNavigate();
 	const [fortyTwo, setFortyTwo] = useState(false);
 	const [params] = useSearchParams();
+	const {hostname} = document.location;
+	
 
 	
 
-	let client: Client = new Colyseus.Client('ws://localhost:4000');
+	let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
 	let clientId : number;
 	let canvas : any = useRef(null);
 	let ball : Ball;
@@ -47,34 +49,52 @@ export default function Game() {
 	unload.add(function(){
     	console.log('Ouch, I\'m dying.');
 	}); // detecte si un user quitte la page.
-
 	if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
 		alert('Ouch, Im dying.');
 	} // detecte si un user use le bouton retour du navigateur*/
 
 	function updateData()
 	{
-		const code = params.get("code")
-		const {hostname, port} = document.location;
-    	if (code)
+		let userUpdate = {...User};
+		if (player.userName === User.username)
 		{
-      		setFortyTwo(true);
-			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json','cors': 'true'},
-				body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})
-			})
-			request.then(response => response.json()
-      			.then((response) => {dispatch({type: "User/setUser", payload: response,});}))
-					request.catch(e => {console.error(e)})
-	}
-		return () => {}
+			if (player.score > player2.score)
+			{
+				userUpdate.gameWon += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello += 10;
+			}
+			else
+			{
+				userUpdate.gameLost += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello -= 10;
+			}
+		}
+		else if (player2.userName === User.username)
+		{
+			if (player2.score > player.score)
+			{
+				userUpdate.gameWon += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello += 10;
+			}
+			else
+			{
+				userUpdate.gameLost += 1;
+				userUpdate.gamePlayed += 1;
+				userUpdate.ello -= 10;
+			}
+		}
+		userUpdate.status = "online";
+		dispatch({type: "User/setUser", payload: userUpdate,});
 	}
 
 	const connect = async () => {
 		room = User.room;
 		if (room)
 		{
+			room.send("requestClient", {});
 			room.onMessage("client", (message) => {
 				clientsNb = message.clientsNb;
 				if (clientsNb === 1)
@@ -88,6 +108,10 @@ export default function Game() {
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
 					room.send("player2_name", {player2_username : player2.userName});
+				}
+				else
+				{
+					room.send("viewer", {})
 				}
 				clientId = message.client.sessionId;
 				room.onMessage("players_names", (message) => {
@@ -280,15 +304,9 @@ export default function Game() {
 			}
 		})
 		room.onMessage("leaver", (message) => {
-			if (message.leaver === player.userName)
-				player.score = -1;
-			if (message.leaver === player2.userName)
-				player2.score = -1;
-			room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 			updateData();
 			navigation('/Home');
 		})
-		room.send("pong", {id : clientId});
 	}
 
 	const display = () => {
@@ -307,6 +325,11 @@ export default function Game() {
 		console.log(result);
 
 		return () => {
+			if(room)
+			{
+				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
+				room.leave();
+			}
 			cancelAnimationFrame(animationRequest);
 		}
 	}, [canvas.current]);
@@ -325,21 +348,3 @@ export default function Game() {
 		</>
 	)
 }
-
- 	//const canvasRef = useRef<HTMLCanvasElement | null>(null);
-	//let canvas = canvasRef.current;
-	
-	// 	const connect = async () => {
-	// 		const room = await client.joinOrCreate("my_room", {mode: "single", })	
-	// 		if (room){
-	// 			console.log("3")		
-	// 		// room.onStateChange((newState:any) => {// verification des updates
-	// 		// });
-
-	// 		room.onMessage("clientsNb", (message) => {
-	// 			console.log("1")		
-	// 			clientsNb = message.clientsNb;
-	// 		});
-	// 	}
-	// }
-

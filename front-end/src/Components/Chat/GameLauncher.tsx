@@ -21,6 +21,10 @@ export default function GameLauncher(props: any) {
         fromUsername: User.username,
         toUsername: props.player2.username,
     };
+    let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
+    const player1 = User.username;
+    const player2 = props.player2.username;
+    let room : Colyseus.Room<unknown>;
 
     useEffect(() => {
         const newSocket = io(`http://${hostname}:8000`);
@@ -53,7 +57,24 @@ export default function GameLauncher(props: any) {
             receiverName: props.player2.username,
               })
           })
-        await response;
+        let player2Data = await response.json();
+        if ((player2Data.ello - User.ello > 50) || (player2Data.ello - User.ello < -50))
+        {
+            //POPUP pour dire qu il n est pas possible de jouer avec ce joueur car trop grande difference d ello.
+        }
+        /*else 
+        {
+            response= await fetch(`http://${hostname}:4000/chat/gameInvitation`, {method: "POST", headers: {
+                'Authorization': `Bearer ${User.JWT_token}`,
+                'Content-Type': 'application/json',
+                'cors': 'true'
+            },
+            body: JSON.stringify({
+                fromUsername: User.username,
+                toUsername: props.player2.username,
+            })
+            })
+        } */   
         socket?.emit("invitationGame", invitation);
     }
 
@@ -61,90 +82,37 @@ export default function GameLauncher(props: any) {
         createGame();
     },[alertAnswer])
 
-
     async function createGame()
     {
-        if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
-           // console.log('alertGame', alertGame)
-           console.log("le player2 est OK pour jouer");
-            setAlertGame({})
-        }
         
-        if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
-           // console.log('alertGame', alertGame)
-            //console.log("le player2 est KO (pas OK) pour jouer");
+        if (alertGame.fromUsername == User.username && alertGame.text ==  "OK"){
+        //if (alertGame.text ==  "OK"){
+           // room = room = await client?.create("private_room", {});
+          //  room.send("clientName", {player1 : player1});
+            console.log('alertGame', alertGame)
+            console.log("le player2 est OK pour jouer");
             setAlertGame({})
+            let client: Client = new Colyseus.Client(`ws://localhost:4000`);
+            let rooms;
+            let userUpdate = {...User};
+            let room = await client?.joinById(alertGame.id, {}); 
+            room.onMessage("joinRoom", async (message)  => {
+                userUpdate.room = await client?.joinById(message.id, {});
+                await dispatch({
+                    type : "User/setUser",
+                    payload: userUpdate
+                });
+                room.leave();
+                navigation('/game'); 
+            })
         }
-
-
-        // let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
-        // const player1 = User.username;
-        // const player2 = props.player2.username;
-        // console.log(props);
-        // let response= await fetch(`http://${hostname}:4000/users/search/${player2}`, {headers: {
-        //     'Authorization': `Bearer ${User.JWT_token}`,
-        //     'Content-Type': 'application/json',
-        //     'cors': 'true'
-        //   }})
-        // let player2Data = await response.json();
-        // if ((player2Data.ello - User.ello > 50) || (player2Data.ello - User.ello < -50))
-        // {
-            //POPUP pour dire qu il n est pas possible de jouer avec ce joueur car trop grande difference d ello.
-        // }
-        // else if (player1 === player2)
-        // {
-            //POPUP pour dire qu on ne peut pas jouer contre soi meme.
-        // }
-        // else
-        // {
-        //     let answer = 1;
-            // ENVOYER LE POPUP A L INVITE ET METTRE ANSWER A 0 OU 1 SELON LE CHOIX
-            // if (answer === 1)
-            // {
-            //     let room = await client?.create("private_room", {});
-            //     room.send("clientName", {player1 : player1});
-            //     room.onMessage("createRoom", async (message) => {
-            //         userUpdate.room = await client?.create("my_room", {}); 
-            //         dispatch({
-            //             type : "User/setUser",
-            //             payload: userUpdate
-            //         });
-            //         room.send("gameId", {id: userUpdate.room.id});
-            //         room.leave();
-            //         navigation('/game');
-            //     })
-                // TROUVER UN MOYEN DE FAIRE EXECUTER TOUT CA AU JOUEUR 2 APRES AVOIR ACCEPTE.
-                
-
-                   /* async function join ()
-                    {
-                        let rooms;
-                        let room : Colyseus.Room<unknown>;
-                        let userUpdate = {...User};
-                        rooms = await client.getAvailableRooms("private_room")
-                        for (let i = 0; i < rooms.length; i++)
-                        {
-                            if (rooms[i].metadata.player1 === player1)
-                            {
-                                room = await client?.joinById(rooms[i].roomId, {});
-                                room.send("joined", {});
-                                room.onMessage('joinRoom', async (message) => {
-                                    userUpdate.room = await client?.joinById(message.id, {});
-                                    dispatch({
-                                        type : "User/setUser",
-                                        payload: userUpdate
-                                    });
-                                    room.leave();
-                                    navigation('/game');
-                                })
-                            }
-                        }
-                    }*/
-
-                
-            // }
-// 
-        // }
+        // if (alertGame.fromUsername == User.username && alertGame.text ==  "KO"){
+        if (alertGame.text ==  "KO"){
+        console.log('alertGame', alertGame)
+        console.log("le player2 est KO (pas OK) pour jouer");
+        setAlertGame({})
+            // POP UP POUR DIRE QUE LE JOUEUR A REFUSE
+        }
     }
 
     return (

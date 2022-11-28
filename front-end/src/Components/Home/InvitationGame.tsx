@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
+import * as Colyseus from "colyseus.js";
+import { Client } from "colyseus.js";
 
 export default function InvitationGame() {
     const {hostname} = document.location;
@@ -12,6 +14,8 @@ export default function InvitationGame() {
     const [alertGame, setAlertGame] = useState<string>("");
     let acceptGame =  "OK";
     const refuseGame = "KO";
+    let navigation = useNavigate();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -67,13 +71,26 @@ export default function InvitationGame() {
         }
         ).then(response => response.json())
         handleInvitation();
+        let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
+        let userUpdate = {...User};
+        let room = await client?.create("private_room", {}); 
         const acceptGame = {
             // toUsername:  User.username,
             fromUsername: invit.fromUsername,
-            text: "OK"
+            text: "OK",
+            id: room.id
             };
         socket?.emit("acceptGame", acceptGame)
-
+        room.onMessage("createRoom", async (message)  => {
+            userUpdate.room = await client?.create("my_room", {}); 
+            await dispatch({
+                type : "User/setUser",
+                payload: userUpdate
+            })
+            room.send("gameId", {id : userUpdate.room.id});
+            room.leave();
+            navigation('/game');
+        })
         }
 
         async function handleRefuse(invit: any)  {

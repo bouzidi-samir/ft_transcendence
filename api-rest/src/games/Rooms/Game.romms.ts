@@ -9,45 +9,15 @@ export class gameRoom extends Room {
 	player2: players = new players();
 	game : Game;
 	my_job : any;
-	p1_ping : number = 0;
-	p2_ping : number = 0;
 
 	onCreate(options: any){
 		this.setState(new Game);
-		this.my_job = cron.schedule('*/1 * * * * *', () => {
-			setTimeout( () => 
-			{
-				if(this.clients[0])
-				{
-					if (this.p1_ping === 0)
-					{
-						for (let i = 0; i < this.clients.length; i++)
-						{
-							this.clients[i].send("leaver", {leaver : this.player1.username});
-						}
-					}
-				}
-				if (this.clients[1])
-				{
-					if (this.p2_ping === 0)
-					{
-						for (let i = 0; i < this.clients.length; i++)
-						{
-							this.clients[i].send("leaver", {leaver : this.player2.username});
-						}
-					}
-				}
-				this.p1_ping = 0;
-				this.p2_ping = 0;
-			}, 100);
-		})
 	}
 
 	onJoin(client: Client, options?: any){
-		this.onMessage("test", (client, message) => {
-			console.log(client.sessionId, " join ", message);
-		});
-		client.send("client", {client : client, clientsNb : this.clients.length})
+		this.onMessage("requestClient", () => {
+			client.send("client", {client : client, clientsNb : this.clients.length});
+		})
 		console.log(client.sessionId + " join");
 		this.onMessage("player", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
@@ -86,23 +56,35 @@ export class gameRoom extends Room {
 			{
 				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
 			}
+			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
+		})
+		this.onMessage("viewer", (client,message) => {
+			for (let i = 0; i < this.clients.length; i++)
+			{
+				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
+			}
 		})
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
 			this.disconnect();
 		});
-		this.onMessage("pong", (client, message) => {
-			if(this.clients[0])
+		this.onMessage("leaver", (client, message) => {
+			if (message.id === this.clients[0].sessionId)
 			{
-				if (message.id === this.clients[0].sessionId)
-					this.p1_ping = 1;
+				this.player1.score = -1;
+				this.player2.score = message.player2_score;
 			}
-			if(this.clients[1])
+			else if (message.id === this.clients[1].sessionId)
 			{
-				if (message.id === this.clients[1].sessionId)
-					this.p2_ping = 1;
+				this.player2.score = -1;
+				this.player1.score = message.player1_score;
 			}
+			for (let i = 0; i < this.clients.length; i++)
+			{
+				this.clients[i].send("leaver", {});
+			}
+			this.disconnect();
 		});
 	}
 
@@ -132,7 +114,6 @@ export class gameRoom extends Room {
 			  player2_score : this.player2.score,
 			})
 		  })
-		this.my_job.stop();
 		console.log("room destroy " );
 
 	}
