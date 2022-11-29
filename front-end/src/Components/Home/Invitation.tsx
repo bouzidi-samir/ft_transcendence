@@ -32,7 +32,6 @@ export default function Invitation() {
         }, []);
 
         async function handleAccept(invit: any)  {
-            console.log('accept')
             let url = `http://${hostname}:4000/chat/acceptOneRoomInvitation`;
             const response = await fetch(url, {method: "POST",
             headers: {
@@ -42,6 +41,7 @@ export default function Invitation() {
         },
         body: JSON.stringify({
             username:  User.username,
+            nickname: invit.nickname,
             fromUsername:invit.fromUSername,
             avatar_url: User.avatar_url,
             tag: invit.roomTag,
@@ -55,7 +55,6 @@ export default function Invitation() {
         }
 
         async function handleRefuse(invit: any)  {
-            console.log('accept')
             let url = `http://${hostname}:4000/chat/refuseOneRoomInvitation`;
             const response = await fetch(url, {method: "POST",
             headers: {

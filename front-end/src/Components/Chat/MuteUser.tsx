@@ -40,6 +40,7 @@ body: JSON.stringify({
 if (response == false){
     setAlert(true)
 }
+console.log("test");
 setMute(false);
 }
 

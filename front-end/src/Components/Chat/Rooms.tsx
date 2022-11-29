@@ -21,6 +21,12 @@ export default function Rooms() {
     let p : [string | boolean][];
     const alertMember = "NEW MEMBER !!!";
 
+    
+    function getRoomByname(tag : string, list : any[]) {
+        let room = list.filter(e => e.tag == tag)
+        return room[0];
+    }
+
     function sortRoom(room : any) : boolean{
         if (room.privateMessage == true) {
             if (room.tag.indexOf(User.nickname) == -1)
@@ -45,16 +51,37 @@ export default function Rooms() {
         setSocket(newSocket)
     }, [setSocket])
 
-    const alertListener = (alertRoom: string) => {
+    
+    const alertListener = (alertRoom: any) => {
         updateRoomList();
+        /*   console.log(alertRoom);
+        if (alertRoom.toUsername == User.username){
+            console.log(alertRoom);
+            let globalRoom = getRoomByname("global", Roomlist);
+            dispatch({type: "RoomActive/setRoomActive", tag: globalRoom});
+        }*/
+    }
+    
+    const banListener = (alert: any) => {
+        console.log(alert);
+        if (alert.toUsername == User.username){
+            console.log(alert);
+            let globalRoom = getRoomByname("global", Roomlist);
+            dispatch({type: "RoomActive/setRoomActive", tag: globalRoom});
+        }
     }
 
     useEffect(() => {
+        socket?.on("bannedServer", banListener);
+        return () => {
+            socket?.off("bannedServer", banListener)
+        }
+    }, [banListener])
+    
+    useEffect(() => {
         socket?.on("newRoomServer", alertListener);
-        socket?.on("bannedServer", alertListener);
         return () => {
             socket?.off("newRoomServer", alertListener)
-            socket?.off("bannedServer", alertListener)
         }
     }, [alertListener])
     

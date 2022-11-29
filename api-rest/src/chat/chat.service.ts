@@ -489,6 +489,7 @@ export class ChatService {
     const newMember = await this.memberRepository.create();
     const invited = await this.userRepository.findOne({where: {username: body.username}})
     newMember.username = body.username;
+    newMember.nickname = invited.nickname;
     newMember.avatar_url = body.avatar_url;
     newMember.userId = invited.id;
     newMember.roomTag = body.tag;
@@ -578,10 +579,10 @@ async muteMember(body) {
   const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
   if (room == null || body.tag == 'global')
     return false;
-  if (body.minutes > 1 && body.minutes > 100)
-     return false 
+  //if (body.minutes > 1 && body.minutes > 100)
+    // return false 
   // return {error: "Merci de rentre un chiffre en tre 1 et 100"};
-  const existingMember = await this.memberRepository.findOne({where: { nickname: body.toMuteUsername, roomTag: body.tag}});
+  const existingMember = await this.memberRepository.findOne({where: { username: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
     return false;
   if (existingMember.blocked == true)

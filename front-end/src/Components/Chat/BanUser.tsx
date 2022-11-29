@@ -11,7 +11,10 @@ export default function BanUser(props: any) {
     const [socket, setSocket] = useState<Socket>();
     const [ban, setBan] = useState(false);
     const {toBan} = props;
-    const alertBan = "Baned";
+    const alertBan = {
+        toUsername: toBan.username,
+        text: "banned"
+    };
 
     useEffect(() => {
         const newSocket = io(`http://${hostname}:8000`);
