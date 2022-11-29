@@ -495,7 +495,7 @@ export class ChatService {
       return false;
 
     const existingMember = await this.memberRepository.findOne({where: {username: body.toBanUsername, roomTag: body.tag}});
-    if (existingMember == null || existingMember.owner == true){
+    if (existingMember.owner == true){
       return false;
     }
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
@@ -512,7 +512,7 @@ export class ChatService {
       existingMember.muted = false;
     }
     await this.memberRepository.save(existingMember);
-    return existingMember;
+    return true;
     
   }
 

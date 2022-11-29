@@ -79,6 +79,12 @@ import { Repository } from 'typeorm';
       this.server.emit('refuseGameServer', refuseGame);
     }
 
+    @SubscribeMessage('banned')
+    handleBanned(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received banned in Back', alert);
+      this.server.emit('bannedServer', alert);
+    }
+
     // @SubscribeMessage('createChat')
     // create(@MessageBody() createChatDto: CreateChatDto) {
     //   return this.chatService.create(createChatDto);

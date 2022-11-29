@@ -19,8 +19,8 @@ export default function RoomCase ({room} :any) {
 
     }, []    
     )
-    console.log('room', room)
-    console.log('room active', RoomActive)
+    // console.log('room', room)
+    // console.log('room active', RoomActive)
 
     return (
         <>

@@ -17,9 +17,37 @@ export default function Rooms() {
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
+    const [alertBanned, setAlertBanned] = useState<any>({}); //// 2 eme
+
     const values = Object.values(User.JWT_token);
     const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
     let p : [string | boolean][];
+
+
+    function getRoomByname(tag : string, list : any[]) {
+        let room = list.filter(e => e.tag == tag)
+        return room[0];
+    }
+
+    function sortRoom(room : any) : boolean{
+        if (room.privateMessage == true) {
+            if (room.tag.indexOf(User.nickname) == -1)
+                return false
+        }
+        return true
+    }
+    
+    async function updateRoomList() {
+        let url = 'http://localhost:4000/chat/rooms';
+        let response = await fetch(url, { headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            "Content-Type": "application/json",
+            'cors': 'true'
+        }})
+        .then(ret => ret.json()) 
+        dispatch({type: "Roomlist/setRoomlist",payload: response,})
+    }
+
 
     useEffect(() => {
         const newSocket = io('http://localhost:8000');
@@ -27,15 +55,39 @@ export default function Rooms() {
     }, [setSocket])
 
     const alertListener = (alertRoom: string) => {
-        setAlertRoom(alertRoom);
+        // setAlertRoom(alertRoom);
+        updateRoomList();
+    }
+
+    const banListener = (alert: any) => {  /// 1 ere facon
+        setAlertBanned(alert)
+        if (alert.toUsername == "gab"){ //teste avec toUsername == 'gab'
+            console.log('OK tata', alert);
+        }
+
     }
     
     useEffect(() => {
         socket?.on("newRoomServer", alertListener);
+        
         return () => {
             socket?.off("newRoomServer", alertListener)
         }
     }, [alertListener])
+    
+    useEffect(() => {
+        socket?.on("bannedServer", banListener);
+        return () => {
+            socket?.off("bannedServer", banListener)
+        }
+    }, [banListener])
+    
+    useEffect(() => { ///// 2 eme facon
+        if (alertBanned.toUsername == "gab"){
+            console.log('OK toto', alertBanned);
+        }
+        
+    }, [banListener])
     
     useEffect(()=>{
         handleCheckMember(RoomActive)

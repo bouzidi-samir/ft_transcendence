@@ -15,7 +15,7 @@ export default function GameLauncher(props: any) {
     // const [user, setUser]  = useState(User);
     const {hostname} = document.location;
     const [socket, setSocket] = useState<Socket>();
-    const [alertGame, setAlertGame] = useState<any>();
+    const [alertGame, setAlertGame] = useState<any>({});
     // let userUpdate = {...User};
     const invitation = {
         fromUsername: User.username,
