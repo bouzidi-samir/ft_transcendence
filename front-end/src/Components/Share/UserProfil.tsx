@@ -16,7 +16,6 @@ export default function UserProfil() {
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
     const [user, setUser]  = useState(User);
-    const [friend, setFriend] = useState(false);
     const location = useLocation();
     let navigation = useNavigate();
   
@@ -28,15 +27,11 @@ export default function UserProfil() {
             'cors': 'true'
         }})
         .then(response => response.json())
-        .then ((data) => {
-            setUser(data);
-        }
-            );
+        .then ((data) => {setUser(data);}
+        );
     }
 
-    useEffect(()=>{
-        fetchData();
-    }, [])
+    useEffect(()=>{fetchData();}, [])
          
     return (
         <div className='userprofil'>
