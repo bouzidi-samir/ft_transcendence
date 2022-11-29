@@ -20,6 +20,14 @@ export default function Rooms() {
     const [notifs, setNotifs] = useState<any[]>([]);
     let p : [string | boolean][];
     const alertMember = "NEW MEMBER !!!";
+
+    function sortRoom(room : any) : boolean{
+        if (room.privateMessage == true) {
+            if (room.tag.indexOf(User.nickname) == -1)
+                return false
+        }
+        return true
+    }
     
     async function updateRoomList() {
         let url = `http://${hostname}:4000/chat/rooms`;
@@ -43,8 +51,10 @@ export default function Rooms() {
 
     useEffect(() => {
         socket?.on("newRoomServer", alertListener);
+        socket?.on("bannedServer", alertListener);
         return () => {
             socket?.off("newRoomServer", alertListener)
+            socket?.off("bannedServer", alertListener)
         }
     }, [alertListener])
     
@@ -156,11 +166,12 @@ export default function Rooms() {
             <div className='roomlist' >
                 {
                     Roomlist.map((room: any) => 
-                    
+                    sortRoom(room) ?
                         <div className='room' key={room.id + room.tag}  
                         onClick={() => {handleCheckMember(room); handleCheckBan(room)}} >
                             <RoomCase room={room}/>
                         </div>
+                        : null
                     )
                 }
                 { privateAcces ? <PrivateAcces privateRoom={privateAcces} setPrivate={setPrivate} /> : null}

@@ -56,15 +56,15 @@ export default function RoomCase ({room} :any) {
     }, []    
     )
 
-    return (
-        <div style={{background : notifStyle}} className="roomcase" onClick={() => {setNotif("")}}>
-                {room.privateMessage ? <div className='message-avatar'></div>
-                   : <div className='room-avatar'></div>
-                }
-                <div className="room-infos">
-                    <p className="room-tag">{room.tag}</p>
-                    <p style={{fontSize: '12px'}} className="room-notif">{notif}</p>
-                </div>
-       </div>
+    return (  
+            <div style={{background : notifStyle}} className="roomcase" onClick={() => {setNotif("")}}>
+                    {room.privateMessage ? <div className='message-avatar'></div>
+                        : <div className='room-avatar'></div>
+                    }
+                    <div className="room-infos">
+                        <p className="room-tag">{room.tag}</p>
+                        <p style={{fontSize: '12px'}} className="room-notif">{notif}</p>
+                    </div>
+            </div>
     )
 }

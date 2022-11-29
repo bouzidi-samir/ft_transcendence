@@ -19,7 +19,7 @@ export default function Conversation (props : any) {
         {
             messages.length > 0 ?
                 messages.map((message: any, index: number) => (  
-                     <NewMessage key={message.id} message={message}/>
+                     <NewMessage key={message.id + message.fromUsername} message={message}/>
                 ))
             : null           
         }

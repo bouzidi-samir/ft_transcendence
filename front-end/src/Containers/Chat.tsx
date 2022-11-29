@@ -11,10 +11,10 @@ export default function Chat() {
   const {hostname} = document.location;
   const dispatch = useDispatch();
   const User = useSelector((state: any) => state.User);
+  let Roomlist = useSelector((state: any) => state.RoomList);
   let navigation = useNavigate();
   const [alert, setAlert] = useState<string>("Pong");
   
-
   function useTitle(title: any) {
     useEffect(() => {
       document.title = title
@@ -38,8 +38,7 @@ export default function Chat() {
         navigation("/Unauthorized");
       else
        return response.json()})
-    .then(data => dispatch({type: "Roomlist/setRoomlist",payload: data,}));
-  
+    .then((data) => {dispatch({type: "Roomlist/setRoomlist",payload: data,})});
   }, []
   )
   

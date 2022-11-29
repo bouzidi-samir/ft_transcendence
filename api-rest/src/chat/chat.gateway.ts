@@ -83,6 +83,12 @@ import { Repository } from 'typeorm';
       return this.chatService.remove(id);
     }
 
+    @SubscribeMessage('banned')
+    handleBanned(@MessageBody() id: number) {
+      console.log('new banned', alert);
+      this.server.emit('bannedServer', alert);
+    }
+
     @SubscribeMessage('invitationGame')
     invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       console.log('Received message in Back', alert);
