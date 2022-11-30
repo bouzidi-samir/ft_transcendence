@@ -85,21 +85,23 @@ export default function MatchingPage (props : any) {
     }
 
     return (
-        <div className="loading-contents">
         <>
-            <Particle/>
             <Navbar />
-            
+        <div className="loading-contents">
             <form className = 'form-newsettings'>
-                <Link to ="/WaitingRoom" className="MultiButtons">Multiplayer.</Link>
-                <button onClick={enableMenu} className="SingleButtons">Spectate.</button>
+            <h1 >Master Pong</h1>
+
+                <Link to ="/WaitingRoom" style={{textDecoration: 'none', width:'100%'}}>
+                <button className="MultiButtons">
+                    MultiJoueur
+                </button>
+                </Link>
+                <button onClick={enableMenu} className="SingleButtons">Spectate</button>
                 {hide === 1 &&
                     <ul className="list_match">{getList()}</ul>
                 }
             </form>
-
-                
-        </>
         </div>
+        </>
     )
 }

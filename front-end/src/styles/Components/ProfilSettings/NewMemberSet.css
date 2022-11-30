@@ -101,6 +101,18 @@
     font-size: 160%;
 }
 
+.form-newsettings h1 {
+    padding-top: 2%;
+    color: white;
+    opacity: 70%;
+    font-size: 210%;
+    font-family: 'calvierregular';
+}
+
+.form-newsettings form {
+    border: solid 1px grey;
+}
+
 .newform input {
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);

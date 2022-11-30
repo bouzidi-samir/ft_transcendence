@@ -111,18 +111,14 @@ export default function MatchingPage (props : any) {
     }
 
     return (
-        <div className="loading-content">
         <>
-            <Particle/>
             <Navbar />
-            
+        <div className="loading-content">
             <form className = 'form-newsetting'>
             <p id="myId" className="message">Waiting for players</p>
             <p id="myId2" className="timer">0h0m0s</p>
-            </form>
-
-                
-        </>
+            </form>         
         </div>
+        </>
     )
 }

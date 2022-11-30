@@ -43,8 +43,9 @@ export default function UserProfil() {
                 <h3>{user.nickname}</h3>
                 <p>{user.status}</p>
                 <hr></hr>
-                <div className='ecusson-user'></div>
-                <p>Novice</p>
+                <p style={{color: 'white'}} className='user-stat'>Matchs Joués: {user.game_played}</p>
+                <p style={{color: 'white'}} className='user-stat'>Victoires: {user.game_won}</p>
+                <p style={{color: 'white'}} className='user-stat'>Défaites: {user.game_lost}</p>
                 <AddFriend toUsername={user_id.id}/>
                 <Block toUsername={user_id.id}/>
             </form>
