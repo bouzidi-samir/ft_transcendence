@@ -9,6 +9,8 @@ export class gameRoom extends Room {
 	player2: players = new players();
 	game : Game;
 	my_job : any;
+	p1_score : number = 0;
+	p2_score : number = 0;
 
 	onCreate(options: any){
 		this.setState(new Game);
@@ -43,6 +45,8 @@ export class gameRoom extends Room {
 		this.onMessage("updateScore", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
 			{
+				this.p1_score = message.player_score;
+				this.p2_score = message.player2_score;
 				if (this.clients[i].sessionId != client.sessionId)
 					this.clients[i].send("updateScore", {player_score : message.player_score, player2_score : message.player2_score});
 			}
@@ -54,14 +58,14 @@ export class gameRoom extends Room {
 			this.player2.username = message.player2_username;
 			for (let i = 0; i < this.clients.length; i++)
 			{
-				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
+				this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
 			}
 			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
 		})
 		this.onMessage("viewer", (client,message) => {
 			for (let i = 0; i < this.clients.length; i++)
 			{
-				this.clients[i].send("players_names", {player_name : this.player1.username, player2_name : this.player2.username});
+				this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
 			}
 		})
 		this.onMessage("gameEnd", (client, message) => {
