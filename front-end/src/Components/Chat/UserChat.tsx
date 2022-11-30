@@ -72,10 +72,8 @@ export default function UserChat() {
                       )
                   }
                 </div>  
-                <div className='online-notifs-list'>
-                 
-                  
-                  <Invitation/>
+                <div>
+                  <InvitationGame/>
                 </div>      
         </div>
     );
