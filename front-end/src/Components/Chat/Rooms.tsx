@@ -54,22 +54,21 @@ export default function Rooms() {
     
     const alertListener = (alertRoom: any) => {
         updateRoomList();
-        /*   console.log(alertRoom);
-        if (alertRoom.toUsername == User.username){
-            console.log(alertRoom);
-            let globalRoom = getRoomByname("global", Roomlist);
-            dispatch({type: "RoomActive/setRoomActive", tag: globalRoom});
-        }*/
     }
     
-    const banListener = (alert: any) => {
-        console.log(alert);
-        if (alert.toUsername == User.username){
-            console.log(alert);
-            let globalRoom = getRoomByname("global", Roomlist);
-            dispatch({type: "RoomActive/setRoomActive", tag: globalRoom});
+    const banListener = (alert: any) => {  /// 1 ere facon
+        if (alert.toUsername == User.username){ //teste avec toUsername == 'gab'
+            let global = getRoomByname("global", Roomlist);
+            dispatch({type: "RoomActive/setRoomActive",payload: global});
         }
     }
+    
+    useEffect(() => {
+        socket?.on("newRoomServer", alertListener);
+        return () => {
+            socket?.off("newRoomServer", alertListener)
+        }
+    }, [alertListener])
 
     useEffect(() => {
         socket?.on("bannedServer", banListener);
@@ -79,19 +78,12 @@ export default function Rooms() {
     }, [banListener])
     
     useEffect(() => {
-        socket?.on("newRoomServer", alertListener);
-        return () => {
-            socket?.off("newRoomServer", alertListener)
-        }
-    }, [alertListener])
-    
-    useEffect(() => {
         socket?.on("newNotifServer", alertListener);
         return () => {
             socket?.off("newNotifServer", alertListener)
         }
     }, [alertListener])
-   
+    
     useEffect(()=>{
         handleCheckMember(RoomActive)
     },[])
@@ -142,8 +134,8 @@ export default function Rooms() {
             setPrivate(room)
             return;
         }
-/*
-        let url_a = `http://${hostname}:4000/chat/leaveRoom`;
+
+    /*    let url_a = `http://${hostname}:4000/chat/leaveRoom`;
         await fetch(url_a, {
             method: "POST",
             headers: {

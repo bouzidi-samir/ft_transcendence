@@ -17,7 +17,7 @@ export class UsersController {
     @Inject(UsersService)
 	private readonly service: UsersService;
 
-	@UseGuards(JwtAuthGuard)
+	//@UseGuards(JwtAuthGuard)
     @Get()
 	async getUsers(): Promise<User[]> {
         return await this.service.getAllUsers();

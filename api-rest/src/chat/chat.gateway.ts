@@ -49,19 +49,16 @@ import { Repository } from 'typeorm';
     }
     @SubscribeMessage('newRoomClient')
     handleNewRoom(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
       this.server.emit('newRoomServer', alert);
     }
     
     @SubscribeMessage('newAdmin')
     handleNewAdmin(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back admin', alert);
       this.server.emit('newAdminServer', alert);
     }
 
     @SubscribeMessage('newMember')
     handleNewMember(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('New Member', alert);
       this.server.emit('newMemberServer', alert);
     }
 
@@ -82,25 +79,21 @@ import { Repository } from 'typeorm';
 
     @SubscribeMessage('banned')
     handleBanned(@ConnectedSocket() client: Socket,@MessageBody() alert: any) : void {
-      console.log('new banned', alert);
       this.server.emit('bannedServer', alert);
     }
 
     @SubscribeMessage('invitationGame')
     invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
       this.server.emit('invitationGameServer', alert);
     }
     
     @SubscribeMessage('acceptGame')
     acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
       this.server.emit('acceptGameServer', alert);
     }
 
     @SubscribeMessage('refuseGame')
     refuseGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
       this.server.emit('refuseGameServer', alert);
     }
     

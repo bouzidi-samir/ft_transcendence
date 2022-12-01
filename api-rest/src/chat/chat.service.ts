@@ -119,7 +119,7 @@ export class ChatService {
   }
 
   async createGlobalRoom(){
-
+    console.log('creation');
     const room = await this.roomsRepository.findOne({where: {tag: "global"}});
 
     if (!room){
@@ -132,7 +132,6 @@ export class ChatService {
     const users = await this.userRepository.find();
 
     for (let i = 0; i < users.length; i++) {
-
       const already = await this.memberRepository.findOne({where: {username: users[i].username, roomTag: "global"}});
       if (!already){
         const oneMember = await this.memberRepository.create();

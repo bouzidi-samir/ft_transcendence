@@ -27,9 +27,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-      const newSocket = io(`http://${hostname}:8000`, {
-      extraHeaders: {Authorization: `Bearer ${User.JWT_token}`}
-      });
+      const newSocket = io(`http://${hostname}:8000`);
       setSocket(newSocket)
   }, [setSocket])
 
@@ -64,8 +62,8 @@ export default function Home() {
       if(ret.status === 401)
         navigation("/Unauthorized");
     });
-  }, []
-  )
+  }, [User]
+  ) 
   
   return (
     <>
