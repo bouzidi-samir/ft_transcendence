@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import RoomSettings from "./RoomSettings";
+import QuitRoom from "./QuitRoom";
 
 export default function RoomDisplay() {
     
@@ -7,7 +8,7 @@ export default function RoomDisplay() {
     
     return (
         <div className='room-title'>
-        <div className='room-picture'></div>
+        <QuitRoom/>
         <h2>{RoomActive.tag}</h2>
         {RoomActive.privateMessage === false && RoomActive.tag !== "global" ? <RoomSettings/> : null}
     </div>

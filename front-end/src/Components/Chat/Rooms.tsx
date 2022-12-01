@@ -142,7 +142,7 @@ export default function Rooms() {
             setPrivate(room)
             return;
         }
-
+/*
         let url_a = `http://${hostname}:4000/chat/leaveRoom`;
         await fetch(url_a, {
             method: "POST",
@@ -157,7 +157,7 @@ export default function Rooms() {
                 nickname: User.nickname,
             })
         })
-
+*/
         let url_b = `http://${hostname}:4000/chat/joinRoom`;
             const response =  await fetch(url_b, {method: "POST",
             headers: {

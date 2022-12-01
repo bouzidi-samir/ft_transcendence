@@ -53,13 +53,13 @@
  }
 
  .room-picture {
-    background-image: url(../../../styles/img/icones/groups.png);
+    background-image: url(../../../styles/img/icones/exit.png);
     background-position: center;
     background-size: cover;
-    border-radius: 50%;
     width: 7%;
     height: 80%;
     margin-left: 2%;
+    cursor: pointer;
  }
 
  .room-settings {
