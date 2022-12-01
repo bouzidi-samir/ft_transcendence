@@ -60,6 +60,7 @@ export default function GameLauncher(props: any) {
         let player2Data = await response.json();
         if ((player2Data.ello - User.ello > 50) || (player2Data.ello - User.ello < -50))
         {
+            alert('invitation impossible');
             //POPUP pour dire qu il n est pas possible de jouer avec ce joueur car trop grande difference d ello.
         }
         /*else 
