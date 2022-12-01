@@ -62,7 +62,7 @@ export default function RoomCase ({room} :any) {
                         : <div className='room-avatar'></div>
                     }
                     <div className="room-infos">
-                        <p className="room-tag">{room.tag}</p>
+                    {room.tag !== "global" ? <p className="room-tag">{room.tag}</p> : null}
                         <p style={{fontSize: '12px'}} className="room-notif">{notif}</p>
                     </div>
             </div>

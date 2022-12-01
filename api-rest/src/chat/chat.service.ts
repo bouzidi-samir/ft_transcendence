@@ -578,15 +578,14 @@ async muteMember(body) {
   const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
   if (room == null || body.tag == 'global')
     return false;
-  //if (body.minutes > 1 && body.minutes > 100)
-    // return false 
+  if (body.minutes > 1 && body.minutes > 100)
+     return false 
   // return {error: "Merci de rentre un chiffre en tre 1 et 100"};
   const existingMember = await this.memberRepository.findOne({where: { username: body.toMuteUsername, roomTag: body.tag}});
   if (existingMember == null)
     return false;
   if (existingMember.blocked == true)
     return false;
-  
   const oneAdmin = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
   if (oneAdmin.admin == false)
     return false;

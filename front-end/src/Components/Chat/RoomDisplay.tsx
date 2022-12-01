@@ -8,8 +8,8 @@ export default function RoomDisplay() {
     
     return (
         <div className='room-title'>
-        <QuitRoom/>
-        <h2>{RoomActive.tag}</h2>
+        {RoomActive.tag !== "global" ?  <QuitRoom/> : null}
+        {RoomActive.tag !== "global" ? <h2>{RoomActive.tag}</h2> : null}
         {RoomActive.privateMessage === false && RoomActive.tag !== "global" ? <RoomSettings/> : null}
     </div>
     )

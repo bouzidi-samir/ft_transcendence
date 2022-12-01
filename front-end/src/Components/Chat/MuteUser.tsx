@@ -32,7 +32,7 @@ async function handleMute(e: any) {
 body: JSON.stringify({
     tag : RoomActive.tag,
     username: User.username,
-    toMuteUsername: toMute.nickname,
+    toMuteUsername: toMute.username,
     minutes: minutes
     })
 }
@@ -40,7 +40,6 @@ body: JSON.stringify({
 if (response == false){
     setAlert(true)
 }
-console.log("test");
 setMute(false);
 }
 

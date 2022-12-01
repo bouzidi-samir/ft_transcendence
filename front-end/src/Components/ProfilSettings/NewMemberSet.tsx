@@ -63,7 +63,7 @@ export default function NewMemberSet() {
             <form  
                 className="newform" data-aos="fade-up" data-aos-duration="1000" >
                 <h1 >Master Pong</h1>
-                <p>Choisie un pseudo et selectionne un avatar:</p>
+                <p>Choisis un pseudo et selectionne un avatar:</p>
                 <img  className="vignette-form" src={User.avatar_url}></img>
                     {avatarform ? <NewMemberAvatar setAvatarform={setAvatarform} /> : null}
                 <div onClick={()=> setAvatarform(true)} className='set-avatar'></div>               
