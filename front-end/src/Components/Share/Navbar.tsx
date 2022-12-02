@@ -11,6 +11,12 @@ function Navbar() {
         dispatch({type: "User/logout",payload: null});
         dispatch({type: "RoomList/logout",payload: null});
         dispatch({type: "RoomActive/logout",payload: null});
+        // document.cookie = '_intra_42_session_production; Max-Age=0; path=/; domain=.intra.42.fr';
+
+        var allCookies = document.cookie.split(';');
+        for (var i = 0; i < allCookies.length; i++)
+            document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
+            
     }
 
     return (

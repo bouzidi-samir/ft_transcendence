@@ -36,6 +36,8 @@ export class AuthController {
 			code, body.redirect_uri
 		);
 		let infos = await this.service.getUserInformations(api.access_token);
+		console.log('api acces token', api.access_token);
+		
 		let user = new User;
 		user.username = infos.login;
 		user.avatar_url = infos.image_url; 

@@ -17,7 +17,7 @@ export default function Rooms() {
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
-    const [alertBanned, setAlertBanned] = useState<any>({}); //// 2 eme
+    // const [alertBanned, setAlertBanned] = useState<any>({}); //// 2 eme
 
     const values = Object.values(User.JWT_token);
     const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
@@ -60,9 +60,10 @@ export default function Rooms() {
     }
 
     const banListener = (alert: any) => {  /// 1 ere facon
-        setAlertBanned(alert)
-        if (alert.toUsername == "gab"){ //teste avec toUsername == 'gab'
+        // setAlertBanned(alert)
+        if (alert.toUsername == User.username){ 
             console.log('OK tata', alert);
+            dispatch({type: "RoomActiveSlice/setRoomActive",payload: 'global'})
         }
 
     }
@@ -82,12 +83,12 @@ export default function Rooms() {
         }
     }, [banListener])
     
-    useEffect(() => { ///// 2 eme facon
-        if (alertBanned.toUsername == "gab"){
-            console.log('OK toto', alertBanned);
-        }
+    // useEffect(() => { ///// 2 eme facon
+    //     if (alertBanned.toUsername == "gab"){
+    //         console.log('OK toto', alertBanned);
+    //     }
         
-    }, [banListener])
+    // }, [banListener])
     
     useEffect(()=>{
         handleCheckMember(RoomActive)
