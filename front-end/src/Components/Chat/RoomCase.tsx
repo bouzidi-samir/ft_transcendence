@@ -58,9 +58,9 @@ export default function RoomCase ({room} :any) {
 
     return (  
             <div style={{background : notifStyle}} className="roomcase" onClick={() => {setNotif("")}}>
-                    {room.privateMessage ? <div className='message-avatar'></div>
-                        : <div className='room-avatar'></div>
-                    }
+                    {room.privateMessage ? <div className='message-avatar'></div> : null}
+                    {room.tag !== "global" &&  !room.privateMessage ? <div className='room-avatar'></div> : null }
+                    {room.tag === "global" ? <div className='waiting-avatar'></div> : null }
                     <div className="room-infos">
                     {room.tag !== "global" ? <p className="room-tag">{room.tag}</p> : null}
                         <p style={{fontSize: '12px'}} className="room-notif">{notif}</p>

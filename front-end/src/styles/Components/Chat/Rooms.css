@@ -93,6 +93,15 @@
     margin-left: 2%;
 }
 
+.waiting-avatar {
+    background-image: url(../../../styles/img/icones/waiting-room-.png);
+    background-position: center;
+    background-size: cover;
+    width: 20%;
+    height: 90%;
+    margin-left: 2%;
+}
+
 .fond1 {
     top:0%;
     left: 0%;

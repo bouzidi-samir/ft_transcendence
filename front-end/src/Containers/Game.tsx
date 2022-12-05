@@ -173,7 +173,6 @@ export default function Game() {
 	document.addEventListener('keypress', (event) => 
 	{
 		const nomTouche = event.key;
-		console.log(nomTouche);
 	});
 	
 		// permet de bouger les payers avec la souris 

@@ -119,7 +119,6 @@ export class ChatService {
   }
 
   async createGlobalRoom(){
-    console.log('creation');
     const room = await this.roomsRepository.findOne({where: {tag: "global"}});
 
     if (!room){
