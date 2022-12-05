@@ -95,7 +95,7 @@ export class UsersController {
 	@UploadedFile() file: any, 
 	@Body() params: any) 
 	{	
-		let url = "http://localhost:4000/users/" + file.path;
+		let url = `http://${process.env.LOCATION_HOST}:4000/users/` + file.path;
 		return this.service.updateAvatar(id, url)
     } 
 

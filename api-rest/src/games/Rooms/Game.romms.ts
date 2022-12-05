@@ -1,4 +1,5 @@
 import { ConsoleLogger } from "@nestjs/common";
+import fetch from 'node-fetch';
 import { Room, Client } from "colyseus";
 import { Game, players } from "../schema/GameSchema";
 
@@ -105,7 +106,7 @@ export class gameRoom extends Room {
 		//console.log(this.player2.username);
 		//console.log(this.player1.score);
 		//console.log(this.player2.score);
-		let request = await fetch("http://localhost:4000/games/result", {
+		let request = await fetch(`http://${process.env.LOCATION_HOST}:4000/games/result`, {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json',
@@ -117,7 +118,7 @@ export class gameRoom extends Room {
 			  player1_score : this.player1.score,
 			  player2_score : this.player2.score,
 			})
-		  })
+		  }).then(rep => console.log(rep))
 		console.log("room destroy " );
 
 	}

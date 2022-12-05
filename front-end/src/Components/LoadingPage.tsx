@@ -21,7 +21,7 @@ export default function LoadingPage (props : any) {
     function redirect() {
      
        setTimeout(() => {
-        if (User.nickname !== '')
+        if (User.nickname !== "")
             navigation("/Home");
         }, 1000);
     }

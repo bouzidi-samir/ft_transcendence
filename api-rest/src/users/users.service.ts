@@ -88,7 +88,8 @@ export class UsersService {
 			`UPDATE "user" SET "avatar_url" = $1, updated_at = NOW() WHERE id = $2;`,
 			[image, id]
 		);
-        return await this.userRepository.findOne({where: {id: id}});
+        const user = await this.userRepository.findOne({where: {id : id}});
+        return user;
 	}
 
     async getAvatar(id: number): Promise<any> {

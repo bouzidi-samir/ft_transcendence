@@ -47,8 +47,6 @@ export class gameController {
 
 		let player1 = await this.userService.getUserByUsername(game.p1_userName);
 		let player2 = await this.userService.getUserByUsername(game.p2_userName);
-		//console.log(player1);
-		//console.log(player2);
 
 		await this.userService.gamePlayedAdd(player1.id, player1.game_played + 1);
 		await this.userService.gamePlayedAdd(player2.id, player2.game_played + 1);
@@ -65,9 +63,6 @@ export class gameController {
 			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 10)
 			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 10);
 		}
-		//console.log(game);
-		// rajouter dans l historique des joueurs par la suite
-		//console.log(game);
 		return await this.service.addGame(game);
 	}
 }
