@@ -73,7 +73,7 @@ export default function InvitationGame() {
         handleInvitation();
         let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
         let userUpdate = {...User};
-        let room = await client?.create("private_room", {}); 
+        let room = await client?.create("private_room", {access_token : User.JWT_token}); 
         const acceptGame = {
             // toUsername:  User.username,
             fromUsername: invit.fromUsername,
@@ -82,7 +82,8 @@ export default function InvitationGame() {
             };
         socket?.emit("acceptGame", acceptGame)
         room.onMessage("createRoom", async (message)  => {
-            userUpdate.room = await client?.create("my_room", {}); 
+            userUpdate.room = await client?.create("my_room", {access_token : User.JWT_token});
+            userUpdate.status = "In Game";
             await dispatch({
                 type : "User/setUser",
                 payload: userUpdate

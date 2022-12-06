@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Res } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Res, UseGuards } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
 import Game from './game.entity';
 import {gameService} from './game.service';
 import {UsersService} from '../users/users.service';
+import { JwtAuthGuard } from "src/auth/jwt-authguards";
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -34,6 +35,13 @@ export class gameController {
 	{
 		console.log(body.player1_username)
 		return ("test success");
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("checkGuard")
+	async checkGuard()
+	{
+		return (true);
 	}
 
 	@Post("result")

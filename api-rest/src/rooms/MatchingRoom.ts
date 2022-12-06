@@ -15,6 +15,21 @@ export class MatchingRoom extends Room<MyRoomState> {
     this.setState(new MyRoomState());
   }
 
+  async onAuth(client, options, request)
+  {
+    let ret = await fetch("http://localhost:4000/games/checkGuard", {
+			method: "POST",
+			headers: {
+        'Authorization': `Bearer ${options.access_token}`,
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			  },
+		  })
+      let response = await ret.json();
+      if(response === true)
+        return (true);
+  }
+
   async onJoin (client: Client, options: any) {
     console.log(client.sessionId, "joined!");
    // client.send(this.gameData) data de la partie a afficher

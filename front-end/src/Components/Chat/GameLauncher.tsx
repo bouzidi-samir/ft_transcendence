@@ -95,9 +95,10 @@ export default function GameLauncher(props: any) {
             let client: Client = new Colyseus.Client(`ws://localhost:4000`);
             let rooms;
             let userUpdate = {...User};
-            let room = await client?.joinById(alertGame.id, {}); 
+            let room = await client?.joinById(alertGame.id, {access_token : User.JWT_token}); 
             room.onMessage("joinRoom", async (message)  => {
-                userUpdate.room = await client?.joinById(message.id, {});
+                userUpdate.room = await client?.joinById(message.id, {access_token : User.JWT_token});
+                userUpdate.status = "In Game";
                 await dispatch({
                     type : "User/setUser",
                     payload: userUpdate

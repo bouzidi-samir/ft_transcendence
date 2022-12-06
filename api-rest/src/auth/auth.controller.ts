@@ -39,7 +39,7 @@ export class AuthController {
 	): Promise<string> {
 		
 		let api = await this.service.getUserAccessToken(
-			 '7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670','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',
+			 'u-s4t2ud-12e25a234ef125eb8e7fac577309cbc56f3d4a537cb7c03b13a96766c1c3491d','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',
 			//process.env.FORTY_TWO_ID, process.env.FORTY_TWO_CLIENT_SECRET,
 			code, body.redirect_uri
 		);

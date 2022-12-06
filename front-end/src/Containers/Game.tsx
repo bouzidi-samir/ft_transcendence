@@ -95,7 +95,7 @@ export default function Game() {
 		if (room)
 		{
 			room.send("requestClient", {});
-			await room.onMessage("client", (message) => {
+			await room.onMessage("client", async (message) => {
 				clientsNb = message.clientsNb;
 				if (clientsNb === 1)
 				{
@@ -114,7 +114,7 @@ export default function Game() {
 					room.send("viewer", {})
 				}
 				clientId = message.client.sessionId;
-				room.onMessage("players_names&scores", (message) => {
+				await room.onMessage("players_names&scores", (message) => {
 					player.userName = message.player_name;
 					player2.userName = message.player2_name;
 					player.score = message.p1_score;

@@ -16,6 +16,21 @@ export class gameRoom extends Room {
 		this.setState(new Game);
 	}
 
+	async onAuth(client, options, request)
+  	{
+    	let ret = await fetch("http://localhost:4000/games/checkGuard", {
+			method: "POST",
+			headers: {
+        		'Authorization': `Bearer ${options.access_token}`,
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			  },
+		  })
+      let response = await ret.json();
+      if(response === true)
+        return (true);
+  }
+
 	onJoin(client: Client, options?: any){
 		this.onMessage("requestClient", () => {
 			client.send("client", {client : client, clientsNb : this.clients.length});
