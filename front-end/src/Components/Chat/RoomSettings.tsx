@@ -37,6 +37,13 @@ export default function RoomSettings() {
         setPrivate(RoomActive.private);
         setPublicRoom(RoomActive.public);
         setPassword(RoomActive.password);
+    }, [])
+
+
+    useEffect(() => {
+        //setPrivate(RoomActive.private);
+        //setPublicRoom(RoomActive.public);
+        //setPassword(RoomActive.password);
         let url = `http://${hostname}:4000/chat/getRoomAdmin/${RoomActive.tag}`;
         fetch(url, {headers: 
             {'Authorization': `Bearer ${User.JWT_token}`,
@@ -99,11 +106,13 @@ export default function RoomSettings() {
     function handleChange(e : any, element : string) {
         switch(element) {
             case("name"):
-                setRoomName(e.target.value);
-                break;
+            setRoomName(e.target.value);
+            break;
             case("private"):
-                setPrivate(true);
-                setPublicRoom(false);
+            console.log(publicRoom);
+            setPrivate(true);
+            setPublicRoom(false);
+            console.log(publicRoom)
                 break
             case("public"):
                 setPublicRoom(true);
