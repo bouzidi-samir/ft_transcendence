@@ -14,6 +14,8 @@ function useForceUpdate(){
 }
 
 function Navbar() {
+    const {hostname} = document.location;
+    
     const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const user_id = useParams();
@@ -21,7 +23,7 @@ function Navbar() {
     const [twofactor, setTwoFactor]  = useState(false);
     const navigate = useNavigate();
     
-    function logout1 () : void {
+    async function logout1 () {
         //setCookie('name', "_intra_42_session_production", 30);
         //document.cookie = '_intra_42_session_production=e0e6ed570f292eeed6b80e510af6b961'; //Crée ou met à jour un cookie 'user'
         console.log(document.cookie);

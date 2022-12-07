@@ -10,6 +10,21 @@
     padding-bottom: 2%;
 }
 
+@media only screen and (max-width: 1000px)  {
+    .form-setting {
+        position: relative;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+        border: solid gray 1px;
+        border-radius: 2%;
+        margin-left: 15%;
+        width: 70%;
+        margin-top: 12%;
+        height: 80%;
+        padding-bottom: 2%;
+    }
+}
+
 .vignette-form {
     width: 50%;
     height: 50%;

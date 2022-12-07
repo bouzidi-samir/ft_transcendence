@@ -12,7 +12,7 @@
 
     .profilCard-content {
         width: 70%;
-        height: 85%;
+        height: 95%;
         background: rgb(2,0,36);
         background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
         margin-right: 1%;
@@ -53,7 +53,7 @@
 
     .vignette-card {
         width: 60%;
-        height: 50%;
+        height: 20%;
         margin-top: 5%;
         margin-left: 20%;    
         background-image: url(../../img/avatar.png);

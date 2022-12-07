@@ -28,6 +28,52 @@
     }
  }
 
+ @media only screen and (max-width: 500px) {
+
+    .Navbar {
+        height: 30px;
+        text-decoration: none;
+        position: fixed;
+        margin-bottom: 0%;
+        margin-top: 0%;
+        margin-left: 0% ;
+        padding-bottom: 5%;
+        padding-top: 1%;
+        padding-right: 0%;
+        background: rgb(110, 109, 117);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+       
+    }
+
+
+   li {
+    padding-left: 0px;
+    margin-right: -40px;
+    margin-bottom: 6px;
+    margin-top: 5px;
+    padding-right: 0px;
+    width: 8px;
+}
+
+ul {
+   margin: 0px;
+}
+
+.nav_link{
+  margin-right: 110px;
+}
+
+.home-icon {
+    margin-right: 110px;
+}
+.text-center {
+
+    padding-left: -5px;
+    margin-left: px;
+
+}
+ }
+
 .status-nav {
     flex-direction: column;
 }

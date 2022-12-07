@@ -11,6 +11,22 @@
     border: solid gray 1px;
 }
 
+@media only screen and (max-width: 1000px) {
+    .addroom-content {
+        position:absolute;
+        margin-left: 0%;
+        margin-top: 0%;
+        width: 70%;
+        height: 65%;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+        border-radius: 2%;
+        padding-bottom: 8%;
+        border: solid gray 1px;
+    }
+
+}
+
 .addroom-content label {
     color: white;
     font-size: 20px;

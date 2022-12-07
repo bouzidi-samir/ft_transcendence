@@ -8,6 +8,18 @@
     border-radius: 2%;
 }
 
+@media only screen and (max-width: 1000px) {
+    .userchat-content {
+        margin-top: 1%;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+        width: 70%;
+        height: 80vh;
+        border: solid black 1px;
+        border-radius: 2%;
+    }
+ }
+
 .userchat-content .add {
     width: 15%;
     margin-left: 42%;
@@ -29,8 +41,7 @@
 .user-block {
     height: 28%;
     width: 100%;
-    border: solid 1px black;
-    
+    border: solid 1px black;  
 }
 
 .user-block p {
@@ -46,9 +57,11 @@
     width: 100%;
     height: 80%;
     padding-bottom: 5%;
-  
 }
 
+@media only screen and (max-width: 1000px) {
+  
+}
 
 
 .online-avatar {
