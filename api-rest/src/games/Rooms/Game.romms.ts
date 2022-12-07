@@ -11,6 +11,7 @@ export class gameRoom extends Room {
 	my_job : any;
 	p1_score : number = 0;
 	p2_score : number = 0;
+	token : any;
 
 	onCreate(options: any){
 		this.setState(new Game);
@@ -18,6 +19,7 @@ export class gameRoom extends Room {
 
 	async onAuth(client, options, request)
   	{
+		this.token = options.access_token;
     	let ret = await fetch("http://localhost:4000/games/checkGuard", {
 			method: "POST",
 			headers: {
@@ -123,6 +125,7 @@ export class gameRoom extends Room {
 		let request = await fetch("http://localhost:4000/games/result", {
 			method: "POST",
 			headers: {
+				'Authorization': `Bearer ${this.token}`,
 				'Content-Type': 'application/json',
 				'cors': 'true'
 			  },

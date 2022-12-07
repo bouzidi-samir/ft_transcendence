@@ -30,11 +30,16 @@ export class gameController {
 	}*/
 
 
-	@Post("test")
-	async test(@Body() body : any)
+	@UseGuards(JwtAuthGuard)
+	@Get("history")
+	async getHistory()
 	{
-		console.log(body.player1_username)
-		return ("test success");
+		console.log("history");
+		console.log(await this.gameService.getAllGames())
+		const game = await this.gameService.getAllGames();
+		return JSON.stringify({
+			games : game,
+		});
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -44,6 +49,7 @@ export class gameController {
 		return (true);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post("result")
 	async gameResult(@Body() body : any)
 	{
