@@ -1,6 +1,7 @@
 import { ConsoleLogger } from "@nestjs/common";
 import { Room, Client } from "colyseus";
 import { Game, players } from "../schema/GameSchema";
+import fetch from 'node-fetch';
 
 var cron = require('node-cron');
 

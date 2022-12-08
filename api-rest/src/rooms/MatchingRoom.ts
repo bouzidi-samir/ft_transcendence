@@ -7,6 +7,7 @@ import { UsersService } from "../users/users.service";
 import { Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import fetch from 'node-fetch';
 
 export class MatchingRoom extends Room<MyRoomState> {
   clientsEllo : number[] = [];
