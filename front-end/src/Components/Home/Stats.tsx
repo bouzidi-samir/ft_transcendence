@@ -46,7 +46,7 @@ export default function Stats() {
 
        for (let i = 0 ; i < gameList.length; i++){
         if((User.username == gameList[i].p1_userName) || (User.username == gameList[i].p2_userName))
-            content.push(<a href="#" > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+            content.push(<a href="#" id={i.toString()} key={i} > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
        }
         return content;
     }
@@ -63,8 +63,7 @@ export default function Stats() {
             <div className='match-total'>
                 <div className='vertical-menu'>
                     <a href="#" className="active">Historique des parties.</a>
-
-                    <>{createList()}</>
+                    {createList()}
                 </div>
             </div>
             <div className='match-stats'>

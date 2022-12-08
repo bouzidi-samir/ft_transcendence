@@ -15,6 +15,8 @@ export class gameRoom extends Room {
 
 	onCreate(options: any){
 		this.setState(new Game);
+		this.player1.username = "null";
+		this.player2.username = "null";
 	}
 
 	async onAuth(client, options, request)
@@ -34,10 +36,7 @@ export class gameRoom extends Room {
   }
 
 	onJoin(client: Client, options?: any){
-		this.onMessage("requestClient", () => {
-			client.send("client", {client : client, clientsNb : this.clients.length});
-		})
-		console.log(client.sessionId + " join");
+
 		this.onMessage("player", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
 			{
@@ -52,6 +51,10 @@ export class gameRoom extends Room {
 					this.clients[i].send("player2", {player2_y : message.player2_y});
 			}
 		});
+		this.onMessage("requestClient", () => {
+			console.log("client request");
+			client.send("client", {client : client, clientsNb : this.clients.length, player1 : this.player1.username, player2 : this.player2.username});
+		})
 		this.onMessage("ballPos", (client, message) => {
 			for (let i = 0; i < this.clients.length; i++)
 			{
@@ -68,23 +71,28 @@ export class gameRoom extends Room {
 					this.clients[i].send("updateScore", {player_score : message.player_score, player2_score : message.player2_score});
 			}
 		});
-		this.onMessage("player1_name", (client,message) => {
-			this.player1.username = message.player1_username;
-		})
-		this.onMessage("player2_name", (client,message) => {
-			this.player2.username = message.player2_username;
-			for (let i = 0; i < this.clients.length; i++)
+
+		this.onMessage("player_name", (client,message) => {
+			if (this.player1.username === "null")
 			{
-				this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
+				this.player1.username = message.player_username;
+				client.send("role", {role : "player1", client : client})
 			}
-			this.setMetadata({ player1: this.player1.username, player2: this.player2.username });
-		})
-		this.onMessage("viewer", (client,message) => {
-			for (let i = 0; i < this.clients.length; i++)
+			else if (this.player2.username === "null")
 			{
-				this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
+				this.player2.username = message.player_username;
+				client.send("role", {role : "player2", client : client})
+				this.setMetadata({player1 : this.player1.username, player2 : this.player2.username});
+			}
+			if (this.player1.username != 'null' && this.player2.username != 'null')
+			{
+				for (let i = 0; i < this.clients.length; i++)
+				{
+					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
+				}
 			}
 		})
+
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
