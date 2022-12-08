@@ -109,10 +109,8 @@ export default function RoomSettings() {
             setRoomName(e.target.value);
             break;
             case("private"):
-            console.log(publicRoom);
             setPrivate(true);
             setPublicRoom(false);
-            console.log(publicRoom)
                 break
             case("public"):
                 setPublicRoom(true);
@@ -138,11 +136,11 @@ export default function RoomSettings() {
                         <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
-                        value={roomName} name="type" className='room-type' checked= {privateRoom}>
+                     name="type" className='room-type' checked= {privateRoom}>
                         </input>
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
-                        value={roomName} name="type" className='room-type' checked= {publicRoom}>
+                      name="type" className='room-type' checked= {publicRoom}>
 
                         </input>
                     <br></br>

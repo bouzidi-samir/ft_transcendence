@@ -1,7 +1,9 @@
 import * as bcrypt from 'bcrypt';
 
 function checkPasswordFormat(password : string) : boolean | string {
-    if (password.length < 11 )
+    if (!password)
+        return "Merci de rentrer un mot de passe."
+    else if (password.length < 11 )
         return "Le mot de passe doit contenir au moins onze caractères."
     else if (!password.match(/[0-9]/g))
         return "Le mot de passe doit contenir au moins un chiffre."

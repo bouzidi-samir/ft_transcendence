@@ -60,7 +60,7 @@ export default function NewMemberSet() {
 
     return (
         <>
-            <form  
+            <div  
                 className="newform" data-aos="fade-up" data-aos-duration="1000" >
                 <h1 >Master Pong</h1>
                 <p>Choisis un pseudo et selectionne un avatar:</p>
@@ -70,7 +70,7 @@ export default function NewMemberSet() {
                   <input type="text" onChange={handlechange}></input>             
                 <p className="error-text">{error}</p>
                 <button onClick={handleForm}  className="btn btn-primary valid">Valider</button>
-            </form>
+            </div>
         </>
     );
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Header, Patch, 
+import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, Header, Patch,
 	UseInterceptors, UploadedFile, StreamableFile, Res, Put, UseGuards } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -17,7 +17,7 @@ export class UsersController {
     @Inject(UsersService)
 	private readonly service: UsersService;
 
-	//@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
     @Get()
 	async getUsers(): Promise<User[]> {
         return await this.service.getAllUsers();
@@ -81,6 +81,7 @@ export class UsersController {
 		return await this.service.updateNickname(id, body.nickname)
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post("/:id/upload")
     @UseInterceptors(FileInterceptor("file", {
         storage: diskStorage({
@@ -90,6 +91,7 @@ export class UsersController {
             }
         })
     }))
+
     async uploadFile(
 	@Param('id', ParseIntPipe) id: number,
 	@UploadedFile() file: any, 
@@ -111,6 +113,7 @@ export class UsersController {
 	{
 		return await this.service.getFriends(username);
 	}
+
 		//-----------------------------------------------------------------------------
 
 		@Post('/sendFriendshipRequest')

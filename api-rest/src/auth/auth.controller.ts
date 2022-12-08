@@ -23,6 +23,7 @@ export class AuthController {
 			url.searchParams.append("client_id", process.env.FORTY_TWO_ID);
 			url.searchParams.append("redirect_uri", body.redirect_uri);
 			url.searchParams.append("response_type", "code");
+			console.log(url);
 		return JSON.stringify({url: url.toString()});
 	}
 
@@ -39,15 +40,16 @@ export class AuthController {
 	): Promise<string> {
 		
 		let api = await this.service.getUserAccessToken(
-			// '7b4d5bf2e660cabc43c2fc7f0ab4dc0715929525952231c59c8a39be728cc670','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',
 			process.env.FORTY_TWO_ID, process.env.FORTY_TWO_CLIENT_SECRET,
 			code, body.redirect_uri
 		);
+		console.log(api);
 		let infos = await this.service.getUserInformations(api.access_token);
 		let user = new User;
 		user.username = infos.login;
 		user.avatar_url = infos.image.link; 
 		user.email = infos.email;
+		user['42_token'] = api.access_token;
 		user.isTwoFactorAuthenticationEnabled = false; 
 		let finaluser = await this.service.addUser(user);
 		let token = await this.service.createToken(finaluser);

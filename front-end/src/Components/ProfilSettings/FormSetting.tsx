@@ -65,7 +65,7 @@ export default function FormSetting() {
 
     return (
         <>    
-            <form className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
+            <div className="form-setting" data-aos="fade-up" data-aos-duration="1000" >
                 <Cross lastPage="/Home" />
                 <img  className="vignette-form" src={User.avatar_url}>         
                 </img>
@@ -80,7 +80,7 @@ export default function FormSetting() {
         
                 <button onClick={handleForm}  className="btn btn-primary">Valider</button>
                 <p className="error-text">{error}</p>
-            </form>
+            </div>
         </>
     );
 }

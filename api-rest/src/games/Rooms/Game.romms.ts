@@ -1,5 +1,4 @@
 import { ConsoleLogger } from "@nestjs/common";
-import fetch from 'node-fetch';
 import { Room, Client } from "colyseus";
 import { Game, players } from "../schema/GameSchema";
 
@@ -12,10 +11,27 @@ export class gameRoom extends Room {
 	my_job : any;
 	p1_score : number = 0;
 	p2_score : number = 0;
+	token : any;
 
 	onCreate(options: any){
 		this.setState(new Game);
 	}
+
+	async onAuth(client, options, request)
+  	{
+		this.token = options.access_token;
+    	let ret = await fetch("http://localhost:4000/games/checkGuard", {
+			method: "POST",
+			headers: {
+        		'Authorization': `Bearer ${options.access_token}`,
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			  },
+		  })
+      let response = await ret.json();
+      if(response === true)
+        return (true);
+  }
 
 	onJoin(client: Client, options?: any){
 		this.onMessage("requestClient", () => {
@@ -106,9 +122,10 @@ export class gameRoom extends Room {
 		//console.log(this.player2.username);
 		//console.log(this.player1.score);
 		//console.log(this.player2.score);
-		let request = await fetch(`http://${process.env.LOCATION_HOST}:4000/games/result`, {
+		let request = await fetch("http://localhost:4000/games/result", {
 			method: "POST",
 			headers: {
+				'Authorization': `Bearer ${this.token}`,
 				'Content-Type': 'application/json',
 				'cors': 'true'
 			  },
@@ -118,7 +135,7 @@ export class gameRoom extends Room {
 			  player1_score : this.player1.score,
 			  player2_score : this.player2.score,
 			})
-		  }).then(rep => console.log(rep))
+		  })
 		console.log("room destroy " );
 
 	}

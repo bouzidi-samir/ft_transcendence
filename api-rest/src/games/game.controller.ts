@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Res } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Res, UseGuards } from '@nestjs/common';
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
 import Game from './game.entity';
 import {gameService} from './game.service';
 import {UsersService} from '../users/users.service';
+import { JwtAuthGuard } from "src/auth/jwt-authguards";
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -29,13 +30,26 @@ export class gameController {
 	}*/
 
 
-	@Post("test")
-	async test(@Body() body : any)
+	@UseGuards(JwtAuthGuard)
+	@Get("history")
+	async getHistory()
 	{
-		console.log(body.player1_username)
-		return ("test success");
+		console.log("history");
+		console.log(await this.gameService.getAllGames())
+		const game = await this.gameService.getAllGames();
+		return JSON.stringify({
+			games : game,
+		});
 	}
 
+	@UseGuards(JwtAuthGuard)
+	@Post("checkGuard")
+	async checkGuard()
+	{
+		return (true);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Post("result")
 	async gameResult(@Body() body : any)
 	{
@@ -47,6 +61,8 @@ export class gameController {
 
 		let player1 = await this.userService.getUserByUsername(game.p1_userName);
 		let player2 = await this.userService.getUserByUsername(game.p2_userName);
+		//console.log(player1);
+		//console.log(player2);
 
 		await this.userService.gamePlayedAdd(player1.id, player1.game_played + 1);
 		await this.userService.gamePlayedAdd(player2.id, player2.game_played + 1);
@@ -63,6 +79,9 @@ export class gameController {
 			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 10)
 			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 10);
 		}
+		//console.log(game);
+		// rajouter dans l historique des joueurs par la suite
+		//console.log(game);
 		return await this.service.addGame(game);
 	}
 }
