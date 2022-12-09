@@ -89,7 +89,6 @@ export default function Rooms() {
     },[])
 
     async function handleCheckMember(room: any) {
-            
         let url_ = `http://${hostname}:4000/chat/checkIfMember`;
             const response = await fetch(url_, {method: "POST",
             headers: {
@@ -107,7 +106,6 @@ export default function Rooms() {
     }
 
     async function handleCheckBan(room: any) {
-        
         let url_ = `http://${hostname}:4000/chat/checkBan`;
             const response_ = await fetch(url_, {method: "POST",
             headers: {
@@ -122,7 +120,6 @@ export default function Rooms() {
         }
         )
         const banned = await response_.json();
-
         if (banned){
             alert("You are banned from this room");
             return;
@@ -134,22 +131,6 @@ export default function Rooms() {
             setPrivate(room)
             return;
         }
-
-    /*    let url_a = `http://${hostname}:4000/chat/leaveRoom`;
-        await fetch(url_a, {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${User.JWT_token}`,
-                'Content-Type': 'application/json',
-                'cors': 'true'
-            },
-            body: JSON.stringify({
-                tag : RoomActive.tag,
-                username: User.username,
-                nickname: User.nickname,
-            })
-        })
-*/
         let url_b = `http://${hostname}:4000/chat/joinRoom`;
             const response =  await fetch(url_b, {method: "POST",
             headers: {
@@ -162,7 +143,7 @@ export default function Rooms() {
                 username: User.username,
                 nickname: User.nickname,
                 avatar_url: User.avatar_url,
-                password: p[0]
+              //  password: p[0]
             })
         }
         ).then(rep => rep.json())

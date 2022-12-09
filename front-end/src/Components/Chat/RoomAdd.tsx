@@ -83,10 +83,10 @@ export default function RoomAdd({setAddroom} :any) {
                 <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
-                        value={roomName} name="type" className='room-type'></input>
+                         name="type" className='room-type'></input>
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
-                        value={roomName} name="type" className='room-type' checked={publicRoom}>
+                         name="type" className='room-type' checked={publicRoom}>
                         </input>
                     <br></br>
                     <div className='pass-zone'>
