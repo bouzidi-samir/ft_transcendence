@@ -16,7 +16,6 @@ import {PrivateRoom} from './rooms/PrivateRoom';
 
 	const gameServer = new Server();
 	gameServer.define('my_room', gameRoom)
-	.filterBy(['mode', 'userId']) // rajouter access token
 	.enableRealtimeListing()
 	.on("create", (room) => console.log("room created:", room.roomId))
 	.on("dispose", (room) => console.log("room disposed:", room.roomId))
@@ -25,7 +24,6 @@ import {PrivateRoom} from './rooms/PrivateRoom';
 
 	
 	gameServer.define('matching_room', MatchingRoom)
-	.filterBy(['userId']) // rajouter access token
 	.enableRealtimeListing()
 	.on("create", (room) => console.log("room created:", room.roomId))
 	.on("dispose", (room) => console.log("room disposed:", room.roomId))
@@ -33,7 +31,6 @@ import {PrivateRoom} from './rooms/PrivateRoom';
 	.on("leave", (room, client) => console.log(client.id, "left", room.roomId));
 
 	gameServer.define('private_room', PrivateRoom)
-	.filterBy(['userId']) 
 	.enableRealtimeListing()
 	.on("create", (room) => console.log("room created:", room.roomId))
 	.on("dispose", (room) => console.log("room disposed:", room.roomId))

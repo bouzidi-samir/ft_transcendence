@@ -70,13 +70,13 @@ export default function MatchingPage (props : any) {
 
    async function findPlayers()
    {
-       room = await client?.joinOrCreate("matching_room", {});
+       room = await client?.joinOrCreate("matching_room", {access_token : User.JWT_token});
        if (room)
        {
            room.send("clientEllo", {ello : User.ello});
            room.onMessage("createRoom", async (message) => {
                userUpdate.status = "In game";
-                userUpdate.room = await client?.create("my_room", {}); 
+                userUpdate.room = await client?.create("my_room", {access_token : User.JWT_token}); 
                 dispatch({
                     type : "User/setUser",
                     payload: userUpdate
@@ -87,7 +87,7 @@ export default function MatchingPage (props : any) {
             })
             room.onMessage('joinRoom', async (message) => {
                 userUpdate.status = "In game";
-                userUpdate.room = await client?.joinById(message.id, {});
+                userUpdate.room = await client?.joinById(message.id, {access_token : User.JWT_token});
                 dispatch({
                     type : "User/setUser",
                     payload: userUpdate
@@ -101,6 +101,9 @@ export default function MatchingPage (props : any) {
     useEffect( () => {
         refresh();
         findPlayers();
+        return () => {
+            room.leave();
+        }
      }, []
      )
 

@@ -214,3 +214,37 @@
     font-size: 15px;
     text-align: center;
 }
+
+.vertical-menu{
+    width : 100%;
+    height : 150px;
+    overflow-y: auto;
+    border: solid gold;
+    text-align:center ;
+}
+
+.vertical-menu a{
+    background: rgb(110, 109, 117);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    color : white;
+    display : block;
+    padding : 12px;
+    text-decoration : none;
+    border : solid black;
+    text-align: center;
+}
+
+.vertical-menu a:hover{
+    background: rgb(110, 109, 117);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    border : solid black;
+    text-align: center;
+    color : white;
+}
+
+.vertical-menu a.active{
+    background: rgb(110, 109, 117);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+    text-align:center;
+}

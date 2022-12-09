@@ -17,25 +17,10 @@ export class gameController {
 	@Inject(UsersService)
 	private readonly userService: UsersService;
 
-   /* @Get()
-	async getGames(): Promise<Game[]> {
-        return await this.service.getAllGames();
-    }*/
-
-    /*@Get(":id")
-	async getGameById(
-		@Param('id') id: number
-	): Promise<Game> {
-		return await this.service.getGameById(id);
-	}*/
-
-
 	@UseGuards(JwtAuthGuard)
 	@Get("history")
 	async getHistory()
 	{
-		console.log("history");
-		console.log(await this.gameService.getAllGames())
 		const game = await this.gameService.getAllGames();
 		return JSON.stringify({
 			games : game,
@@ -79,9 +64,6 @@ export class gameController {
 			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 10)
 			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 10);
 		}
-		//console.log(game);
-		// rajouter dans l historique des joueurs par la suite
-		//console.log(game);
 		return await this.service.addGame(game);
 	}
 }

@@ -47,7 +47,7 @@ export default function Invitation() {
             tag: invit.roomTag,
             })
         }
-        ).then(response => response.json())
+        )
         handleInvitation();
         navigate(`/Chat`);
         dispatch({type: "RoomActive/setRoomActive",payload: {tag:invit.roomTag}})
@@ -68,7 +68,7 @@ export default function Invitation() {
             tag: invit.roomTag,
             })
         }
-        ).then(response => response.json()) 
+        )
         handleInvitation();
         }
     
@@ -78,13 +78,15 @@ export default function Invitation() {
             <h2>Invitations</h2>
             <hr></hr>
             { invitations.length > 0 ? (
-                invitations.map((invit: any) => (
-                    <div className="invit-block" key={invit.id}>
-                    <p>Chat invitation from : {invit.fromUsername + ' ' }
-                    <button  onClick={() => handleAccept(invit)}>Accepter</button>
-                    <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
-                    </p> 
-                    </div>  
+                invitations.map((invit: any, key: any) => (
+                    invit.toUsername == User.username ?
+                        <div className="invit-block" key={invit.id + key}>
+                            <p>Chat invitation from : {invit.fromUsername + ' ' }
+                            <button  onClick={() => handleAccept(invit)}>Accepter</button>
+                            <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
+                            </p> 
+                        </div>
+                        : null  
                     ))) : (null)
             }
         </div>

@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { createImportSpecifier, updatePostfix } from "typescript";
 import { useSearchParams } from "react-router-dom";
+import { RoomInternalState } from "colyseus";
 
 
 let clientsNb;
@@ -91,45 +92,37 @@ export default function Game() {
 		dispatch({type: "User/setUser", payload: userUpdate,});
 	}
 
-	const connect = async () => {
-		room = User.room;
-		if (room)
-		{
-			room.send("requestClient", {});
-			await room.onMessage("client", (message) => {
-				clientsNb = message.clientsNb;
-				if (clientsNb === 1)
+	const clientInit = async() => {
+		room = user.room;
+		room.onMessage("players_names&scores", (message) => {
+				console.log("names&scores");
+				player.userName = message.player_name;
+				player2.userName = message.player2_name;
+				player.score = message.p1_score;
+				player2.score = message.p2_score;
+		})
+
+		room.onMessage("role", async (message) => {
+				if(message.role === "player1")
 				{
 					player.userName = user.username;
 					player.id = message.client.sessionId;
-					room.send("player1_name", {player1_username : player.userName});
+					clientId = player.id
 				}
-				else if (clientsNb === 2)
+				else if (message.role === "player2")
 				{
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
-					room.send("player2_name", {player2_username : player2.userName});
+					clientId = player2.id;
 				}
-				else
-				{
-					room.send("viewer", {})
-				}
-				clientId = message.client.sessionId;
-				room.onMessage("players_names&scores", (message) => {
-					player.userName = message.player_name;
-					player2.userName = message.player2_name;
-					player.score = message.p1_score;
-					player2.score = message.p2_score;
-				})
-			});
-		}
+		})
+		room.send("player_name", {player_username : user.username});
 	}
 
 	const draw = () => {
 			
 		context = canvas.current.getContext("2d");
-		// canvas.current.width = canvas.current.width;
-		// canvas.current.height = canvas.current.height;
+
 		// context.fillStyle = "transparent";
 		// context.fillRect(0, 0, canvas.current.width, canvas.current.height);
 		context.clearRect(0, 0, canvas.current.width, canvas.current.height);
@@ -182,7 +175,9 @@ export default function Game() {
 		{
 			var canvasLocation = canvas.current.getBoundingClientRect();
 			var mouseLocation = event.clientY - canvasLocation.y;
-			player.y = mouseLocation - setting_game.paddle_height / 2;
+			console.log('hellow rodl ');
+			player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
+							- setting_game.paddle_height / 2;
 
 			// permet de limiter les players par rapport a la taille du canvas
 			if (mouseLocation < setting_game.paddle_height / 2) {
@@ -325,11 +320,10 @@ export default function Game() {
 	useEffect( () => {
 		player = new Player(0, setting_game.player_y, 0, 0);
 		player2 = new Player(canvas.current.width - setting_game.paddle_width, setting_game.player_y, 0, 0);
-		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
-		connect()
-			.then(() => display());
-		console.log(result);
 
+
+		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
+		clientInit().then(() => display());
 		return () => {
 			if(room)
 			{
@@ -343,12 +337,12 @@ export default function Game() {
 	return(
 		<>
 		<Navbar / >
-		<div className="visual">
+		<div className="visual" onMouseMove={playerMove}>
 			<div>
 				
 				{/* <div className="scorePlayer1">joueur 1: {p1_score}</div>
 				<div className="scorePlayer2">joueur 2: {p2_score}</div> */}
-				<canvas onMouseMove={playerMove} className="gameCanvas" ref={canvas} width='680' height='450'/>
+				<canvas className="gameCanvas" ref={canvas} width='680' height='450'/>
 			</div>
 		</div>
 		</>

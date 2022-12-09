@@ -59,7 +59,7 @@ export default function MatchingPage (props : any) {
     {
         if (rooms)
         {
-            userUpdate.room = await client?.joinById(rooms[key].roomId, {});
+            userUpdate.room = await client?.joinById(rooms[key].roomId, {access_token : User.JWT_token});
             dispatch({
                 type : "User/setUser",
                 payload: userUpdate

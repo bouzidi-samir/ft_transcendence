@@ -32,17 +32,14 @@ import { Repository } from 'typeorm';
 
     @SubscribeMessage('newMessageClient')
     handleNewMessage(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received message in Back', alert);
       this.server.emit('newMessageServer', alert);
     }
     @SubscribeMessage('newNotifClient')
     handleNotif(@ConnectedSocket() client: Socket, @MessageBody()  alertNotif: any): void {
-      console.log('Received notif in Back', alertNotif);
       this.server.emit('newNotifServer', alertNotif);
     }
     @SubscribeMessage('messageFromClient')
     handleMessage(@ConnectedSocket() client: Socket, @MessageBody()  message: any): void {
-      console.log('Received message in Back', message);
       this.server.emit('messageFromServer', message);
       this.chatService.saveMessage(message);
 

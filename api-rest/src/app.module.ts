@@ -24,7 +24,7 @@ import { gameModule } from './games/game.module';
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),
- /*   TypeOrmModule.forRootAsync({
+    /*TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({

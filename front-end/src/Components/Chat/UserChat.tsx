@@ -73,6 +73,7 @@ export default function UserChat() {
                   }
                 </div>  
                 <div>
+                  <Invitation/>
                   <InvitationGame/>
                 </div>      
         </div>

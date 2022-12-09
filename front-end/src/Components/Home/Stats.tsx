@@ -10,11 +10,22 @@ export default function Stats() {
     const user_id = useParams();
     const [user, setUser]  = useState(User);
     const {hostname} = document.location;
-    const [gameList, setGames] = useState(["hello"]);
+    const [gameList, setGames] = useState([{
+        p1_score : 0,
+        p1_userName : "",
+        p2_score : 0,
+        p2_userName : "",
+    }]);
     let games : any;
 
 
     const fetchGame = async () => {
+
+        // console.log(gamesList);
+        //console.log(games['games']);
+
+        // games['games'].splice();
+        // console.log(games['games'][0]);
 
         const url = `http://${hostname}:4000/games/history`
         const ret = await fetch(url, {headers: {
@@ -23,34 +34,37 @@ export default function Stats() {
             'cors': 'true'
         }})
         games = await ret.json();
-        setGames(games.games);
+        console.log("la game ==> ",games)
+        setGames(games["games"]);
+       // setsw(1);
     }
 
-        useEffect(()=>{
-            fetchGame();
-        }, [])
+    const  createList =  () =>
+    { 
+        let content = [];
+
+
+       for (let i = 0 ; i < gameList.length; i++){
+        if((User.username == gameList[i].p1_userName) || (User.username == gameList[i].p2_userName))
+            content.push(<a href="#" id={i.toString()} key={i} > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+       }
+        return content;
+    }
+
+    //const [gameList, setList]  = useState(createList());
+
+    useEffect(()=>{
+        fetchGame();
+        //setsw(1);
+    }, [])
 
     return (
         <div className='stats-content'>
             <div className='match-total'>
-            <p>Historique</p>
-            <hr style={{backgroundColor: "white"}}></hr>
-                    <div className='tableau'>
-                        <div className='col'>
-                            <div className='case1'> <p>Joueur-1</p></div>
-                            <div className='case1'> <p>Joueur-2</p></div>
-                            <div className='case1'><p>Score-1</p></div>
-                            <div className='case1'><p>Score2</p></div>
-                        </div>
-                        {gameList.map( (game : any) => 
-                              <div key={game.id} className='col'>
-                              <div className='case'> <p>{game.p1_userName}</p></div>
-                              <div className='case'> <p>{game.p2_userName}</p></div>
-                              <div className='case'><p>{game.p1_score}</p></div>
-                              <div className='case'><p>{game.p2_score}</p></div>
-                          </div>
-                        )}
-                    </div>
+                <div className='vertical-menu'>
+                    <a href="#" className="active">Historique des parties.</a>
+                    {createList()}
+                </div>
             </div>
             <div className='match-stats'>
                 <div className='win-lost'> 

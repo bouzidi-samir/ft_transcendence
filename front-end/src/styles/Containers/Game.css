@@ -2,11 +2,12 @@
 .visual{
 	margin:0%, auto;
 	height: 100vw;
-	background-color: blueviolet;
+	background-color: rgb(60, 201, 95);
 }
 
 .gameCanvas {
-	height: 35vw;
+	/*height: 35vw;*/
+	top : 10%;
 	padding: 0;
 	margin: auto; 
 	display: block;

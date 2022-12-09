@@ -73,16 +73,16 @@ export default function InvitationGame() {
         handleInvitation();
         let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
         let userUpdate = {...User};
-        let room = await client?.create("private_room", {}); 
+        let room = await client?.create("private_room", {access_token : User.JWT_token}); 
         const acceptGame = {
-            // toUsername:  User.username,
             fromUsername: invit.fromUsername,
             text: "OK",
             id: room.id
             };
         socket?.emit("acceptGame", acceptGame)
         room.onMessage("createRoom", async (message)  => {
-            userUpdate.room = await client?.create("my_room", {}); 
+            userUpdate.room = await client?.create("my_room", {access_token : User.JWT_token});
+            userUpdate.status = "In Game";
             await dispatch({
                 type : "User/setUser",
                 payload: userUpdate
@@ -107,7 +107,6 @@ export default function InvitationGame() {
             })
         }
         ).then(response => response.json())
-            console.log('refuse response', response); 
         handleInvitation();
         const refuseGame = {
             // toUsername:  User.username,
@@ -122,9 +121,9 @@ export default function InvitationGame() {
     return (
         <div className='notifs-content'>
             { invitations.length > 0 ? (
-                invitations.map((invit: any) => (
+                invitations.map((invit: any, key: any) => (
                     invit.toUsername == User.username ?
-                    <div key={invit.id}>
+                    <div key={invit.id + key}>
                     <p>Game invitation from : {invit.fromUsername + ' ' }
                     <button  onClick={() => handleAccept(invit)}>Accepter</button>
                     <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
