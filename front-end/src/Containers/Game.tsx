@@ -121,8 +121,7 @@ export default function Game() {
 	const draw = () => {
 			
 		context = canvas.current.getContext("2d");
-		// canvas.current.width = canvas.current.width;
-		// canvas.current.height = canvas.current.height;
+
 		// context.fillStyle = "transparent";
 		// context.fillRect(0, 0, canvas.current.width, canvas.current.height);
 		context.clearRect(0, 0, canvas.current.width, canvas.current.height);
@@ -176,7 +175,9 @@ export default function Game() {
 		{
 			var canvasLocation = canvas.current.getBoundingClientRect();
 			var mouseLocation = event.clientY - canvasLocation.y;
-			player.y = mouseLocation - setting_game.paddle_height / 2;
+			console.log('hellow rodl ');
+			player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
+							- setting_game.paddle_height / 2;
 
 			// permet de limiter les players par rapport a la taille du canvas
 			if (mouseLocation < setting_game.paddle_height / 2) {
@@ -319,6 +320,8 @@ export default function Game() {
 	useEffect( () => {
 		player = new Player(0, setting_game.player_y, 0, 0);
 		player2 = new Player(canvas.current.width - setting_game.paddle_width, setting_game.player_y, 0, 0);
+
+
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
 		clientInit().then(() => display());
 		return () => {
@@ -334,12 +337,12 @@ export default function Game() {
 	return(
 		<>
 		<Navbar / >
-		<div className="visual">
+		<div className="visual" onMouseMove={playerMove}>
 			<div>
 				
 				{/* <div className="scorePlayer1">joueur 1: {p1_score}</div>
 				<div className="scorePlayer2">joueur 2: {p2_score}</div> */}
-				<canvas onMouseMove={playerMove} className="gameCanvas" ref={canvas} width='680' height='450'/>
+				<canvas className="gameCanvas" ref={canvas} width='680' height='450'/>
 			</div>
 		</div>
 		</>
