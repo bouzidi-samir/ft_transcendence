@@ -54,8 +54,8 @@ export class gameController {
 	async gameResult(@Body() body : any)
 	{
 		let game = new Game;
-		game.p1_userName = body.player1_username;
-		game.p2_userName = body.player2_username;
+		game.p1_userName = body.player1_username.slice();
+		game.p2_userName = body.player2_username.slice( );
 		game.p1_score = parseInt(body.player1_score);
 		game.p2_score = parseInt(body.player2_score);
 
