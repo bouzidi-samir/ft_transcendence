@@ -28,7 +28,8 @@ export class gameService {
 	  }
 
     async setP1Name(gameId: number, name: string) { //save le secret dans la db
-        return this.gameRepository.update(gameId, {
+      //get nick name  
+      return this.gameRepository.update(gameId, {
           p1_userName: name
         });
       }
