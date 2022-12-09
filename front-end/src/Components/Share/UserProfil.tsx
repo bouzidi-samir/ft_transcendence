@@ -19,9 +19,11 @@ export default function UserProfil() {
     const location = useLocation();
     const [gameList, setGames] = useState([{
         p1_score : 0,
-        p1_userName : "",
+        p1_id : 0,
         p2_score : 0,
-        p2_userName : "",
+        p2_id : 0,
+        p1_nick : 'null',
+        p2_nick : 'null',
     }]);
     let games : any;
   
@@ -53,7 +55,6 @@ export default function UserProfil() {
             'cors': 'true'
         }})
         games = await ret.json();
-        console.log("la game ==> ",games)
         setGames(games["games"]);
        // setsw(1);
     }
@@ -62,10 +63,9 @@ export default function UserProfil() {
     { 
         let content = [];
 
-
        for (let i = 0 ; i < gameList.length; i++){
-        if((user.username == gameList[i].p1_userName) || (user.username == gameList[i].p2_userName))
-            content.push(<a href="#" > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+        if((user.id == gameList[i].p1_id) || (user.id == gameList[i].p2_id))
+            content.push(<a href="#" > {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</a>);
        }
         return content;
     }

@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { Server } from 'colyseus';
 import { AppModule } from './app.module';
 import { gameRoom } from './games/Rooms/Game.romms';
-import { MyRoom } from './rooms/MyRoom';
+//import { MyRoom } from './rooms/MyRoom';
 import { MatchingRoom } from './rooms/MatchingRoom';
 import {PrivateRoom} from './rooms/PrivateRoom';
 
