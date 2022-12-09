@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
+import { io, Socket } from "socket.io-client";
 
 export default function Invitation() {
 
@@ -9,6 +10,8 @@ export default function Invitation() {
     const [invitations, setInvitations] = useState([]);
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    const [socket, setSocket] = useState<Socket>();
+
 
 
     async function handleInvitation() {
@@ -56,6 +59,22 @@ export default function Invitation() {
         dispatch({type: "RoomActive/setRoomActive",payload: {tag:invit.roomTag}})
 
         }
+
+        useEffect(() => {
+            const newSocket = io('http://localhost:8000');
+            setSocket(newSocket)
+        }, [setSocket])
+    
+        const invitationListener = (alert: string) => {
+            handleInvitation();
+        }
+    
+        useEffect(() => {
+            socket?.on("roomInvitationServer", invitationListener );
+            return () => {
+                socket?.off("roomInvitationServer", invitationListener )
+            }
+        }, [invitationListener])
 
         async function handleRefuse(invit: any)  {
             console.log('accept')

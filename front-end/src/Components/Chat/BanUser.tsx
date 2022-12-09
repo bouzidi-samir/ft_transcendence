@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { io, Socket } from "socket.io-client";
+import { SocketContext } from "../../Context/socket";
 import Cross from "../Share/Cross";
 
 export default function BanUser(props: any) {
@@ -11,16 +12,18 @@ export default function BanUser(props: any) {
     const values = Object.values(User.JWT_token);
     const [ban, setBan] = useState(false);
     const {toBan} = props;
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const alertBan = {
         toUsername: toBan.username,
         text: "banned"
     };
 
-useEffect(() => {
-    const newSocket = io('http://localhost:8000');
-    setSocket(newSocket)
-}, [setSocket])
+    const socket = useContext(SocketContext);
+
+// useEffect(() => {
+//     const newSocket = io('http://localhost:8000');
+//     setSocket(newSocket)
+// }, [setSocket])
 
 async function handleBan(e: any) {
 

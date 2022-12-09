@@ -7,17 +7,19 @@ import { Link } from 'react-router-dom';
 import mp3 from '../../styles/Sound/new.mp3'
 import { Howl } from "howler";
 import Invitation from './Invitation';
+import { SocketContext } from '../../Context/socket';
 
 export default function Notifs() {
 
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [notifs, setNotifs] = useState<any[]>([]);
     const dispatch = useDispatch();
     const Roomlist = useSelector((state: any) => state.RoomList);
 
+    const socket = useContext(SocketContext);
     
     const playMp3 = (src: any) => {
         const sound = new Howl({
@@ -27,10 +29,10 @@ export default function Notifs() {
         sound.play()
       };
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     setSocket(newSocket)
+    // }, [setSocket])
   
     const alertListener = (alert: any) => {
         setNotifs([...notifs,alert]);

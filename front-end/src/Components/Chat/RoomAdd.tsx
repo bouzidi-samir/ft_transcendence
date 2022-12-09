@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../../styles/Components/Chat/RoomAdd.css'
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { User } from "../../Slices/UserSlice";
 import React, { useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { couldStartTrivia } from 'typescript';
+import { SocketContext } from '../../Context/socket';
 
 
 export default function RoomAdd({setAddroom} :any) {
@@ -19,17 +20,18 @@ export default function RoomAdd({setAddroom} :any) {
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(true);
     const [password, setPassword] = useState("");
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [error, setError] = useState("");
 
 
     const values = Object.values(User.JWT_token);
     const alertRoom = "NEW ROOM AVAILABLE !!!";
+    const socket = useContext(SocketContext);
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     setSocket(newSocket)
+    // }, [setSocket])
     
     
    async function handleForm(e: any)  {

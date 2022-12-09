@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
 import PrivateAcces from './PrivateAccess';
@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import RoomCase from './RoomCase';
+import { SocketContext } from '../../Context/socket';
 
 
 export default function Rooms() {
@@ -15,13 +16,15 @@ export default function Rooms() {
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     // const [alertBanned, setAlertBanned] = useState<any>({}); //// 2 eme
 
     const values = Object.values(User.JWT_token);
     const [member, setMember] = useState<{password: string; member: boolean}>({password: "", member: false});
     let p : [string | boolean][];
+    
+    const socket = useContext(SocketContext);
 
 
     function getRoomByname(tag : string, list : any[]) {
@@ -49,10 +52,10 @@ export default function Rooms() {
     }
 
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
     const alertListener = (alertRoom: string) => {
         // setAlertRoom(alertRoom);

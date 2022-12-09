@@ -6,10 +6,11 @@ import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 import RoomDisplay from './RoomDisplay';
 import Conversation from './Conversation';
+import { SocketContext } from '../../Context/socket';
 
 
 export default function Messages() {
-   const [socket, setSocket] = useState<Socket>();
+//    const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<any[]>([]);
     const [value, setValue] = useState<string>("");
     const RoomActive = useSelector((state: any) => state.RoomActive);
@@ -25,11 +26,13 @@ export default function Messages() {
         room: String(RoomActive.tag)
     }
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        console.log('New socket', newSocket?.id);
-        setSocket(newSocket)
-    }, [setSocket])
+    const socket = useContext(SocketContext);
+
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     console.log('New socket', newSocket?.id);
+    //     setSocket(newSocket)
+    // }, [setSocket])
     
     // Récupération des messages de la room active.
     useEffect(() => {

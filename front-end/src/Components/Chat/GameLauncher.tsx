@@ -1,9 +1,10 @@
 import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { io, Socket } from "socket.io-client";
+import { SocketContext } from "../../Context/socket";
 
 
 export default function GameLauncher(props: any) {
@@ -14,18 +15,19 @@ export default function GameLauncher(props: any) {
     const dispatch = useDispatch();
     // const [user, setUser]  = useState(User);
     const {hostname} = document.location;
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [alertGame, setAlertGame] = useState<any>({});
     // let userUpdate = {...User};
     const invitation = {
         fromUsername: User.username,
         toUsername: props.player2.username,
     };
+    const socket = useContext(SocketContext);
 
-    useEffect(() => {
-        const newSocket = io('http://localhost:8000');
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io('http://localhost:8000');
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
     const alertAnswer = (answer: any) => {
         setAlertGame(answer);
