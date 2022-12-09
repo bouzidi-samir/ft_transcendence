@@ -468,22 +468,29 @@ export class ChatService {
   async acceptOneRoomInvitation(body) {
 
     const request = await this.relationsRepository.findOne({ where: [{ toUsername: body.username, fromUsername: body.fromUsername, roomRequest: true, roomTag: body.tag} ]});
+    
     if (!request)
       return 'No roomRequest';
-    // if (request.acceptRoom == true)
-    //   return true;
-
+  
     const requester = await this.memberRepository.findOne({ where: [{username: body.fromUsername, roomTag: body.tag}]});
+    const toMember =  await this.memberRepository.findOne({ where: [{username: body.username, roomTag: body.tag}]});
+    
     if (!requester)
       return 'requester not a member';
+    
+    if (toMember) {
+        toMember.blocked = false
+        request.roomRequest = false // on kill l'invitation de la liste
+        await this.relationsRepository.save(request);
+        await this.memberRepository.save(toMember);
+        return 
+    }
+
     const room = await this.roomsRepository.findOne({where: {tag: body.tag}});
     if (!room)
       return 'room doesnt exist';
-
-    // request.acceptRoom = true;
     request.roomRequest = false // on kill l'invitation de la liste
     await this.relationsRepository.save(request);
-
     const newMember = await this.memberRepository.create();
     const invited = await this.userRepository.findOne({where: {username: body.username}})
     newMember.username = body.username;
@@ -513,11 +520,7 @@ export class ChatService {
   }
 
   async banMember(body) {
-    console.log(body)
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }});
-    //if (room == null || body.tag == 'global')
-      //return false;
-
     const existingMember = await this.memberRepository.findOne({where: {username: body.toBanUsername, roomTag: body.tag}});
     if (existingMember.owner == true){
       return false;
@@ -525,7 +528,6 @@ export class ChatService {
     const member = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     if (member == null || member.admin == false)
       return false;
-    //await this.memberRepository.delete({username: existingMember.username});
     existingMember.blocked = true;
     existingMember.in = false;
     existingMember.out = true;
