@@ -17,7 +17,15 @@ export default function UserProfil() {
     const user_id = useParams();
     const [user, setUser]  = useState(User);
     const location = useLocation();
-    let navigation = useNavigate();
+    const [gameList, setGames] = useState([{
+        p1_score : 0,
+        p1_id : 0,
+        p2_score : 0,
+        p2_id : 0,
+        p1_nick : 'null',
+        p2_nick : 'null',
+    }]);
+    let games : any;
   
     async function fetchData(){
         const url = `http://${hostname}:4000/users/search/${user_id.id}`
@@ -31,7 +39,41 @@ export default function UserProfil() {
         );
     }
 
-    useEffect(()=>{fetchData();}, [])
+
+    const fetchGame = async () => {
+
+        // console.log(gamesList);
+        //console.log(games['games']);
+
+        // games['games'].splice();
+        // console.log(games['games'][0]);
+
+        const url = `http://${hostname}:4000/games/history`
+        const ret = await fetch(url, {headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        }})
+        games = await ret.json();
+        setGames(games["games"]);
+       // setsw(1);
+    }
+
+    const  createList =  () =>
+    { 
+        let content = [];
+
+       for (let i = 0 ; i < gameList.length; i++){
+        if((user.id == gameList[i].p1_id) || (user.id == gameList[i].p2_id))
+            content.push(<a href="#" > {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</a>);
+       }
+        return content;
+    }
+
+    useEffect(()=>{
+        fetchData();
+        fetchGame();
+    }, [])
          
     return (
         <div className='userprofil'>
@@ -43,7 +85,11 @@ export default function UserProfil() {
                 <h3>{user.nickname}</h3>
                 <p>{user.status}</p>
                 <hr></hr>
-                <p style={{color: 'white'}} className='user-stat'>Matchs Joués:  {user.game_played}</p>
+                <div className='vertical-menu'>
+                    <a href="#" className="active">Historique des parties.</a>
+
+                    <>{createList()}</>
+                </div>
                 <p style={{color: 'white'}} className='user-stat'>Victoires: {user.game_won}</p>
                 <p style={{color: 'white'}} className='user-stat'>Défaites: {user.game_lost}</p>
                 <AddFriend toUsername={user_id.id}/>

@@ -12,9 +12,11 @@ export default function Stats() {
     const {hostname} = document.location;
     const [gameList, setGames] = useState([{
         p1_score : 0,
-        p1_userName : "",
+        p1_id : 0,
         p2_score : 0,
-        p2_userName : "",
+        p2_id : 0,
+        p1_nick : 'null',
+        p2_nick: 'null',
     }]);
     let games : any;
 
@@ -45,8 +47,8 @@ export default function Stats() {
 
 
        for (let i = 0 ; i < gameList.length; i++){
-        if((User.username == gameList[i].p1_userName) || (User.username == gameList[i].p2_userName))
-            content.push(<a href="#" id={i.toString()} key={i} > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+        if((User.id == gameList[i].p1_id) || (User.id == gameList[i].p2_id))
+            content.push(<a href="#" id={i.toString()} key={i} > {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</a>);
        }
         return content;
     }
