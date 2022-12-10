@@ -29,6 +29,18 @@ export class ChatController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Post('/setOnline') 
+    async setOnline( @Body() body: any ): Promise<any> {
+        return this.service.setOnline(body);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/setOffline') 
+    async setOffline( @Body() body: any ): Promise<any> {
+        return this.service.setOffline(body);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);

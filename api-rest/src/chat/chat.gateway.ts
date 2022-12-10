@@ -83,6 +83,12 @@ import { Repository } from 'typeorm';
     invitationGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
       this.server.emit('invitationGameServer', alert);
     }
+
+    @SubscribeMessage('roomInvitation')
+    roomInvitation(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
+      console.log('Received invitation in Back', alert);
+      this.server.emit('roomInvitationServer', alert);
+    }
     
     @SubscribeMessage('acceptGame')
     acceptGame(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {

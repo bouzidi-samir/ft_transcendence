@@ -20,6 +20,12 @@ export default class User {
 	@Column({ default: false })
 	public isTwoFactorAuthenticationEnabled: boolean;
 
+	@Column({ default: false })
+	public online: boolean;
+
+	@Column({ default: false })
+	public onGame: boolean;
+
 	@Column({ type: 'varchar', unique: true , nullable: true})
 	email: string;
 	

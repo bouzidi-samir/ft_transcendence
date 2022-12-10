@@ -49,6 +49,24 @@ export class ChatService {
       return room;      
   }
 
+  async setOnline(body): Promise<any>
+  {
+      const user = await this.userRepository.findOne({where: {username: body.username}});
+      user.online = true;
+      await this.userRepository.save(user);
+
+      return user; 
+  }
+
+  async setOffline(body): Promise<any>
+  {
+      const user = await this.userRepository.findOne({where: {username: body.username}});
+      user.online = false;
+      await this.userRepository.save(user);
+
+      return user; 
+  }
+
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});
