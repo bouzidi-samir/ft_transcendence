@@ -15,6 +15,7 @@ export default function Messages() {
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
     const Roomlist = useSelector((state: any) => state.RoomList);
+    const [blockedList, setBlockedList] = useState([]);
     const dispatch = useDispatch();
     
 
@@ -42,6 +43,22 @@ export default function Messages() {
     }, [setSocket])
     
     useEffect(() => {
+        let url = `http://${hostname}:4000/users/blockedPeople/${User.username}`;
+        fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(ret => ret.json()).then((ret) => { 
+            let list : any  = ret.map((e: any) => (e.toUsername));
+            setBlockedList(list)
+        }
+        )
+    }
+    , []
+    )
+
+    useEffect(() => {
         let url : string = `http://${hostname}:4000/chat/getRoomMessages/${RoomActive.tag}`;
         const ret = fetch(url, { headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -49,7 +66,10 @@ export default function Messages() {
             'cors': 'true'
         }})
         .then(response => response.json())
-        .then(data => setMessages(data))
+        .then((data) => {
+        let sort = data.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername)) 
+        setMessages(sort);
+        })
     }, [RoomActive])
 
     const send = (messageData: any) => {
