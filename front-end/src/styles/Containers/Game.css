@@ -24,3 +24,54 @@
 .scorePlayer2 {
 	color: red
 }
+
+.gameparams {
+	position:absolute;
+    top: 14%;
+    left: 0%;
+    margin-left: 25%;
+    margin-top: 0%;
+    width: 50%;
+    display: inline-block;
+	height: 60%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+    border-radius: 5%;
+    padding-top: 1%;
+    padding-left: 1%;
+    border: solid gray 1px;
+
+}
+
+.gameparams h2 {
+	color: white;
+}
+
+.gameparams label {
+	color: white;
+	display: block;
+	margin-bottom: 3%
+}
+
+.gameparams .btn-primary {
+    position: relative;
+    top: 26%;
+    right: 0%;
+    left: 35%;
+    width: 30%;
+    margin-top: 10%;
+    margin-bottom: 6%;
+} 
+
+.gameparams  .room-type {
+    margin-right: 5px;
+    margin-left: 3%;
+    width: 20px;
+    height: 20px;
+ }
+
+ .gameparams span {
+    color : white;
+    margin-right: 2%;
+    margin-left: 3%;
+}
