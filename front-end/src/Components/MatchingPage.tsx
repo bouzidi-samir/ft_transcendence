@@ -8,6 +8,7 @@ import "../styles/Components/Share/MatchingPage.css"
 import NewMemberSet from "./ProfilSettings/NewMemberSet";
 import TFAset from './ProfilSettings/TFAset'
 import Navbar from "./Share/Navbar";
+import GameParameters from "./Game/GameParameters";
 import { Link } from "react-router-dom";
 import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
@@ -18,7 +19,9 @@ export default function MatchingPage (props : any) {
 
     const {redirection} = props;
     const User = useSelector((state: any) => state.User);
+    const Game = useSelector((state: any) => state.Game); 
     const [time , setTime] = useState(0);
+    const [parameter , setParameter] = useState(false);
     let navigation = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser]  = useState(User);
@@ -28,7 +31,7 @@ export default function MatchingPage (props : any) {
     const [rooms, setRooms] = useState<Colyseus.RoomAvailable<any>[]>();
     let roomsNb : number | undefined;
     let userUpdate = {...User};
-
+console.log(Game.padColor);
     async function defineRooms()
     {
        await setRooms(await client.getAvailableRooms("my_room"));
@@ -88,20 +91,21 @@ export default function MatchingPage (props : any) {
         <>
             <Navbar />
         <div className="loading-contents">
-            <form className = 'form-newsettings'>
+            <div className = 'form-newsettings'>
             <h1 >Master Pong</h1>
-
                 <Link to ="/WaitingRoom" style={{textDecoration: 'none', width:'100%'}}>
                 <button className="MultiButtons">
                     MultiJoueur
                 </button>
                 </Link>
                 <button onClick={enableMenu} className="SingleButtons">Spectate</button>
+                <button onClick={() => setParameter(true)} className="SingleButtons" >Paramètres</button>
                 {hide === 1 &&
                     <ul className="list_match">{getList()}</ul>
                 }
-            </form>
+            </div>
         </div>
+            {parameter ? <GameParameters setParameter = {setParameter}/> : null}
         </>
     )
 }
