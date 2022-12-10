@@ -12,19 +12,19 @@ import { gameModule } from './games/game.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal:true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-		host: 'localhost',
-   // host: 'postgres-db',
-			port: 5432,
-		//	username: 'user',
-		//	password: 'password',
-			database: 'postgres',
-      autoLoadEntities: true,
-      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-      synchronize: true,
-    }),
-    /*TypeOrmModule.forRootAsync({
+  //   TypeOrmModule.forRoot({
+  //     type: 'postgres',
+	// 	host: 'localhost',
+  //  // host: 'postgres-db',
+	// 		port: 5432,
+	// 	//	username: 'user',
+	// 	//	password: 'password',
+	// 		database: 'postgres',
+  //     autoLoadEntities: true,
+  //     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+  //     synchronize: true,
+  //   }),
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -36,7 +36,7 @@ import { gameModule } from './games/game.module';
         database: configService.get('DATABASE_DB'),
         entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         synchronize: true,
-    })}),*/
+    })}),
     UsersModule,
     AuthModule,
     ChatModule,
