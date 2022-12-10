@@ -20,6 +20,7 @@ export default function Game() {
 	// const [p1_score, setp1_score] = useState(0);
 	// const [p2_score, setp2_score] = useState(0);
 	const User = useSelector((state: any) => state.User);
+    const Game = useSelector((state: any) => state.Game); 
     const dispatch = useDispatch();
     const user_id = useParams();
     const [user, setUser]  = useState(User);
@@ -139,7 +140,7 @@ export default function Game() {
 
 				// draw paddle_player
 
-		context.fillStyle = {color};
+		context.fillStyle = Game.padColor;
 		context.fillRect(player.x, player.y, setting_game.paddle_width, setting_game.paddle_height);
 		context.fillRect(player2.x, player2.y, setting_game.paddle_width, setting_game.paddle_height);
 
