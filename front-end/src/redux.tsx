@@ -7,6 +7,7 @@ import { UserSlice } from "./Slices/UserSlice";
 import { UserlistSlice } from "./Slices/UserlistSlice";
 import { RoomlistSlice } from "./Slices/RoomListSlice";
 import { RoomActiveSlice } from "./Slices/RoomSlice";
+import { GameSlice } from "./Slices/GameSlice";
 
 const persistConfig = {
     key:'root',
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     UserList: UserlistSlice.reducer,
     RoomList : RoomlistSlice.reducer,
     RoomActive : RoomActiveSlice.reducer,
+    Game : GameSlice.reducer
 })
 
 
