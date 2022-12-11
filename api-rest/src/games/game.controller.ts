@@ -17,7 +17,7 @@ export class gameController {
 	@Inject(UsersService)
 	private readonly userService: UsersService;
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Get("history")
 	async getHistory()
 	{
@@ -34,7 +34,7 @@ export class gameController {
 		return (true);
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Post("result")
 	async gameResult(@Body() body : any)
 	{

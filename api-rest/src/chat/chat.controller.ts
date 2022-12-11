@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard } from "src/auth/jwt-authguards";
+import JwtTwoFactorGuard, { JwtAuthGuard } from "src/auth/jwt-authguards";
 import { ChatService } from "./chat.service";
 
 @Controller('chat')
@@ -28,13 +28,13 @@ export class ChatController {
         return await this.service.getRoomAdmin(roomTag);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/createGlobalRoom')
     async createGlobalRoom(): Promise<any> {
         return this.service.createGlobalRoom();
@@ -45,13 +45,13 @@ export class ChatController {
         return this.service.createMyFriendsRoom(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/checkIfMember')
     async checkIfMember(@Body() body:any): Promise<any> {
         return this.service.checkIfMember(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/joinRoom') // tag, username
     async joinRoom(@Body() body: any): Promise<any> {
         return this.service.joinRoom(body);
@@ -98,13 +98,13 @@ export class ChatController {
         return this.service.leaveRoom(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/banMember') // tag, username, toBanUsername
     async banMember( @Body() body: any): Promise<any> {
         return this.service.banMember(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/checkBan') // tag, username
     async checkBan( @Body() body: any): Promise<any> {
         return this.service.checkBan(body);
@@ -125,7 +125,7 @@ export class ChatController {
 		return await this.service.unmuteMember(body);
 	}
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/checkMute')
     async checkMute(@Body() body:any): Promise<any> {
         return await this.service.checkMute(body);
@@ -136,19 +136,19 @@ export class ChatController {
         return await this.service.roomInvitation(body);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/checkRoomInvitation')
 		async checkRoomInvitation(@Body() body: any): Promise<any> { // username
 			return await this.service.checkRoomInvitation(body);
 	}
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/acceptOneRoomInvitation')
 	async acceptOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
 		return await this.service.acceptOneRoomInvitation(body);
 	}
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/refuseOneRoomInvitation')
 	async refuseOneRoomInvitation(@Body() body: any): Promise<any> { // username, fromUsername, tag
 		return await this.service.refuseOneRoomInvitation(body);
@@ -176,25 +176,25 @@ export class ChatController {
 
         //--------------------------------- GAME   -------------------------------------------
 
-        @UseGuards(JwtAuthGuard)
+        @UseGuards(JwtTwoFactorGuard)
         @Post('gameInvitation')
         async gameInvitation(@Body() body: any): Promise<any> {
             return await this.service.gameInvitation(body);
         }
     
-        @UseGuards(JwtAuthGuard)
+        @UseGuards(JwtTwoFactorGuard)
         @Post('/checkGameInvitation')
             async checkGameInvitation(@Body() body: any): Promise<any> { 
                 return await this.service.checkGameInvitation(body);
         }
     
-        @UseGuards(JwtAuthGuard)
+        @UseGuards(JwtTwoFactorGuard)
         @Post('/acceptOneGameInvitation')
         async acceptOneGameInvitation(@Body() body: any): Promise<any> { 
             return await this.service.acceptOneGameInvitation(body);
         }
     
-        @UseGuards(JwtAuthGuard)
+        @UseGuards(JwtTwoFactorGuard)
         @Post('/refuseOneGameInvitation')
         async refuseOneGameInvitation(@Body() body: any): Promise<any> { 
             return await this.service.refuseOneGameInvitation(body);

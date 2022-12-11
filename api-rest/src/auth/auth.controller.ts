@@ -5,7 +5,7 @@ import User from '../users/entities/user.entity';
 import { PassThrough } from 'stream';
 import { URLSearchParams } from 'url';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from './jwt-authguards'
+import JwtTwoFactorGuard, { JwtAuthGuard } from './jwt-authguards'
 import { LocalAuthGuard } from './local-auth.guards'
 import { Console } from 'console';
 
@@ -66,7 +66,7 @@ export class AuthController {
 		});
 	}
 	
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
   	@Get('profile')
   	getProfile(@Request() req) {
     return req.user;
