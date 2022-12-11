@@ -5,7 +5,7 @@ import { EntityManager } from 'typeorm';
 import Games from './entities/game.entity';
 import {gameService} from './game.service';
 import {UsersService} from '../users/users.service';
-import { JwtAuthGuard } from "src/auth/jwt-authguards";
+import JwtTwoFactorGuard, { JwtAuthGuard } from "src/auth/jwt-authguards";
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -27,7 +27,7 @@ export class gameController {
 		});
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Post("checkGuard")
 	async checkGuard()
 	{

@@ -49,7 +49,7 @@ export class AuthController {
 		user.email = infos.email;
 		user.isTwoFactorAuthenticationEnabled = false; 
 		let finaluser = await this.service.addUser(user);
-		let token = await this.service.createToken(finaluser);
+		let token = await this.service.getCookieWithJwtAccessToken(finaluser.id);
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,

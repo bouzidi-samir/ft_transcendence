@@ -9,11 +9,11 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly configService: ConfigService,) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.SECRET,
+      secretOrKey: configService.get('JWT_ACCESS_TOKEN_SECRET'),
     });
   }
 
@@ -43,7 +43,7 @@ export class JwtTwoFactorStrategy extends PassportStrategy(
     if (!user.isTwoFactorAuthenticationEnabled) {
       return user;
     }
-    if (payload.isSecondFactorAuthenticated) {
+    else if (payload.isSecondFactorAuthenticated) {
       return user;
     }
   }
