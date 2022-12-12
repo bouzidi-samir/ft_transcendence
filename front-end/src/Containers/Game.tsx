@@ -123,9 +123,11 @@ export default function Game() {
 	}
 
 	const draw = () => {
-			
-		context = canvas.current.getContext("2d");
-
+		if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
+			return;
+		if(canvas.current.getContext("2d") != null)
+		{
+		context = canvas.current.getContext("2d")
 		// context.fillStyle = "transparent";
 		// context.fillRect(0, 0, canvas.current.width, canvas.current.height);
 		context.clearRect(0, 0, canvas.current.width, canvas.current.height);
@@ -160,6 +162,7 @@ export default function Game() {
 		context.moveTo(canvas.current.width / 2, 0);
 		context.lineTo(canvas.current.width / 2, canvas.current.height);
 		context.stroke();
+		}
 	}
 		// L’évènement DOMContentLoaded est émis lorsque le document HTML initial a été complètement chargé et analysé
 	// document.addEventListener('DOMContentLoaded', function () // latence a gerer
@@ -334,6 +337,7 @@ export default function Game() {
 			}
 		})
 		room.onMessage("leaver", (message) => {
+			console.log("leaver");
 			updateData();
 			navigation('/Home');
 		})
@@ -356,6 +360,8 @@ export default function Game() {
 
 	const display = () => {
 		ballMove();
+		if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
+			return;
 		updatePos();
 		draw();
 		animationRequest = requestAnimationFrame(display);

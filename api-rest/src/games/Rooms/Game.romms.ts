@@ -103,6 +103,7 @@ export class gameRoom extends Room {
 			this.disconnect();
 		});
 		this.onMessage("leaver", (client, message) => {
+			console.log("leaver");
 			if (message.id === this.clients[0].sessionId)
 			{
 				this.player1.score = -1;
