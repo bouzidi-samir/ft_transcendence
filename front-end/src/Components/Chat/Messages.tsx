@@ -67,8 +67,13 @@ export default function Messages() {
         }})
         .then(response => response.json())
         .then((data) => {
-        let sort = data.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername)) 
-        setMessages(sort);
+        if (data != false)
+        {
+            let tab = Array();
+            tab = data;
+            tab = tab.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername)) 
+            setMessages(tab);
+        }
         })
     }, [RoomActive])
 
