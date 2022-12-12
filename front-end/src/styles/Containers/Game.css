@@ -1,12 +1,86 @@
-
 .visual{
+	margin:0%, auto;
+	height: 100vh;
+	background: rgb(110, 109, 117);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+	display: flex;
+}
+
+.visual h1 {
+	color: yellow;
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 2%;
+	font-family: 'calvierregular';
+} 
+
+@media only screen and (max-width: 1000px) {
+
+	.visual{
+		margin:0%, auto;
+		height: 100vh;
+		background: rgb(110, 109, 117);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+		display: flex;
+		flex-direction: columns;
+	}
+}
+
+.gameCanvas {
+	/*height: 35vw;*/
+	top : 20%;
+	left: 10%;
+	width: 80%;
+	padding: 0;
+	margin: auto; 
+	display: block;
+	position: absolute;
+	background: linear-gradient(90deg, rgb(62, 162, 81), rgb(23, 44, 162));
+}
+
+@media only screen and (max-width: 1000px) {
+	.gameCanvas {
+		/*height: 35vw;*/
+		top : 20%;
+		left: 20%;
+		width: 60%;
+		height: 50%;
+		padding: 0;
+		margin: auto; 
+		position: absolute;
+		background: linear-gradient(90deg, rgb(62, 162, 81), rgb(23, 44, 162));
+	}
+
+
+
+}
+
+.scorePlayer1 {
+	color: red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.scorePlayer2 {
+	color: red
+}
+
+
+
+
+
+
+
+
+/* .visual{
 	margin:0%, auto;
 	height: 100vw;
 	background-color: rgb(60, 201, 95);
 }
 
-.gameCanvas {
-	/*height: 35vw;*/
+.gameCanvas { */
+	/*height: 35vw;
 	top : 10%;
 	padding: 0;
 	margin: auto; 
@@ -74,4 +148,4 @@
     color : white;
     margin-right: 2%;
     margin-left: 3%;
-}
+} */

@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { User } from "../Slices/UserSlice";
 import mp3Sexy from '../styles/Sound/sexy.mp3';
-import mp3 from '../styles/Sound/new.mp3';
+// import mp3 from '../styles/Sound/new.mp3';
 import { Howl } from "howler";
 
 
@@ -44,7 +44,7 @@ export default function Home() {
   useEffect(() => {
     document.title = alert;
     if (alert !== 'Pong'){
-      playMp3(mp3);
+      playMp3(mp3Sexy);
       setTimeout(function(){setAlert('Pong')}, 2000);
     }
   })
@@ -62,6 +62,19 @@ export default function Home() {
       if(ret.status === 401)
         navigation("/Unauthorized");
     });
+
+	let url_ = `http://${hostname}:4000/chat/setOnline`;
+    fetch(url_, {method: "POST",
+       headers: {
+         'Authorization': `Bearer ${User.JWT_token}`,
+         'Content-Type': 'application/json',
+         'cors': 'true'
+       } ,
+       body: JSON.stringify({
+        username: User.username,
+        } )
+     }
+     )
   }, [User]
   ) 
   

@@ -63,7 +63,7 @@ export default function Stats() {
         <div className='stats-content'>
             <div className='match-total'>
                 <div className='vertical-menu'>
-                    <a href="#" className="active">Historique des parties.</a>
+                    <a href="#" className="active">Historique des parties</a>
                     {createList()}
                 </div>
             </div>

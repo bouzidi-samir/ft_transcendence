@@ -16,6 +16,18 @@ export class ChatController {
         return await this.service.getAllRooms();
     }
 
+	@UseGuards(JwtTwoFactorGuard)
+    @Post('/setOnline') 
+    async setOnline( @Body() body: any ): Promise<any> {
+        return this.service.setOnline(body);
+    }
+
+    @UseGuards(JwtTwoFactorGuard)
+    @Post('/setOffline') 
+    async setOffline( @Body() body: any ): Promise<any> {
+        return this.service.setOffline(body);
+    }
+
     @Get('getRoomMembers/:roomTag')
     async getRoomMembers(@Param('roomTag') roomTag: string, @Body() body: any): Promise<any> 
     {

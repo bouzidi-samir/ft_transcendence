@@ -46,6 +46,7 @@ export default function Game() {
 	let context : any;
 	let room : Colyseus.Room<unknown>;
 	let animationRequest: number;
+	let finished : number = 0;
 
 
 	/*var unload = require('unload');
@@ -96,7 +97,6 @@ export default function Game() {
 	const clientInit = async() => {
 		room = user.room;
 		room.onMessage("players_names&scores", (message) => {
-				console.log("names&scores");
 				player.userName = message.player_name;
 				player2.userName = message.player2_name;
 				player.score = message.p1_score;
@@ -171,49 +171,90 @@ export default function Game() {
 	{
 		const nomTouche = event.key;
 	});
+
+	function playerMove(event: any) {
+        if (clientId === player.id)
+        {
+            var canvasLocation = canvas.current.getBoundingClientRect();
+            var mouseLocation = event.clientY - canvasLocation.y;
+            player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+                            - setting_game.paddle_height / 2;
+
+            // permet de limiter les players par rapport a la taille du canvas
+            if (mouseLocation < setting_game.paddle_height / 2) {
+                player.y = 0;
+            } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+                        + setting_game.paddle_height / 2 > canvas.current.height) {
+                player.y = canvas.current.height - setting_game.paddle_height;
+            }
+            if (room)
+            {
+                room.send("player", {player_y : player.y})
+            }
+        }
+        else if (clientId === player2.id)
+        {
+            var canvasLocation = canvas.current.getBoundingClientRect();
+            var mouseLocation = event.clientY - canvasLocation.y;
+            player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+                            - setting_game.paddle_height / 2;
+
+            // permet de limiter les players par rapport a la taille du canvas
+            if (mouseLocation < setting_game.paddle_height / 2) {
+                player2.y = 0;
+            } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+                        + setting_game.paddle_height / 2 > canvas.current.height) {
+                player2.y = canvas.current.height - setting_game.paddle_height;
+            }
+            if (room)
+            {
+                room.send("player2", {player2_y : player2.y})
+            }
+        }
+    }
 	
 		// permet de bouger les payers avec la souris 
-	function playerMove(event: any) {
-		if (clientId === player.id)
-		{
-			var canvasLocation = canvas.current.getBoundingClientRect();
-			var mouseLocation = event.clientY - canvasLocation.y;
-			player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
-							- setting_game.paddle_height / 2;
+	// function playerMove(event: any) {
+	// 	if (clientId === player.id)
+	// 	{
+	// 		var canvasLocation = canvas.current.getBoundingClientRect();
+	// 		var mouseLocation = event.clientY - canvasLocation.y;
+	// 		player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
+	// 						- setting_game.paddle_height / 2;
 
-			// permet de limiter les players par rapport a la taille du canvas
-			if (mouseLocation < setting_game.paddle_height / 2) {
-				player.y = 0;
-			} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-				player.y = canvas.current.height - setting_game.paddle_height;
-			} else {
-				player.y = mouseLocation - setting_game.paddle_height / 2;
-			}
-			if (room)
-			{
-				room.send("player", {player_y : player.y})
-			}
-		}
-		else if (clientId === player2.id)
-		{
-			var canvasLocation = canvas.current.getBoundingClientRect();
-			var mouseLocation = event.clientY - canvasLocation.y;
-			player2.y = mouseLocation - setting_game.paddle_height / 2;
+	// 		// permet de limiter les players par rapport a la taille du canvas
+	// 		if (mouseLocation < setting_game.paddle_height / 2) {
+	// 			player.y = 0;
+	// 		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
+	// 			player.y = canvas.current.height - setting_game.paddle_height;
+	// 		} else {
+	// 			player.y = mouseLocation - setting_game.paddle_height / 2;
+	// 		}
+	// 		if (room)
+	// 		{
+	// 			room.send("player", {player_y : player.y})
+	// 		}
+	// 	}
+	// 	else if (clientId === player2.id)
+	// 	{
+	// 		var canvasLocation = canvas.current.getBoundingClientRect();
+	// 		var mouseLocation = event.clientY - canvasLocation.y;
+	// 		player2.y = mouseLocation - setting_game.paddle_height / 2;
 
-			// permet de limiter les players par rapport a la taille du canvas
-			if (mouseLocation < setting_game.paddle_height / 2) {
-				player2.y = 0;
-			} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-				player2.y = canvas.current.height - setting_game.paddle_height;
-			} else {
-				player2.y = mouseLocation - setting_game.paddle_height / 2;
-			}
-			if (room)
-			{
-				room.send("player2", {player2_y : player2.y})
-			}
-		}
-	}
+	// 		// permet de limiter les players par rapport a la taille du canvas
+	// 		if (mouseLocation < setting_game.paddle_height / 2) {
+	// 			player2.y = 0;
+	// 		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
+	// 			player2.y = canvas.current.height - setting_game.paddle_height;
+	// 		} else {
+	// 			player2.y = mouseLocation - setting_game.paddle_height / 2;
+	// 		}
+	// 		if (room)
+	// 		{
+	// 			room.send("player2", {player2_y : player2.y})
+	// 		}
+	// 	}
+	// }
 
 
 		// mouvrement du coomputer
@@ -245,6 +286,7 @@ export default function Game() {
 			// Reset speed
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
+				finished = 1;
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 				updateData();
 				navigation('/Home');
@@ -280,11 +322,12 @@ export default function Game() {
 			ball.x = message.ball_x;
 			ball.y = message.ball_y;	
 		})
-		room.onMessage("updateScore", (message) => {
+		room.onMessage("updateScore", async (message)  => {
 			player.score = message.player_score;
 			player2.score = message.player2_score;
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
+				finished = 1;
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 				updateData();
 				navigation('/Home');
@@ -313,7 +356,6 @@ export default function Game() {
 
 	const display = () => {
 		ballMove();
-		//computerMove();
 		updatePos();
 		draw();
 		animationRequest = requestAnimationFrame(display);
@@ -329,8 +371,10 @@ export default function Game() {
 		return () => {
 			if(room)
 			{
-				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
-				room.leave();
+				if(finished === 0)
+					room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score, finished : finished});
+				//if(room)
+					//room.leave();
 			}
 			cancelAnimationFrame(animationRequest);
 		}

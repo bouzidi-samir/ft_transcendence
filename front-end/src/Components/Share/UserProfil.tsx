@@ -83,10 +83,11 @@ export default function UserProfil() {
                 <Cross lastPage="/Chat"/>
                 <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
-                <p>{user.status}</p>
+                {/* <p>{user.status}</p> */}
+				<p>{user.online ? "online" : "offline"}</p>
                 <hr></hr>
                 <div className='vertical-menu'>
-                    <a href="#" className="active">Historique des parties.</a>
+                    <a href="#" className="active">Historique des parties</a>
 
                     <>{createList()}</>
                 </div>
