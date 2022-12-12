@@ -337,7 +337,6 @@ export default function Game() {
 			}
 		})
 		room.onMessage("leaver", (message) => {
-			console.log("leaver");
 			updateData();
 			navigation('/Home');
 		})
