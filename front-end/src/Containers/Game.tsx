@@ -178,7 +178,6 @@ export default function Game() {
 		{
 			var canvasLocation = canvas.current.getBoundingClientRect();
 			var mouseLocation = event.clientY - canvasLocation.y;
-			console.log('hellow rodl ');
 			player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
 							- setting_game.paddle_height / 2;
 

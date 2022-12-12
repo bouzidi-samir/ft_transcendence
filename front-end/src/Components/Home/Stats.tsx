@@ -36,7 +36,6 @@ export default function Stats() {
             'cors': 'true'
         }})
         games = await ret.json();
-        console.log("la game ==> ",games)
         setGames(games["games"]);
        // setsw(1);
     }
