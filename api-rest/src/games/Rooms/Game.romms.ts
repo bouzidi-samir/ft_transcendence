@@ -13,6 +13,8 @@ export class gameRoom extends Room {
 	p1_score : number = 0;
 	p2_score : number = 0;
 	token : any;
+	p1_nick : any = "";
+	p2_nick: any = "";
 
 	onCreate(options: any){
 		this.setState(new Game);
@@ -76,19 +78,21 @@ export class gameRoom extends Room {
 			if (this.player1.username === "null")
 			{
 				this.player1.username = message.player_username;
+				this.p1_nick = message.nick;
 				client.send("role", {role : "player1", client : client})
 			}
 			else if (this.player2.username === "null")
 			{
+				this.p2_nick = message.nick
 				this.player2.username = message.player_username;
 				client.send("role", {role : "player2", client : client})
-				this.setMetadata({player1 : this.player1.username, player2 : this.player2.username});
+				this.setMetadata({player1 : this.p1_nick, player2 : this.p2_nick});
 			}
 			if (this.player1.username != 'null' && this.player2.username != 'null')
 			{
 				for (let i = 0; i < this.clients.length; i++)
 				{
-					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
+					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick: this.p2_nick });
 				}
 			}
 		})
