@@ -84,7 +84,8 @@ export default function UserProfil() {
                 <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
                 {/* <p>{user.status}</p> */}
-				<p>{user.online ? "online" : "offline"}</p>
+				<p>{user.online ? "online" : "offline"} {user.onGame ? " - in a Game" : null}</p>
+				<p></p>
                 <hr></hr>
                 <div className='vertical-menu'>
                     <a href="#" className="active">Historique des parties</a>

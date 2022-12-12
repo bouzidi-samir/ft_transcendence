@@ -61,6 +61,18 @@ export default function GameLauncher(props: any) {
     }
 
     useEffect(()=>{
+		let url_ = `http://${hostname}:4000/chat/setInGame`;
+        fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        } ,
+        body: JSON.stringify({
+            username: User.username,
+            } )
+        }
+        )
         createGame();
     },[alertAnswer])
 

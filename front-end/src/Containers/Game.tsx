@@ -373,7 +373,22 @@ export default function Game() {
 
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
 		clientInit().then(() => display());
+		
 		return () => {
+
+			let url_ = `http://${hostname}:4000/chat/leaveGame`;
+			fetch(url_, {method: "POST",
+			headers: {
+				'Authorization': `Bearer ${User.JWT_token}`,
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			} ,
+			body: JSON.stringify({
+				username: User.username,
+				} )
+			}
+			)
+
 			if(room)
 			{
 				if(finished === 0)

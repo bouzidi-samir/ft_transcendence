@@ -67,6 +67,24 @@ export class ChatService {
       return user; 
   }
 
+  async setInGame(body): Promise<any>
+  {
+      const user = await this.userRepository.findOne({where: {username: body.username}});
+      user.onGame = true;
+      await this.userRepository.save(user);
+
+      return user; 
+  }
+
+  async leaveGame(body): Promise<any>
+  {
+      const user = await this.userRepository.findOne({where: {username: body.username}});
+      user.onGame = false;
+      await this.userRepository.save(user);
+
+      return user; 
+  }
+
   async createRoom(body) {
 
     const check = await this.roomsRepository.findOne({where: { tag:body.tag }});

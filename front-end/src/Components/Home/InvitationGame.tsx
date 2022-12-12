@@ -70,6 +70,20 @@ export default function InvitationGame() {
             })
         }
         ).then(response => response.json())
+
+		let url_ = `http://${hostname}:4000/chat/setInGame`;
+        fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        } ,
+        body: JSON.stringify({
+            username: User.username,
+            } )
+        }
+        )
+
         handleInvitation();
         let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
         let userUpdate = {...User};

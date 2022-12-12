@@ -28,6 +28,18 @@ export class ChatController {
         return this.service.setOffline(body);
     }
 
+	@UseGuards(JwtTwoFactorGuard)
+    @Post('/setInGame') 
+    async setInGame( @Body() body: any ): Promise<any> {
+        return this.service.setInGame(body);
+    }
+
+	@UseGuards(JwtTwoFactorGuard)
+    @Post('/leaveGame') 
+    async leaveGame( @Body() body: any ): Promise<any> {
+        return this.service.leaveGame(body);
+    }
+
     @Get('getRoomMembers/:roomTag')
     async getRoomMembers(@Param('roomTag') roomTag: string, @Body() body: any): Promise<any> 
     {
