@@ -12,7 +12,7 @@ export default function RoomSettings() {
     const [adminList, setAdminList] = useState<any>([])
     const[isAdmin, setIsAdmin] = useState(false);
     const [alert, setAlert] = useState(false);
-    const [roomName, setRoomName] = useState<string>(RoomActive.tag);
+    const [roomName, setRoomName] = useState<string>("");
     const [privateRoom, setPrivate] = useState<boolean>(RoomActive.private);
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
     const [password, setPassword] = useState("");
@@ -34,9 +34,11 @@ export default function RoomSettings() {
     }, [alertListener])
     
     useEffect(() => {
+        setRoomName(RoomActive.tag);
         setPrivate(RoomActive.private);
         setPublicRoom(RoomActive.public);
-        setPassword(RoomActive.password);
+        if (RoomActive.private)
+            setPassword(RoomActive.password);
     }, [])
 
 
@@ -141,7 +143,6 @@ export default function RoomSettings() {
                     <span>Public</span>
                     <input type="radio" onChange={(e)=> handleChange(e, "public")} 
                       name="type" className='room-type' checked= {publicRoom}>
-
                         </input>
                     <br></br>
                     <div className='pass-zone'>

@@ -40,12 +40,6 @@ export default function UserProfil() {
 
     const fetchGame = async () => {
 
-        // console.log(gamesList);
-        //console.log(games['games']);
-
-        // games['games'].splice();
-        // console.log(games['games'][0]);
-
         const url = `http://${hostname}:4000/games/history`
         const ret = await fetch(url, {headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -53,9 +47,7 @@ export default function UserProfil() {
             'cors': 'true'
         }})
         games = await ret.json();
-        console.log("la game ==> ",games)
         setGames(games["games"]);
-       // setsw(1);
     }
 
     const  createList =  () =>
@@ -65,7 +57,7 @@ export default function UserProfil() {
 
        for (let i = 0 ; i < gameList.length; i++){
         if((user.username == gameList[i].p1_userName) || (user.username == gameList[i].p2_userName))
-            content.push(<a href="#" > {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+            content.push(<a href="#"  key={i}> {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
        }
         return content;
     }

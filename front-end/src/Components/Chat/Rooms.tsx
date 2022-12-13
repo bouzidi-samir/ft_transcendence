@@ -18,7 +18,7 @@ export default function Rooms() {
     const [socket, setSocket] = useState<Socket>();
     const [alertRoom, setAlertRoom] = useState<string>("");
     const [notifs, setNotifs] = useState<any[]>([]);
-    let p : [string | boolean][];
+    let p : boolean;
     const alertMember = "NEW MEMBER !!!";
 
     
@@ -102,7 +102,7 @@ export default function Rooms() {
             })
         })
         let result  = await response.json();
-        p = Object.values(result);
+        p = result.member;
     }
 
     async function handleCheckBan(room: any) {
@@ -127,7 +127,7 @@ export default function Rooms() {
       
         if (room.tag === RoomActive.tag)
             return;
-        if (room.private && !room.privateMessage && !p[1]) {
+        if (room.private && !room.privateMessage &&  p == false) {
             setPrivate(room)
             return;
         }
@@ -143,7 +143,8 @@ export default function Rooms() {
                 username: User.username,
                 nickname: User.nickname,
                 avatar_url: User.avatar_url,
-              //  password: p[0]
+                password : ""
+                //password: p[0]
             })
         }
         ).then(rep => rep.json())

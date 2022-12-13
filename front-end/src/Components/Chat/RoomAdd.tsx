@@ -79,7 +79,7 @@ export default function RoomAdd({setAddroom} :any) {
                 <hr></hr>
                 <label>Nom du salon:</label>       
                     <input type="text"  onChange={(e)=> handleChange(e, "name")} 
-                    value={roomName} className='room-name' placeholder='Nom du salon'></input>
+                     className='room-name' placeholder='Nom du salon'></input>
                 <label>Type:</label>
                     <span>Privée</span>
                     <input type="radio"  onChange={(e)=> handleChange(e, "private")} 
