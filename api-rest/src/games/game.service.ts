@@ -1,42 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import Game from './game.entity';
+import Games from './entities/game.entity';
 
 @Injectable()
 export class gameService {
     constructor(
-		@InjectRepository(Game)
-		public gameRepository: Repository<Game>,
+		@InjectRepository(Games)
+		public gameRepository: Repository<Games>,
 	) {}
 
-    getAllGames(): Promise<Game[]> {
+    getAllGames(): Promise<Games[]> {
         return this.gameRepository.find() // SELECT * from user
     }
 
-    async getGameById(id: number): Promise<Game>
+    async getGameById(id: number): Promise<Games>
     {
         
         const user = await this.gameRepository.findOne({where: {id: id}});
         return user;      
     }    
 
-    async addGame(game: Game): Promise<Game> {
+    async addGame(game: Games): Promise<Games> {
 		  const addedGame = this.gameRepository.create(game);
 		  await this.gameRepository.save(addedGame);
 		  return addedGame;
 	  }
 
-    async setP1Name(gameId: number, name: string) { //save le secret dans la db
+    async setP1Id(gameId: number, Id: number) { //save le secret dans la db
       //get nick name  
       return this.gameRepository.update(gameId, {
-          p1_userName: name
+          p1_id: Id
         });
       }
 
-    async setP2Name(gameId: number, name: string) { //save le secret dans la db
+    async setP2Id(gameId: number, Id: number) { //save le secret dans la db
         return this.gameRepository.update(gameId, {
-          p2_userName: name
+          p2_id: Id
         });
       }
 }

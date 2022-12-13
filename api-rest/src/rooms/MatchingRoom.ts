@@ -1,7 +1,7 @@
 import { Room, Client } from "colyseus";
 import { MyRoomState } from "./schema/MyRoomState";
 import User from '../users/entities/user.entity';
-import Game from '../games/game.entity';
+import Game from '../games/entities/game.entity';
 import { gameService } from '../games/game.service';
 import { UsersService } from "../users/users.service";
 import { Inject } from '@nestjs/common';

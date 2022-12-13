@@ -19,9 +19,11 @@ export default function UserProfil() {
     const location = useLocation();
     const [gameList, setGames] = useState([{
         p1_score : 0,
-        p1_userName : "",
+        p1_id : 0,
         p2_score : 0,
-        p2_userName : "",
+        p2_id : 0,
+        p1_nick : 'null',
+        p2_nick : 'null',
     }]);
     let games : any;
   
@@ -40,6 +42,12 @@ export default function UserProfil() {
 
     const fetchGame = async () => {
 
+        // console.log(gamesList);
+        //console.log(games['games']);
+
+        // games['games'].splice();
+        // console.log(games['games'][0]);
+
         const url = `http://${hostname}:4000/games/history`
         const ret = await fetch(url, {headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
@@ -48,16 +56,16 @@ export default function UserProfil() {
         }})
         games = await ret.json();
         setGames(games["games"]);
+       // setsw(1);
     }
 
     const  createList =  () =>
     { 
         let content = [];
 
-
        for (let i = 0 ; i < gameList.length; i++){
-        if((user.username == gameList[i].p1_userName) || (user.username == gameList[i].p2_userName))
-            content.push(<a href="#"  key={i}> {gameList[i].p1_userName} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_userName}</a>);
+        if((user.id == gameList[i].p1_id) || (user.id == gameList[i].p2_id))
+            content.push(<a href="#" key= {i}> {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</a>);
        }
         return content;
     }
@@ -75,10 +83,12 @@ export default function UserProfil() {
                 <Cross lastPage="/Chat"/>
                 <img  className="vignette-user" src={user.avatar_url}></img>
                 <h3>{user.nickname}</h3>
-                <p>{user.status}</p>
+                {/* <p>{user.status}</p> */}
+				<p>{user.online ? "online" : "offline"} {user.onGame ? " - in a Game" : null}</p>
+				<p></p>
                 <hr></hr>
                 <div className='vertical-menu'>
-                    <a href="#" className="active">Historique des parties.</a>
+                    <a href="#" className="active">Historique des parties</a>
 
                     <>{createList()}</>
                 </div>

@@ -79,7 +79,7 @@ export default function MatchingPage (props : any) {
         }
         else 
         {
-            content.push(<li className="listButton">No games found.</li>)
+            content.push(<li className="listButton" key="1">No games found.</li>)
         }
         return content;
     }

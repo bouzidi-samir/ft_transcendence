@@ -100,6 +100,8 @@ export default function Game() {
 				player2.userName = message.player2_name;
 				player.score = message.p1_score;
 				player2.score = message.p2_score;
+				player.nickname = message.p1_nick;
+				player2.nickname = message.p2_nick;
 		})
 
 		room.onMessage("role", async (message) => {
@@ -113,10 +115,17 @@ export default function Game() {
 				{
 					player2.userName = user.username;
 					player2.id = message.client.sessionId;
+					player.id = 0;
 					clientId = player2.id;
 				}
+				else if (message.role === "viewer")
+				{
+					player.id = 0;
+					player2.id = 0;
+					clientId = message.client.sessionId;
+				}
 		})
-		room.send("player_name", {player_username : user.username});
+		room.send("player_name", {player_username : user.username, player_nick : user.nickname});
 	}
 
 	const draw = () => {
@@ -130,12 +139,12 @@ export default function Game() {
 
 			context.fillStyle = "black";
 			context.font = "30px Arial";
-			context.fillText(player.userName, canvas.current.width / 4 - 35, canvas.current.height / 3);
+			context.fillText(player.nickname, canvas.current.width / 4 - 35, canvas.current.height / 3);
 			context.fillText(player.score, canvas.current.width / 4, canvas.current.height / 2);
 
 			context.fillStyle = "black";
 			context.font = "30px Arial";
-			context.fillText(player2.userName, 3 * canvas.current.width / 4 - 35, canvas.current.height / 3);
+			context.fillText(player2.nickname, 3 * canvas.current.width / 4 - 35, canvas.current.height / 3);
 			context.fillText(player2.score, 3 * canvas.current.width / 4, canvas.current.height / 2);
 
 					// draw paddle_player
@@ -174,7 +183,7 @@ export default function Game() {
 		// permet de bouger les payers avec la souris 
 
 		function playerMove(event: any) {
-			if (player.id != undefined && clientId === player.id)
+			if (clientId === player.id)
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;

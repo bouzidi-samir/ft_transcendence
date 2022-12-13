@@ -2,10 +2,10 @@ import { Controller, Get, Post, Inject, Param, Body, ParseIntPipe, UseIntercepto
 import { TypeOrmModule, getEntityManagerToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
-import Game from './game.entity';
+import Games from './entities/game.entity';
 import {gameService} from './game.service';
 import {UsersService} from '../users/users.service';
-import { JwtAuthGuard } from "src/auth/jwt-authguards";
+import JwtTwoFactorGuard, { JwtAuthGuard } from "src/auth/jwt-authguards";
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -17,7 +17,7 @@ export class gameController {
 	@Inject(UsersService)
 	private readonly userService: UsersService;
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Get("history")
 	async getHistory()
 	{
@@ -27,25 +27,27 @@ export class gameController {
 		});
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Post("checkGuard")
 	async checkGuard()
 	{
 		return (true);
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
 	@Post("result")
 	async gameResult(@Body() body : any)
 	{
-		let game = new Game;
-		game.p1_userName = body.player1_username;
-		game.p2_userName = body.player2_username;
+		let game = new Games;
 		game.p1_score = parseInt(body.player1_score);
 		game.p2_score = parseInt(body.player2_score);
 
-		let player1 = await this.userService.getUserByUsername(game.p1_userName);
-		let player2 = await this.userService.getUserByUsername(game.p2_userName);
+		let player1 = await this.userService.getUserByUsername(body.player1_username);
+		let player2 = await this.userService.getUserByUsername(body.player2_username);
+		game.p1_id = player1.id;
+		game.p2_id = player2.id;
+		game.p1_nick = player1.nickname;
+		game.p2_nick = player2.nickname;
 		//console.log(player1);
 		//console.log(player2);
 
@@ -54,13 +56,13 @@ export class gameController {
 
 		if (game.p1_score > game.p2_score)
 		{
-			game.winner = game.p1_userName;
+			game.winner = game.p1_id;
 			await this.userService.gameWonAdd(player1.id, player1.game_won + 1, player1.ello + 10);
 			await this.userService.gameLostAdd(player2.id, player2.game_lost + 1, player2.ello - 10);
 		}
 		else 
 		{
-			game.winner = game.p2_userName;
+			game.winner = game.p2_id;
 			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 10)
 			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 10);
 		}

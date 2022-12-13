@@ -5,7 +5,7 @@ import User from '../users/entities/user.entity';
 import { PassThrough } from 'stream';
 import { URLSearchParams } from 'url';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from './jwt-authguards'
+import JwtTwoFactorGuard, { JwtAuthGuard } from './jwt-authguards'
 import { LocalAuthGuard } from './local-auth.guards'
 import { Console } from 'console';
 
@@ -49,7 +49,7 @@ export class AuthController {
 		user.email = infos.email;
 		user.isTwoFactorAuthenticationEnabled = false; 
 		let finaluser = await this.service.addUser(user);
-		let token = await this.service.createToken(finaluser);
+		let token = await this.service.getCookieWithJwtAccessToken(finaluser.id);
 		return JSON.stringify({
 			id: finaluser.id,
 			username: finaluser.username,
@@ -66,7 +66,7 @@ export class AuthController {
 		});
 	}
 	
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtTwoFactorGuard)
   	@Get('profile')
   	getProfile(@Request() req) {
     return req.user;

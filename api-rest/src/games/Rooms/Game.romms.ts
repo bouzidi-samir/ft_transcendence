@@ -8,6 +8,8 @@ var cron = require('node-cron');
 export class gameRoom extends Room {
 	player1 : players = new players();
 	player2: players = new players();
+	p1_nick : string = "";
+	p2_nick :string = "";
 	game : Game;
 	my_job : any;
 	p1_score : number = 0;
@@ -75,19 +77,25 @@ export class gameRoom extends Room {
 			if (this.player1.username === "null")
 			{
 				this.player1.username = message.player_username;
+				this.p1_nick = message.player_nick;
 				client.send("role", {role : "player1", client : client})
 			}
 			else if (this.player2.username === "null")
 			{
 				this.player2.username = message.player_username;
+				this.p2_nick = message.player_nick
 				client.send("role", {role : "player2", client : client})
-				this.setMetadata({player1 : this.player1.username, player2 : this.player2.username});
+				this.setMetadata({player1 : this.p1_nick, player2 : this.p2_nick});
+			}
+			else
+			{
+				client.send("role", {role : "viewer", client : client})
 			}
 			if (this.player1.username != 'null' && this.player2.username != 'null')
 			{
 				for (let i = 0; i < this.clients.length; i++)
 				{
-					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score });
+					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick : this.p2_nick });
 				}
 			}
 		})
@@ -102,15 +110,19 @@ export class gameRoom extends Room {
 				{
 					this.player1.score = -1;
 					this.player2.score = message.player2_score;
+					for (let i = 0; i < this.clients.length; i++)
+					{
+						this.clients[i].send("leaver", {});
+					}
 				}
 				else if (message.id === this.clients[1].sessionId)
 				{
 					this.player2.score = -1;
 					this.player1.score = message.player1_score;
-				}
-				for (let i = 0; i < this.clients.length; i++)
-				{
-					this.clients[i].send("leaver", {});
+					for (let i = 0; i < this.clients.length; i++)
+					{
+						this.clients[i].send("leaver", {});
+					}
 				}
 		});
 	}
