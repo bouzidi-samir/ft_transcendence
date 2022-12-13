@@ -38,7 +38,7 @@ export default function NewMessage(props: any) {
         <>
             {
                 !blockedList.some((e : string) => e == message.fromUsername) ?
-                <div key={message.index} className="buble-zone" style={{justifyContent: bubleStyle.bullDirection}}>
+                <div className="buble-zone" style={{justifyContent: bubleStyle.bullDirection}}>
                     <img src={avatar} className="avatar-buble"></img>   
                     <div key={message.index} className="message-bubleA" style={{backgroundColor: bubleStyle.bullColor}}> 
                     <span>{message.fromNickname} ({message.time}) :</span>
