@@ -45,6 +45,7 @@ export default function Game() {
 	let context : any;
 	let room : Colyseus.Room<unknown>;
 	let animationRequest: number;
+	let finished : number = 0;
 
 
 	/*var unload = require('unload');
@@ -95,7 +96,6 @@ export default function Game() {
 	const clientInit = async() => {
 		room = user.room;
 		room.onMessage("players_names&scores", (message) => {
-				console.log("names&scores");
 				player.userName = message.player_name;
 				player2.userName = message.player2_name;
 				player.score = message.p1_score;
@@ -120,43 +120,45 @@ export default function Game() {
 	}
 
 	const draw = () => {
+		if (canvas.current && canvas.current.getContext("2d") != null)
+		{
+			context = canvas.current.getContext("2d");
+
+			// context.fillStyle = "transparent";
+			// context.fillRect(0, 0, canvas.current.width, canvas.current.height);
+			context.clearRect(0, 0, canvas.current.width, canvas.current.height);
+
+			context.fillStyle = "black";
+			context.font = "30px Arial";
+			context.fillText(player.userName, canvas.current.width / 4 - 35, canvas.current.height / 3);
+			context.fillText(player.score, canvas.current.width / 4, canvas.current.height / 2);
+
+			context.fillStyle = "black";
+			context.font = "30px Arial";
+			context.fillText(player2.userName, 3 * canvas.current.width / 4 - 35, canvas.current.height / 3);
+			context.fillText(player2.score, 3 * canvas.current.width / 4, canvas.current.height / 2);
+
+					// draw paddle_player
+
+			context.fillStyle = {color};
+			context.fillRect(player.x, player.y, setting_game.paddle_width, setting_game.paddle_height);
+			context.fillRect(player2.x, player2.y, setting_game.paddle_width, setting_game.paddle_height);
+
+					//draw ball
+
+			context.beginPath(); // permet d'effacer tout les tracages possible pour n'avoir qu'une balle
+			context.fillStyle = 'white';
+			context.arc(ball.x , ball.y, setting_game.ball_radius, 0, Math.PI * 2, false);
+			context.fill(); // permet de dessiner l'interieure	
 			
-		context = canvas.current.getContext("2d");
-
-		// context.fillStyle = "transparent";
-		// context.fillRect(0, 0, canvas.current.width, canvas.current.height);
-		context.clearRect(0, 0, canvas.current.width, canvas.current.height);
-
-		context.fillStyle = "black";
-		context.font = "30px Arial";
-		context.fillText(player.userName, canvas.current.width / 4 - 35, canvas.current.height / 3);
-		context.fillText(player.score, canvas.current.width / 4, canvas.current.height / 2);
-
-		context.fillStyle = "black";
-		context.font = "30px Arial";
-		context.fillText(player2.userName, 3 * canvas.current.width / 4 - 35, canvas.current.height / 3);
-		context.fillText(player2.score, 3 * canvas.current.width / 4, canvas.current.height / 2);
-
-				// draw paddle_player
-
-		context.fillStyle = {color};
-		context.fillRect(player.x, player.y, setting_game.paddle_width, setting_game.paddle_height);
-		context.fillRect(player2.x, player2.y, setting_game.paddle_width, setting_game.paddle_height);
-
-				//draw ball
-
-		context.beginPath(); // permet d'effacer tout les tracages possible pour n'avoir qu'une balle
-		context.fillStyle = 'white';
-		context.arc(ball.x , ball.y, setting_game.ball_radius, 0, Math.PI * 2, false);
-		context.fill(); // permet de dessiner l'interieure	
-		
-				//draw line
-			
-		context.strokeStyle = 'white';
-		context.beginPath();
-		context.moveTo(canvas.current.width / 2, 0);
-		context.lineTo(canvas.current.width / 2, canvas.current.height);
-		context.stroke();
+					//draw line
+				
+			context.strokeStyle = 'white';
+			context.beginPath();
+			context.moveTo(canvas.current.width / 2, 0);
+			context.lineTo(canvas.current.width / 2, canvas.current.height);
+			context.stroke();
+		}
 	}
 		// L’évènement DOMContentLoaded est émis lorsque le document HTML initial a été complètement chargé et analysé
 	// document.addEventListener('DOMContentLoaded', function () // latence a gerer
@@ -170,48 +172,89 @@ export default function Game() {
 	});
 	
 		// permet de bouger les payers avec la souris 
-	function playerMove(event: any) {
-		if (clientId === player.id)
-		{
-			var canvasLocation = canvas.current.getBoundingClientRect();
-			var mouseLocation = event.clientY - canvasLocation.y;
-			console.log('hellow rodl ');
-			player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
-							- setting_game.paddle_height / 2;
 
-			// permet de limiter les players par rapport a la taille du canvas
-			if (mouseLocation < setting_game.paddle_height / 2) {
-				player.y = 0;
-			} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-				player.y = canvas.current.height - setting_game.paddle_height;
-			} else {
-				player.y = mouseLocation - setting_game.paddle_height / 2;
-			}
-			if (room)
+		function playerMove(event: any) {
+			if (player.id != undefined && clientId === player.id)
 			{
-				room.send("player", {player_y : player.y})
+				var canvasLocation = canvas.current.getBoundingClientRect();
+				var mouseLocation = event.clientY - canvasLocation.y;
+				player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+								- setting_game.paddle_height / 2;
+	
+				// permet de limiter les players par rapport a la taille du canvas
+				if (mouseLocation < setting_game.paddle_height / 2) {
+					player.y = 0;
+				} else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+							+ setting_game.paddle_height / 2 > canvas.current.height) {
+					player.y = canvas.current.height - setting_game.paddle_height;
+				}
+				if (room)
+				{
+					room.send("player", {player_y : player.y})
+				}
+			}
+			else if (clientId === player2.id)
+			{
+				var canvasLocation = canvas.current.getBoundingClientRect();
+				var mouseLocation = event.clientY - canvasLocation.y;
+				player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+								- setting_game.paddle_height / 2;
+	
+				// permet de limiter les players par rapport a la taille du canvas
+				if (mouseLocation < setting_game.paddle_height / 2) {
+					player2.y = 0;
+				} else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+							+ setting_game.paddle_height / 2 > canvas.current.height) {
+					player2.y = canvas.current.height - setting_game.paddle_height;
+				}
+				if (room)
+				{
+					room.send("player2", {player2_y : player2.y})
+				}
 			}
 		}
-		else if (clientId === player2.id)
-		{
-			var canvasLocation = canvas.current.getBoundingClientRect();
-			var mouseLocation = event.clientY - canvasLocation.y;
-			player2.y = mouseLocation - setting_game.paddle_height / 2;
+	//function playerMove(event: any) {
+	//	if (clientId === player.id)
+	//	{
+	//		var canvasLocation = canvas.current.getBoundingClientRect();
+	//		var mouseLocation = event.clientY - canvasLocation.y;
+	//		console.log('hellow rodl ');
+	//		player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
+	//						- setting_game.paddle_height / 2;
 
-			// permet de limiter les players par rapport a la taille du canvas
-			if (mouseLocation < setting_game.paddle_height / 2) {
-				player2.y = 0;
-			} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-				player2.y = canvas.current.height - setting_game.paddle_height;
-			} else {
-				player2.y = mouseLocation - setting_game.paddle_height / 2;
-			}
-			if (room)
-			{
-				room.send("player2", {player2_y : player2.y})
-			}
-		}
-	}
+	//		// permet de limiter les players par rapport a la taille du canvas
+	//		if (mouseLocation < setting_game.paddle_height / 2) {
+	//			player.y = 0;
+	//		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
+	//			player.y = canvas.current.height - setting_game.paddle_height;
+	//		} else {
+	//			player.y = mouseLocation - setting_game.paddle_height / 2;
+	//		}
+	//		if (room)
+	//		{
+	//			room.send("player", {player_y : player.y})
+	//		}
+	//	}
+	//	else if (clientId === player2.id)
+	//	{
+	//		var canvasLocation = canvas.current.getBoundingClientRect();
+	//		var mouseLocation = event.clientY - canvasLocation.y;
+	//		player2.y = mouseLocation - setting_game.paddle_height / 2;
+
+	//		// permet de limiter les players par rapport a la taille du canvas
+	//		if (mouseLocation < setting_game.paddle_height / 2) {
+	//			player2.y = 0;
+	//		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
+	//			player2.y = canvas.current.height - setting_game.paddle_height;
+	//		} else {
+	//			player2.y = mouseLocation - setting_game.paddle_height / 2;
+	//		}
+	//		if (room)
+	//		{
+	//			room.send("player2", {player2_y : player2.y})
+	//		}
+	//	}
+	//}
 
 
 		// mouvrement du coomputer
@@ -241,12 +284,6 @@ export default function Game() {
 				room.send("updateScore", {player_score: player.score , player2_score : player2.score});
 			}
 			// Reset speed
-			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
-			{
-				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
-				updateData();
-				navigation('/Home');
-			}
 			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);
 			ball.velocity_y = Math.random();
 		}
@@ -256,6 +293,51 @@ export default function Game() {
 			ball.velocity_x *= -1.2;
 		}
 	}
+
+
+	
+
+	//function playerMove(event: any) {
+    //    if (clientId === player.id)
+    //    {
+    //        var canvasLocation = canvas.current.getBoundingClientRect();
+    //        var mouseLocation = event.clientY - canvasLocation.y;
+    //        console.log('hellow rodl ', mouseLocation);
+    //        player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+    //                        - setting_game.paddle_height / 2;
+
+    //        // permet de limiter les players par rapport a la taille du canvas
+    //        if (mouseLocation < setting_game.paddle_height / 2) {
+    //            player.y = 0;
+    //        } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+    //                    + setting_game.paddle_height / 2 > canvas.current.height) {
+    //            player.y = canvas.current.height - setting_game.paddle_height;
+    //        }
+    //        if (room)
+    //        {
+    //            room.send("player", {player_y : player.y})
+    //        }
+    //    }
+    //    else if (clientId === player2.id)
+    //    {
+    //        var canvasLocation = canvas.current.getBoundingClientRect();
+    //        var mouseLocation = event.clientY - canvasLocation.y;
+    //        player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+    //                        - setting_game.paddle_height / 2;
+
+    //        // permet de limiter les players par rapport a la taille du canvas
+    //        if (mouseLocation < setting_game.paddle_height / 2) {
+    //            player2.y = 0;
+    //        } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
+    //                    + setting_game.paddle_height / 2 > canvas.current.height) {
+    //            player2.y = canvas.current.height - setting_game.paddle_height;
+    //        }
+    //        if (room)
+    //        {
+    //            room.send("player2", {player2_y : player2.y})
+    //        }
+    //    }
+    //}
 
 		// gestion de la balle contre les murs
 	function ballMove() {
@@ -285,11 +367,13 @@ export default function Game() {
 			{
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 				updateData();
+				finished = 1;
 				navigation('/Home');
 			}
 		})
 		room.onMessage("leaver", (message) => {
 			updateData();
+			finished = 1;
 			navigation('/Home');
 		})
 	}
@@ -324,15 +408,19 @@ export default function Game() {
 
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
 		clientInit().then(() => display());
-		return () => {
-			if(room)
-			{
-				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
-				room.leave();
-			}
+		return () =>{
 			cancelAnimationFrame(animationRequest);
 		}
 	}, [canvas.current]);
+
+	useEffect( () => {
+		return () => {
+			if (finished === 0)
+				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
+			room.leave();
+		}
+	}, [])
+
 
 	return(
 		<>

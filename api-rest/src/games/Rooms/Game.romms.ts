@@ -67,8 +67,7 @@ export class gameRoom extends Room {
 			{
 				this.p1_score = message.player_score;
 				this.p2_score = message.player2_score;
-				if (this.clients[i].sessionId != client.sessionId)
-					this.clients[i].send("updateScore", {player_score : message.player_score, player2_score : message.player2_score});
+				this.clients[i].send("updateScore", {player_score : message.player_score, player2_score : message.player2_score});
 			}
 		});
 
@@ -96,31 +95,30 @@ export class gameRoom extends Room {
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
-			this.disconnect();
 		});
+		
 		this.onMessage("leaver", (client, message) => {
-			if (message.id === this.clients[0].sessionId)
-			{
-				this.player1.score = -1;
-				this.player2.score = message.player2_score;
-			}
-			else if (message.id === this.clients[1].sessionId)
-			{
-				this.player2.score = -1;
-				this.player1.score = message.player1_score;
-			}
-			for (let i = 0; i < this.clients.length; i++)
-			{
-				this.clients[i].send("leaver", {});
-			}
-			this.disconnect();
+				if (message.id === this.clients[0].sessionId)
+				{
+					this.player1.score = -1;
+					this.player2.score = message.player2_score;
+				}
+				else if (message.id === this.clients[1].sessionId)
+				{
+					this.player2.score = -1;
+					this.player1.score = message.player1_score;
+				}
+				for (let i = 0; i < this.clients.length; i++)
+				{
+					this.clients[i].send("leaver", {});
+				}
 		});
 	}
 
 	// player qui quitte la room
 	onLeave(client: Client, consented?: boolean){
 		// permet de detruire la room une fois le player leave
-		this.disconnect();
+		//this.disconnect();
 	}
 
 	// effacer les rooms

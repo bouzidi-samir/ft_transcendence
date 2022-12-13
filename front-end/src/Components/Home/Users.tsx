@@ -37,9 +37,9 @@ export default function Users() {
                 <p>Mes Amis</p>
             <div className='friends'>   
                 {
-                    Object.values(friends).map((f : any)=> (
+                    Object.values(friends).map((f : any, index: number)=> (
                         f.toUsername != User.username ?
-                        <Friend key={f.id + f.username} friend={f}/>
+                        <Friend key={index} friend={f}/>
                         : null
                     )
                     )
