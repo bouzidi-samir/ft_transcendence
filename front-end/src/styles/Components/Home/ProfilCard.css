@@ -53,15 +53,16 @@
 @media only screen and (max-width: 1000px) {
 
     .vignette-card {
-        width: 60%;
+        width: 50%;
         height: 20%;
         margin-top: 5%;
-        margin-left: 20%;    
+        margin-left: 25%;    
         background-image: url(../../img/avatar.png);
         background-position: center;
         background-size: contain;
         border: solid black 1px;
-        border-radius: 9%;
+        border-radius: 50%;
+        object-fit: cover;
     }
     
  }

@@ -715,6 +715,9 @@ async getRoomAdmin(tag) {
         await this.relationsRepository.save(relation);
         return relation;
       }
+      if (relation.gameRequest == true) {
+        return relation;
+      }
     }
     else {
 
