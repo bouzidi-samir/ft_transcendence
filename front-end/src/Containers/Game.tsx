@@ -182,7 +182,7 @@ export default function Game() {
 		// permet de bouger les payers avec la souris 
 
 		function playerMove(event: any) {
-			if (clientId === player.id)
+			if ((player.id) && clientId === player.id)
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;

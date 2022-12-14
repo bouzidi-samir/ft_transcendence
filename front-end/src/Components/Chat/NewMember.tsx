@@ -15,6 +15,7 @@ export default function NewMember(props : any) {
     const [alert, setAlert] = useState(false);
     const [socket, setSocket] = useState<Socket>();
     const alertAdmin = "NEW ROOM ADMiN !!!";
+    const alertRoomInvitation = {text: "room invitation"};
 
     async function updateMemberList() {
         let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
@@ -89,10 +90,11 @@ export default function NewMember(props : any) {
         })
     }
     )
-        setStatu("Inviation envoiyée!");
-        setTimeout(() => {
-            setStatu("");
-        }, 1000);
+    socket?.emit("roomInvitation", alertRoomInvitation);
+        // setStatu("Inviation envoiyée!");
+        // setTimeout(() => {
+        //     setStatu("");
+        // }, 1000);
     }
 
     async function setAdmin(toUser : any) {

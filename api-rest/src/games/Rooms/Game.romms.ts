@@ -110,7 +110,7 @@ export class gameRoom extends Room {
 		});
 		
 		this.onMessage("leaver", (client, message) => {
-				if (message.id === this.clients[0].sessionId)
+				if (client.sessionId === this.clients[0].sessionId)
 				{
 					this.player1.score = -1;
 					this.player2.score = message.player2_score;
@@ -119,7 +119,7 @@ export class gameRoom extends Room {
 						this.clients[i].send("leaver", {});
 					}
 				}
-				else if (message.id === this.clients[1].sessionId)
+				else if (client.sessionId === this.clients[1].sessionId)
 				{
 					this.player2.score = -1;
 					this.player1.score = message.player1_score;
