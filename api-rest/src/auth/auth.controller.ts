@@ -62,8 +62,11 @@ export class AuthController {
 			ello : finaluser.ello,
 			gamePlayed : finaluser.game_played,
 			gameWon : finaluser.game_won,
-			gameLost : finaluser.game_lost,	
+			gameLost : finaluser.game_lost,
 		});
+
+	
+
 	}
 	
 	@UseGuards(JwtTwoFactorGuard)

@@ -29,6 +29,30 @@ export class ChatController {
     }
 
     @UseGuards(JwtTwoFactorGuard)
+    @Post('/setOnline') 
+    async setOnline( @Body() body: any ): Promise<any> {
+        return this.service.setOnline(body);
+    }
+
+    @UseGuards(JwtTwoFactorGuard)
+    @Post('/setOffline') 
+    async setOffline( @Body() body: any ): Promise<any> {
+        return this.service.setOffline(body);
+    }
+
+    @UseGuards(JwtTwoFactorGuard)
+    @Post('/setInGame') 
+    async setInGame( @Body() body: any ): Promise<any> {
+        return this.service.setInGame(body);
+    }
+
+    @UseGuards(JwtTwoFactorGuard)
+    @Post('/setOffGame') 
+    async setOffGame( @Body() body: any ): Promise<any> {
+        return this.service.setOffGame(body);
+    }
+
+    @UseGuards(JwtTwoFactorGuard)
     @Post('/createRoom') // tag, username
     async createRoom( @Body() body: any ): Promise<any> {
         return this.service.createRoom(body);

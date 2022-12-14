@@ -17,8 +17,7 @@ import { RoomInternalState } from "colyseus";
 let clientsNb;
 
 export default function Game() {
-	// const [p1_score, setp1_score] = useState(0);
-	// const [p2_score, setp2_score] = useState(0);
+	const {hostname} = document.location;
 	const User = useSelector((state: any) => state.User);
     const dispatch = useDispatch();
     const user_id = useParams();
@@ -30,10 +29,7 @@ export default function Game() {
 	let navigation = useNavigate();
 	const [fortyTwo, setFortyTwo] = useState(false);
 	const [params] = useSearchParams();
-	const {hostname} = document.location;
-	
 
-	
 
 	let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
 	let clientId : number;
@@ -222,55 +218,6 @@ export default function Game() {
 				}
 			}
 		}
-	//function playerMove(event: any) {
-	//	if (clientId === player.id)
-	//	{
-	//		var canvasLocation = canvas.current.getBoundingClientRect();
-	//		var mouseLocation = event.clientY - canvasLocation.y;
-	//		console.log('hellow rodl ');
-	//		player.y = (mouseLocation / canvasLocation.height * setting_game.canvas_height)
-	//						- setting_game.paddle_height / 2;
-
-	//		// permet de limiter les players par rapport a la taille du canvas
-	//		if (mouseLocation < setting_game.paddle_height / 2) {
-	//			player.y = 0;
-	//		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-	//			player.y = canvas.current.height - setting_game.paddle_height;
-	//		} else {
-	//			player.y = mouseLocation - setting_game.paddle_height / 2;
-	//		}
-	//		if (room)
-	//		{
-	//			room.send("player", {player_y : player.y})
-	//		}
-	//	}
-	//	else if (clientId === player2.id)
-	//	{
-	//		var canvasLocation = canvas.current.getBoundingClientRect();
-	//		var mouseLocation = event.clientY - canvasLocation.y;
-	//		player2.y = mouseLocation - setting_game.paddle_height / 2;
-
-	//		// permet de limiter les players par rapport a la taille du canvas
-	//		if (mouseLocation < setting_game.paddle_height / 2) {
-	//			player2.y = 0;
-	//		} else if (mouseLocation > canvas.current.height - setting_game.paddle_height / 2) {
-	//			player2.y = canvas.current.height - setting_game.paddle_height;
-	//		} else {
-	//			player2.y = mouseLocation - setting_game.paddle_height / 2;
-	//		}
-	//		if (room)
-	//		{
-	//			room.send("player2", {player2_y : player2.y})
-	//		}
-	//	}
-	//}
-
-
-		// mouvrement du coomputer
-		// function computerMove() 
-		// {
-		// 	computer.y += ball.velocity_y * 0.85;
-		// }
 
 	async function collide(playerCurrent: Player) {
 		//preventDefault();
@@ -302,51 +249,6 @@ export default function Game() {
 			ball.velocity_x *= -1.2;
 		}
 	}
-
-
-	
-
-	//function playerMove(event: any) {
-    //    if (clientId === player.id)
-    //    {
-    //        var canvasLocation = canvas.current.getBoundingClientRect();
-    //        var mouseLocation = event.clientY - canvasLocation.y;
-    //        console.log('hellow rodl ', mouseLocation);
-    //        player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
-    //                        - setting_game.paddle_height / 2;
-
-    //        // permet de limiter les players par rapport a la taille du canvas
-    //        if (mouseLocation < setting_game.paddle_height / 2) {
-    //            player.y = 0;
-    //        } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
-    //                    + setting_game.paddle_height / 2 > canvas.current.height) {
-    //            player.y = canvas.current.height - setting_game.paddle_height;
-    //        }
-    //        if (room)
-    //        {
-    //            room.send("player", {player_y : player.y})
-    //        }
-    //    }
-    //    else if (clientId === player2.id)
-    //    {
-    //        var canvasLocation = canvas.current.getBoundingClientRect();
-    //        var mouseLocation = event.clientY - canvasLocation.y;
-    //        player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
-    //                        - setting_game.paddle_height / 2;
-
-    //        // permet de limiter les players par rapport a la taille du canvas
-    //        if (mouseLocation < setting_game.paddle_height / 2) {
-    //            player2.y = 0;
-    //        } else if ((mouseLocation / canvasLocation.height * canvas.current.height)
-    //                    + setting_game.paddle_height / 2 > canvas.current.height) {
-    //            player2.y = canvas.current.height - setting_game.paddle_height;
-    //        }
-    //        if (room)
-    //        {
-    //            room.send("player2", {player2_y : player2.y})
-    //        }
-    //    }
-    //}
 
 		// gestion de la balle contre les murs
 	function ballMove() {
@@ -429,6 +331,37 @@ export default function Game() {
 			room.leave();
 		}
 	}, [])
+
+
+	useEffect( () => {
+		let url_ = `http://${hostname}:4000/chat/setInGame`;
+        fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            username: User.username,
+            })
+        }
+        )
+	}, [])
+	useEffect( () => {
+		return () => {
+		let url_ = `http://${hostname}:4000/chat/setOffGame`;
+        fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            username: User.username,
+            })
+        }
+        )}
+		}, [])
 
 
 	return(

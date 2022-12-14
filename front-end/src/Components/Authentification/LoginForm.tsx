@@ -21,6 +21,7 @@ export default function AuthForm() {
 		});
     let response = await request.json();
 		document.location.href = response.url;
+    
   }
   return (
     <>

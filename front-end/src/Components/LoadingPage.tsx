@@ -10,6 +10,7 @@ export default function LoadingPage (props : any) {
     const User = useSelector((state: any) => state.User);
     const [time , setTime] = useState(0);
     let navigation = useNavigate();
+    const {hostname} = document.location;
    
     useEffect( () => {    
         setInterval(() => {

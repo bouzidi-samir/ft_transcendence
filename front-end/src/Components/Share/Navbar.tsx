@@ -24,11 +24,22 @@ function Navbar() {
     const navigate = useNavigate();
     
     async function logout1 () {
-        //setCookie('name', "_intra_42_session_production", 30);
-        //document.cookie = '_intra_42_session_production=e0e6ed570f292eeed6b80e510af6b961'; //Crée ou met à jour un cookie 'user'
-        console.log(document.cookie);
         localStorage.clear();
         document.cookie = "_intra_42_session_production=e0e6ed570f292eeed6b80e510af6b961; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+        let url = `http://${hostname}:4000/chat/setOffline`;
+        fetch(url, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+            username: User.username,
+            })
+        }
+        )
+        // socket?.emit("offline", "off");
     }
 
     return (
