@@ -14,6 +14,8 @@ export class gameRoom extends Room {
 	my_job : any;
 	p1_score : number = 0;
 	p2_score : number = 0;
+	p1_color : string = "white";
+	p2_color : string = "white";
 	token : any;
 
 	onCreate(options: any){
@@ -78,12 +80,14 @@ export class gameRoom extends Room {
 			{
 				this.player1.username = message.player_username;
 				this.p1_nick = message.player_nick;
+				this.p1_color = message.color;
 				client.send("role", {role : "player1", client : client})
 			}
 			else if (this.player2.username === "null")
 			{
 				this.player2.username = message.player_username;
 				this.p2_nick = message.player_nick
+				this.p2_color = message.color;
 				client.send("role", {role : "player2", client : client})
 				this.setMetadata({player1 : this.p1_nick, player2 : this.p2_nick});
 			}
@@ -95,7 +99,7 @@ export class gameRoom extends Room {
 			{
 				for (let i = 0; i < this.clients.length; i++)
 				{
-					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick : this.p2_nick });
+					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick : this.p2_nick, p1_color : this.p1_color, p2_color : this.p2_color });
 				}
 			}
 		})

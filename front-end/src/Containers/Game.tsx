@@ -19,10 +19,10 @@ let clientsNb;
 export default function Game() {
 	const {hostname} = document.location;
 	const User = useSelector((state: any) => state.User);
+	const Game = useSelector((state: any) => state.Game);
     const dispatch = useDispatch();
     const user_id = useParams();
     const [user, setUser]  = useState(User);
-    const [color, setColor]  = useState("white");
 	const score = [0, 0];
 	const [connected, setConnect] = useState(0);
 	const result = useMemo(() => Math.random(), []);
@@ -98,6 +98,8 @@ export default function Game() {
 				player2.score = message.p2_score;
 				player.nickname = message.p1_nick;
 				player2.nickname = message.p2_nick;
+				player.color = message.p1_color;
+				player2.color = message.p2_color;
 		})
 
 		room.onMessage("role", async (message) => {
@@ -121,7 +123,7 @@ export default function Game() {
 					clientId = message.client.sessionId;
 				}
 		})
-		room.send("player_name", {player_username : user.username, player_nick : user.nickname});
+		room.send("player_name", {player_username : user.username, player_nick : user.nickname, color : Game.padColor});
 	}
 
 	const draw = () => {
@@ -145,8 +147,9 @@ export default function Game() {
 
 					// draw paddle_player
 
-			context.fillStyle = {color};
+			context.fillStyle =  player.color;
 			context.fillRect(player.x, player.y, setting_game.paddle_width, setting_game.paddle_height);
+			context.fillStyle =  player2.color;
 			context.fillRect(player2.x, player2.y, setting_game.paddle_width, setting_game.paddle_height);
 
 					//draw ball
@@ -369,7 +372,6 @@ export default function Game() {
 		<Navbar / >
 		<div className="visual" onMouseMove={playerMove}>
 			<div>
-				
 				{/* <div className="scorePlayer1">joueur 1: {p1_score}</div>
 				<div className="scorePlayer2">joueur 2: {p2_score}</div> */}
 				<canvas className="gameCanvas" ref={canvas} width='680' height='450'/>

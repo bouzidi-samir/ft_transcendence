@@ -58,10 +58,12 @@ export default function Home() {
         'cors': 'true'
       },
     }
-    ).then(ret => {
+    )
+    .then(ret => {
       if(ret.status === 401)
         navigation("/Unauthorized");
-    });
+    })
+    ;
 
     let url_ = `http://${hostname}:4000/chat/setOnline`;
         fetch(url_, {method: "POST",
