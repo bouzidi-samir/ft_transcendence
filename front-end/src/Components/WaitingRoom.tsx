@@ -82,7 +82,6 @@ export default function MatchingPage (props : any) {
                     payload: userUpdate
                 });
                 room.send('room_id', {id : userUpdate.room.id})
-                room.leave();
                 navigation('/game');
             })
             room.onMessage('joinRoom', async (message) => {
@@ -92,7 +91,6 @@ export default function MatchingPage (props : any) {
                     type : "User/setUser",
                     payload: userUpdate
                 });
-                room.leave();
                 navigation('/game');
             })
         }

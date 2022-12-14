@@ -65,7 +65,7 @@ export default function UserProfil() {
 
        for (let i = 0 ; i < gameList.length; i++){
         if((user.id == gameList[i].p1_id) || (user.id == gameList[i].p2_id))
-            content.push(<a href="#" key= {i}> {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</a>);
+            content.push(<p key= {i}> {gameList[i].p1_nick} : {gameList[i].p1_score}  |  {gameList[i].p2_score} : {gameList[i].p2_nick}</p>);
        }
         return content;
     }
@@ -87,13 +87,10 @@ export default function UserProfil() {
 				<p>{user.online ? "online" : "offline"} {user.onGame ? " - in a Game" : null}</p>
 				<p></p>
                 <hr></hr>
-                <div className='vertical-menu'>
-                    <a href="#" className="active">Historique des parties</a>
-
-                    <>{createList()}</>
+                <h4>Historique:</h4>
+                <div className='scor-profil'>
+                    {createList()}
                 </div>
-                <p style={{color: 'white'}} className='user-stat'>Victoires: {user.game_won}</p>
-                <p style={{color: 'white'}} className='user-stat'>Défaites: {user.game_lost}</p>
                 <AddFriend toUsername={user_id.id}/>
                 <Block toUsername={user_id.id}/>
             </form>

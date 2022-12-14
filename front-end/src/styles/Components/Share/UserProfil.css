@@ -15,6 +15,12 @@
     margin-top: 4%;
 }
 
+.profilset-content h4{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
 .profilset-content .btn-light{
     display: inline;
     width: 90%;
@@ -60,6 +66,7 @@
     margin-top: 1%;
     margin-bottom: 0%;   
     border: solid black 1px;
+   
 }
 
 .vertical-menu{
@@ -70,28 +77,20 @@
     text-align:center ;
 }
 
-.vertical-menu a{
-    background: rgb(110, 109, 117);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
-    color : white;
-    display : block;
-    padding : 12px;
-    text-decoration : none;
-    border : solid black;
-    text-align: center;
+.scor-profil {
+    width: 100%;
+    border-top: 0.5px solid gray;
+    border-bottom: 0.5px solid gray;
+    height: 25%;
+    overflow-y: scroll;
+    margin-top: 3%;
 }
 
-.vertical-menu a:hover{
-    background: rgb(110, 109, 117);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
-    border : solid black;
-    text-align: center;
-    color : white;
-}
-
-.vertical-menu a.active{
-    background: rgb(110, 109, 117);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+.scor-profil p {
     color: white;
-    text-align:center;
+}
+
+.scor-profil::-webkit-scrollbar {
+    width: 9px; /* width of the entire scrollbar */
+    background-color: blueviolet;
 }
