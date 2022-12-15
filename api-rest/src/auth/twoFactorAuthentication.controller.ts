@@ -36,8 +36,6 @@ import { access } from 'fs';
     async switchTFA (@Body() body : any)
     {
       let user = await this.usersService.getUserById(parseInt(body.userId));
-      console.log(user.isTwoFactorAuthenticationEnabled);
-      console.log("back");
 
       await this.twoFactorAuthenticationService.switchTFA(parseInt(body.userId));
     }
@@ -69,7 +67,6 @@ import { access } from 'fs';
       let user = await this.usersService.getUserById(userId);
       const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(user);
       response.setHeader('content-type', 'image/png');
-      // console.log(await this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl))
       return this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl);
     }
   
