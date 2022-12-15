@@ -19,6 +19,7 @@ export class gameRoom extends Room {
 	p1_id : string = "";
 	p2_id : string = "";
 	token : any;
+	finished : number = 0;
 
 	onCreate(options: any){
 		this.setState(new Game);
@@ -111,9 +112,11 @@ export class gameRoom extends Room {
 		this.onMessage("gameEnd", (client, message) => {
 			this.player1.score = message.player_score;
 			this.player2.score = message.player2_score;
+			this.finished = 1;
 		});
 		
 		this.onMessage("leaver", (client, message) => {
+			this.finished = 1;
 				if (client.sessionId === this.p1_id)
 				{
 					this.player1.score = -1;
@@ -137,8 +140,27 @@ export class gameRoom extends Room {
 
 	// player qui quitte la room
 	onLeave(client: Client, consented?: boolean){
-		// permet de detruire la room une fois le player leave
-		//this.disconnect();
+	if(this.finished === 0)
+	{
+		if (client.sessionId === this.p1_id)
+		{
+			this.player1.score = -1;
+			for (let i = 0; i < this.clients.length; i++)
+			{
+				this.clients[i].send("leaver", {});
+			}
+			this.finished = 1;
+		}
+		else if (client.sessionId === this.p2_id)
+		{
+			this.player2.score = -1;
+			for (let i = 0; i < this.clients.length; i++)
+			{
+				this.clients[i].send("leaver", {});
+			}
+			this.finished = 1;
+		}
+	}
 	}
 
 	// effacer les rooms

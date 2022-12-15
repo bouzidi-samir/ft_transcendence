@@ -1,5 +1,6 @@
 import '../../styles/Components/Home/Dashboard.css'
 import Invitation from './Invitation';
+import InvitationGame from './InvitationGame';
 import Notifs from './Notifs';
 import ProfilCard from './ProfilCard';
 import Stats from './Stats';

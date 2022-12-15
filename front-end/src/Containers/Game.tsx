@@ -136,7 +136,8 @@ export default function Game() {
 					player2.color = message.p2_color;
 					player.id = message.p1_id;
 					player2.id = message.p2_id;
-					display();
+					if(player.id)
+						display();
 			})
 
 			room.onMessage("role", async (message) => {
@@ -347,7 +348,7 @@ export default function Game() {
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
 
 
-		if(started === 1)
+		if(started === 1 && player.id)
 			display();
 		return () =>{
 			cancelAnimationFrame(animationRequest);
