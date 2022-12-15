@@ -16,6 +16,8 @@ export class gameRoom extends Room {
 	p2_score : number = 0;
 	p1_color : string = "white";
 	p2_color : string = "white";
+	p1_id : string = "";
+	p2_id : string = "";
 	token : any;
 
 	onCreate(options: any){
@@ -81,25 +83,27 @@ export class gameRoom extends Room {
 				this.player1.username = message.player_username;
 				this.p1_nick = message.player_nick;
 				this.p1_color = message.color;
-				client.send("role", {role : "player1", client : client})
+				this.p1_id = client.sessionId;
+				client.send("role", {client : client.sessionId})
 			}
 			else if (this.player2.username === "null")
 			{
 				this.player2.username = message.player_username;
 				this.p2_nick = message.player_nick
 				this.p2_color = message.color;
-				client.send("role", {role : "player2", client : client})
+				this.p2_id = client.sessionId;
+				client.send("role", {client : client.sessionId})
 				this.setMetadata({player1 : this.p1_nick, player2 : this.p2_nick});
 			}
 			else
 			{
-				client.send("role", {role : "viewer", client : client})
+				client.send("role", {client : client.sessionId})
 			}
 			if (this.player1.username != 'null' && this.player2.username != 'null')
 			{
 				for (let i = 0; i < this.clients.length; i++)
 				{
-					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick : this.p2_nick, p1_color : this.p1_color, p2_color : this.p2_color });
+					this.clients[i].send("players_names&scores", {player_name : this.player1.username, player2_name : this.player2.username, p1_score : this.p1_score, p2_score : this.p2_score, p1_nick : this.p1_nick, p2_nick : this.p2_nick, p1_color : this.p1_color, p2_color : this.p2_color, p1_id : this.p1_id, p2_id : this.p2_id });
 				}
 			}
 		})
@@ -110,7 +114,7 @@ export class gameRoom extends Room {
 		});
 		
 		this.onMessage("leaver", (client, message) => {
-				if (client.sessionId === this.clients[0].sessionId)
+				if (client.sessionId === this.p1_id)
 				{
 					this.player1.score = -1;
 					this.player2.score = message.player2_score;
@@ -119,7 +123,7 @@ export class gameRoom extends Room {
 						this.clients[i].send("leaver", {});
 					}
 				}
-				else if (client.sessionId === this.clients[1].sessionId)
+				else if (client.sessionId === this.p2_id)
 				{
 					this.player2.score = -1;
 					this.player1.score = message.player1_score;

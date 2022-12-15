@@ -16,6 +16,8 @@ export default function Messages() {
     const User = useSelector((state: any) => state.User);
     const Roomlist = useSelector((state: any) => state.RoomList);
     const dispatch = useDispatch();
+    const [blockedList, setBlockedList] = useState([]);
+    let tab = Array();
     
 
     const alert = "NEW MESSAGE AVAILABLE";
@@ -24,6 +26,23 @@ export default function Messages() {
         from: String(User.nickname),
         room: String(RoomActive.tag)
     }
+
+    useEffect(() => {
+        let url = `http://${hostname}:4000/users/blockedPeople/${User.username}`;
+        fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(ret => ret.json()).then((ret) => { 
+            let list : any  = ret.map((e: any) => (e.toUsername));
+            setBlockedList(list)
+        }
+        )
+    }
+    , []
+    )
+
 
     async function updateRoomList() {
         let url = `http://${hostname}:4000/chat/rooms`;
@@ -49,7 +68,13 @@ export default function Messages() {
             'cors': 'true'
         }})
         .then(response => response.json())
-        .then(data => setMessages(data))
+        .then((data) => 
+        {
+         //   let tab = Array();
+            tab = data;
+            let sort = tab.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername));
+            setMessages(data)}
+        )
     }, [RoomActive])
 
     const send = (messageData: any) => {

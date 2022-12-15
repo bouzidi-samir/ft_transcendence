@@ -99,6 +99,7 @@ ul {
     background-image: url(../../../styles/img/icones/profil.png);
     background-position: center;
     background-size: cover;
+    position: relative;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -121,6 +122,7 @@ ul {
     background-image: url(../../../styles/img/icones/accueil.png);
     background-position: center;
     background-size: cover;
+    position: relative;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -137,6 +139,7 @@ ul {
  }
 
 .chat-icon {
+    position: relative;
     width: 40px;
     height: 40px;
     margin-left: 20px;
@@ -168,6 +171,7 @@ ul {
     background-image: url(../../../styles/img/icones/controle-du-jeu-2.png);
     background-position: center;
     background-size: cover;
+    position: relative;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -191,6 +195,8 @@ ul {
     background-image: url(../../../styles/img/icones/logout.png);
     background-position: center;
     background-size: cover;
+    position: relative;
+
 }
 
 @media only screen and (max-width: 1000px) {
@@ -298,4 +304,15 @@ ul {
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  .my-alt {
+    position: absolute;
+    bottom: -35%;
+    left: -10%;
+    background-color: blueviolet;
+    color: white;
+    width: 50px;
+    height: 20px;
+    font-size: 12px;
   }

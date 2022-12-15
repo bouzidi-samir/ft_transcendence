@@ -42,6 +42,8 @@ export default function Game() {
 	let room : Colyseus.Room<unknown>;
 	let animationRequest: number;
 	let finished : number = 0;
+	let started: number = 0;
+	let error : number = 0;
 
 
 	/*var unload = require('unload');
@@ -89,41 +91,64 @@ export default function Game() {
 		dispatch({type: "User/setUser", payload: userUpdate,});
 	}
 
-	const clientInit = async() => {
-		room = user.room;
-		room.onMessage("players_names&scores", (message) => {
-				player.userName = message.player_name;
-				player2.userName = message.player2_name;
-				player.score = message.p1_score;
-				player2.score = message.p2_score;
-				player.nickname = message.p1_nick;
-				player2.nickname = message.p2_nick;
-				player.color = message.p1_color;
-				player2.color = message.p2_color;
+	const checkGuard = async () =>
+	{
+		let url_ = `http://${hostname}:4000/games/checkGuard`;
+        await fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+        username: User.username,
+        })
+        })
+		.then((response) => {
+			if (response.status === 401 || User.room === undefined)
+			{
+				if(response.status === 401)
+					error = 1;
+				if (User.room === undefined)
+					error = 2;
+				throw new Error()
+			}
+			else
+			{
+				started = 1;
+				clientInit();
+			}
 		})
+	}
 
-		room.onMessage("role", async (message) => {
-				if(message.role === "player1")
-				{
-					player.userName = user.username;
-					player.id = message.client.sessionId;
-					clientId = player.id
-				}
-				else if (message.role === "player2")
-				{
-					player2.userName = user.username;
-					player2.id = message.client.sessionId;
-					player.id = 0;
-					clientId = player2.id;
-				}
-				else if (message.role === "viewer")
-				{
-					player.id = 0;
-					player2.id = 0;
-					clientId = message.client.sessionId;
-				}
-		})
-		room.send("player_name", {player_username : user.username, player_nick : user.nickname, color : Game.padColor});
+	const clientInit = async() => {
+		try // Va intercepter un joueur qui a leave puis tente de rejoindre juste derriere sans avoir trouve une game.
+		{
+			room = user.room;
+			room.onMessage("players_names&scores", (message) => {
+					player.userName = message.player_name;
+					player2.userName = message.player2_name;
+					player.score = message.p1_score;
+					player2.score = message.p2_score;
+					player.nickname = message.p1_nick;
+					player2.nickname = message.p2_nick;
+					player.color = message.p1_color;
+					player2.color = message.p2_color;
+					player.id = message.p1_id;
+					player2.id = message.p2_id;
+					display();
+			})
+
+			room.onMessage("role", async (message) => {
+					clientId = message.client;
+			})
+			room.send("player_name", {player_username : user.username, player_nick : user.nickname, color : Game.padColor});
+		}
+		catch 
+		{
+			started = 0;
+			navigation('/home')
+		}
 	}
 
 	const draw = () => {
@@ -319,19 +344,34 @@ export default function Game() {
 		player = new Player(0, setting_game.player_y, 0, 0);
 		player2 = new Player(canvas.current.width - setting_game.paddle_width, setting_game.player_y, 0, 0);
 
-
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
-		clientInit().then(() => display());
+
+
+		if(started === 1)
+			display();
 		return () =>{
 			cancelAnimationFrame(animationRequest);
 		}
 	}, [canvas.current]);
 
 	useEffect( () => {
+		checkGuard().catch(() =>
+		{
+			if (error === 1)
+				navigation('/Unauthorized')
+			else if (error === 2)
+				navigation('/home')
+		})
+
+
 		return () => {
-			if (finished === 0)
+			if (finished === 0 && started === 1)
 				room.send("leaver", {id: room.sessionId , player1_score : player.score ,player2_score : player2.score});
-			room.leave();
+			if(started === 1)
+				room.leave();
+			let userUpdate = {...User};
+			userUpdate.room = undefined;
+			dispatch({type: "User/setUser", payload: userUpdate,});
 		}
 	}, [])
 
@@ -350,6 +390,7 @@ export default function Game() {
         }
         )
 	}, [])
+
 	useEffect( () => {
 		return () => {
 		let url_ = `http://${hostname}:4000/chat/setOffGame`;
