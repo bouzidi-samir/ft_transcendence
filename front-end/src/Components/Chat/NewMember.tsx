@@ -77,7 +77,7 @@ export default function NewMember(props : any) {
 
     async function sendInvitation(toUser : any) {
         let url = `http://${hostname}:4000/chat/roomInvitation`;
-        const response =   fetch(url, {method: "POST",
+        const response = await fetch(url, {method: "POST",
         headers: {
             'Authorization': `Bearer ${User.JWT_token}`,
             'Content-Type': 'application/json',

@@ -699,7 +699,7 @@ async getRoomMessages(tag) {
 
   const roomMessages = await this.messagesRepository.find({where: {roomTag: tag}});
   if (!roomMessages[0])
-    return false;
+    return roomMessages;
   if (roomMessages.length > 20)
   {
     const sortMessages =  roomMessages.slice(roomMessages.length - 20);
