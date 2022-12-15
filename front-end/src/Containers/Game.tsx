@@ -22,6 +22,7 @@ export default function Game() {
     const dispatch = useDispatch();
     const user_id = useParams();
     const [user, setUser]  = useState(User);
+    const [color, setColor]  = useState("white");
 	const score = [0, 0];
 	const [connected, setConnect] = useState(0);
 	const result = useMemo(() => Math.random(), []);
@@ -145,7 +146,7 @@ export default function Game() {
 
 				// draw paddle_player
 
-		context.fillStyle = 'white';
+		context.fillStyle = {color};
 		context.fillRect(player.x, player.y, setting_game.paddle_width, setting_game.paddle_height);
 		context.fillRect(player2.x, player2.y, setting_game.paddle_width, setting_game.paddle_height);
 
