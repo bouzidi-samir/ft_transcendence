@@ -6,6 +6,7 @@ import { io, Socket } from 'socket.io-client';
 import MessageInput from './MessageInput';
 import RoomDisplay from './RoomDisplay';
 import Conversation from './Conversation';
+import { useNavigate } from 'react-router';
 
 
 export default function Messages() {
@@ -18,6 +19,8 @@ export default function Messages() {
     const dispatch = useDispatch();
     const [blockedList, setBlockedList] = useState([]);
     let tab = Array();
+    let navigation = useNavigate();
+
     
 
     const alert = "NEW MESSAGE AVAILABLE";
@@ -34,14 +37,21 @@ export default function Messages() {
             'Content-Type': 'application/json',
             'cors': 'true'
           },})
-        .then(ret => ret.json()).then((ret) => { 
-            let list : any  = ret.map((e: any) => (e.toUsername));
-            setBlockedList(list)
+        .then((ret) => { 
+            if (ret.status === 401)
+            navigation("/Unauthorized");
+            else
+                return ret.json()})
+        .then((data) => {
+        if (data != undefined){
+        let list : any  = data;
+        list.map((e: any) => (e.toUsername));
+        setBlockedList(list)
         }
-        )
-    }
-    , []
-    )
+        })
+    },[])
+
+
 
 
     async function updateRoomList() {
@@ -53,7 +63,9 @@ export default function Messages() {
         }})
         .then(ret => ret.json()) 
         dispatch({type: "Roomlist/setRoomlist",payload: response,})
+
     }
+
 
     useEffect(() => {
         const newSocket = io(`http://${hostname}:8000`);
@@ -67,13 +79,26 @@ export default function Messages() {
             "Content-Type": "application/json",
             'cors': 'true'
         }})
-        .then(response => response.json())
-        .then((data) => 
-        {
-            tab = data;
-            let sort = tab.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername));
-            setMessages(sort)}
-        )
+        .then((response) => {
+            if(response.status === 401)
+              navigation("/Unauthorized");
+            else
+                return response.json()})
+            .then((data) => 
+            {
+                if (data != undefined){
+                tab = data;
+                let sort = tab.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername));
+                setMessages(sort)}
+            }
+        );
+        // .then(response => response.json())
+        // .then((data) => 
+        // {
+        //     tab = data;
+        //     let sort = tab.filter((e: any) => !blockedList.some((blockedName : string) => blockedName == e.fromUsername));
+        //     setMessages(sort)}
+        // )
     }, [RoomActive])
 
     const send = (messageData: any) => {

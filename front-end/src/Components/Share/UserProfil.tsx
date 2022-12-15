@@ -15,6 +15,7 @@ export default function UserProfil() {
     const dispatch = useDispatch();
     const[addroom, setAddroom] = useState(false);
     const user_id = useParams();
+    let navigation = useNavigate();
     const [user, setUser]  = useState(User);
     const location = useLocation();
     const [gameList, setGames] = useState([{
@@ -70,9 +71,35 @@ export default function UserProfil() {
         return content;
     }
 
+    const checkGuard = async () =>
+	{
+		let url_ = `http://${hostname}:4000/games/checkGuard`;
+        await fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+        username: User.username,
+        })
+        })
+		.then((response) => {
+			if (response.status === 401)
+				throw new Error()
+			else
+			{
+                fetchData();
+                fetchGame();
+			}
+		})
+	}
+
     useEffect(()=>{
-        fetchData();
-        fetchGame();
+        checkGuard().catch(() =>
+		{
+			navigation('/Unauthorized')
+		})
     }, [])
          
     return (

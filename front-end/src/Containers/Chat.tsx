@@ -26,6 +26,7 @@ export default function Chat() {
 
   useTitle(alert);
   
+
   useEffect(() => {
     let url = `http://${hostname}:4000/chat/rooms`;
     let ret = fetch(url, {headers: 
@@ -34,11 +35,15 @@ export default function Chat() {
       'cors': 'true'
     },})
     .then((response) => {
+      // console.log(response.status)
       if(response.status === 401)
         navigation("/Unauthorized");
       else
        return response.json()})
-    .then((data) => {dispatch({type: "Roomlist/setRoomlist",payload: data,})});
+    .then((data) => {
+      if (data != undefined)
+        dispatch({type: "Roomlist/setRoomlist",payload: data,});
+    });
   }, []
   )
   

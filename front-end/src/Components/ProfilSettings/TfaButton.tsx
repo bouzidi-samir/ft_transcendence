@@ -11,10 +11,10 @@ export default function TfaButton () {
     const [user, setUser]  = useState(User);
     const [twofactor, setTwoFactor]  = useState(false);
     const navigate = useNavigate();
+    const {hostname} = document.location;
 
     async function TfaSwitch(e : any) // changer l affichage selon si c est active ou non et pas un clic
     {
-        console.log("here");
         let userUpdate = {...User};
         if (User.TFOenabled === true)
             userUpdate.TFOenabled = false;
@@ -24,8 +24,7 @@ export default function TfaButton () {
             type : "User/setUser",
             payload: userUpdate
         })
-        console.log(user.JWT_token);
-        const request = await fetch(`http://localhost:4000/2fa/switch`, { // A remplacer avec le user
+        const request = await fetch(`http://${hostname}:4000/2fa/switch`, { // A remplacer avec le user
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,15 +32,12 @@ export default function TfaButton () {
             },
             body: JSON.stringify({userId : user.id })
         })
-        console.log("herepast");
         if (userUpdate.TFOenabled === true)
         {
-            console.log('/qrcode')
             return (navigate("/qrcode"));
         }
         else
         {
-            console.log('/home')
             return (navigate("/home"));
         }
     }

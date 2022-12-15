@@ -29,7 +29,6 @@ function App() {
         <Route path="/Chat" element={<Chat/>}/>
         <Route path="/qrcode" element={<CodePage/>}/> 
 		<Route path="/Game" element={<Game/>}/>
-		<Route path="/Game2" element={<Game2/>}/>
         <Route path="/Loading" element={<LoadingPage/>}/>
         <Route path="/Matching" element={<MatchingPage/>}/>
         <Route path="/WaitingRoom" element={<WaitingRoom/>}/>

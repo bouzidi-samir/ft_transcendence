@@ -36,8 +36,36 @@ export default function MatchingPage (props : any) {
        await setRooms(await client.getAvailableRooms("my_room"));
     }
 
+
+    const checkGuard = async () =>
+	{
+		let url_ = `http://${hostname}:4000/games/checkGuard`;
+        await fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+        username: User.username,
+        })
+        })
+		.then((response) => {
+			if (response.status === 401)
+				throw new Error()
+			else
+			{
+                defineRooms();
+			}
+		})
+	}
+
+
     useEffect( () => {
-        defineRooms();
+        checkGuard().catch(() =>
+		{
+			navigation('/Unauthorized')
+		})
      }, []
      )
 

@@ -41,7 +41,6 @@ export default function TFAset() {
             body: JSON.stringify({userId : User.id, code : code })
         })
         ret = await request.json();
-        console.log(ret);
         return (ret);
     }
     
@@ -72,7 +71,6 @@ export default function TFAset() {
 
     async function handleForm (e : any) {
        e.preventDefault();
-       console.log(validated)
         if (await codeError(code) == false)
             return;
         setError("");

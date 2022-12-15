@@ -27,6 +27,7 @@ export default function MatchingPage (props : any) {
     let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
     let room : Colyseus.Room<unknown>;
     let userUpdate = {...User};
+    let validated : number = 0;
 
    function refresh()
    {
@@ -96,11 +97,41 @@ export default function MatchingPage (props : any) {
         }
    }
 
+   const checkGuard = async () =>
+	{
+		let url_ = `http://${hostname}:4000/games/checkGuard`;
+        await fetch(url_, {method: "POST",
+        headers: {
+            'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+        },
+        body: JSON.stringify({
+        username: User.username,
+        })
+        })
+		.then((response) => {
+			if (response.status === 401)
+				throw new Error()
+			else
+			{
+                validated = 1;
+                refresh();
+                findPlayers();
+			}
+		})
+	}
+
+
     useEffect( () => {
-        refresh();
-        findPlayers();
+        checkGuard().catch(() =>
+		{
+			navigation('/Unauthorized')
+		})
+
         return () => {
-            room.leave();
+            if(validated === 1 )
+                room.leave();
         }
      }, []
      )
