@@ -2,7 +2,7 @@ import "../styles/Containers/Authentification.css"
 import LoginForm from "../Components/Authentification/LoginForm"
 import React from "react";
 import { useEffect, useState} from 'react';
-import {useSearchParams, Navigate,  useNavigate} from 'react-router-dom';
+import {useSearchParams, Navigate} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import Particle from "../Components/Particle";
 
@@ -18,7 +18,7 @@ export default function Authentification() {
     if (code)
 		{
       setFortyTwo(true);
-			const request = fetch(`http://${hostname}:4000/auth/token/${code}`, {
+			fetch(`http://${hostname}:4000/auth/token/${code}`, {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json','cors': 'true', 'Authorization': `Bearer ${User.JWT_token}` },
 				body: JSON.stringify({redirect_uri: `http://${hostname}:${port}`})

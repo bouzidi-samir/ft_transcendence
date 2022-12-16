@@ -8,18 +8,15 @@ import MuteUser from './MuteUser';
 import BanUser from './BanUser';
 import NewMember from './NewMember';
 import Invitation from '../Home/Invitation';
-import ChatNotifs from './ChatNotifs';
 import InvitationGame from '../Home/InvitationGame';
 import { io, Socket } from "socket.io-client";
 
 export default function UserChat() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
-    const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const [members, setMembers] = useState([]);
     const [socket, setSocket] = useState<Socket>();
-    const [alert, setAlert] = useState<string>("Pong");
   
     useEffect(() => {
         const newSocket = io(`http://${hostname}:8000`);
@@ -54,7 +51,7 @@ export default function UserChat() {
               <div className='online-list'>
                   {
                       members.map((user : any) => (
-                        user.username != User.username ? 
+                        user.username !== User.username ? 
                         <div key={user.id + user.username} className='user-block'>
                                 <p>{user.nickname}</p>
                         <div className="user-online">

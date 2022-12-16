@@ -1,12 +1,7 @@
 import "../../styles/Components/Authentification/LoginForm.css"
-import React from "react";
-import { useEffect} from "react";
-import { useSelector } from "react-redux";
 
 export default function AuthForm() {
 
-  const Userlist = useSelector((state: any) => state.Userlist);
- 
   const handleFourtyTwo = async (e : any) => {	
   e.preventDefault()
   const {hostname, port} = document.location;

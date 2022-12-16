@@ -2,8 +2,8 @@
 import "../styles/Containers/ProfilSettings.css"
 import Navbar from "../Components/Share/Navbar";
 import FormSetting from "../Components/ProfilSettings/FormSetting";
-import { useParams, Navigate, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import {useNavigate } from "react-router";
+import { useEffect} from "react";
 import { useSelector } from "react-redux";
 
 export default function ProfilSettings() {

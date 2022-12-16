@@ -1,29 +1,16 @@
-import { redirect } from "react-router"
-import { useEffect, useState } from "react";
-import Particle from "./Particle";
-import Home from "../Containers/Home";
-import { useParams, Navigate, useNavigate } from "react-router";
+import { useEffect} from "react";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/Components/WaitingRoom.css"
-import NewMemberSet from "./ProfilSettings/NewMemberSet";
-import TFAset from './ProfilSettings/TFAset'
 import Navbar from "./Share/Navbar";
-import { Link } from "react-router-dom";
-import { createTypeReferenceDirectiveResolutionCache } from "typescript";
 import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
-import { RoomInternalState } from "colyseus";
-
 
 export default function MatchingPage (props : any) {
-    const {redirection} = props;
     const User = useSelector((state: any) => state.User);
-    const [time , setTime] = useState(0);
     let navigation = useNavigate();
     const dispatch = useDispatch();
-    const [user, setUser]  = useState(User);
     const {hostname} = document.location;
-
     let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
     let room : Colyseus.Room<unknown>;
     let userUpdate = {...User};
@@ -33,7 +20,6 @@ export default function MatchingPage (props : any) {
    {
        var text = document.getElementById("myId");
        var text2 = document.getElementById("myId2");
-       var intervalID = setInterval(myCallback, 1000);
        function myCallback() {
             if(text)
             {
@@ -48,7 +34,6 @@ export default function MatchingPage (props : any) {
             }
         }
 
-        var timer = setInterval(setTime, 1000);
         let seconds = 0;
         let minuts = 0;
         let hours = 0;

@@ -16,20 +16,19 @@ export default function Rooms() {
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
     const [socket, setSocket] = useState<Socket>();
-    const [alertRoom, setAlertRoom] = useState<string>("");
-    const [notifs, setNotifs] = useState<any[]>([]);
+    const [alertRoom] = useState<string>("");
     let p : boolean;
     const alertMember = "NEW MEMBER !!!";
 
     
     function getRoomByname(tag : string, list : any[]) {
-        let room = list.filter(e => e.tag == tag)
+        let room = list.filter(e => e.tag === tag)
         return room[0];
     }
 
     function sortRoom(room : any) : boolean{
         if (room.privateMessage == true) {
-            if (room.tag.indexOf(User.nickname) == -1)
+            if (room.tag.indexOf(User.nickname) === -1)
                 return false
         }
         return true

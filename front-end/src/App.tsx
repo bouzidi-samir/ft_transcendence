@@ -2,7 +2,6 @@ import Authentification from './Containers/Authentification';
 import Home from './Containers/Home';
 import Chat from './Containers/Chat';
 import Game from './Containers/Game';
-import Game2 from './Containers/Game2';
 import { BrowserRouter as Router} from 'react-router-dom';
 import { Route, Routes} from 'react-router';
 import ProfilSettings from './Containers/ProfilSettings';

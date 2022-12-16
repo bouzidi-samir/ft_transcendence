@@ -1,33 +1,17 @@
 import "../../styles/Components/ProfilSettings/NewMemberSet.css"
-import React, { useContext, useEffect, useState } from 'react'
-import AvatarSetting from "./AvatarSetting";
-import Cross from "../Share/Cross";
+import React, { useState } from 'react'
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
-import {myIsalpha} from "../../Utils/Util";
-import { useParams, Navigate, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { responsePathAsArray } from "graphql";
-import Home from "../../Containers/Home";
+import {useNavigate } from "react-router";
 
 export default function TFAset() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
-    const Userlist = useSelector((state: any) => state.UserList);
     const dispatch = useDispatch();
-    const[avatarform, setAvatarform] = useState(false);
-    const[nickForm, setNickform] = useState(false);
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
     const [validated, setValidation] = useState(false);
     let navigation = useNavigate();
-
-    function validateResponse(response : any) {
-        if (!response.ok) {
-            throw Error(response.statusText);
-        }
-        return response;
-    }
 
     async function checkCode() : Promise<any>
     {
@@ -44,17 +28,13 @@ export default function TFAset() {
         return (ret);
     }
     
-    useEffect( () => {
-    }, []
-    )
-
     async function codeError(code: string) {
-        if ((code.length == 0) ) {
+        if ((code.length === 0) ) {
             setError("Un code ne peut pas être vide.");
             return false;
         }
         let ret = await checkCode();
-        if (ret.codeValidity == false)
+        if (ret.codeValidity === false)
         {
             setError("Le code envoyé n est pas bon.");
             return false;
@@ -74,7 +54,7 @@ export default function TFAset() {
         if (await codeError(code) == false)
             return;
         setError("");
-        setValidation(true);
+        navigation("/Home")
     }
 
     return (
@@ -89,7 +69,6 @@ export default function TFAset() {
                     <p className="error-text">{error}</p>
                 </form>
             }
-            {validated === true ? navigation("/Home") : null}
         </>
     );
 }

@@ -1,43 +1,24 @@
 import "../styles/Containers/Game.css";
-import { KeyboardEvent, useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState} from "react";
 import * as Colyseus from "colyseus.js";
-import { Client } from "colyseus.js";
-import { Ball, Player, Computer } from '../Components/Game/Game.schema';
+import { Ball, Player} from '../Components/Game/Game.schema';
 import * as setting_game from "../Components/Game/Game.config";
 import Navbar from "../Components/Share/Navbar";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
-import { wait } from "@testing-library/user-event/dist/utils";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate} from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { createImportSpecifier, updatePostfix } from "typescript";
-import { useSearchParams } from "react-router-dom";
-import { RoomInternalState } from "colyseus";
-
-
-let clientsNb;
 
 export default function Game() {
 	const {hostname} = document.location;
 	const User = useSelector((state: any) => state.User);
 	const Game = useSelector((state: any) => state.Game);
     const dispatch = useDispatch();
-    const user_id = useParams();
-    const [user, setUser]  = useState(User);
-	const score = [0, 0];
-	const [connected, setConnect] = useState(0);
-	const result = useMemo(() => Math.random(), []);
+    const [user]  = useState(User);
 	let navigation = useNavigate();
-	const [fortyTwo, setFortyTwo] = useState(false);
-	const [params] = useSearchParams();
-
-
-	let client: Client = new Colyseus.Client(`ws://${hostname}:4000`);
 	let clientId : number;
 	let canvas : any = useRef(null);
 	let ball : Ball;
 	let player : Player;
 	let player2 : Player;
-	//let computer : Computer;
 	let context : any;
 	let room : Colyseus.Room<unknown>;
 	let animationRequest: number;
@@ -200,10 +181,6 @@ export default function Game() {
 		
 	// });
 
-	document.addEventListener('keypress', (event) => 
-	{
-		const nomTouche = event.key;
-	});
 	
 		// permet de bouger les payers avec la souris 
 
@@ -282,12 +259,12 @@ export default function Game() {
 		// gestion de la balle contre les murs
 	function ballMove() {
 		// gestion collision haut et bas 
-		if (clientId === player.id)
+		if (clientId === player.id && canvas.current?.height)
 		{
-			if (ball?.y > canvas.current.height || ball?.y < 0) {
+			if (ball?.y > canvas.current?.height || ball?.y < 0) {
 				ball.velocity_y *= -1;
 			}
-			if (ball?.x + setting_game.ball_radius > canvas.current.width - setting_game.paddle_width) {
+			if (ball?.x + setting_game.ball_radius > canvas.current?.width - setting_game.paddle_width) {
 				collide(player2);
 			} else if (ball?.x - setting_game.ball_radius < setting_game.paddle_width) {
 				collide(player);

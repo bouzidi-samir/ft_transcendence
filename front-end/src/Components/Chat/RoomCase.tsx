@@ -8,7 +8,6 @@ export default function RoomCase ({room} :any) {
     const User = useSelector((state: any) => state.User);
     const [members, setMembers] = useState<any>();
     const [notifStyle, setNotifStyle] = useState("");
-    const dispatch = useDispatch();
     const RoomActive = useSelector((state: any) => state.RoomActive); 
     const [notifs, setNotifs] = useState<any[]>([]);
     const [notif, setNotif] = useState("");
@@ -23,7 +22,7 @@ export default function RoomCase ({room} :any) {
     const alertListener = (alert: any) => {
         setNotifs([...notifs,alert]);
         let roomnotif = {alert}.alert.alertNotif.room;
-        if (roomnotif != RoomActive.tag && roomnotif == room.tag){
+        if (roomnotif !== RoomActive.tag && roomnotif == room.tag){
             setNotifStyle('goldenrod')
             setNotif({alert}.alert.alertNotif.text)
         }

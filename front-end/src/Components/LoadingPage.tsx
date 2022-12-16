@@ -24,7 +24,7 @@ export default function LoadingPage (props : any) {
        setTimeout(() => {
         if (User.nickname !== "")
             navigation("/Home");
-        }, 1000);
+        }, 1500);
     }
 
     return (

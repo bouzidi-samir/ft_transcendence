@@ -11,9 +11,8 @@ export default function Chat() {
   const {hostname} = document.location;
   const dispatch = useDispatch();
   const User = useSelector((state: any) => state.User);
-  let Roomlist = useSelector((state: any) => state.RoomList);
   let navigation = useNavigate();
-  const [alert, setAlert] = useState<string>("Pong");
+  const [alert] = useState<string>("Pong");
   
   function useTitle(title: any) {
     useEffect(() => {
@@ -29,7 +28,7 @@ export default function Chat() {
 
   useEffect(() => {
     let url = `http://${hostname}:4000/chat/rooms`;
-    let ret = fetch(url, {headers: 
+   fetch(url, {headers: 
       {'Authorization': `Bearer ${User.JWT_token}`,
       'Content-Type': 'application/json',
       'cors': 'true'
@@ -41,7 +40,7 @@ export default function Chat() {
       else
        return response.json()})
     .then((data) => {
-      if (data != undefined)
+      if (data !== undefined)
         dispatch({type: "Roomlist/setRoomlist",payload: data,});
     });
   }, []
