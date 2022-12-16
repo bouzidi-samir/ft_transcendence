@@ -43,7 +43,6 @@ export default function NewMemberSet() {
             return;
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
-        dispatch({type: "User/setUser", payload: userUpdate,});
         let response = await fetch(`http://${hostname}:4000/users/${User.id}/nickname`,{
                     method: "POST",
                     headers: {
@@ -53,8 +52,13 @@ export default function NewMemberSet() {
                     },
                     body: JSON.stringify({nickname})
                 }
-            )
-        setError("");
+                ).then(response => response.json())
+                if (response.error) {
+                    setError(response.error)
+                    return;
+                }
+            dispatch({type: "User/setUser",payload: userUpdate,});
+            setError("");
         return navigation("/Home");
     }
 

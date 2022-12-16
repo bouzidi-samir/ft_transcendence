@@ -45,20 +45,20 @@ export default function FormSetting() {
             return navigation("/Home");
         let userUpdate = {...User};
         userUpdate.nickname = nickname;
-        dispatch({type: "User/setUser",payload: userUpdate,});
         let response = await fetch(`http://${hostname}:4000/users/${User.id}/nickname`,
-                {method: "POST", headers: 
-                { 'Authorization': `Bearer ${User.JWT_token}`,
-                    "Content-Type": "application/json",
-                    'cors': 'true',
-                },
-                    body: JSON.stringify({nickname})
+        {method: "POST", headers: 
+        { 'Authorization': `Bearer ${User.JWT_token}`,
+        "Content-Type": "application/json",
+        'cors': 'true',
+    },
+    body: JSON.stringify({nickname})
                 }
-            ).then((response) => { 
-            if(response.status === 401)
-                navigation("/Unauthorized");
-              else
-                return response.json()});
+            ).then(response => response.json())
+            if (response.error) {
+                setError(response.error)
+                return;
+            }
+        dispatch({type: "User/setUser",payload: userUpdate,});
         setError("");
         return navigation("/Home");
     }

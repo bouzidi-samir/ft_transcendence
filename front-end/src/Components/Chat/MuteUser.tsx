@@ -15,8 +15,14 @@ const {toMute} = props;
 
 
 async function handleMute(e: any) {
-
+   
     e.preventDefault();
+    const check = parseInt(minutes);
+    if (isNaN(check)){
+        setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
+        setAlert(true)
+        return;
+    }
     if (minutes < "0" &&  minutes > "100" ) {
         setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
         setAlert(true)
@@ -54,7 +60,7 @@ return (
                    <h2>Mute Mode</h2>
                    <label>Durée:</label>   
                     <br></br> 
-                    <input value={minutes} 
+                    <input value={minutes}
                     onChange={(e)=> setMinutes(e.target.value)} placeholder='Minutes' ></input> 
                     <br></br>
                     <button className='btn btn-primary' onClick={handleMute} >Valider</button>

@@ -12,7 +12,7 @@ import { gameModule } from './games/game.module';
 @Module({
   imports: [
    ConfigModule.forRoot({ isGlobal:true }),
-    TypeOrmModule.forRoot({
+  TypeOrmModule.forRoot({
        type: 'postgres',
 	 	  host: 'localhost',
 //  //  // host: 'postgres-db',
@@ -24,19 +24,19 @@ import { gameModule } from './games/game.module';
        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
        synchronize: true,
      }),
-    //  TypeOrmModule.forRootAsync({
-    //    imports: [ConfigModule],
-    //    inject: [ConfigService],
-    //    useFactory: (configService: ConfigService) => ({
-    //      type: 'postgres',
-    //      host: configService.get('DATABASE_HOST'),
-    //      port: parseInt(configService.get('DATABASE_PORT')),
-    //      username: configService.get('DATABASE_USER'),
-    //      password: configService.get('DATABASE_PASSWORD'),
-    //      database: configService.get('DATABASE_DB'),
-    //      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-    //      synchronize: true,
-    //  })}),
+      // TypeOrmModule.forRootAsync({
+      //   imports: [ConfigModule],
+      //   inject: [ConfigService],
+      //   useFactory: (configService: ConfigService) => ({
+      //     type: 'postgres',
+      //     host: configService.get('DATABASE_HOST'),
+      //     port: parseInt(configService.get('DATABASE_PORT')),
+      //     username: configService.get('DATABASE_USER'),
+      //     password: configService.get('DATABASE_PASSWORD'),
+      //     database: configService.get('DATABASE_DB'),
+      //     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+      //     synchronize: true,
+      // })}),
     UsersModule,
     AuthModule,
     ChatModule,

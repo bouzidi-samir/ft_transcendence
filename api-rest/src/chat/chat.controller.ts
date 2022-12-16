@@ -36,7 +36,7 @@ export class ChatController {
         return this.service.setOnline(body);
     }
 
-    @UseGuards(JwtTwoFactorGuard)
+    // @UseGuards(JwtTwoFactorGuard)
     @Post('/setOffline') 
     async setOffline( @Body() body: any ): Promise<any> {
         return this.service.setOffline(body);

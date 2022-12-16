@@ -67,6 +67,9 @@ export class UsersService {
     async updateNickname(id: number, nickname: string): Promise<any> {
 		if (!nickname)
 			return {error: "Veuillez saisir un pseudo"}
+        const already =  await this.userRepository.findOne({where: {nickname: nickname}})
+        if (already)
+            return {error: "Ce pseudo existe deja."}
         await this.memberRepository.query(
                 `UPDATE "member" SET "nickname" = $1 WHERE "userId" = $2;`,
                 [nickname, id]
