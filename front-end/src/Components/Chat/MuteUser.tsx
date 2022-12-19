@@ -17,8 +17,9 @@ const {toMute} = props;
 async function handleMute(e: any) {
    
     e.preventDefault();
-    const check = parseInt(minutes);
-    if (isNaN(check)){
+    
+    let isnum = minutes.match(/ˆ\d+$/);
+    if (!isnum){
         setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
         setAlert(true)
         return;

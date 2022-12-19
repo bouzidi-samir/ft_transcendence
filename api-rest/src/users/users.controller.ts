@@ -38,12 +38,13 @@ export class UsersController {
     }
 
 	@UseGuards(JwtAuthGuard)
-    @Get(":id")
+    @Post("/stats")
 	async getUserById(
-		@Param('id') id: number
+		@Body() body: any
 	): Promise<User> {
-		return await this.service.getUserById(id);
+		return await this.service.getUserById(body.id);
 	}
+	
 
 	@UseGuards(JwtAuthGuard)
 	@Get("/search/:username")

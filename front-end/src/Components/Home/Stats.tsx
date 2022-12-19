@@ -21,6 +21,33 @@ export default function Stats() {
     let games : any;
 
 
+    const fetchStats = async () => {
+
+        // console.log(gamesList);
+        //console.log(games['games']);
+
+        // games['games'].splice();
+        // console.log(games['games'][0]);
+        let request = await fetch(`http://${hostname}:4000/users/stats`, {
+			method: "POST",
+			headers: {
+				'Authorization': `Bearer ${User.JWT_token}`,
+				'Content-Type': 'application/json',
+				'cors': 'true'
+			  },
+			body: JSON.stringify({
+			  id : User.id,
+			})
+		  })
+        let tmp = await request.json();
+        let userUpdate = {...User};
+        userUpdate.ello = tmp.ello;
+        userUpdate.gameWon = tmp.game_won;
+        userUpdate.gameLost = tmp.game_lost;
+        dispatch({type: "User/setUser", payload: userUpdate,});
+       // setsw(1);
+    }
+
     const fetchGame = async () => {
 
         // console.log(gamesList);
@@ -56,6 +83,11 @@ export default function Stats() {
 
     useEffect(()=>{
         fetchGame();
+        //setsw(1);
+    }, [])
+
+    useEffect(()=>{
+        fetchStats();
         //setsw(1);
     }, [])
 

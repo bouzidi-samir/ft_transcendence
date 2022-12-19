@@ -18,6 +18,10 @@ export default function PrivateAcces(props : any) {
 
    async function handleRoom(e: any)  {
     e.preventDefault();
+    if (!password) {
+        setError("Merci de rentrer un password.");
+        return;
+    }
     let url_a = `http://${hostname}:4000/chat/leaveRoom`;
     await fetch(url_a, {
       method: "POST",

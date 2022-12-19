@@ -35,43 +35,6 @@ export default function Game() {
 		alert('Ouch, Im dying.');
 	} // detecte si un user use le bouton retour du navigateur*/
 
-	function updateData()
-	{
-		let userUpdate = {...User};
-		if (player.userName === User.username)
-		{
-			if (player.score > player2.score)
-			{
-				userUpdate.gameWon += 1;
-				userUpdate.gamePlayed += 1;
-				userUpdate.ello += 10;
-			}
-			else
-			{
-				userUpdate.gameLost += 1;
-				userUpdate.gamePlayed += 1;
-				userUpdate.ello -= 10;
-			}
-		}
-		else if (player2.userName === User.username)
-		{
-			if (player2.score > player.score)
-			{
-				userUpdate.gameWon += 1;
-				userUpdate.gamePlayed += 1;
-				userUpdate.ello += 10;
-			}
-			else
-			{
-				userUpdate.gameLost += 1;
-				userUpdate.gamePlayed += 1;
-				userUpdate.ello -= 10;
-			}
-		}
-		userUpdate.status = "online";
-		dispatch({type: "User/setUser", payload: userUpdate,});
-	}
-
 	const checkGuard = async () =>
 	{
 		let url_ = `http://${hostname}:4000/games/checkGuard`;
@@ -185,7 +148,7 @@ export default function Game() {
 		// permet de bouger les payers avec la souris 
 
 		function playerMove(event: any) {
-			if ((player.id) && clientId === player.id)
+			if ((player?.id) && clientId === player?.id)
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;
@@ -204,7 +167,7 @@ export default function Game() {
 					room.send("player", {player_y : player.y})
 				}
 			}
-			else if (clientId === player2.id)
+			else if (clientId === player2?.id)
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;
@@ -252,7 +215,7 @@ export default function Game() {
 		else 
 		{
 			// Increase speed and change direction
-			ball.velocity_x *= -1.2;
+			ball.velocity_x *= -0.30;
 		}
 	}
 
@@ -283,13 +246,11 @@ export default function Game() {
 			if (player2.score === setting_game.score_limits || player.score  === setting_game.score_limits)
 			{
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
-				updateData();
 				finished = 1;
 				navigation('/Home');
 			}
 		})
 		room.onMessage("leaver", (message) => {
-			updateData();
 			finished = 1;
 			navigation('/Home');
 		})
@@ -311,11 +272,14 @@ export default function Game() {
 	}
 
 	const display = () => {
-		ballMove();
-		//computerMove();
-		updatePos();
-		draw();
-		animationRequest = requestAnimationFrame(display);
+		if (player?.id)
+		{
+			ballMove();
+			//computerMove();
+			updatePos();
+			draw();
+			animationRequest = requestAnimationFrame(display);
+		}
 	}
 
 	useEffect( () => {
@@ -325,7 +289,7 @@ export default function Game() {
 		ball = new Ball(canvas.current.width / 2, canvas.current.height / 2, 2, 2);
 
 
-		if(started === 1 && player.id)
+		if(started === 1 && player?.id)
 			display();
 		return () =>{
 			cancelAnimationFrame(animationRequest);
