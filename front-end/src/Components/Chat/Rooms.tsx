@@ -126,9 +126,11 @@ export default function Rooms() {
       
         if (room.tag === RoomActive.tag)
             return;
-        if (room.private && !room.privateMessage &&  p == false) {
-            setPrivate(room)
-            return;
+        if (p == false){
+            if (room.private && !room.privateMessage) {
+                setPrivate(room)
+                return;
+            }
         }
         let url_b = `http://${hostname}:4000/chat/joinRoom`;
             const response =  await fetch(url_b, {method: "POST",
@@ -148,7 +150,7 @@ export default function Rooms() {
         }
         ).then(rep => rep.json())
         if (!response.tag)
-            response.tag = room.tag;
+            response.tag = room.tag
         dispatch({type: "RoomActive/setRoomActive",payload: response});
         socket?.emit("newMember", alertMember);
     }
