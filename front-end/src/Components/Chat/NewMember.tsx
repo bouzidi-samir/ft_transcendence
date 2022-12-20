@@ -1,8 +1,9 @@
 import '../../styles/Components/Chat/NewMember.css'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import Alert from '../Share/Alert';
 import { io, Socket } from 'socket.io-client';
+import { SocketContext } from '../../Context/socket';
 
 export default function NewMember(props : any) {
     const {hostname} = document.location;
@@ -13,9 +14,10 @@ export default function NewMember(props : any) {
     const [adminList, setAdminList] = useState<any>([])
     const [statu, setStatu] = useState(""); 
     const [alert, setAlert] = useState(false);
-    const [socket, setSocket] = useState<Socket>();
     const alertAdmin = "NEW ROOM ADMiN !!!";
     const alertRoomInvitation = {text: "room invitation"};
+
+    const socket = useContext(SocketContext);
 
     async function updateMemberList() {
         let url : string = `http://${hostname}:4000/chat/getRoomMembers/${RoomActive.tag}`;
@@ -28,10 +30,10 @@ export default function NewMember(props : any) {
         .then(data => props.setMembers(data));
     }
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
     const adminListener = (alertRoom: string) => {
         updateMemberList();

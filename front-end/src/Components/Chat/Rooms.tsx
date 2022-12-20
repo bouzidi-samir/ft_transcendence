@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../../styles/Components/Chat/Rooms.css'
 import RoomAdd from './RoomAdd';
 import PrivateAcces from './PrivateAccess';
@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import RoomCase from './RoomCase';
+import { SocketContext } from '../../Context/socket';
 
 export default function Rooms() {
     const {hostname} = document.location;
@@ -15,12 +16,12 @@ export default function Rooms() {
     const dispatch = useDispatch();
     const [addroom, setAddroom] = useState(false);
     const [privateAcces, setPrivate] = useState(false);
-    const [socket, setSocket] = useState<Socket>();
     const [alertRoom] = useState<string>("");
     let p : boolean;
     const alertMember = "NEW MEMBER !!!";
 
-    
+    const socket = useContext(SocketContext);
+
     function getRoomByname(tag : string, list : any[]) {
         let room = list.filter(e => e.tag === tag)
         return room[0];
@@ -45,10 +46,10 @@ export default function Rooms() {
         dispatch({type: "Roomlist/setRoomlist",payload: response,})
     }
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
     
     const alertListener = (alertRoom: any) => {

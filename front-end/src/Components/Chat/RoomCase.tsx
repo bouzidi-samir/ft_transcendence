@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { io, Socket } from 'socket.io-client';
+import { SocketContext } from '../../Context/socket';
 
 export default function RoomCase ({room} :any) {
     
@@ -11,13 +12,15 @@ export default function RoomCase ({room} :any) {
     const RoomActive = useSelector((state: any) => state.RoomActive); 
     const [notifs, setNotifs] = useState<any[]>([]);
     const [notif, setNotif] = useState("");
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
+
+    const socket = useContext(SocketContext);
 
     const alertListener = (alert: any) => {
         setNotifs([...notifs,alert]);

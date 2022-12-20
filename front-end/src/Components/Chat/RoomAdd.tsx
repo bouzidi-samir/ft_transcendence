@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../../styles/Components/Chat/RoomAdd.css'
 import {useDispatch, useSelector} from 'react-redux';
 import React, { useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { SocketContext } from '../../Context/socket';
 
 export default function RoomAdd({setAddroom} :any) {
     const {hostname} = document.location;
@@ -12,14 +13,15 @@ export default function RoomAdd({setAddroom} :any) {
     const [privateRoom, setPrivate] = useState<boolean>(false);
     const [publicRoom, setPublicRoom] = useState<boolean>(true);
     const [password, setPassword] = useState("");
-    const [socket, setSocket] = useState<Socket>();
     const [error, setError] = useState("");
     const alertRoom = "NEW ROOM AVAILABLE !!!";
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    const socket = useContext(SocketContext);
+    
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
     
     
    async function handleForm(e: any)  {

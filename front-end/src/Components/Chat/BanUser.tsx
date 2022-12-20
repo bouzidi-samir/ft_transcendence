@@ -1,14 +1,15 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import { useSelector } from "react-redux";
 import Alert from "../Share/Alert";
 import { io, Socket } from "socket.io-client";
+import { SocketContext } from '../../Context/socket';
 
 export default function BanUser(props: any) {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const [alert, setAlert] = useState(false);
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [ban, setBan] = useState(false);
     const {toBan} = props;
     const alertBan = {
@@ -16,10 +17,12 @@ export default function BanUser(props: any) {
         text: "banned"
     };
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    const socket = useContext(SocketContext);
+
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
 async function handleBan(e: any) { 
     e.preventDefault();

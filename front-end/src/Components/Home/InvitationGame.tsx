@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import * as Colyseus from "colyseus.js";
 import { Client } from "colyseus.js";
+import { SocketContext } from '../../Context/socket';
 
 export default function InvitationGame() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const values = Object.values(User.JWT_token);
     const [invitations, setInvitations] = useState([]);
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [alertGame, setAlertGame] = useState<string>("");
     let acceptGame =  "OK";
     const refuseGame = "KO";
     let navigation = useNavigate();
     const dispatch = useDispatch();
+    const socket = useContext(SocketContext);
 
-
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
 
     const alertListener = (alert: string) => {

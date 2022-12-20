@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
+import { SocketContext } from '../../Context/socket';
 
 export default function Invitation() {
     const {hostname} = document.location;
@@ -9,9 +10,9 @@ export default function Invitation() {
     const [invitations, setInvitations] = useState([]);
     const dispatch = useDispatch();
     let navigate = useNavigate();
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [alertInvit, setAlertInvit] = useState<string>("");
-
+    const socket = useContext(SocketContext);
 
     async function handleInvitation() {
 
@@ -30,10 +31,10 @@ export default function Invitation() {
         ).then(response => response.json()).then(data => setInvitations(data));
         }
 
-        useEffect(() => {
-            const newSocket = io(`http://${hostname}:8000`);
-            setSocket(newSocket)
-        }, [setSocket])
+        // useEffect(() => {
+        //     const newSocket = io(`http://${hostname}:8000`);
+        //     setSocket(newSocket)
+        // }, [setSocket])
     
         const invitationListener = (alert: string) => {
             setAlertInvit(alert);

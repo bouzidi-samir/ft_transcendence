@@ -1,5 +1,5 @@
 import '../../styles/Components/Chat/UserChat.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import PrivateMessage from './PrivateMessage';
@@ -10,18 +10,19 @@ import NewMember from './NewMember';
 import Invitation from '../Home/Invitation';
 import InvitationGame from '../Home/InvitationGame';
 import { io, Socket } from "socket.io-client";
+import { SocketContext } from '../../Context/socket';
 
 export default function UserChat() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const [members, setMembers] = useState([]);
-    const [socket, setSocket] = useState<Socket>();
+    const socket = useContext(SocketContext);
   
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
   
     const memberListener = (alert: string) => {
     }

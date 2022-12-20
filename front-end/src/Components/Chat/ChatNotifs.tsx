@@ -6,21 +6,23 @@ import { io, Socket } from "socket.io-client";
 import { Link } from 'react-router-dom';
 // import mp3 from '../../styles/Sound/new.mp3'
 // import { Howl } from "howler";
+import { SocketContext } from '../../Context/socket';
 
 export default function Notifs() {
     const {hostname} = document.location;
     const User = useSelector((state: any) => state.User);
     const Userlist = useSelector((state: any) => state.UserList);
     const RoomActive = useSelector((state: any) => state.RoomActive);
-    const [socket, setSocket] = useState<Socket>();
     const [notifs, setNotifs] = useState<any[]>([]);
     const dispatch = useDispatch();
     const Roomlist = useSelector((state: any) => state.RoomList);
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    const socket = useContext(SocketContext);
+    
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
   
     const alertListener = (alert: any) => {
         setNotifs([...notifs,alert]);

@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { io, Socket } from 'socket.io-client';
 import Alert from '../Share/Alert';
 import '../../styles/Components/Chat/RoomSetting.css'
+import { SocketContext } from '../../Context/socket';
 
 export default function RoomSettings() {
     const {hostname} = document.location;
@@ -17,13 +18,14 @@ export default function RoomSettings() {
     const [publicRoom, setPublicRoom] = useState<boolean>(RoomActive.public);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [socket, setSocket] = useState<Socket>();
     const alertRoom = "NEW ROOM AVAILABLE !!!";
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    const socket = useContext(SocketContext);
+
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
 
     const alertListener = (alertRoom: string) => {
     }
