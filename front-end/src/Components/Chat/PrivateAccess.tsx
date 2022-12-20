@@ -11,7 +11,7 @@ export default function PrivateAcces(props : any) {
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const {privateRoom, setPrivate} = props;
     const dispatch = useDispatch();
-    const [password, setPassword] = useState();
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [socket, setSocket] = useState<Socket>();
     const alertMember = "NEW MEMBER !!!";

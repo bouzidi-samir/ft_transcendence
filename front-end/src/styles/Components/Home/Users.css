@@ -1,6 +1,6 @@
 .users-content {
     width: 100%;
-    height: 28%;
+    height: 85%;
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
     margin-right: 1%;
@@ -89,7 +89,7 @@
 .friend-case{
     display: flex;
     width: 100%;
-    height: 50%;
+    height: 18%;
     border: solid 1px blueviolet;
     cursor: pointer;
     padding-bottom: 2%;
@@ -99,7 +99,7 @@
     .friend-case{
         display: flex;
         width: 100%;
-        height: 60%;
+        height: 18%;
         border: solid 1px blueviolet;
         cursor: pointer;
         padding-bottom: 2%;
@@ -109,7 +109,7 @@
 .friend-case:hover {
     display: flex;
     width: 100%;
-    height: 50%;
+    height: 18%;
     border: solid 1px blueviolet;
     cursor: pointer;
     padding-bottom: 2%;

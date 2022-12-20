@@ -124,7 +124,7 @@ export default function InvitationGame() {
                 invitations.map((invit: any, key: any) => (
                     invit.toUsername == User.username ?
                     <div key={invit.id + key}>
-                    <p>Game invitation from : {invit.fromUsername + ' ' }
+                    <p style={{color: "white", fontSize: "12px", marginLeft: "5px"}}>Game invitation from : {invit.fromUsername + ' ' }
                     <button  onClick={() => handleAccept(invit)}>Accepter</button>
                     <button  onClick={()=> handleRefuse(invit)}>Refuser</button>
                     </p> 
