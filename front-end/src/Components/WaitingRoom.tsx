@@ -16,44 +16,6 @@ export default function MatchingPage (props : any) {
     let userUpdate = {...User};
     let validated : number = 0;
 
-   function refresh()
-   {
-       var text = document.getElementById("myId");
-       var text2 = document.getElementById("myId2");
-       function myCallback() {
-            if(text)
-            {
-                if (text.textContent === "Waiting for players")
-                    text.textContent = "Waiting for players.";
-                else if (text.textContent === "Waiting for players.")
-                    text.textContent = "Waiting for players..";
-                else if (text.textContent === "Waiting for players..")
-                    text.textContent = "Waiting for players...";
-                else if (text.textContent === "Waiting for players...")
-                    text.textContent = "Waiting for players";
-            }
-        }
-
-        let seconds = 0;
-        let minuts = 0;
-        let hours = 0;
-        function setTime(){
-            seconds += 1;
-            if (seconds === 60)
-            {
-                seconds = 0;
-               minuts += 1;
-            }
-            if (minuts === 60)
-            {
-                minuts = 0;
-                hours += 1;
-            }
-            if(text2)
-                text2.textContent =  String(hours) + "h" + String(minuts) + "m" + String(seconds) + "s";
-        }
-   }
-
    async function findPlayers()
    {
        room = await client?.joinOrCreate("matching_room", {access_token : User.JWT_token});
@@ -101,7 +63,6 @@ export default function MatchingPage (props : any) {
 			else
 			{
                 validated = 1;
-                refresh();
                 findPlayers();
 			}
 		})
@@ -132,8 +93,11 @@ export default function MatchingPage (props : any) {
             <Navbar />
         <div className="loading-content">
             <form className = 'form-newsetting'>
-            <p id="myId" className="message">Waiting for players</p>
-            <p id="myId2" className="timer">0h0m0s</p>
+            <p  className="message">En attente de joueurs...</p>
+            <br></br>
+            <br></br>
+            <p className="message">-Le paddle est dirige avec la souris.</p>
+            <p className="message">-Quitter la page de jeu <br></br>est considere comme un abandon. </p>
             </form>         
         </div>
         </>

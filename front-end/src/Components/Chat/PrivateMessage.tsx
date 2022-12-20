@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useState, useEffect } from 'react';
+import { set } from 'immer/dist/internal';
 
 export default function PrivateMessage(props: any) {
     const {hostname} = document.location;
     const dispatch = useDispatch();
     const {interlocutor} = props;
+    const [increment, setIncrement] = useState(0);
     const User = useSelector((state: any) => state.User);
     let Roomlist = useSelector((state: any) => state.RoomList);
     const [blockedList, setBlockedList] = useState([]);
@@ -16,21 +18,38 @@ export default function PrivateMessage(props: any) {
             'Content-Type': 'application/json',
             'cors': 'true'
           },})
-        .then(ret => ret.json()).then((ret) => { 
-            let list : any  = ret.map((e: any) => (User.username));
-            setBlockedList(list)
+        .then(ret => ret.json()).then((ret) => {
+            //let list : any  = ret.map((e: any) => (User.username));
+            setBlockedList(ret)
         }
         )
     }
-    , [openConversation]
+    , []
     )
+    
+    async function updateBlockedList(){
+        let url = `http://${hostname}:4000/users/blockedPeople/${interlocutor.username}`;
+        fetch(url, {headers: 
+            {'Authorization': `Bearer ${User.JWT_token}`,
+            'Content-Type': 'application/json',
+            'cors': 'true'
+          },})
+        .then(ret => ret.json()).then((ret) => {
+            //let list : any  = ret.map((e: any) => (User.username));
+            setBlockedList(ret)
+        }
+        )
+    }
+
+
    
-    function openConversation(e : any) {
+    async function openConversation(e : any) {
         e.preventDefault();
+        await updateBlockedList();
         let check = Roomlist.filter((e: any) => 
                 e.tag === User.nickname + interlocutor.nickname || e.tag === interlocutor.nickname + User.nickname
             )
-        if (blockedList.length > 0){
+        if (blockedList.some((e : any) => e.toUsername == User.username)){
             alert("Cet utilisateur vous a bloqué")
             return;
         }
