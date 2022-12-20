@@ -17,14 +17,19 @@ const {toMute} = props;
 async function handleMute(e: any) {
    
     e.preventDefault();
-    
-    let isnum = minutes.match(/ˆ\d+$/);
-    if (!isnum){
-        setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
+    let ok : Boolean = false;
+    // let isnum = minutes.match(/ˆ\d+$/);
+    for(let i = 0; i < minutes.length ; i++){
+        if ((minutes[i] < "0" || minutes[i] > "9"))
+            ok = true
+    }
+    if (ok == true)
+    {
+        setAlertMess("Merci de rentrer un vrai chiffre entre 1 et 100");
         setAlert(true)
         return;
     }
-    if (minutes < "0" &&  minutes > "100" ) {
+    if (parseInt(minutes) < 0 ||  parseInt(minutes) > 100 ) {
         setAlertMess("Merci de rentrer un chiffre entre 1 et 100");
         setAlert(true)
         return

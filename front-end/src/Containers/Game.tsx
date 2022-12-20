@@ -160,10 +160,12 @@ export default function Game() {
 	
 				// permet de limiter les players par rapport a la taille du canvas
 				if (mouseLocation < setting_game.paddle_height / 2) {
-					player.y = 0;
+					if(player?.y || player?.y === 0)
+						player.y = 0;
 				} else if ((mouseLocation / canvasLocation.height * canvas.current.height)
 							+ setting_game.paddle_height / 2 > canvas.current.height) {
-					player.y = canvas.current.height - setting_game.paddle_height;
+					if(player?.y || player?.y === 0)
+						player.y = canvas.current.height - setting_game.paddle_height;
 				}
 				if (room)
 				{
@@ -182,10 +184,12 @@ export default function Game() {
 	
 				// permet de limiter les players par rapport a la taille du canvas
 				if (mouseLocation < setting_game.paddle_height / 2) {
-					player2.y = 0;
+					if(player2?.y || player2?.y === 0)
+						player2.y = 0;
 				} else if ((mouseLocation / canvasLocation.height * canvas.current.height)
 							+ setting_game.paddle_height / 2 > canvas.current.height) {
-					player2.y = canvas.current.height - setting_game.paddle_height;
+					if(player2?.y || player2?.y === 0)
+						player2.y = canvas.current.height - setting_game.paddle_height;
 				}
 				if (room)
 				{
@@ -221,7 +225,7 @@ export default function Game() {
 		else 
 		{
 			// Increase speed and change direction
-			ball.velocity_x *= -0.30;
+			ball.velocity_x *= -1.2;
 		}
 	}
 
@@ -253,12 +257,12 @@ export default function Game() {
 			{
 				room.send("gameEnd", {player_score: player.score , player2_score : player2.score});
 				finished = 1;
-				navigation('/Home');
+				navigation('/Matching');
 			}
 		})
 		room.onMessage("leaver", (message) => {
 			finished = 1;
-			navigation('/Home');
+			navigation('/Matching');
 		})
 	}
 
