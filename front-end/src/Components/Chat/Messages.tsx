@@ -105,7 +105,7 @@ export default function Messages() {
         socket?.emit("messageFromClient", { messageData });
          if (Roomlist.some((e : any) => RoomActive.tag == e.tag)){
           socket?.emit("newMessageClient", alert )}
-        socket?.emit("newNotifClient", { alertNotif });
+        //socket?.emit("newNotifClient", { alertNotif });
     }
 
     const messageListener = (message: any) => {

@@ -46,9 +46,9 @@ export default function Invitation() {
             }
         }, [invitationListener])
         
-        // useEffect(() => {
-        //     handleInvitation();
-        // }, []);
+         useEffect(() => {
+             handleInvitation();
+         }, []);
 
         useEffect(() => {
             handleInvitation();

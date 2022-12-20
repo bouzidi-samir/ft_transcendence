@@ -152,8 +152,11 @@ export default function Game() {
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;
-				player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
-								- setting_game.paddle_height / 2;
+				if (player?.y || player?.y === 0)
+				{
+					player.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+									- setting_game.paddle_height / 2;
+				}
 	
 				// permet de limiter les players par rapport a la taille du canvas
 				if (mouseLocation < setting_game.paddle_height / 2) {
@@ -171,8 +174,11 @@ export default function Game() {
 			{
 				var canvasLocation = canvas.current.getBoundingClientRect();
 				var mouseLocation = event.clientY - canvasLocation.y;
-				player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
-								- setting_game.paddle_height / 2;
+				if(player2?.y || player2?.y === 0)
+				{
+					player2.y = (mouseLocation / canvasLocation.height * canvas.current.height)
+									- setting_game.paddle_height / 2;
+				}
 	
 				// permet de limiter les players par rapport a la taille du canvas
 				if (mouseLocation < setting_game.paddle_height / 2) {

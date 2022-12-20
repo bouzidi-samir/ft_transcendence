@@ -76,12 +76,12 @@ export default function Rooms() {
         }
     }, [banListener])
     
-    useEffect(() => {
-        socket?.on("newNotifServer", alertListener);
-        return () => {
-            socket?.off("newNotifServer", alertListener)
-        }
-    }, [alertListener])
+    //useEffect(() => {
+    //    socket?.on("newNotifServer", alertListener);
+    //    return () => {
+    //        socket?.off("newNotifServer", alertListener)
+    //    }
+    //}, [alertListener])
     
     useEffect(()=>{
         handleCheckMember(RoomActive)

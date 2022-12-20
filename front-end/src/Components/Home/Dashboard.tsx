@@ -13,8 +13,8 @@ export default function Dashboard() {
             <Stats/>
             <div className='user-infos'>
                 <Users/>
-                <Notifs/>
-                <Invitation/>
+                {/*<Notifs/>*/}
+                {/*<Invitation/>*/}
             </div>
         </div>
     );
