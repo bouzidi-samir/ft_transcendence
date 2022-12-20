@@ -12,6 +12,7 @@ import fetch from 'node-fetch';
 export class PrivateRoom extends Room<MyRoomState> {
 
   gameId : number;
+  leaversNb : number = 0;
   onCreate (options: any) {
     this.setState(new MyRoomState());
   }
@@ -47,11 +48,14 @@ export class PrivateRoom extends Room<MyRoomState> {
   }
 
   async onLeave (client: Client, consented: boolean) {
-    console.log(client.sessionId, "left!");
+    this.leaversNb += 1;
+    if(this.leaversNb === 2)
+    {
+      this.disconnect();
+    }
   }
 
   async onDispose() {
-    console.log("room", this.roomId, "disposing...");
 
   }
 
