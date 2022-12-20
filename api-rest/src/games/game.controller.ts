@@ -57,14 +57,14 @@ export class gameController {
 		if (game.p1_score > game.p2_score)
 		{
 			game.winner = game.p1_id;
-			await this.userService.gameWonAdd(player1.id, player1.game_won + 1, player1.ello + 10);
-			await this.userService.gameLostAdd(player2.id, player2.game_lost + 1, player2.ello - 10);
+			await this.userService.gameWonAdd(player1.id, player1.game_won + 1, player1.ello + 5);
+			await this.userService.gameLostAdd(player2.id, player2.game_lost + 1, player2.ello - 5);
 		}
 		else 
 		{
 			game.winner = game.p2_id;
-			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 10)
-			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 10);
+			await this.userService.gameWonAdd(player2.id, player2.game_won + 1, player2.ello + 5)
+			await this.userService.gameLostAdd(player1.id, player1.game_lost + 1, player1.ello - 5);
 		}
 		return await this.service.addGame(game);
 	}

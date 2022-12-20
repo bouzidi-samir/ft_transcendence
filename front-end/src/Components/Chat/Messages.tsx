@@ -1,5 +1,5 @@
 import '../../styles/Components/Chat/Messages.css'
-import React, {useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import {useDispatch} from 'react-redux';
 import { io, Socket } from 'socket.io-client';
@@ -7,11 +7,12 @@ import MessageInput from './MessageInput';
 import RoomDisplay from './RoomDisplay';
 import Conversation from './Conversation';
 import { useNavigate } from 'react-router';
+import { SocketContext } from '../../Context/socket';
 
 
 export default function Messages() {
     const {hostname} = document.location;
-    const [socket, setSocket] = useState<Socket>();
+    // const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<any[]>([]);
     const RoomActive = useSelector((state: any) => state.RoomActive);
     const User = useSelector((state: any) => state.User);
@@ -29,6 +30,7 @@ export default function Messages() {
         from: String(User.nickname),
         room: String(RoomActive.tag)
     }
+    const socket = useContext(SocketContext);
 
     useEffect(() => {
         let url = `http://${hostname}:4000/users/blockedPeople/${User.username}`;
@@ -67,10 +69,10 @@ export default function Messages() {
     // }
 
 
-    useEffect(() => {
-        const newSocket = io(`http://${hostname}:8000`);
-        setSocket(newSocket)
-    }, [setSocket])
+    // useEffect(() => {
+    //     const newSocket = io(`http://${hostname}:8000`);
+    //     setSocket(newSocket)
+    // }, [setSocket])
     
     useEffect(() => {
         let url : string = `http://${hostname}:4000/chat/getRoomMessages/${RoomActive.tag}`;
