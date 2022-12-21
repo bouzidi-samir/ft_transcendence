@@ -5,6 +5,7 @@ import { useEffect, useState} from 'react';
 import {useSearchParams, Navigate} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import Particle from "../Components/Particle";
+import localStorage from "redux-persist/es/storage";
 
 
 export default function Authentification() {
@@ -12,6 +13,7 @@ export default function Authentification() {
   const dispatch = useDispatch();
   const [params] = useSearchParams();
   const [fortyTwo, setFortyTwo] = useState(false);
+  
   useEffect(() => {
     const code = params.get("code")
 		const {hostname, port} = document.location;
