@@ -219,7 +219,7 @@ export default function Game() {
 				room.send("updateScore", {player_score: player.score , player2_score : player2.score});
 			}
 			// Reset speed
-			ball.velocity_x = (Math.random() * 5 + 5) * (Math.random() < .5 ? -1 : 1);
+			ball.velocity_x = (Math.random() * 3 + 2) * (Math.random() < .5 ? -1 : 1);
 			ball.velocity_y = Math.random();
 		}
 		else 

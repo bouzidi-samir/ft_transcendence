@@ -233,7 +233,6 @@ export class ChatService {
   }
 
   async joinRoom(body) {
-    console.log(body);
     const alreadyMember = await this.memberRepository.findOne({where: [{ username: body.username, roomTag: body.tag }]});
     const room = await this.roomsRepository.findOne({where: { tag: body.tag }}); 
     
@@ -516,7 +515,7 @@ export class ChatService {
     
     if (toMember) {
         toMember.blocked = false
-        request.roomRequest = false // on kill l'invitation de la liste
+        request.roomRequest = false // on kill l'invitation de la list
         await this.relationsRepository.save(request);
         await this.memberRepository.save(toMember);
         return 

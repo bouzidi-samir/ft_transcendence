@@ -48,7 +48,7 @@ export default function CodePage (props : any) {
             <img style={{marginTop: "100px"}}className="vignette-form" src={User.qrcode}></img>
             <p className="p-qr">Scane ce QR Code pour récupérer ton code.</p>
             <p className="p-qr">Ce dernier te sera demandé lors de ta prochaine connection.</p>
-            <p className="p-qr">Deconnecte toi pour reavoir acces aux services.</p>
+            <p className="p-qr">Deconnecte toi pour avoir a nouveau acces aux services.</p>
             </form>
 
                 

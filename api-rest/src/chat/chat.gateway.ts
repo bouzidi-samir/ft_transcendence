@@ -96,7 +96,6 @@ import { Repository } from 'typeorm';
 
     @SubscribeMessage('roomInvitation')
     roomInvitation(@ConnectedSocket() client: Socket, @MessageBody()  alert: any): void {
-      console.log('Received roomx invitation in Back', alert);
       this.server.emit('roomInvitationServer', alert);
     }
     

@@ -38,7 +38,7 @@ export default function Users() {
             <div className='friends'>   
                 {
                     Object.values(friends).map((f : any, index: number)=> (
-                        f.toUsername != User.username ?
+                        f.fromUsername == User.username ?
                         <Friend key={index} friend={f}/>
                         : null
                     )

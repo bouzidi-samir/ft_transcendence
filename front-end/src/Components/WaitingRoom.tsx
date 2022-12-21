@@ -96,9 +96,9 @@ export default function MatchingPage (props : any) {
             <h1>Master-Pong</h1>
             <h2 >En attente de joueurs...</h2>
              <h3>Tutoriel:</h3>   
-            <p >-Dirige le paddle avec la souris pour renvoiyer la balle.</p>
+            <p >-Dirige le paddle avec la souris pour renvoyer la balle.</p>
             <p >-Quitter la page de jeu est considere comme un abandon. </p>
-            <p >-L' historique des matchs est affiché sur ton dasbboard. </p>
+            <p >-L' historique des matchs est affiché sur ton dashboard. </p>
             <h3>Bon Match!</h3>
             </form>         
         </div>
