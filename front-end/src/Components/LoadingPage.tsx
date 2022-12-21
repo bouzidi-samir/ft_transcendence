@@ -12,7 +12,7 @@ export default function LoadingPage (props : any) {
     let navigation = useNavigate();
     const {hostname} = document.location;
    
-    useEffect( () => {    
+    useEffect( () => {   
         setInterval(() => {
             setTime(time => time + 1);
         },100)
@@ -20,16 +20,14 @@ export default function LoadingPage (props : any) {
     )
 
     function redirect() {
-     
        setTimeout(() => {
-        if (User.nickname !== "")
+        if (User.registred !== "false")
             navigation("/Home");
         }, 1500);
     }
 
     return (
         <div className="loading-content">
-
         <>  
             {User.TFOenabled === true ? <TFAset /> : null}
             {setTimeout(() => {
