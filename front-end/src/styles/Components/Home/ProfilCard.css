@@ -1,0 +1,108 @@
+.profilCard-content {
+    width: 30%;
+    height: 85%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    margin-right: 1%;
+    border-radius: 2%;
+    opacity: 80%;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .profilCard-content {
+        width: 70%;
+        height: 95%;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+        margin-right: 1%;
+        margin-left: 15%;
+        border-radius: 2%;
+        opacity: 80%;
+        margin-bottom: 4%;
+        padding-bottom: 5%;
+        margin-top: 2%;
+    }
+        
+ }
+
+.profilCard-content h2 {
+    color: goldenrod;
+}
+
+.profilCard-content p {
+    color: white;
+    text-align: center;
+    font-size: 120%;
+}
+
+
+.vignette-card {
+    width: 70%;
+    height: 40%;
+    margin-top: 5%;
+    margin-left: 15%;    
+    background-image: url(../../img/avatar.png);
+    background-position: center;
+    background-size: contain;
+    border: solid black 3px;
+    border-radius: 50%;
+	
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .vignette-card {
+        width: 50%;
+        height: 20%;
+        margin-top: 5%;
+        margin-left: 25%;    
+        background-image: url(../../img/avatar.png);
+        background-position: center;
+        background-size: contain;
+        border: solid black 1px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+ }
+
+.set-avatar {
+    position: relative;
+    width: 15%;
+    height: 10%;
+    top: -7%;
+    left: 10%;
+    background-image: url(../../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid white 2px;
+    border-radius: 80%;
+    margin-left: 40%;
+}
+
+.ecusson {
+    background-image: url(../../../styles/img/ecusson/gold.png);
+    background-position: center;
+    background-size: cover;
+    height: 32%;
+    margin-left: 25%;
+    margin-top: 5%;
+    width: 50%;
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .ecusson {
+        background-image: url(../../../styles/img/ecusson/gold.png);
+        background-position: center;
+        background-size: cover;
+        height: 30%;
+        margin-left: 35%;
+        margin-top: 1%;
+        width: 30%;
+    
+    }
+    
+ }

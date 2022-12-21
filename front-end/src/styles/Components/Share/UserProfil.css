@@ -1,0 +1,96 @@
+
+.profilset-content .btn-add{
+    display: inline;
+    width: 20%;
+    margin-left: 25%;
+    margin-right: 10%;
+    margin-top: 4%;
+}
+
+.profilset-content .btn-secondary{
+    display: inline;
+    width: 20%;
+    margin-left: 2px;
+    margin-right: 5%;
+    margin-top: 4%;
+}
+
+.profilset-content h4{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
+.profilset-content .btn-light{
+    display: inline;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+}
+
+.userprofil h3 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    margin-top: 2%;
+}
+
+.userprofil hr {
+ 
+    color: white;
+
+}
+
+.userprofil p {
+ 
+    color: goldenrod;
+    text-align: center;
+}
+
+.ecusson-user {
+    background-image: url(../../../styles/img/ecusson/gold.png);
+    background-position: center;
+    background-size: cover;
+    height: 22%;
+    margin-left: 40%;
+    margin-top: 2%;
+    width: 20%;
+}
+
+.vignette-user {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    margin-left: 35%;
+    margin-top: 1%;
+    margin-bottom: 0%;   
+    border: solid black 1px;
+   
+}
+
+.vertical-menu{
+    width : 100%;
+    height : 55px;
+    overflow-y: auto;
+    border: solid gold;
+    text-align:center ;
+}
+
+.scor-profil {
+    width: 100%;
+    border-top: 0.5px solid gray;
+    border-bottom: 0.5px solid gray;
+    height: 25%;
+    overflow-y: scroll;
+    margin-top: 3%;
+}
+
+.scor-profil p {
+    color: white;
+}
+
+.scor-profil::-webkit-scrollbar {
+    width: 9px; /* width of the entire scrollbar */
+    background-color: blueviolet;
+}

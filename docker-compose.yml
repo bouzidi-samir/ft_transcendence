@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  api-rest:
+    build:
+      context: api-rest
+      dockerfile: Dockerfile
+    container_name: back
+    ports:
+      - 4000:4000
+      - 8000:8000
+    depends_on:
+      - postgres
+    networks:
+      - mynetwork
+
+  front-end:
+    build:
+      context: front-end
+      dockerfile: Dockerfile
+    container_name: front
+    ports:
+      - 3000:3000
+    depends_on:
+      - api-rest
+    networks:
+      - mynetwork
+
+  postgres:
+    image: postgres:13
+    hostname: postgres-db
+    container_name: postgres-db
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - database.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+volumes:
+  postgres:
+    name: nest-db
+
+networks:
+  mynetwork:
+    driver: bridge

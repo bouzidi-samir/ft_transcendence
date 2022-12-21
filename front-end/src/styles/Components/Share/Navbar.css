@@ -1,0 +1,318 @@
+.Navbar {
+    height: 30px;
+    text-decoration: none;
+    margin-bottom: 0%;
+    margin-top: 0%;
+    padding-bottom: 5%;
+    padding-top: 1%;
+    padding-right: 2%;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+   
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .Navbar {
+        height: 30px;
+        text-decoration: none;
+        position: fixed;
+        margin-bottom: 0%;
+        margin-top: 0%;
+        padding-bottom: 5%;
+        padding-top: 1%;
+        padding-right: 2%;
+        background: rgb(110, 109, 117);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+       
+    }
+ }
+
+ @media only screen and (max-width: 500px) {
+
+    .Navbar {
+        height: 30px;
+        text-decoration: none;
+        position: fixed;
+        margin-bottom: 0%;
+        margin-top: 0%;
+        margin-left: 0% ;
+        padding-bottom: 5%;
+        padding-top: 1%;
+        padding-right: 0%;
+        background: rgb(110, 109, 117);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(10,4,4,1) 100%, rgba(0,212,255,1) 100%);
+       
+    }
+
+
+   li {
+    padding-left: 0px;
+    margin-right: -40px;
+    margin-bottom: 6px;
+    margin-top: 5px;
+    padding-right: 0px;
+    width: 8px;
+}
+
+ul {
+   margin: 0px;
+}
+
+.nav_link{
+  margin-right: 110px;
+}
+
+.home-icon {
+    margin-right: 110px;
+}
+.text-center {
+
+    padding-left: -5px;
+    margin-left: px;
+
+}
+ }
+
+.status-nav {
+    flex-direction: column;
+}
+
+.status {
+    position: relative;
+    color: yellow;
+    left: 1%;
+}
+
+
+.nav_link {
+    text-decoration: none;
+    margin-right: 80px;
+    font-size: 120%;
+    color: black;
+}
+
+.profil-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../../styles/img/icones/profil.png);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .profil-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/profil.png);
+        background-position: center;
+        background-size: cover;
+    }  
+ }
+
+.home-icon {
+    width: 42px;
+    height: 42px;
+    margin-left: 20px;
+    background-image: url(../../../styles/img/icones/accueil.png);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .home-icon {
+        width: 42px;
+        height: 42px;
+        margin-left: 20px;
+        margin-top: 25%;
+        background-image: url(../../../styles/img/icones/accueil.png);
+        background-position: center;
+        background-size: cover;
+    }     
+ }
+
+.chat-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../../styles/img/icones/messenger.png);
+    background-position: center;
+    background-size: cover;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .chat-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/messenger.png);
+        background-position: center;
+        background-size: cover;
+    }
+ }
+
+
+
+
+.game-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../../styles/img/icones/controle-du-jeu-2.png);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .game-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/controle-du-jeu-2.png);
+        background-position: center;
+        background-size: cover;
+    }
+     
+ }
+
+.logout-icon {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url(../../../styles/img/icones/logout.png);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .logout-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 20px;
+        margin-top: 10%;
+        background-image: url(../../../styles/img/icones/logout.png);
+        background-position: center;
+        background-size: cover;
+    }
+     
+ }
+
+
+
+.avatar {
+    position: absolute;
+    top: 3%;
+    left: 1%;
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 60%;
+    border: 1px goldenrod solid;
+}
+
+.navbar-brand {
+    color: yellow;
+}
+
+@media only screen and (max-width: 991px) {
+    .Navbar {
+        height: 60px;
+    }
+
+    .nav_link {
+        margin: auto;
+    }
+  }
+    
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .my-alt {
+    position: absolute;
+    bottom: -35%;
+    left: -10%;
+    background-color: blueviolet;
+    color: white;
+    width: 50px;
+    height: 20px;
+    font-size: 12px;
+  }

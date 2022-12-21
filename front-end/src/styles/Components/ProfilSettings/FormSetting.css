@@ -1,0 +1,157 @@
+.form-setting {
+    position: relative;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    border: solid gray 1px;
+    border-radius: 2%;
+    margin-left: 25%;
+    width: 50%;
+    height: 95%;
+    padding-bottom: 2%;
+}
+
+@media only screen and (max-width: 1000px)  {
+    .form-setting {
+        position: relative;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+        border: solid gray 1px;
+        border-radius: 2%;
+        margin-left: 15%;
+        width: 70%;
+        margin-top: 12%;
+        height: 80%;
+        padding-bottom: 2%;
+    }
+}
+
+.vignette-form {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 4%;
+    margin-bottom: 0%;
+  
+    
+    border: solid black 1px;
+}
+
+.form-setting .set-avatar {
+    position: relative;
+    width: 9%;
+    height: 10%;
+    top: -7%;
+    left: 12%;
+    background-image: url(../../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid black 2px;
+    border-radius: 80%;
+    margin-left: 40%;
+    cursor: pointer;
+}
+
+.form-setting .set-nickname {
+    position: relative;
+    width: 6%;
+    height: 7%;
+    top: -14.2%;
+    left: 25%;
+    background-image: url(../../../styles/img/icones/modif.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    border-radius: 80%;
+    margin-left: 40%;
+}
+
+.set-avatar :hover {
+    position: relative;
+    width: 7%;
+    height: 10%;
+    top: -15%;
+    left: 12%;
+    background-image: url(../../../styles/img/icones/camera.png);
+    background-position: center;
+    background-size: cover;
+    border: solid blue 2px;
+    border-radius: 10%;
+    margin-left: 40%;
+}
+
+.form-setting button {
+    width: 20%;
+    margin-left: 40%;
+}
+
+.form-setting h2 {
+    color: white;
+    border: solid white 1px;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 3%;
+    padding-bottom: 1%;
+    font-size: 160%;
+}
+
+.form-setting input {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,67,154,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+    border: solid white 1px;
+    width: 30%;
+    height: 6%;
+    margin-left: 35%;
+    margin-bottom: 3%;
+    font-size: 130%;
+    text-align: center;
+}
+
+.error-text {
+    color: red;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.close {
+
+    position: relative;
+    width: 5%;
+    height: 5%;
+    top: 2%;
+    left: 2%;
+    background-image: url(../../../styles/img/icones/cross.png);
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.auth-p {
+    color: white;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 4%;
+}
+
+.tfa-p {
+    display: inline;
+    color: white;
+    margin-right: 2%;
+    font-size: 22px;
+    margin-left: 30%;
+    margin-top: 15%;
+}
+
+.round {
+    margin-bottom: 12%;
+    height: 33px;
+}
+
+.slider {
+    margin-bottom: 12%;
+}
+
+.tfa-s {
+    margin-bottom: 12px;
+}
+
