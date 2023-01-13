@@ -7,25 +7,26 @@ Les notions pricipales abordées ont été:
 
 - Les appels d' API.
 - L' Authentification d'un utilisateur.
-- Les JSON Web Token
-- Les WebSockets;
+- Les JSON Web Tokens.
+- Les WebSockets.
 
 
 Les technologies utilisées pour ce projet ont été: 
 
 Pour la partie front-end:
 
-- Html, CSS (Flex-Box)
-- TypeScript
-- Librairie React-Js
+- Html, CSS (Flex-Box).
+- TypeScript.
+- Librairie React-Js.
 - Redux tool Kit.
 
 Pour la partie back-end:
 
-- API-Rest
-- Node-Js
-- Framework Nest-Js
-- TypeOrm
-- Postgres Sql
+- API-Rest.
+- Node-Js.
+- Framework Nest-Js.
+- Insomnia.
+- TypeOrm.
+- Postgres Sql.
 - Socket IO.
 
